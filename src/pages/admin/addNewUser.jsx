@@ -73,9 +73,23 @@ const AddNewUser = () => {
                 <Input placeholder="Nhập Email" />
               </Form.Item>
             </Col>
+            <Col span={24}>
+              <Form.Item
+                name="password"
+                label="Mật khẩu"
+                rules={[
+                  {
+                    required: true,
+                    message: "Bạn chưa nhập Mật khẩu!",
+                  },
+                ]}
+              >
+                <Input placeholder="Nhập mật khẩu của bạn" />
+              </Form.Item>
+            </Col>
           </Row>
-          <Row gutter={16}>
-            <Col span={12}>
+          <Row gutter={24}>
+            <Col span={24}>
               <Form.Item
                 name="gender"
                 label="Giới tính"
@@ -86,13 +100,13 @@ const AddNewUser = () => {
                   },
                 ]}
               >
-                <Select placeholder="Please select an owner">
+                <Select placeholder="Chọn giới tính của bạn">
                   <Option value="Female">Nữ</Option>
                   <Option value="male">Nam</Option>
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={24}>
               <Form.Item
                 name="phone_number"
                 label="Số điện thoại"
@@ -107,8 +121,8 @@ const AddNewUser = () => {
               </Form.Item>
             </Col>
           </Row>
-          <Row gutter={16}>
-            <Col span={12}>
+          <Row gutter={24}>
+            <Col span={24}>
               <Form.Item
                 name="address"
                 label="Địa chỉ"
@@ -122,7 +136,7 @@ const AddNewUser = () => {
                 <Input placeholder="Nhập thông tin địa chỉ ở đây" />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={24}>
               <Form.Item
                 name="dateTime"
                 label="Ngày sinh"
@@ -138,25 +152,6 @@ const AddNewUser = () => {
                     width: "100%",
                   }}
                   getPopupContainer={(trigger) => trigger.parentElement}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={24}>
-              <Form.Item
-                name="description"
-                label="Giới thiệu bản thân"
-                rules={[
-                  {
-                    required: true,
-                    message: "Bạn chưa nhập giới thiệu bản thân",
-                  },
-                ]}
-              >
-                <Input.TextArea
-                  rows={4}
-                  placeholder="Đôi chút thông tin của bản thân"
                 />
               </Form.Item>
             </Col>

@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../service/Actions/UserAPI";
 import AlertMessage from "../alert/AlertMessage";
 import { DatePicker, Radio } from "antd";
+
 import moment from "moment";
 
 const RegisterForm = () => {
@@ -152,7 +153,8 @@ const RegisterForm = () => {
             <Radio.Button value="true">Male</Radio.Button>
           </Radio.Group>
         </Form.Group>
-        <Button variant="success" type="submit">
+
+        <Button variant="success" className="btn_register_1" type="submit">
           Register
         </Button>
       </Form>

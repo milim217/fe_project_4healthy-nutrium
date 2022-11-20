@@ -38,7 +38,6 @@ const LoginForm = () => {
     <>
       <Form className="my-4" onSubmit={login}>
         <AlertMessage info={alert} />
-
         <Form.Group>
           <Form.Control
             type="text"
@@ -57,15 +56,19 @@ const LoginForm = () => {
             onChange={onChangeLoginForm}
           />
         </Form.Group>
-        <Button variant="success" type="submit">
-          Login
+        <Button variant="success" className="btn_loginForm_1" type="submit">
+          Đăng nhập
         </Button>
       </Form>
       <p>
-        Don't have an account?
-        <Link to="/register">
+        <Link to="/sendmail">
           <Button variant="info" size="sm" className="ml-2">
-            Register
+            Đăng kí tài khoản mới
+          </Button>
+        </Link>
+        <Link to="/sendmail">
+          <Button variant="info" size="sm" className="ml-2">
+            Bạn quên mật khẩu?
           </Button>
         </Link>
       </p>

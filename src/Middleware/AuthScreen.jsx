@@ -5,6 +5,8 @@ import { AuthContext } from "../service/Actions/UserAPI";
 import { useContext } from "react";
 import { Redirect } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
+import SendMailForm from "../components/form/SendMailForm";
+import ResetPasswordForm from "../components/form/ResetPasswordForm";
 
 const Auth = ({ authRoute }) => {
   const {
@@ -21,17 +23,19 @@ const Auth = ({ authRoute }) => {
     );
   } else if (isAuthenticated) {
     if (UserRole === "ADMIN") {
-      return <Redirect to="/admin" />;
+      return <Redirect to="/admin/dashboard" />;
     } else if (UserRole === "USER") {
       return <Redirect to="/home/user/profile" />;
     } else {
-      return <Redirect to="/nutrionexpert" />;
+      return <Redirect to="/nutrionexpert/information" />;
     }
   } else {
     body = (
       <>
         {authRoute === "login" && <LoginForm />}
         {authRoute === "register" && <RegisterForm />}
+        {authRoute === "sendmail" && <SendMailForm />}
+        {authRoute === "resetpassword" && <ResetPasswordForm />}
       </>
     );
   }

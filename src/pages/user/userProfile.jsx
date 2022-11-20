@@ -1,25 +1,9 @@
-import React, { useState } from "react";
-import {
-  Card,
-  Space,
-  Button,
-  Form,
-  Input,
-  Row,
-  Col,
-  Statistic,
-  Image,
-} from "antd";
-import {
-  InfoCircleOutlined,
-  ArrowDownOutlined,
-  ArrowUpOutlined,
-} from "@ant-design/icons";
+import React from "react";
+import { Card, Space, Button, Form, Input, Row, Col, Image } from "antd";
 import HeaderLayout from "../../components/header/HeaderAdmin";
 import ChangePassword from "../../components/form/ChangePassword";
-import Slidebar from "../admin/SlidebarAdmin";
 import UploadImageFile from "../../components/upload-image-avt/uploadImageFile";
-import { Progres, Breadcrumb } from "antd";
+import { Breadcrumb } from "antd";
 import SlidebarUser from "./SlidbarUser";
 
 const userProfile = () => {
@@ -124,6 +108,18 @@ const userProfile = () => {
                             <div className="informatione_user_cover__UserProfile">
                               Số điện thoại:
                             </div>
+                            <div className="informatione_user_cover__UserProfile">
+                              Công việc:
+                            </div>
+                            <div className="informatione_user_cover__UserProfile">
+                              Chiều cao:
+                            </div>
+                            <div className="informatione_user_cover__UserProfile">
+                              Cân nặng:
+                            </div>
+                            <div className="informatione_user_cover__UserProfile">
+                              Tần số tập luyện:
+                            </div>
                           </Col>
                           <Col span={12}>
                             <div className="informatione_user_cover__UserProfile">
@@ -140,6 +136,18 @@ const userProfile = () => {
                             </div>
                             <div className="informatione_user_cover__UserProfile">
                               0123.xx.xx.xx9
+                            </div>
+                            <div className="informatione_user_cover__UserProfile">
+                              Công việc:
+                            </div>
+                            <div className="informatione_user_cover__UserProfile">
+                              Chiều cao:
+                            </div>
+                            <div className="informatione_user_cover__UserProfile">
+                              Cân nặng:
+                            </div>
+                            <div className="informatione_user_cover__UserProfile">
+                              Tần số tập luyện:
                             </div>
                           </Col>
                         </Row>

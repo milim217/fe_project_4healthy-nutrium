@@ -38,19 +38,24 @@ const Slidebar = ({ children }) => {
           defaultSelectedKeys={["/"]}
           items={[
             {
-              key: "/admin/dashboard",
+              key: "/nutrionexpert/information",
               icon: <UserOutlined />,
-              label: "Thống kê người dùng",
+              label: "Thông tin của bạn",
             },
             {
-              key: "/admin/listuser",
+              key: "/nutrionexpert/food",
               icon: <UserSwitchOutlined />,
-              label: "Danh sách người dùng",
+              label: "Danh sách món ăn",
             },
             {
-              key: "/login",
+              key: "/nutrionexpert/ingredients",
               icon: <UploadOutlined />,
-              label: "Đăng xuất",
+              label: "Danh sách thành phần",
+            },
+            {
+              key: "/nutrionexpert/recipes",
+              icon: <UploadOutlined />,
+              label: "Danh sách công thức",
             },
           ]}
         />

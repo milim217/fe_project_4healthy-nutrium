@@ -1,13 +1,8 @@
-import React, { useState } from "react";
-import { Card, Space, Button, Form, Input, Row, Col, Statistic } from "antd";
-import {
-  InfoCircleOutlined,
-  ArrowDownOutlined,
-  ArrowUpOutlined,
-} from "@ant-design/icons";
+import React from "react";
+import { Card, Row, Col, Statistic } from "antd";
 import HeaderLayout from "../../components/header/HeaderAdmin";
 import Slidebar from "./SlidebarAdmin";
-import { Progres, Breadcrumb } from "antd";
+import { Breadcrumb } from "antd";
 
 const DashboardAdmin = () => {
   return (
