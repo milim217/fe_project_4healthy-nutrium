@@ -1,6 +1,6 @@
 import React from "react";
-import LoginForm from "../components/auth/LoginForm";
-import RegisterForm from "../components/auth/RegisterForm";
+import LoginForm from "../components/form/LoginForm";
+import RegisterForm from "../components/form/RegisterForm";
 import { AuthContext } from "../service/Actions/UserAPI";
 import { useContext } from "react";
 import { Redirect } from "react-router-dom";
@@ -23,7 +23,7 @@ const Auth = ({ authRoute }) => {
     if (UserRole === "ADMIN") {
       return <Redirect to="/admin" />;
     } else if (UserRole === "USER") {
-      return <Redirect to="/home" />;
+      return <Redirect to="/home/user/profile" />;
     } else {
       return <Redirect to="/nutrionexpert" />;
     }

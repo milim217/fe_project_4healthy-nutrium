@@ -1,10 +1,10 @@
 import React from "react";
-import homepage from "../pages/user/homepage";
+import homeUser from "../pages/user/homeUser";
 import DashboardAdmin from "../pages/admin/DashboardAdmin";
 import ListUser from "../pages/admin/ListUser";
 import nutrionExpertPage from "../pages/nutrion/nutrionExpertPage";
-import LayoutAdmin from "../layout/Admin/LayoutAdmin";
-import Landing from "../components/Landing";
+import userProfile from "../pages/user/userProfile";
+import Landing from "../Landing";
 import { Route } from "react-router-dom";
 // Kiểm tra trước khi Router
 import ProtectedRoute from "../Middleware/ProtectedRoute";
@@ -26,8 +26,9 @@ const Routes = () => {
       />
       <ProtectedRoute path="/listuser" component={ListUser} />
       <ProtectedRoute path="/admin/dashboard" component={DashboardAdmin} />
-      <ProtectedRoute exact path="/admin" component={LayoutAdmin} />
-      <ProtectedRoute exact path="/home" component={homepage} />
+      <ProtectedRoute exact path="/admin" component={DashboardAdmin} />
+      <ProtectedRoute exact path="/home" component={homeUser} />
+      <ProtectedRoute exact path="/home/user/profile" component={userProfile} />
       <ProtectedRoute
         exact
         path="/nutrionexpert"

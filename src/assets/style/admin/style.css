@@ -1,0 +1,55 @@
+.site-page-header {
+  border-bottom: 5px solid rgb(61, 154, 76);
+}
+
+/* .site-card-wrapper {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+} */
+
+.border-1 {
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px,
+    rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.margin-20 {
+  margin-top: 20px;
+}
+
+.add_new_user__listUser {
+  padding: 20px;
+  float: right;
+}
+
+.search_user___listUser {
+  float: left;
+  width: 650px;
+  padding: 20px 20px 20px 10px;
+}
+.wrapper__listUser {
+  width: 100%;
+}
+
+.Upload_image___userProfile {
+  width: 300px;
+  background-color: blanchedalmond;
+  margin: 10px 0px 0px 0px;
+}
+
+.btn_upload_image__UploadmangeFile {
+  width: 300px;
+}
+
+.information_user__UserProfile {
+  letter-spacing: 1px;
+  text-align: left;
+  justify-content: center;
+  margin-top: 35px;
+  font-family: "Roboto Condensed", sans-serif;
+  padding-right: 20%;
+  float: right;
+}
+.information_user__UserProfile .informatione_user_cover__UserProfile {
+  padding: 5px 0px 5px 0px;
+  font-size: 20px;
+  text-align: left;
+}

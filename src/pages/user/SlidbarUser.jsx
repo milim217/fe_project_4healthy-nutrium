@@ -16,19 +16,25 @@ import {
   UserSwitchOutlined,
   DashboardFilled,
 } from "@ant-design/icons";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Breadcrumb } from "antd";
 import React, { useState } from "react";
-import "../../../assets/style/layout.css";
+import "../../assets/style/admin/style.css";
 const { Header, Sider, Content } = Layout;
 
-const Slidebar = ({ children }) => {
+const SlidebarUser = ({ children }) => {
   useState();
   const history = useHistory();
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <Layout>
-      <Sider trigger={null} collapsible collapsed={isSidebarOpen}>
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={isSidebarOpen}
+        className="border-1"
+        width="300"
+      >
         <div className="logo" />
         <Menu
           onClick={({ key }) => {
@@ -39,19 +45,14 @@ const Slidebar = ({ children }) => {
           defaultSelectedKeys={["/"]}
           items={[
             {
-              key: "/admin/dashboard",
+              key: "/home/user/profile",
               icon: <UserOutlined />,
-              label: "Dashboard",
+              label: "Hồ Sơ Người Dùng",
             },
             {
-              key: "/listuser",
-              icon: <UserSwitchOutlined />,
-              label: "Manager User",
-            },
-            {
-              key: "/setting",
+              key: "/login",
               icon: <UploadOutlined />,
-              label: "nav 3",
+              label: "Đăng xuất",
             },
           ]}
         />
@@ -71,12 +72,13 @@ const Slidebar = ({ children }) => {
             }
           )}
         </Header>
+
         <div
           className="site-layout-background"
           style={{
-            margin: "24px 16px",
-            padding: 24,
-            minHeight: 280,
+            margin: "10px 16px",
+            paddingBottom: "20px",
+            minHeight: "auto",
           }}
         >
           {children}
@@ -86,4 +88,4 @@ const Slidebar = ({ children }) => {
   );
 };
 
-export default Slidebar;
+export default SlidebarUser;
