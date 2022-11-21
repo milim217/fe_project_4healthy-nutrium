@@ -12,9 +12,9 @@ const NutrionExpertInformation = () => {
         }}
       >
         <Breadcrumb.Item>
-          <a href="">Trang Quản trị viên</a>
+          <a href="">Trang chuyên gia dinh dưỡng</a>
         </Breadcrumb.Item>
-        <Breadcrumb.Item>Thống kê người dùng</Breadcrumb.Item>
+        <Breadcrumb.Item>Thông tin của bạn</Breadcrumb.Item>
       </Breadcrumb>
       <Card
         title="Thông tin tài khoản"

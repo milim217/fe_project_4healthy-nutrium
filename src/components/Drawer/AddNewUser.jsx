@@ -23,7 +23,11 @@ const AddNewUser = () => {
   };
   return (
     <>
-      <Button type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
+      <Button
+        type="primary"
+        onClick={showDrawer}
+        icon={<PlusOutlined className="plus_add_button" />}
+      >
         Thêm tài khoản chuyên gia dinh dưỡng
       </Button>
       <Drawer

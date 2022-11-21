@@ -25,7 +25,7 @@ const Auth = ({ authRoute }) => {
     if (UserRole === "ADMIN") {
       return <Redirect to="/admin/dashboard" />;
     } else if (UserRole === "USER") {
-      return <Redirect to="/home/user/profile" />;
+      return <Redirect to="/home" />;
     } else {
       return <Redirect to="/nutrionexpert/information" />;
     }

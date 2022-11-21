@@ -52,3 +52,8 @@
   font-size: 15px;
   text-align: left;
 }
+.plus_add_button svg {
+  display: inline-block;
+  margin-bottom: 6px;
+  margin-right: 20px;
+}

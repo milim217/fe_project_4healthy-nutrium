@@ -1,5 +1,5 @@
 import React from "react";
-import homeUser from "../pages/user/homeUser";
+import HomePage from "../pages/user/HomePage";
 import DashboardAdmin from "../pages/admin/DashboardAdmin";
 import ListUser from "../pages/admin/ListUser";
 import NutrionExpertPage from "../pages/nutrion/NutrionExpertPage";
@@ -36,7 +36,7 @@ const Routes = () => {
       />
       <ProtectedRoute path="/admin/listuser" component={ListUser} />
       <ProtectedRoute path="/admin/dashboard" component={DashboardAdmin} />
-      <ProtectedRoute exact path="/home" component={homeUser} />
+      <ProtectedRoute exact path="/home" component={HomePage} />
       <ProtectedRoute exact path="/home/user/profile" component={userProfile} />
       <ProtectedRoute
         exact

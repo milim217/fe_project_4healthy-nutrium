@@ -39,23 +39,28 @@ const Slidebar = ({ children }) => {
           items={[
             {
               key: "/nutrionexpert/information",
-              icon: <UserOutlined />,
+              // icon: <UserOutlined />,
               label: "Thông tin của bạn",
             },
             {
               key: "/nutrionexpert/food",
-              icon: <UserSwitchOutlined />,
+              // icon: <UserSwitchOutlined />,
               label: "Danh sách món ăn",
             },
             {
               key: "/nutrionexpert/ingredients",
-              icon: <UploadOutlined />,
+              // icon: <UploadOutlined />,
               label: "Danh sách thành phần",
             },
             {
               key: "/nutrionexpert/recipes",
-              icon: <UploadOutlined />,
+              // icon: <UploadOutlined />,
               label: "Danh sách công thức",
+            },
+            {
+              // key: "/nutrionexpert/recipes",
+              // icon: <UploadOutlined />,
+              label: "Đăng xuất",
             },
           ]}
         />

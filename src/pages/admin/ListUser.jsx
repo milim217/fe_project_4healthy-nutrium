@@ -11,7 +11,7 @@ import {
 } from "antd";
 import React, { useState } from "react";
 import HeaderLayout from "../../components/header/HeaderAdmin";
-import AddNewUser from "./AddNewUser";
+import AddNewUser from "../../components/Drawer/AddNewUser";
 import "../../assets/style/admin/style.css";
 import Slidebar from "./SlidebarAdmin";
 const text = "Bạn có chắc chắn muốn xoá tài khoản này?";

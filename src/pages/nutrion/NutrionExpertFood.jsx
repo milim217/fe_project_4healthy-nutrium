@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Table,
   Button,
@@ -5,13 +6,17 @@ import {
   Tag,
   Image,
   Popconfirm,
+  Space,
   Breadcrumb,
   Modal,
   Input,
 } from "antd";
-import React, { useState } from "react";
-import HeaderLayout from "../../components/header/HeaderAdmin";
 import "../../assets/style/admin/style.css";
+import SelectionFoods from "../../components/selection/SelectionFoods";
+import SelectionCategories from "../../components/selection/SelectionCategories";
+import SelectionDisplayPer from "../../components/selection/SelectionDisplayPer";
+import SelectionSeasonFood from "../../components/selection/SelectionSeasonFood";
+import AddNewFood from "../../components/Drawer/AddNewFood";
 const text = "Bạn có chắc chắn muốn món ăn này khỏi danh sách?";
 
 const NutrionExpertFood = () => {
@@ -57,12 +62,12 @@ const NutrionExpertFood = () => {
       justify: "center",
     },
     {
-      title: "chất béo",
+      title: "Fat",
       dataIndex: "fat",
       justify: "center",
     },
     {
-      title: "Chất đạm",
+      title: "Protein",
       dataIndex: "protein",
       justify: "center",
     },
@@ -81,7 +86,7 @@ const NutrionExpertFood = () => {
       title: "Chỉnh sửa món ăn",
       render: () => (
         <Button type="primary" onClick={() => showModal()}>
-          Xem chi tiết
+          Chỉnh sửa
         </Button>
       ),
     },
@@ -98,7 +103,7 @@ const NutrionExpertFood = () => {
             okText="Xoá món ăn"
             cancelText="Huỷ hành động"
           >
-            <Button>Xoá khỏi danh sách món ăn này</Button>
+            <Button>Xoá</Button>
           </Popconfirm>
         </>
       ),
@@ -155,8 +160,14 @@ const NutrionExpertFood = () => {
       </Breadcrumb>
       <div className="wrapper__listUser">
         <div className="add_new_user__listUser">
-          {/* <AddNewUser></AddNewUser> */}
+          <AddNewFood></AddNewFood>
         </div>
+        <Space>
+          <SelectionFoods />
+          <SelectionCategories />
+          <SelectionSeasonFood />
+          <SelectionDisplayPer />
+        </Space>
         <div className="search_user___listUser">
           <Search
             placeholder="Nhập tên món ăn cần tìm"
@@ -173,7 +184,7 @@ const NutrionExpertFood = () => {
         columns={columns}
         dataSource={data}
         scroll={{
-          x: 600,
+          x: 1200,
           y: 580,
         }}
       />
