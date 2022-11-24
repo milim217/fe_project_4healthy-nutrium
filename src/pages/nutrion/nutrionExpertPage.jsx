@@ -4,7 +4,6 @@ import SlidebarNutrionExp from "./SlidebarNutrionExp";
 import NutriongExpertInformation from "./NutrionExpertInformation";
 import NutrionExpertIngredients from "./NutrionExpertIngredients";
 import NutrionExpertFood from "./NutrionExpertFood";
-import NutrionExpertRecipes from "./NutrionExpertRecipes";
 
 function NutrionExpertPage({ changePage }) {
   let body = (
@@ -12,7 +11,6 @@ function NutrionExpertPage({ changePage }) {
       {changePage === "information" && <NutriongExpertInformation />}
       {changePage === "food" && <NutrionExpertFood />}
       {changePage === "ingredients" && <NutrionExpertIngredients />}
-      {changePage === "recipes" && <NutrionExpertRecipes />}
     </>
   );
   return (

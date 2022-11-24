@@ -48,7 +48,7 @@ const Slidebar = ({ children }) => {
               label: "Danh sách người dùng",
             },
             {
-              key: "/login",
+              key: "/home",
               icon: <UploadOutlined />,
               label: "Đăng xuất",
             },

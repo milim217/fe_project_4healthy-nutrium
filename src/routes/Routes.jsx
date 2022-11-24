@@ -9,6 +9,11 @@ import { Route } from "react-router-dom";
 // Kiểm tra trước khi Router
 import ProtectedRoute from "../Middleware/ProtectedRoute";
 import Auth from "../Middleware/AuthScreen";
+import Quiz1 from "../components/onboarding/Quiz1";
+import Quiz2 from "../components/onboarding/Quiz2";
+import Quiz3 from "../components/onboarding/Quiz3";
+import Quiz4 from "../components/onboarding/Quiz4";
+import Quiz5 from "../components/onboarding/Quiz5";
 
 const Routes = () => {
   return (
@@ -36,7 +41,7 @@ const Routes = () => {
       />
       <ProtectedRoute path="/admin/listuser" component={ListUser} />
       <ProtectedRoute path="/admin/dashboard" component={DashboardAdmin} />
-      <ProtectedRoute exact path="/home" component={HomePage} />
+      <Route exact path="/home" component={HomePage} />
       <ProtectedRoute exact path="/home/user/profile" component={userProfile} />
       <ProtectedRoute
         exact
@@ -62,13 +67,11 @@ const Routes = () => {
           <NutrionExpertPage {...props} changePage="ingredients" />
         )}
       />
-      <Route
-        exact
-        path="/nutrionexpert/recipes"
-        render={(props) => (
-          <NutrionExpertPage {...props} changePage="recipes" />
-        )}
-      />
+      <Route exact path="/onboarding/quiz1" component={Quiz1}></Route>
+      <Route exact path="/onboarding/quiz2" component={Quiz2}></Route>
+      <Route exact path="/onboarding/quiz3" component={Quiz3}></Route>
+      <Route exact path="/onboarding/quiz4" component={Quiz4}></Route>
+      <Route exact path="/onboarding/quiz5" component={Quiz5}></Route>
     </div>
   );
 };

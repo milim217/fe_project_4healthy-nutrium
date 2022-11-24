@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+
+body {
+  font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
+  height: auto;
+}
+.wrapper-quiz_page {
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(255, 255, 255);
+}
+
+.wrapper-ProgressBar {
+  padding: 1.25rem;
+  max-width: 58rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wrapper-title-quiz {
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  font-size: 32px;
+  line-height: 36px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: auto;
+  height: auto;
+  width: 70%;
+}
+
+.wrapper-table-option {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  max-width: 38rem;
+  width: 100%;
+  margin: auto;
+}
+
+.wrapper-table-option .button_Link {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.button-opinion-quiz {
+  transition-duration: 0.15s;
+  text-align: center;
+  padding-bottom: 1.75rem;
+  padding-top: 1.75rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  --tw-bg-opacity: 1;
+  color: #404040;
+  background-color: aliceblue;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1.2em;
+  font-weight: 1000;
+  border-radius: 0.5rem;
+}
+
+.button-opinion-quiz:hover {
+  color: white;
+  background-color: rgba(5, 170, 88, var(--tw-bg-opacity));
+}
+
+.InputText_Quiz {
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.InputText_Quiz:hover {
+  background-color: aliceblue;
+}
+
+.ant-radio-input {
+  font-size: 20px;
+}
+
+.btn-radio-quiz {
+  transition-duration: 0.15s;
+  text-align: center;
+  padding-bottom: 1.75rem;
+  padding-top: 1.75rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  font-weight: 800;
+  font-size: 20px;
+}

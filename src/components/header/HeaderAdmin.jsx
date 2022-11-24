@@ -6,6 +6,7 @@ const HeaderLayout = (props) => {
       className="site-page-header"
       onBack={() => null}
       title={props.title}
+      style={{ backgroundColor: "white" }}
     />
   );
 };

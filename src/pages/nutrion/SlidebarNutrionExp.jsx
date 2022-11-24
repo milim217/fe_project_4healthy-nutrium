@@ -53,12 +53,7 @@ const Slidebar = ({ children }) => {
               label: "Danh sách thành phần",
             },
             {
-              key: "/nutrionexpert/recipes",
-              // icon: <UploadOutlined />,
-              label: "Danh sách công thức",
-            },
-            {
-              // key: "/nutrionexpert/recipes",
+              key: "/home",
               // icon: <UploadOutlined />,
               label: "Đăng xuất",
             },
