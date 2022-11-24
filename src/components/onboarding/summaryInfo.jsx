@@ -58,9 +58,9 @@ const summaryInfo = () => {
               </p>
             </Card>
           </Space>
-          <Link to="/onboarding/quiz7">
+          <Link to="/onboarding/quiz5">
             <Button variant="success" className="button_Link">
-              Tiếp tục
+              Lưu và tiếp tục
             </Button>
           </Link>
         </div>

@@ -21,7 +21,7 @@ const resultQuiz = () => {
         </div>
         <div className="wrapper-table-option">
           <ChartSuccess></ChartSuccess>
-          <Link to="/onboarding/summaryInfo">
+          <Link to="/onboarding/quiz7">
             <Button variant="success" className="button_Link">
               Tiếp tục
             </Button>

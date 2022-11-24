@@ -48,7 +48,7 @@ const Quiz1 = () => {
               </Radio>
             </Space>
           </Radio.Group>
-          <Link to="/onboarding/quiz5">
+          <Link to="/onboarding/summaryInfo">
             <Button variant="success" className="button_Link">
               Tiếp tục
             </Button>
