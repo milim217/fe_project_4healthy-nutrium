@@ -1,5 +1,6 @@
 import React from "react";
 import HomePage from "../pages/user/HomePage";
+import HomeUser from "../pages/user/HomeUser";
 import DashboardAdmin from "../pages/admin/DashboardAdmin";
 import ListUser from "../pages/admin/ListUser";
 import NutrionExpertPage from "../pages/nutrion/NutrionExpertPage";
@@ -14,6 +15,11 @@ import Quiz2 from "../components/onboarding/Quiz2";
 import Quiz3 from "../components/onboarding/Quiz3";
 import Quiz4 from "../components/onboarding/Quiz4";
 import Quiz5 from "../components/onboarding/Quiz5";
+import Quiz6 from "../components/onboarding/Quiz6";
+import Quiz7 from "../components/onboarding/Quiz7";
+import summaryInfo from "../components/onboarding/summaryInfo";
+import pageLoadingQuiz from "../components/onboarding/pageLoadingQuiz";
+import GetUserDiet from "../components/onboarding/GetUserDiet";
 
 const Routes = () => {
   return (
@@ -42,7 +48,7 @@ const Routes = () => {
       <ProtectedRoute path="/admin/listuser" component={ListUser} />
       <ProtectedRoute path="/admin/dashboard" component={DashboardAdmin} />
       <Route exact path="/home" component={HomePage} />
-      <ProtectedRoute exact path="/home/user/profile" component={userProfile} />
+      <ProtectedRoute exact path="/homeuser/profile" component={userProfile} />
       <ProtectedRoute
         exact
         path="/nutrionexpert"
@@ -72,6 +78,28 @@ const Routes = () => {
       <Route exact path="/onboarding/quiz3" component={Quiz3}></Route>
       <Route exact path="/onboarding/quiz4" component={Quiz4}></Route>
       <Route exact path="/onboarding/quiz5" component={Quiz5}></Route>
+      <Route exact path="/onboarding/quiz6" component={Quiz6}></Route>
+      <Route exact path="/onboarding/quiz7" component={Quiz7}></Route>
+      <Route
+        exact
+        path="/onboarding/summaryInfo"
+        component={summaryInfo}
+      ></Route>
+      <Route
+        exact
+        path="/onboarding/pageLoadingQuiz"
+        component={pageLoadingQuiz}
+      ></Route>
+      <Route
+        exact
+        path="/onboarding/GetUserDiet"
+        component={GetUserDiet}
+      ></Route>
+      <ProtectedRoute
+        exact
+        path="/homeuser"
+        component={HomeUser}
+      ></ProtectedRoute>
     </div>
   );
 };

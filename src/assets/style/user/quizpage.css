@@ -7,7 +7,9 @@ body {
 }
 .wrapper-quiz_page {
   width: 100%;
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
+  padding-bottom: 30px;
   background-color: rgb(255, 255, 255);
 }
 
@@ -90,4 +92,65 @@ body {
   padding-right: 1.25rem;
   font-weight: 800;
   font-size: 20px;
+}
+
+.button-opinion-quiz-icon {
+  background-image: url("../../icon/steak.png");
+  width: 150px;
+  height: 150px;
+  background-size: contain;
+  margin-left: 12px;
+  background-color: white;
+}
+
+.cover-btn-quiz-icon-text {
+  display: block;
+  /* background-color: blanchedalmond; */
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+}
+
+.cover-btn-quiz-icon-text:hover {
+  background-color: #001529;
+  color: white;
+}
+
+.button-opinion-quiz-text {
+  padding-top: 10px;
+  text-align: center;
+  font-weight: 900;
+}
+
+.button-opinion-quiz-icon-foodGreen {
+  background-image: url("../../icon/vegetables.png");
+  width: 150px;
+  height: 150px;
+  background-size: contain;
+  margin-left: 12px;
+  background-color: white;
+}
+
+.center-text {
+  font-size: 20px;
+  text-align: center;
+}
+
+.icon-water {
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  /* background-color: aqua; */
+  margin: auto;
+}
+
+.center-icon {
+  width: 80px;
+  height: 80px;
+  background-image: url("https://img.icons8.com/external-stickers-smashing-stocks/70/null/external-Water-Bottle-football-stickers-smashing-stocks.png");
+  background-repeat: no-repeat;
+  justify-items: center;
+  margin: auto;
+}
+
+.padding_20 {
+  padding-bottom: 20px;
 }

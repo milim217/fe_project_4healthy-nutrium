@@ -45,7 +45,7 @@ const SlidebarUser = ({ children }) => {
           defaultSelectedKeys={["/"]}
           items={[
             {
-              key: "/home/user/profile",
+              key: "/homeuser/profile",
               icon: <UserOutlined />,
               label: "Hồ Sơ Người Dùng",
             },

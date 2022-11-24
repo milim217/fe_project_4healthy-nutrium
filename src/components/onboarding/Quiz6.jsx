@@ -13,75 +13,69 @@ const Quiz1 = () => {
       <HeaderUser></HeaderUser>
       <div className="wrapper-quiz_page">
         <div className="wrapper-ProgressBar">
-          <Progress per="75"></Progress>
+          <Progress per="95"></Progress>
         </div>
         <div className="wrapper-title-quiz">
-          <p>Vui lòng chọn loại thịt mà bạn muốn?</p>
+          <p>Vui lòng chọn loại rau mà bạn muốn?</p>
         </div>
         <div className="wrapper-table-option">
           <Row gutter={[16, 16]}>
             <Col span={8}>
               <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
+                <div className="button-opinion-quiz-icon-foodGreen"></div>
                 <div className="button-opinion-quiz-text">Thịt Bò</div>
               </div>
             </Col>
             <Col span={8}>
               <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
+                <div className="button-opinion-quiz-icon-foodGreen"></div>
                 <div className="button-opinion-quiz-text">Thịt Bò</div>
               </div>
             </Col>
             <Col span={8}>
               <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
+                <div className="button-opinion-quiz-icon-foodGreen"></div>
                 <div className="button-opinion-quiz-text">Thịt Bò</div>
               </div>
             </Col>
             <Col span={8}>
               <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
+                <div className="button-opinion-quiz-icon-foodGreen"></div>
                 <div className="button-opinion-quiz-text">Thịt Bò</div>
               </div>
             </Col>
             <Col span={8}>
               <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
+                <div className="button-opinion-quiz-icon-foodGreen"></div>
                 <div className="button-opinion-quiz-text">Thịt Bò</div>
               </div>
             </Col>
             <Col span={8}>
               <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
+                <div className="button-opinion-quiz-icon-foodGreen"></div>
                 <div className="button-opinion-quiz-text">Thịt Bò</div>
               </div>
             </Col>
             <Col span={8}>
               <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
+                <div className="button-opinion-quiz-icon-foodGreen"></div>
                 <div className="button-opinion-quiz-text">Thịt Bò</div>
               </div>
             </Col>
             <Col span={8}>
               <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
+                <div className="button-opinion-quiz-icon-foodGreen"></div>
                 <div className="button-opinion-quiz-text">Thịt Bò</div>
               </div>
             </Col>
             <Col span={8}>
               <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
+                <div className="button-opinion-quiz-icon-foodGreen"></div>
                 <div className="button-opinion-quiz-text">Thịt Bò</div>
               </div>
             </Col>
           </Row>
-          <Link to="/onboarding/quiz6">
+          <Link to="/onboarding/pageLoadingQuiz">
             <Button variant="success" className="button_Link">
               Tiếp tục
             </Button>

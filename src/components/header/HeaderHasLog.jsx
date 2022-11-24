@@ -4,6 +4,8 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
+import { UserOutlined } from "@ant-design/icons";
+import { Avatar } from "antd";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 
@@ -34,9 +36,11 @@ const HeaderUser = () => {
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                  <Nav.Link href="/home" className="text-nav-link">
-                    Trang chủ
-                  </Nav.Link>
+                  <Link to={"/homeuser"}>
+                    <Nav.Link href="#features" className="text-nav-link">
+                      Trang chủ
+                    </Nav.Link>
+                  </Link>
                   <Nav.Link href="#pricing" className="text-nav-link">
                     Thư viện
                   </Nav.Link>
@@ -48,9 +52,23 @@ const HeaderUser = () => {
                   </Nav.Link>
                 </Nav>
                 <Nav>
-                  <Link to="/login">
-                    <Button className="btn-login">Đăng nhập</Button>
-                  </Link>
+                  <NavDropdown
+                    title="NameUser"
+                    id="basic-nav-dropdown"
+                    className="text-nav-link"
+                  >
+                    <Link to={"/homeuser/profile"}>
+                      <NavDropdown.Item href="#action/3.1">
+                        Thông tin tài khoản
+                      </NavDropdown.Item>
+                    </Link>
+                    <NavDropdown.Divider />
+                    <Link to={"/home"}>
+                      <NavDropdown.Item href="#action/3.2">
+                        Đăng xuất
+                      </NavDropdown.Item>
+                    </Link>
+                  </NavDropdown>
                 </Nav>
               </Navbar.Collapse>
             </div>

@@ -4,11 +4,14 @@ import HeaderLayout from "../../components/header/HeaderAdmin";
 import ChangePassword from "../../components/form/ChangePassword";
 import UploadImageFile from "../../components/upload-image-avt/uploadImageFile";
 import { Breadcrumb } from "antd";
+import HeaderUserHasLog from "../../components/header/HeaderHasLog";
+import Footers from "../../components/footer/footers";
 import SlidebarUser from "./SlidbarUser";
 
 const userProfile = () => {
   return (
     <div>
+      <HeaderUserHasLog></HeaderUserHasLog>
       <HeaderLayout title={"Trang người dùng"}></HeaderLayout>
       <SlidebarUser>
         <Breadcrumb
@@ -160,6 +163,7 @@ const userProfile = () => {
           </div>
         </Space>
       </SlidebarUser>
+      <Footers></Footers>
     </div>
   );
 };

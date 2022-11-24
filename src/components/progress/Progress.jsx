@@ -4,7 +4,7 @@ import React from "react";
 const Progress = (props) => {
   return (
     <div>
-      <ProgressBar animated now={props.per} />;
+      <ProgressBar animated now={props.per} />
     </div>
   );
 };

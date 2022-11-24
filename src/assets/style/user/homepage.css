@@ -99,7 +99,7 @@ body {
   position: relative;
   z-index: 1;
   height: 100vh;
-  background-color: #001529;
+  /* background-color: #001529; */
 }
 
 .flex-image-contain {
@@ -153,4 +153,17 @@ body {
 
 .nav-item > a {
   color: aliceblue;
+}
+
+.wrapper-homeuser {
+  width: 80%;
+  min-height: auto;
+  margin: auto;
+  margin-top: 20px;
+  background-color: aliceblue;
+}
+
+.table_recomendation_wrapper {
+  display: inline-block;
+  overflow: auto;
 }
