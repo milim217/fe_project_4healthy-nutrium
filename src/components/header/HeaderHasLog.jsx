@@ -20,7 +20,7 @@ const HeaderUser = () => {
           className="wrapper-navbar-header"
         >
           <Container>
-            <Navbar.Brand href="#home">
+            <Navbar.Brand href="/home">
               <div className="custom-navbar">
                 <div className="container">
                   <div className="navbar-header">

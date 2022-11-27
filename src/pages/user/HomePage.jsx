@@ -105,7 +105,7 @@ const HomePage = () => (
                 Trả lời câu hỏi trong phần{" "}
                 <Link to="/login">
                   <a>kiểm tra</a>
-                </Link>{" "}
+                </Link>
                 của chúng tôi
                 <h5>Một bài kiểm tra nhỏ chỉ tốn vài phút của bạn</h5>
               </div>

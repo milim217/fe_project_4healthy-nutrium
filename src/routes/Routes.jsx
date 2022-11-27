@@ -21,6 +21,7 @@ import summaryInfo from "../components/onboarding/summaryInfo";
 import pageLoadingQuiz from "../components/onboarding/pageLoadingQuiz";
 import GetUserDiet from "../components/onboarding/GetUserDiet";
 import LibaryPage from "../pages/user/libaryPage";
+import Slidebar from "../pages/admin/SlidebarAdmin";
 
 const Routes = () => {
   return (
@@ -48,7 +49,6 @@ const Routes = () => {
       />
       <ProtectedRoute path="/admin/listuser" component={ListUser} />
       <ProtectedRoute path="/admin/dashboard" component={DashboardAdmin} />
-      <Route exact path="/home" component={HomePage} />
       <ProtectedRoute exact path="/homeuser/profile" component={userProfile} />
       <ProtectedRoute
         exact
@@ -74,6 +74,7 @@ const Routes = () => {
           <NutrionExpertPage {...props} changePage="ingredients" />
         )}
       />
+      <Route exact path="/home" component={HomePage} />
       <Route exact path="/onboarding/quiz1" component={Quiz1}></Route>
       <Route exact path="/onboarding/quiz2" component={Quiz2}></Route>
       <Route exact path="/onboarding/quiz3" component={Quiz3}></Route>

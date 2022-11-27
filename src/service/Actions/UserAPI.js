@@ -4,13 +4,14 @@ import { apiUrl, LOCAL_STORAGE_TOKEN_NAME } from "./UrlAPI";
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt from "jwt-decode";
+import { truncate } from "fs";
 
 export const AuthContext = createContext();
 
 const UserAPI = ({ children }) => {
   const [authState, dispatch] = useReducer(authReducer, {
     authLoading: false,
-    isAuthenticated: true,
+    isAuthenticated: false,
     userName: null,
     UserRole: null,
   });
