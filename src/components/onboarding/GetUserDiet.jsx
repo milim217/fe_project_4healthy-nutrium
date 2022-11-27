@@ -13,7 +13,7 @@ const GetUserDiet = () => {
       <HeaderUser></HeaderUser>
       <div className="wrapper-quiz_page">
         <div className="wrapper-ProgressBar">
-          <Progress per="5"></Progress>
+          <Progress per="100"></Progress>
         </div>
         <div className="wrapper-title-quiz">
           <p> Hoàn thành!! dưới đây là kế hoạch cho bữa ăn hàng ngày của bạn</p>

@@ -14,7 +14,7 @@ const resultQuiz = () => {
       <HeaderUser></HeaderUser>
       <div className="wrapper-quiz_page">
         <div className="wrapper-ProgressBar">
-          <Progress per="100"></Progress>
+          <Progress per="80"></Progress>
         </div>
         <div className="wrapper-title-quiz">
           <p>Đang xử lý kế hoạch bữa ăn</p>

@@ -17,10 +17,10 @@ import Quiz3 from "../components/onboarding/Quiz3";
 import Quiz4 from "../components/onboarding/Quiz4";
 import Quiz5 from "../components/onboarding/Quiz5";
 import Quiz6 from "../components/onboarding/Quiz6";
-import Quiz7 from "../components/onboarding/Quiz7";
 import summaryInfo from "../components/onboarding/summaryInfo";
 import pageLoadingQuiz from "../components/onboarding/pageLoadingQuiz";
 import GetUserDiet from "../components/onboarding/GetUserDiet";
+import LibaryPage from "../pages/user/libaryPage";
 
 const Routes = () => {
   return (
@@ -80,7 +80,6 @@ const Routes = () => {
       <Route exact path="/onboarding/quiz4" component={Quiz4}></Route>
       <Route exact path="/onboarding/quiz5" component={Quiz5}></Route>
       <Route exact path="/onboarding/quiz6" component={Quiz6}></Route>
-      <Route exact path="/onboarding/quiz7" component={Quiz7}></Route>
       <Route
         exact
         path="/onboarding/summaryInfo"
@@ -101,6 +100,11 @@ const Routes = () => {
         exact
         path="/homeuser"
         component={HomeUser}
+      ></ProtectedRoute>
+      <ProtectedRoute
+        exact
+        path="/libary"
+        component={LibaryPage}
       ></ProtectedRoute>
     </div>
   );

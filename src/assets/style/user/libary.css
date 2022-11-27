@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+
+body {
+  font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
+}
+
+.wrapper-libary {
+  /* background-color: aquamarine; */
+  width: 80%;
+  min-height: 100vh;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+}
+
+.group-card-libaryPage {
+  padding: 20px;
+  /* max-width: 33.3333333%; */
+  /* margin: 20px; */
+}

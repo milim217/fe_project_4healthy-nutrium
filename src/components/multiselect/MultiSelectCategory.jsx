@@ -3,12 +3,12 @@ import { Row, Col } from "antd";
 import { MultiSelect } from "react-multi-select-component";
 
 const options = [
-  { label: "Thịt Heo", value: "Thịt Heo" },
-  { label: "Thịt Bò", value: "Thịt Bò" },
-  { label: "Thịt Gà", value: "Thịt Gà" },
+  { label: "Thịt", value: "Thịt" },
+  { label: "Trứng", value: "Trứng" },
+  { label: "Bánh", value: "Bánh" },
 ];
 
-const MultiSelectMeat = () => {
+const MultiSelectCategory = () => {
   const [selected, setSelected] = useState([]);
   console.log(JSON.stringify(selected));
   let selectOptionFood = [];
@@ -20,6 +20,7 @@ const MultiSelectMeat = () => {
   console.log(selectOptionFood);
   let showChoose;
   showChoose = <div>Bạn đã chọn: {" " + arr + " "} </div>;
+
   return (
     <div>
       {showChoose}
@@ -29,7 +30,7 @@ const MultiSelectMeat = () => {
           options={options}
           value={selected}
           onChange={setSelected}
-          labelledBy="Chọn những loại thịt bạn thích"
+          labelledBy="Chọn những loại thực phẩm bạn thích"
           className="button-opinion-quiz-text"
           shouldToggleOnHover="true"
         />
@@ -38,4 +39,4 @@ const MultiSelectMeat = () => {
   );
 };
 
-export default MultiSelectMeat;
+export default MultiSelectCategory;

@@ -6,7 +6,7 @@ import { Row, Col } from "antd";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
-import MultiSelectMeat from "../multiselect/MultiSelectMeat";
+import MultiSelectCategory from "../multiselect/MultiSelectCategory";
 
 const Quiz1 = () => {
   return (
@@ -14,13 +14,13 @@ const Quiz1 = () => {
       <HeaderUser></HeaderUser>
       <div className="wrapper-quiz_page">
         <div className="wrapper-ProgressBar">
-          <Progress per="75"></Progress>
+          <Progress per="55"></Progress>
         </div>
         <div className="wrapper-title-quiz">
-          <p>Vui lòng chọn loại thịt mà bạn muốn?</p>
+          <p>Vui lòng chọn loại thực phẩm mà bạn muốn?</p>
         </div>
         <div className="wrapper-table-option">
-          <MultiSelectMeat></MultiSelectMeat>
+          <MultiSelectCategory></MultiSelectCategory>
           <Link to="/onboarding/quiz6">
             <Button variant="success" className="button_Link">
               Tiếp tục

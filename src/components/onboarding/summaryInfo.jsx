@@ -20,7 +20,7 @@ const summaryInfo = () => {
           description="lưu thành công tài khoản"
         ></Notification>
         <div className="wrapper-ProgressBar">
-          <Progress per="5"></Progress>
+          <Progress per="45"></Progress>
         </div>
         <div className="wrapper-title-quiz">
           <p>Tóm tắt thông tin</p>
