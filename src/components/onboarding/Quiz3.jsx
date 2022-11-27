@@ -8,7 +8,6 @@ import Progress from "../progress/Progress";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-
 const Quiz3 = () => {
 
   const history = useHistory();

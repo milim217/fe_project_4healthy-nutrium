@@ -24,7 +24,6 @@ const LoginForm = () => {
     event.preventDefault();
     try {
       loginUser(loginForm);
-      
     } catch (error) {
       setAlert({ type: "danger", message: error });
       setTimeout(() => setAlert(null), 5000);

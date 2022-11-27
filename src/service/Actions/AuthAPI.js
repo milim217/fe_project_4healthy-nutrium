@@ -5,7 +5,6 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt from "jwt-decode";
 
-
 export const AuthContext = createContext();
 
 const AuthAPI = ({ children }) => {

@@ -8,6 +8,7 @@ import Progress from "../progress/Progress";
 import FoodAPI from "../../service/Actions/FoodAPI";
 import React, { useEffect, useState } from "react";
 
+
 const GetUserDiet = () => {
 
   const [foods, setFoods] = useState([]);

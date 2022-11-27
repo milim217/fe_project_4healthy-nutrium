@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
 
+
 const Quiz2 = () => {
   const [style, setStyle] = useState("cont");
 

@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import FoodAPI from "../../service/Actions/FoodAPI";
 import UserAPI from "../../service/Actions/UserAPI";
 
+
 const Quiz6 = () => {
 
   const history = useHistory();

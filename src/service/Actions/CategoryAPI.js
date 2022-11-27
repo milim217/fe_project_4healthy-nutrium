@@ -1,5 +1,6 @@
 import AxiosList from "./AxiosList";
 
+
 const CategoryAPI = {
   
   getAll() {

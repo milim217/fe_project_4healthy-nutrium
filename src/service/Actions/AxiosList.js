@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {LOCAL_STORAGE_TOKEN_NAME} from "./UrlAPI";
 
 export const AxiosList =
 {
