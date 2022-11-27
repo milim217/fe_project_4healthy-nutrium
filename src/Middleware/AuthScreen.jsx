@@ -1,7 +1,7 @@
 import React from "react";
 import LoginForm from "../components/form/LoginForm";
 import RegisterForm from "../components/form/RegisterForm";
-import { AuthContext } from "../service/Actions/UserAPI";
+import { AuthContext } from "../service/Actions/AuthAPI";
 import { useContext } from "react";
 import { Redirect } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
@@ -25,7 +25,7 @@ const Auth = ({ authRoute }) => {
     if (UserRole === "ADMIN") {
       return <Redirect to="/admin/dashboard" />;
     } else if (UserRole === "USER") {
-      return <Redirect to="/homeuser" />;
+      return <Redirect to="/user/home" />;
     } else {
       return <Redirect to="/nutrionexpert/information" />;
     }
@@ -33,9 +33,9 @@ const Auth = ({ authRoute }) => {
     body = (
       <>
         {authRoute === "login" && <LoginForm />}
-        {authRoute === "register" && <RegisterForm />}
+        {/* {authRoute === "register" && <RegisterForm />}
         {authRoute === "sendmail" && <SendMailForm />}
-        {authRoute === "resetpassword" && <ResetPasswordForm />}
+        {authRoute === "resetpassword" && <ResetPasswordForm />} */}
       </>
     );
   }

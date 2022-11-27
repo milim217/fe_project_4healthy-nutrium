@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
-import { AuthContext } from "../../service/Actions/UserAPI";
+import { AuthContext } from "../../service/Actions/AuthAPI";
 import AlertMessage from "../alert/AlertMessage";
 
 const LoginForm = () => {
@@ -23,10 +23,8 @@ const LoginForm = () => {
   const login = (event) => {
     event.preventDefault();
     try {
-      const loginData = loginUser(loginForm);
-      if (loginData) {
-        setAlert({ type: "success", message: "Login Data success" });
-      }
+      loginUser(loginForm);
+      
     } catch (error) {
       setAlert({ type: "danger", message: error });
       setTimeout(() => setAlert(null), 5000);

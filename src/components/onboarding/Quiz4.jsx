@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HeaderUser from "../header/HeaderUser";
 import Footers from "../footer/footers";
 import "../../assets/style/user/quizpage.css";
@@ -6,19 +6,59 @@ import { Card, Space, Input, Radio } from "antd";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
+import { useHistory } from "react-router-dom";
+import JobAPI from "../../service/Actions/JobAPI";
 
-const Quiz1 = () => {
-  const [value, setValue] = useState(1);
+const Quiz4 = () => {
+
+  const history = useHistory();
+
+  const [jobs, setJobs] = useState([]);
+  const [value, setValue] = useState(null);
+
+  useEffect(() => {
+    JobAPI.getAll()
+      .then(res => {
+        setJobs(res.data);
+        console.log('data = ' + JSON.stringify(res.data))
+      })
+      .catch(err => {
+
+      })
+  }, []);
+
   const onChange = (e) => {
-    console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
+
+  const submit = (event) => {
+    event.preventDefault();
+
+    let data;
+    try {
+      data = JSON.parse(localStorage.getItem('quiz-data'));
+      data.job = value;
+    } catch (error) {
+      data = {
+        user: null,
+        height: null,
+        weight: null,
+        job: value,
+        categories: null,
+        counts: null
+      }
+    }
+
+    localStorage.setItem('quiz-data', JSON.stringify(data));
+    history.push('/onboarding/quiz5');
+  }
+
   return (
     <>
       <HeaderUser></HeaderUser>
       <div className="wrapper-quiz_page">
         <div className="wrapper-ProgressBar">
-          <Progress per="35"></Progress>
+          <Progress per="50"></Progress>
         </div>
         <div className="wrapper-title-quiz">
           <p>Công việc của bạn là gì?</p>
@@ -26,33 +66,25 @@ const Quiz1 = () => {
         <div className="wrapper-table-option">
           <Radio.Group onChange={onChange} value={value} size="large">
             <Space direction="vertical">
-              <Radio value={1} className="btn-radio-quiz">
-                Nhân viên
-              </Radio>
-              <Radio value={2} className="btn-radio-quiz">
-                Người lao động
-              </Radio>
-              <Radio value={3} className="btn-radio-quiz">
-                Nông dân
-              </Radio>
-              <Radio value={4} className="btn-radio-quiz">
-                More...
-                {value === 4 ? (
-                  <Input
-                    style={{
-                      width: 100,
-                      marginLeft: 10,
-                    }}
-                  />
-                ) : null}
-              </Radio>
+              {
+                jobs ?
+                  (
+                    jobs.map((job) =>
+                      <Radio value={job} className="btn-radio-quiz">
+                        {job.jobName}
+                      </Radio>
+                    )
+                  )
+                  :
+                  (
+                    <h2>No job found</h2>
+                  )
+              }
             </Space>
           </Radio.Group>
-          <Link to="/onboarding/summaryInfo">
-            <Button variant="success" className="button_Link">
-              Tiếp tục
-            </Button>
-          </Link>
+          <Button variant="success" className="button_Link" onClick={submit}>
+            Tiếp tục
+          </Button>
         </div>
       </div>
       <Footers></Footers>
@@ -60,4 +92,4 @@ const Quiz1 = () => {
   );
 };
 
-export default Quiz1;
+export default Quiz4;
