@@ -2,7 +2,7 @@ import React from "react";
 
 const Footers = () => {
   return (
-    <div>
+    <div style={{ backgroundColor: "#001529" }}>
       <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <p className="col-md-4 mb-0">
           <div className="custom-navbar">
@@ -30,7 +30,7 @@ const Footers = () => {
           </li>
           <li className="nav-item">
             <a href="#" className="nav-link px-2">
-              Thử viện
+              Thư viện
             </a>
           </li>
           <li className="nav-item">

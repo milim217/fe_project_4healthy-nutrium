@@ -10,7 +10,7 @@ export const AuthContext = createContext();
 const UserAPI = ({ children }) => {
   const [authState, dispatch] = useReducer(authReducer, {
     authLoading: false,
-    isAuthenticated: false,
+    isAuthenticated: true,
     userName: null,
     UserRole: null,
   });

@@ -6,6 +6,7 @@ import { Row, Col } from "antd";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
+import MultiSelectVegatable from "../multiselect/MultiSelectVegatable";
 
 const Quiz1 = () => {
   return (
@@ -19,62 +20,7 @@ const Quiz1 = () => {
           <p>Vui lòng chọn loại rau mà bạn muốn?</p>
         </div>
         <div className="wrapper-table-option">
-          <Row gutter={[16, 16]}>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon-foodGreen"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon-foodGreen"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon-foodGreen"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon-foodGreen"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon-foodGreen"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon-foodGreen"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon-foodGreen"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon-foodGreen"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon-foodGreen"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-          </Row>
+          <MultiSelectVegatable></MultiSelectVegatable>
           <Link to="/onboarding/pageLoadingQuiz">
             <Button variant="success" className="button_Link">
               Tiếp tục

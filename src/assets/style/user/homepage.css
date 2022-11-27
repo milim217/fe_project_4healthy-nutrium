@@ -52,6 +52,11 @@ body {
   color: white;
 }
 
+.btn-content-head:hover {
+  background-color: #ce3232;
+  color: white;
+}
+
 .wrapper-page-second {
   margin-top: 20px;
   width: 80%;
@@ -166,4 +171,23 @@ body {
 .table_recomendation_wrapper {
   display: inline-block;
   overflow: auto;
+}
+
+.wrapper-about {
+  display: block;
+  padding: 10px 0px 10px 0px;
+}
+
+.about-title {
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.about-detail {
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

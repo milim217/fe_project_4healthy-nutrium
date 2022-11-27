@@ -2,6 +2,7 @@ import React from "react";
 import HomePage from "../pages/user/HomePage";
 import HomeUser from "../pages/user/HomeUser";
 import DashboardAdmin from "../pages/admin/DashboardAdmin";
+import UserPersonalSchedule from "../pages/user/UserPersonalSchedule";
 import ListUser from "../pages/admin/ListUser";
 import NutrionExpertPage from "../pages/nutrion/NutrionExpertPage";
 import userProfile from "../pages/user/userProfile";
@@ -95,6 +96,7 @@ const Routes = () => {
         path="/onboarding/GetUserDiet"
         component={GetUserDiet}
       ></Route>
+      <Route exact path="/schedule" component={UserPersonalSchedule}></Route>
       <ProtectedRoute
         exact
         path="/homeuser"

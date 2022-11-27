@@ -118,6 +118,7 @@ body {
   padding-top: 10px;
   text-align: center;
   font-weight: 900;
+  height: auto;
 }
 
 .button-opinion-quiz-icon-foodGreen {
@@ -129,12 +130,15 @@ body {
   background-color: white;
 }
 
+.dropdown-heading-value {
+  display: flex;
+}
+
 .center-text {
   font-size: 20px;
   text-align: center;
 }
-
-.icon-water {
+.dropdown-heading-value .icon-water {
   justify-content: center;
   align-items: center;
   justify-items: center;
@@ -153,4 +157,7 @@ body {
 
 .padding_20 {
   padding-bottom: 20px;
+}
+.dropdown-multiSelectionChoose {
+  width: 570px;
 }

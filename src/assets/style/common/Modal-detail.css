@@ -1,0 +1,23 @@
+.wrapper-detail-content {
+  display: flex;
+  height: auto;
+  min-width: 80vh;
+}
+
+.wrapper-detail {
+  width: 500px;
+}
+.detail-content {
+  background-color: aqua;
+  margin: 20px;
+}
+.detail-name-content {
+  margin-right: 20px;
+}
+
+.detail-content-wrapper {
+  width: auto;
+  display: flex;
+  padding: 10px;
+  background-color: bisque;
+}

@@ -9,12 +9,16 @@ import Progress from "../progress/Progress";
 import ChartBMI from "../chart/chartBMI";
 import ChartCalo from "../chart/chartCalo";
 import ModalChangeInfoUser_Summary from "../modal/ModalChangeInfoUser_Summary";
-
+import Notification from "../toats/Notification";
 const summaryInfo = () => {
   return (
     <>
       <HeaderUser></HeaderUser>
       <div className="wrapper-quiz_page">
+        <Notification
+          message="lưu thành công"
+          description="lưu thành công tài khoản"
+        ></Notification>
         <div className="wrapper-ProgressBar">
           <Progress per="5"></Progress>
         </div>

@@ -24,8 +24,10 @@ const GetUserDiet = () => {
             <Card title="Bữa Sáng" size="small">
               <Row className="padding_20">
                 <Col span={18} push={6}>
-                  <h5>Food</h5>
-                  About
+                  <div className="wrapper-about">
+                    <h5 className="about-title">Food</h5>
+                    <div className="about-detail">about</div>
+                  </div>
                 </Col>
                 <Col span={6} pull={18}>
                   <Image
@@ -34,10 +36,12 @@ const GetUserDiet = () => {
                   />
                 </Col>
               </Row>
-              <Row className="paddingBottom_20">
+              <Row className="padding_20">
                 <Col span={18} push={6}>
-                  <h5>Food</h5>
-                  About
+                  <div className="wrapper-about">
+                    <h5 className="about-title">Food</h5>
+                    <div className="about-detail">about</div>
+                  </div>
                 </Col>
                 <Col span={6} pull={18}>
                   <Image
@@ -51,8 +55,10 @@ const GetUserDiet = () => {
             <Card title="Bữa Trưa" size="small">
               <Row className="padding_20">
                 <Col span={18} push={6}>
-                  <h5>Food</h5>
-                  About
+                  <div className="wrapper-about">
+                    <h5 className="about-title">Food</h5>
+                    <div className="about-detail">about</div>
+                  </div>
                 </Col>
                 <Col span={6} pull={18}>
                   <Image
@@ -61,10 +67,12 @@ const GetUserDiet = () => {
                   />
                 </Col>
               </Row>
-              <Row className="paddingBottom_20">
+              <Row className="padding_20">
                 <Col span={18} push={6}>
-                  <h5>Food</h5>
-                  About
+                  <div className="wrapper-about">
+                    <h5 className="about-title">Food</h5>
+                    <div className="about-detail">about</div>
+                  </div>
                 </Col>
                 <Col span={6} pull={18}>
                   <Image
@@ -78,8 +86,10 @@ const GetUserDiet = () => {
             <Card title="Bữa Tối" size="small">
               <Row className="padding_20">
                 <Col span={18} push={6}>
-                  <h5>Food</h5>
-                  About
+                  <div className="wrapper-about">
+                    <h5 className="about-title">Food</h5>
+                    <div className="about-detail">about</div>
+                  </div>
                 </Col>
                 <Col span={6} pull={18}>
                   <Image
@@ -88,10 +98,12 @@ const GetUserDiet = () => {
                   />
                 </Col>
               </Row>
-              <Row className="paddingBottom_20">
+              <Row className="padding_20">
                 <Col span={18} push={6}>
-                  <h5>Food</h5>
-                  About
+                  <div className="wrapper-about">
+                    <h5 className="about-title">Food</h5>
+                    <div className="about-detail">about</div>
+                  </div>
                 </Col>
                 <Col span={6} pull={18}>
                   <Image

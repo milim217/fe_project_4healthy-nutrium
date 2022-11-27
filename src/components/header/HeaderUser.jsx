@@ -40,8 +40,8 @@ const HeaderUser = () => {
                   <Nav.Link href="#pricing" className="text-nav-link">
                     Thư viện
                   </Nav.Link>
-                  <Nav.Link href="#pricing" className="text-nav-link">
-                    Chế độ ăn uống của bạn
+                  <Nav.Link href="/schedule" className="text-nav-link">
+                    Kế hoạch ăn uống của bạn
                   </Nav.Link>
                   <Nav.Link href="#pricing" className="text-nav-link">
                     Bài tập thể thao dành cho bạn
