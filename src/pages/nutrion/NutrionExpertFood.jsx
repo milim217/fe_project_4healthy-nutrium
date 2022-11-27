@@ -16,7 +16,7 @@ import SelectionFoods from "../../components/selection/SelectionFoods";
 import SelectionCategories from "../../components/selection/SelectionCategories";
 import SelectionDisplayPer from "../../components/selection/SelectionDisplayPer";
 import SelectionSeasonFood from "../../components/selection/SelectionSeasonFood";
-import AddNewFood from "../../components/Drawer/AddNewFood";
+import AddNewFood from "../../components/drawn/AddNewFood";
 const text = "Bạn có chắc chắn muốn món ăn này khỏi danh sách?";
 
 const NutrionExpertFood = () => {

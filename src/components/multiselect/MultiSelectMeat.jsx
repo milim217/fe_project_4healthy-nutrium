@@ -3,11 +3,12 @@ import { Row, Col } from "antd";
 import { MultiSelect } from "react-multi-select-component";
 
 const options = [
-  { label: "Rau Muống", value: "Rau Muống" },
-  { label: "Rau Cải", value: "Rau Cải" },
-  { label: "Rau đay", value: "Rau đay" },
+  { label: "Thịt Heo", value: "Thịt Heo" },
+  { label: "Thịt Bò", value: "Thịt Bò" },
+  { label: "Thịt Gà", value: "Thịt Gà" },
 ];
-const MultiSelectVegatable = () => {
+
+const MultiSelectMeat = () => {
   const [selected, setSelected] = useState([]);
   console.log(JSON.stringify(selected));
   let selectOptionFood = [];
@@ -22,12 +23,13 @@ const MultiSelectVegatable = () => {
   return (
     <div>
       {showChoose}
+
       <div className="dropdown-multiSelectionChoose">
         <MultiSelect
           options={options}
           value={selected}
           onChange={setSelected}
-          labelledBy="Chọn những loại rau bạn thích"
+          labelledBy="Chọn những loại thịt bạn thích"
           className="button-opinion-quiz-text"
           shouldToggleOnHover="true"
         />
@@ -36,4 +38,4 @@ const MultiSelectVegatable = () => {
   );
 };
 
-export default MultiSelectVegatable;
+export default MultiSelectMeat;

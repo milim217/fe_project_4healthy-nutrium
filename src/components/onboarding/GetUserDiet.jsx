@@ -114,7 +114,7 @@ const GetUserDiet = () => {
               </Row>
             </Card>
           </Space>
-          <Link to="/login">
+          <Link to="/homeuser">
             <Button variant="success" className="button_Link">
               Nhận kế hoạch
             </Button>

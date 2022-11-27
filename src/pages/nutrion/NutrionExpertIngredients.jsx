@@ -17,7 +17,7 @@ import SelectionFoods from "../../components/selection/SelectionFoods";
 import SelectionCategories from "../../components/selection/SelectionCategories";
 import SelectionDisplayPer from "../../components/selection/SelectionDisplayPer";
 import SelectionSeasonFood from "../../components/selection/SelectionSeasonFood";
-import AddNewIngrendient from "../../components/Drawer/AddNewIngrendient";
+import AddNewIngrendient from "../../components/drawn/AddNewIngrendient";
 const text = "Thành phần này sẽ được xoá khỏi danh sách?";
 function NutrionExpertIngredients() {
   const confirm = () => {

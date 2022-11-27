@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal } from "antd";
+import { Button, Modal, Card, Col, Row } from "antd";
 import "../../assets/style/common/Modal-detail.css";
 import { Image } from "antd";
 const ModalDetailFood = () => {
@@ -16,58 +16,145 @@ const ModalDetailFood = () => {
   return (
     <>
       <Button type="primary" onClick={showModal}>
-        Open Modal
+        Xem chi tiết
       </Button>
       <Modal
-        title="Basic Modal"
+        title="Thông tin món ăn của bạn"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        className="modal-detail-food"
+        width="1200px"
       >
         <div className="wrapper-detail">
-          <div className="detail-nameFood">Vegan Meat Sandwich</div>
-          <div className="wrapper-detail-content">
-            <div className="detail-img">
-              <Image
-                width={200}
-                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-              />
-            </div>
-            <div className="detail-content-wrapper">
-              <div className="detail-content">
-                <div className="detail-name-content">
-                  <p>Calories</p>
-                </div>
-                <div className="detail-about-content">
-                  <p>436</p>
-                </div>
-              </div>
-              <div className="detail-content">
-                <div className="detail-name-content">
-                  <p>Crabs</p>
-                </div>
-                <div className="detail-about-content">
-                  <p>51 g</p>
-                </div>
-              </div>
-              <div className="detail-content">
-                <div className="detail-name-content">
-                  <p>Fat</p>
-                </div>
-                <div className="detail-about-content">
-                  <p>11 g</p>
-                </div>
-              </div>
-              <div className="detail-content">
-                <div className="detail-name-content">
-                  <p>Protein</p>
-                </div>
-                <div className="detail-about-content">
-                  <p>37 g</p>
-                </div>
-              </div>
-            </div>
+          <div className="detail-nameFood">
+            <Image
+              width={100}
+              src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            />
+            <h4>Vegan Meat Sandwich</h4>
+          </div>
+
+          <div className="site-card-wrapper">
+            <Row gutter={24} bordered={false}>
+              <Col span={6}>
+                <Card
+                  title="Calories"
+                  bordered={false}
+                  headStyle={{
+                    fontSize: 20,
+                    fontWeight: 1000,
+                    textAlign: "center",
+                  }}
+                >
+                  <p className="content-card-detailFood">436</p>
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card
+                  title="Crabs"
+                  bordered={false}
+                  headStyle={{
+                    fontSize: 20,
+                    fontWeight: 1000,
+                    textAlign: "center",
+                  }}
+                >
+                  <p className="content-card-detailFood"> 51 g</p>
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card
+                  title="Fat"
+                  headStyle={{
+                    fontSize: 20,
+                    fontWeight: 1000,
+                    textAlign: "center",
+                  }}
+                  bordered={false}
+                >
+                  <p className="content-card-detailFood"> 11 g</p>
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card
+                  title="Protein"
+                  headStyle={{
+                    fontSize: 20,
+                    fontWeight: 1000,
+                    textAlign: "center",
+                  }}
+                  bordered={false}
+                >
+                  <p className="content-card-detailFood"> 37 g</p>
+                </Card>
+              </Col>
+            </Row>
+          </div>
+        </div>
+        <div className="wrapper-detail">
+          <div className="detail-nameFood">
+            <Image
+              width={100}
+              src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            />
+            <h4>Vegan Meat Sandwich</h4>
+          </div>
+
+          <div className="site-card-wrapper">
+            <Row gutter={24} bordered={false}>
+              <Col span={6}>
+                <Card
+                  title="Calories"
+                  bordered={false}
+                  headStyle={{
+                    fontSize: 20,
+                    fontWeight: 1000,
+                    textAlign: "center",
+                  }}
+                >
+                  <p className="content-card-detailFood">436</p>
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card
+                  title="Crabs"
+                  bordered={false}
+                  headStyle={{
+                    fontSize: 20,
+                    fontWeight: 1000,
+                    textAlign: "center",
+                  }}
+                >
+                  <p className="content-card-detailFood"> 51 g</p>
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card
+                  title="Fat"
+                  headStyle={{
+                    fontSize: 20,
+                    fontWeight: 1000,
+                    textAlign: "center",
+                  }}
+                  bordered={false}
+                >
+                  <p className="content-card-detailFood"> 11 g</p>
+                </Card>
+              </Col>
+              <Col span={6}>
+                <Card
+                  title="Protein"
+                  headStyle={{
+                    fontSize: 20,
+                    fontWeight: 1000,
+                    textAlign: "center",
+                  }}
+                  bordered={false}
+                >
+                  <p className="content-card-detailFood"> 37 g</p>
+                </Card>
+              </Col>
+            </Row>
           </div>
         </div>
       </Modal>
