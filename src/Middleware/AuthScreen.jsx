@@ -21,14 +21,12 @@ const Auth = ({ authRoute }) => {
         <Spinner animation="border" variant="info" />
       </div>
     );
-  } else if (isAuthenticated) {
-    if (UserRole === "ADMIN") {
-      return <Redirect to="/admin/dashboard" />;
-    } else if (UserRole === "USER") {
-      return <Redirect to="/user/home" />;
-    } else {
-      return <Redirect to="/nutrionexpert/information" />;
-    }
+  } else if (isAuthenticated && UserRole === "ADMIN") {
+    return <Redirect to="/admin/dashboard" />;
+  } else if (isAuthenticated && UserRole === "USER") {
+    return <Redirect to="/homeuser" />;
+  } else if (isAuthenticated && UserRole === "NUTRIENT_EXPERT") {
+    return <Redirect to="/nutrionexpert/information" />;
   } else {
     body = (
       <>
