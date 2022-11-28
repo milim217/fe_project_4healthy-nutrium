@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
-import { AuthContext } from "../../service/Actions/UserAPI";
+import { AuthContext } from "../../service/Actions/AuthAPI";
 import AlertMessage from "../alert/AlertMessage";
 import { DatePicker, Radio } from "antd";
 
