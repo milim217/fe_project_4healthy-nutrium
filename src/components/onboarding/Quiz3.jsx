@@ -4,35 +4,63 @@ import "../../assets/style/user/quizpage.css";
 import { Card, Input, Space } from "antd";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import Progress from "../progress/Progress";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import AlertMessage from "../alert/AlertMessage";
 
 const Quiz3 = () => {
-
   const history = useHistory();
-
+  const [alert, setAlert] = useState(null);
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState(0);
 
+  const minHeight = 50;
+  const maxHeight = 250;
+  const minWeight = 10;
+  const maxWeight = 200;
+
   const onFormChange = (event) => {
-    if (event.target.name == 'height') {
-      setHeight(event.target.value);
+    if (event.target.name == "height") {
+      if (event.target.value < minHeight || event.target.value > maxHeight) {
+        setAlert({
+          type: "danger",
+          message: "Chiều cao phải lớn hơn 50 và bé hơn 250",
+        });
+        setTimeout(() => setAlert(null), 2000);
+      } else {
+        setHeight(event.target.value);
+      }
+    } else {
+      if (event.target.value < minWeight || event.target.value > maxWeight) {
+        setAlert({
+          type: "danger",
+          message: "Cân năng phải lớn hơn 10 và bé hơn 200",
+        });
+        setTimeout(() => setAlert(null), 2000);
+      } else {
+        setWeight(event.target.value);
+      }
     }
-    else {
-      setWeight(event.target.value);
-    }
-  }
+  };
+
+  // const disbale = (event) => {
+  //   event.preventDefault();
+  //   if (event.target.value === null) {
+
+  //   }
+  // }
 
   const submit = (event) => {
     event.preventDefault();
 
     let data;
     try {
-      localStorage.removeItem('quiz-data');
-       data = JSON.parse(localStorage.getItem('quiz-data'));
-       data.height = height;
-       data.weight = weight;
+      localStorage.removeItem("quiz-data");
+      data = JSON.parse(localStorage.getItem("quiz-data"));
+      data.height = height;
+      data.weight = weight;
     } catch (error) {
       data = {
         user: null,
@@ -40,13 +68,13 @@ const Quiz3 = () => {
         weight: weight,
         job: null,
         categories: null,
-        counts: null
-      }
-    }  
+        counts: null,
+      };
+    }
 
-    localStorage.setItem('quiz-data', JSON.stringify(data));
-    history.push('/onboarding/quiz4');
-  }
+    localStorage.setItem("quiz-data", JSON.stringify(data));
+    history.push("/onboarding/quiz4");
+  };
 
   return (
     <>
@@ -60,32 +88,45 @@ const Quiz3 = () => {
         </div>
         <div className="wrapper-table-option">
           <Space direction="vertical" size="middle" style={{ display: "flex" }}>
-            <Card title="Chiều cao của bạn là: " size="small">
-              <Input
-                placeholder="Chiều cao"
-                className="InputText_Quiz"
-                type="number"
-                name="height"
-                required
-                onChange={onFormChange}
-              />
-            </Card>
-            <Card title="Cân nặng của bạn là" size="small">
-              <Input
-                placeholder="Cân nặng"
-                className="InputText_Quiz"
-                type="number"
-                name="weight"
-                required
-                onChange={onFormChange}
-              />
-            </Card>
+            <Form required>
+              <Card title="Chiều cao của bạn là: " size="small">
+                <AlertMessage info={alert} />
+
+                <Input
+                  placeholder="Chiều cao"
+                  className="InputText_Quiz"
+                  type="number"
+                  name="height"
+                  min={50}
+                  max={250}
+                  required
+                  onChange={onFormChange}
+                />
+              </Card>
+              <Card title="Cân nặng của bạn là" size="small">
+                <Input
+                  placeholder="Cân nặng"
+                  className="InputText_Quiz"
+                  type="number"
+                  name="weight"
+                  min={10}
+                  max={200}
+                  required
+                  onChange={onFormChange}
+                />
+              </Card>
+              {/* <Link to="/onboarding/quiz4"> */}
+              <Button
+                variant="success"
+                className="button_Link"
+                onClick={submit}
+                // disabled={disbale}
+              >
+                Tiếp tục
+              </Button>
+              {/* </Link> */}
+            </Form>
           </Space>
-          {/* <Link to="/onboarding/quiz4"> */}
-          <Button variant="success" className="button_Link" onClick={submit}>
-            Tiếp tục
-          </Button>
-          {/* </Link> */}
         </div>
       </div>
       <Footers></Footers>

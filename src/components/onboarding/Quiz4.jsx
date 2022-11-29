@@ -11,7 +11,6 @@ import { useHistory } from "react-router-dom";
 import JobAPI from "../../service/Actions/JobAPI";
 
 const Quiz4 = () => {
-
   const history = useHistory();
 
   const [jobs, setJobs] = useState([]);
@@ -19,13 +18,11 @@ const Quiz4 = () => {
 
   useEffect(() => {
     JobAPI.getAll()
-      .then(res => {
+      .then((res) => {
         setJobs(res.data);
-        console.log('data = ' + JSON.stringify(res.data))
+        console.log("data = " + JSON.stringify(res.data));
       })
-      .catch(err => {
-
-      })
+      .catch((err) => {});
   }, []);
 
   const onChange = (e) => {
@@ -37,7 +34,7 @@ const Quiz4 = () => {
 
     let data;
     try {
-      data = JSON.parse(localStorage.getItem('quiz-data'));
+      data = JSON.parse(localStorage.getItem("quiz-data"));
       data.job = value;
     } catch (error) {
       data = {
@@ -46,13 +43,13 @@ const Quiz4 = () => {
         weight: null,
         job: value,
         categories: null,
-        counts: null
-      }
+        counts: null,
+      };
     }
 
-    localStorage.setItem('quiz-data', JSON.stringify(data));
-    history.push('/onboarding/quiz5');
-  }
+    localStorage.setItem("quiz-data", JSON.stringify(data));
+    history.push("/onboarding/quiz5");
+  };
 
   return (
     <>
@@ -67,20 +64,15 @@ const Quiz4 = () => {
         <div className="wrapper-table-option">
           <Radio.Group onChange={onChange} value={value} size="large">
             <Space direction="vertical">
-              {
-                jobs ?
-                  (
-                    jobs.map((job) =>
-                      <Radio value={job} className="btn-radio-quiz">
-                        {job.jobName}
-                      </Radio>
-                    )
-                  )
-                  :
-                  (
-                    <h2>No job found</h2>
-                  )
-              }
+              {jobs ? (
+                jobs.map((job) => (
+                  <Radio value={job} className="btn-radio-quiz">
+                    {job.jobName}
+                  </Radio>
+                ))
+              ) : (
+                <h2>Bạn vui lòng, quá trình đang thực hiện</h2>
+              )}
             </Space>
           </Radio.Group>
           <Button variant="success" className="button_Link" onClick={submit}>

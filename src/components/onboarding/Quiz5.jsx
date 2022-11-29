@@ -9,22 +9,18 @@ import Progress from "../progress/Progress";
 import CategoryAPI from "../../service/Actions/CategoryAPI";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-
-
+import Form from "react-bootstrap/Form";
 const Quiz5 = () => {
-
   const history = useHistory();
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     CategoryAPI.getAll()
-      .then(res => {
+      .then((res) => {
         setCategories(res.data);
-        console.log('data = ' + JSON.stringify(res.data))
+        console.log("data = " + JSON.stringify(res.data));
       })
-      .catch(err => {
-
-      })
+      .catch((err) => {});
   }, []);
 
   const submit = (event) => {
@@ -32,7 +28,7 @@ const Quiz5 = () => {
 
     let data;
     try {
-      data = JSON.parse(localStorage.getItem('quiz-data'));
+      data = JSON.parse(localStorage.getItem("quiz-data"));
       console.log(1);
       data.categories = categories;
     } catch (error) {
@@ -43,14 +39,14 @@ const Quiz5 = () => {
         weight: null,
         job: null,
         categories: categories,
-        counts: null
-      }
+        counts: null,
+      };
     }
 
     console.log(JSON.stringify(data));
-    localStorage.setItem('quiz-data', JSON.stringify(data));
-    history.push('/onboarding/quiz6');
-  }
+    localStorage.setItem("quiz-data", JSON.stringify(data));
+    history.push("/onboarding/quiz6");
+  };
 
   return (
     <>
@@ -64,83 +60,23 @@ const Quiz5 = () => {
         </div>
         <div className="wrapper-table-option">
           <Row gutter={[16, 16]}>
-            {
-              categories ?
-                (
-                  categories.map((category) =>
-                    <Col span={8}>
-                      <div className="cover-btn-quiz-icon-text">
-                        <div className="button-opinion-quiz-icon"></div>
-                        <div className="button-opinion-quiz-text">{category.categoryName}</div>
-                      </div>
-                    </Col>
-                  )
-                )
-                :
-                (
-                  <h2>Please add new food category</h2>
-                )
-            }
-            {/* <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="cover-btn-quiz-icon-text">
-                <div className="button-opinion-quiz-icon"></div>
-                <div className="button-opinion-quiz-text">Thịt Bò</div>
-              </div>
-            </Col> */}
+            {categories ? (
+              categories.map((category) => (
+                <Col span={8}>
+                  <Form>
+                    <Form.Check
+                      name="group1"
+                      type="checkbox"
+                      id="custom-switch"
+                      label={category.categoryName}
+                      className={"checked"}
+                    ></Form.Check>
+                  </Form>
+                </Col>
+              ))
+            ) : (
+              <h2>Please add new food category</h2>
+            )}
           </Row>
           <Button variant="success" className="button_Link" onClick={submit}>
             Tiếp tục

@@ -1,6 +1,6 @@
 import { Route, Redirect } from "react-router-dom";
 import { useContext } from "react";
-import { AuthContext } from "../service/Actions/UserAPI";
+import { AuthContext } from "../service/Actions/AuthAPI";
 import Spinner from "react-bootstrap/Spinner";
 import ReactDOM from "react-dom";
 

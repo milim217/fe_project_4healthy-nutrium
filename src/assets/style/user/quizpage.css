@@ -119,6 +119,7 @@ body {
   text-align: center;
   font-weight: 900;
   height: auto;
+  width: 100%;
 }
 
 .button-opinion-quiz-icon-foodGreen {
@@ -161,3 +162,22 @@ body {
 .dropdown-multiSelectionChoose {
   width: 570px;
 }
+
+.checked {
+  /* width: 185;
+  height: 100px; */
+  /* background-color: aqua; */
+  font-weight: 600;
+}
+
+input[type="checkbox"] {
+  box-sizing: border-box;
+  /* width: 185px;
+  height: 100px; */
+  /* background-color: aqua; */
+  /* display: none; */
+}
+
+/* .checked:hover {
+  background-color: antiquewhite;
+} */

@@ -1,4 +1,3 @@
-
 import HeaderUser from "../header/HeaderUser";
 import Footers from "../footer/footers";
 import "../../assets/style/user/quizpage.css";
@@ -10,54 +9,74 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import FoodAPI from "../../service/Actions/FoodAPI";
 import UserAPI from "../../service/Actions/UserAPI";
-
+import AlertMessage from "../alert/AlertMessage";
 
 const Quiz6 = () => {
-
   const history = useHistory();
-
+  const [alert, setAlert] = useState(null);
   const [morning, setMorning] = useState(1);
   const [lunch, setLunch] = useState(1);
   const [dinner, setDinner] = useState(1);
 
   const onFormChange = (event) => {
-    if (event.target.name == 'morning') {
-      setMorning(event.target.value);
-    }
-    else if (event.target.name == 'lunch') {
-      setLunch(event.target.value);
-    }
-    else {
+    if (event.target.name == "morning") {
+      if (event.target.value < 1 || event.target.value > 2) {
+        setAlert({
+          type: "danger",
+          message: "Bạn chỉ được nhập tối đa 2 món trong buổi sáng",
+        });
+        setTimeout(() => setAlert(null), 2000);
+      } else {
+        setMorning(event.target.value);
+      }
+    } else if (event.target.name == "lunch") {
+      if (event.target.value < 1 || event.target.value > 4) {
+        setAlert({
+          type: "danger",
+          message: "Bạn chỉ được nhập tối đa 4 món trong buổi trưa",
+        });
+        setTimeout(() => setAlert(null), 2000);
+      } else {
+        setLunch(event.target.value);
+      }
+    } else {
       setDinner(event.target.value);
+      if (event.target.value < 1 || event.target.value > 4) {
+        setAlert({
+          type: "danger",
+          message: "Bạn chỉ được nhập tối đa 4 món trong buổi tối",
+        });
+        setTimeout(() => setAlert(null), 2000);
+      } else {
+        setDinner(event.target.value);
+      }
     }
-  }
+  };
 
   const submit = (event) => {
     event.preventDefault();
 
     let data;
     try {
-      data = JSON.parse(localStorage.getItem('quiz-data'));
+      data = JSON.parse(localStorage.getItem("quiz-data"));
       data.counts = [morning, lunch, dinner];
 
       try {
-        const user = JSON.parse(localStorage.getItem('user'));
-        console.log('user = ' + JSON.stringify(user));
+        const user = JSON.parse(localStorage.getItem("user"));
+        console.log("user = " + JSON.stringify(user));
         // get current user
         UserAPI.getByEmail(user.sub)
-          .then(res => {
+          .then((res) => {
             // data.user = JSON.stringify(res.data);
             data.user = JSON.stringify(res.data);
-            console.log('user new = ' + JSON.stringify(res.data));
+            console.log("user new = " + JSON.stringify(res.data));
           })
-          .catch(err => {
-            console.log('f-user');
+          .catch((err) => {
+            console.log("f-user");
           });
-  
       } catch (error) {
-        history.push('/login');
+        history.push("/login");
       }
-
     } catch (error) {
       data = {
         user: null,
@@ -65,14 +84,12 @@ const Quiz6 = () => {
         weight: null,
         job: null,
         categories: null,
-        counts: [morning, lunch, dinner]
-      }
+        counts: [morning, lunch, dinner],
+      };
     }
 
-    
-
-    console.log('quiz-data = ' + JSON.stringify(data));
-    localStorage.setItem('quiz-data', JSON.stringify(data));
+    console.log("quiz-data = " + JSON.stringify(data));
+    localStorage.setItem("quiz-data", JSON.stringify(data));
 
     // // get diet
     // FoodAPI.getDiet(data)
@@ -82,9 +99,8 @@ const Quiz6 = () => {
     //   .catch(err => {
     //     console.log('f-food');
     //   });
-    history.push('/onboarding/GetUserDiet');
-
-  }
+    history.push("/onboarding/GetUserDiet");
+  };
 
   return (
     <>
@@ -93,14 +109,16 @@ const Quiz6 = () => {
         <div className="wrapper-ProgressBar">
           <Progress per="5"></Progress>
         </div>
+
         <div className="wrapper-title-quiz">
           <p>Số lượng món ăn mà bạn ăn trong bữa Sáng | Trưa | Tối?</p>
         </div>
         <div className="wrapper-table-option">
           <Space direction="vertical" size="middle" style={{ display: "flex" }}>
+            <AlertMessage info={alert} />
             <Card title="Sáng: " size="small">
               <Input
-                placeholder="Nhập số món bạn ăn trong buổi sáng ( 1 - 4 )"
+                placeholder="Nhập số món bạn ăn trong buổi sáng ( 1 - 2 )"
                 className="InputText_Quiz"
                 name="morning"
                 type="number"
