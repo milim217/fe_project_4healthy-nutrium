@@ -22,10 +22,12 @@ const ModalAddNewFoodQuiz5 = () => {
         Thêm loại món ăn khác
       </Button>
       <Modal
-        title="Basic Modal"
+        title="Thêm loại món ăn khác"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        cancelText={"Huỷ"}
+        okText={"Thêm mới"}
       >
         <Form.Label>Thêm loại món của bạn</Form.Label>
         <Form.Control />
