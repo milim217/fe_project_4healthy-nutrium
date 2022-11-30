@@ -12,7 +12,6 @@ const userProfile = () => {
   return (
     <div>
       <HeaderUserHasLog></HeaderUserHasLog>
-      <HeaderLayout title={"Trang người dùng"}></HeaderLayout>
       <SlidebarUser>
         <Breadcrumb
           style={{
@@ -78,10 +77,10 @@ const userProfile = () => {
                   extra={<ChangePassword></ChangePassword>}
                 >
                   <Row gutter={24}>
-                    <Col span={8}>
+                    <Col span={12}>
                       <>
                         <Image
-                          width={300}
+                          width={200}
                           src="https://i.pinimg.com/474x/dd/be/8b/ddbe8b9cb7292f037a8c8e8c62b74d73.jpg"
                           style={{}}
                         />
@@ -91,7 +90,7 @@ const userProfile = () => {
                       </>
                     </Col>
 
-                    <Col span={16}>
+                    <Col span={12}>
                       <div className="information_user__UserProfile">
                         <Row gutter={24}>
                           <Col span={12}>

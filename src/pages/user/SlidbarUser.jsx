@@ -50,7 +50,7 @@ const SlidebarUser = ({ children }) => {
               label: "Hồ Sơ Người Dùng",
             },
             {
-              key: "/login",
+              key: "/home",
               icon: <UploadOutlined />,
               label: "Đăng xuất",
             },

@@ -1,10 +1,9 @@
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
-import ModalDetailFood from "../modal/ModalDetailFood";
 import Button from "react-bootstrap/Button";
+import ModalDetailFood from "../modal/ModalDetailFood";
 import { Col, Row, Slider } from "antd";
-
-function CardGroupFood() {
+function CardGroupIngredient() {
   return (
     <>
       <Row gutter={[24, 24]}>
@@ -15,13 +14,12 @@ function CardGroupFood() {
               src="https://c4.wallpaperflare.com/wallpaper/821/512/1017/peppers-olives-cheese-onions-wallpaper-preview.jpg"
             />
             <Card.Body>
-              <Card.Title>Tên món ăn</Card.Title>
-              <Card.Text>230 Calo trên mỗi 100g</Card.Text>
+              <Card.Title>Tên thành phần</Card.Title>
+              <Card.Text>Thông tin thành phần</Card.Text>
             </Card.Body>
-            <Button variant="warning" href="/detailfood">
+            <Button variant="warning" href="/detailingredient">
               Thông tin thêm
             </Button>
-            {/* <ModalDetailFood></ModalDetailFood> */}
           </Card>
         </Col>
       </Row>
@@ -29,4 +27,4 @@ function CardGroupFood() {
   );
 }
 
-export default CardGroupFood;
+export default CardGroupIngredient;

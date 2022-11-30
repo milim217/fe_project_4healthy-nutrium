@@ -129,9 +129,8 @@ const HomePage = () => (
             </div>
           </div>
         </div>
-        <Footer className="footer">
-          <Footers></Footers>
-        </Footer>
+
+        <Footers></Footers>
       </Content>
     </Layout>
   </>

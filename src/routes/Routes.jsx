@@ -21,6 +21,8 @@ import summaryInfo from "../components/onboarding/summaryInfo";
 import pageLoadingQuiz from "../components/onboarding/pageLoadingQuiz";
 import GetUserDiet from "../components/onboarding/GetUserDiet";
 import LibaryPage from "../pages/user/libaryPage";
+import DetailFood from "../pages/user/DetailFood";
+import DetailIngredient from "../pages/user/DetailIngredient";
 
 const Routes = () => {
   return (
@@ -105,6 +107,16 @@ const Routes = () => {
         exact
         path="/libary"
         component={LibaryPage}
+      ></ProtectedRoute>
+      <ProtectedRoute
+        exact
+        path="/detailfood"
+        component={DetailFood}
+      ></ProtectedRoute>
+      <ProtectedRoute
+        exact
+        path="/detailingredient"
+        component={DetailIngredient}
       ></ProtectedRoute>
     </div>
   );

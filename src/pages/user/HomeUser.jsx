@@ -128,9 +128,7 @@ const HomeUser = () => (
           </Card>
         </div>
       </Content>
-      <Footer className="footer">
-        <Footers></Footers>
-      </Footer>
+      <Footers></Footers>
     </Layout>
   </>
 );

@@ -4,7 +4,7 @@ import { Liquid } from "@ant-design/plots";
 
 const chartSuccess = () => {
   const config = {
-    percent: 0.95,
+    percent: 0.99,
     outline: {
       border: 4,
       distance: 8,

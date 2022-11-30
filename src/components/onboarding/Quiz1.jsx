@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
 
-
 const Quiz1 = () => {
   return (
     <>
@@ -17,7 +16,7 @@ const Quiz1 = () => {
           <Progress per="5"></Progress>
         </div>
         <div className="wrapper-title-quiz">
-          <p>
+          <p style={{ margin: "auto", padding: "auto", width: "80%" }}>
             Chào mừng bạn đến với 4HealthyNutrium. Bạn hãy cung cấp thêm một số
             thông tin về bản thân để chúng tôi có thể đưa ra lộ trình ăn uống
             thích hợp nhất dành cho bạn nhé!

@@ -107,7 +107,7 @@ const Quiz6 = () => {
       <HeaderUser></HeaderUser>
       <div className="wrapper-quiz_page">
         <div className="wrapper-ProgressBar">
-          <Progress per="5"></Progress>
+          <Progress per="95"></Progress>
         </div>
 
         <div className="wrapper-title-quiz">

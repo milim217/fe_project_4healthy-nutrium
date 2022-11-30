@@ -36,18 +36,16 @@ const HeaderUser = () => {
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                  <Link to={"/homeuser"}>
-                    <Nav.Link href="#features" className="text-nav-link">
-                      Trang chủ
-                    </Nav.Link>
-                  </Link>
-                  <Nav.Link href="#pricing" className="text-nav-link">
+                  <Nav.Link href="/homeuser" className="text-nav-link">
+                    Trang chủ
+                  </Nav.Link>
+                  <Nav.Link href="/libary" className="text-nav-link">
                     Thư viện
                   </Nav.Link>
                   <Nav.Link href="/schedule" className="text-nav-link">
                     Kế hoạch ăn uống của bạn
                   </Nav.Link>
-                  <Nav.Link href="#pricing" className="text-nav-link">
+                  <Nav.Link href="/home" className="text-nav-link">
                     Bài tập thể thao dành cho bạn
                   </Nav.Link>
                 </Nav>

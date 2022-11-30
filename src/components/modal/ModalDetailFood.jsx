@@ -23,7 +23,7 @@ const ModalDetailFood = () => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        width="1200px"
+        width="1000px"
       >
         <div className="wrapper-detail">
           <div className="detail-nameFood">

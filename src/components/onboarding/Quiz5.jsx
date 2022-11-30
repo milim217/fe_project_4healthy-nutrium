@@ -10,6 +10,7 @@ import CategoryAPI from "../../service/Actions/CategoryAPI";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+import ModalAddNewFoodQuiz5 from "../modal/ModalAddNewFoodQuiz5";
 const Quiz5 = () => {
   const history = useHistory();
   const [categories, setCategories] = useState([]);
@@ -78,6 +79,9 @@ const Quiz5 = () => {
               <h2>Please add new food category</h2>
             )}
           </Row>
+          <ModalAddNewFoodQuiz5 className="btn-addmore_typeFood">
+            Thêm loại món ăn khác
+          </ModalAddNewFoodQuiz5>
           <Button variant="success" className="button_Link" onClick={submit}>
             Tiếp tục
           </Button>

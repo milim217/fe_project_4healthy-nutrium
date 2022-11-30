@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
 import FoodAPI from "../../service/Actions/FoodAPI";
+import Spinner from "react-bootstrap/Spinner";
 import React, { useEffect, useState } from "react";
 
 const GetUserDiet = () => {
@@ -56,10 +57,14 @@ const GetUserDiet = () => {
       <HeaderUser></HeaderUser>
       <div className="wrapper-quiz_page">
         <div className="wrapper-ProgressBar">
-          <Progress per="5"></Progress>
+          <Progress per="100"></Progress>
         </div>
         <div className="wrapper-title-quiz">
-          <p> Hoàn thành!! dưới đây là kế hoạch cho bữa ăn hàng ngày của bạn</p>
+          <p>
+            {" "}
+            <a style={{ color: "#ff8000" }}>Hoàn thành!!</a> dưới đây là kế
+            hoạch cho bữa ăn hàng ngày của bạn
+          </p>
         </div>
         <div className="wrapper-table-option">
           <Space direction="vertical" size="middle" style={{ display: "flex" }}>
@@ -70,50 +75,69 @@ const GetUserDiet = () => {
               extra={<Button onClick={changeBreakfast}>Đổi món</Button>}
             >
               {foods?.breakfastCalo ? (
-                <Row>Tổng calo cần xấp xỉ {foods.breakfastCalo.toFixed(2)}</Row>
+                <Row>
+                  <div className="CardTitle-Info_Calo">
+                    Tổng calo cần xấp xỉ
+                  </div>
+                  <div className="CardTitle-Info_Number">
+                    {foods.lunchCalo.toFixed(2)}
+                  </div>
+                </Row>
               ) : (
                 <></>
               )}
               {foods.breakfast ? (
                 foods.breakfast[breakfastIndex]?.map((food) => (
                   <Row className="padding_20">
-                    <Col span={8} push={8}>
-                      <h5>{food.foodName}</h5>
-                      <br />
-                      <h5>Calo: {food.calo}</h5>
+                    <Col span={18} push={6}>
+                      <div className="wrapper-food-quantitative">
+                        <h5 className="CardName-food">{food.foodName}</h5>
+                        <h5 className="CardName-quantitative">
+                          Định lượng: <b>50g</b>
+                        </h5>
+                        <h5 className="CardName-caloFood">
+                          Calo: <b> {food.calo}</b>
+                        </h5>
+                      </div>
                     </Col>
-                    <Col span={8} pull={8}>
+                    <Col span={6} pull={18}>
                       <Image
-                        width={100}
+                        width={120}
+                        height={80}
                         src={`http://localhost:8080/food/${food.id}/image`}
                       />
                     </Col>
+                    <Button className="Button-infomation-getuserdiet">
+                      Thông tin dinh dưỡng
+                    </Button>
                   </Row>
                 ))
               ) : (
-                <h2>Đang tải món ăn, xin bạn chờ một chút</h2>
+                <div>
+                  <div className="Messageloading-getUserDiet">
+                    <div className="title-name">
+                      Đang tải món ăn, xin bạn chờ một chút...
+                    </div>
+                    <Spinner animation="border" variant="primary" />
+                  </div>
+                </div>
               )}
-              {/* <Row className="paddingBottom_20">
-                <Col span={18} push={6}>
-                  <h5>Food</h5>
-                  About
-                </Col>
-                <Col span={6} pull={18}>
-                  <Image
-                    width={100}
-                    src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2020/01/24/0/FNK_INSTANT-POT-HUMMUS-H_s4x3.jpg.rend.hgtvcom.616.462.suffix/1579879895817.jpeg"
-                  />
-                </Col>
-              </Row>  */}
             </Card>
             {/* Trưa */}
             <Card
               title="Bữa Trưa"
               size="small"
-              extra={<Button onClick={changeBreakfast}>Đổi món</Button>}
+              extra={<Button onClick={changeLunch}>Đổi món</Button>}
             >
               {foods?.lunchCalo ? (
-                <Row>Tổng calo cần xấp xỉ {foods.lunchCalo.toFixed(2)}</Row>
+                <Row>
+                  <div className="CardTitle-Info_Calo">
+                    Tổng calo cần xấp xỉ
+                  </div>
+                  <div className="CardTitle-Info_Number">
+                    {foods.lunchCalo.toFixed(2)}
+                  </div>
+                </Row>
               ) : (
                 <></>
               )}
@@ -121,41 +145,54 @@ const GetUserDiet = () => {
                 foods.lunch[lunchIndex]?.map((food) => (
                   <Row className="padding_20">
                     <Col span={18} push={6}>
-                      <h5>{food.foodName}</h5>
-                      About
+                      <div className="wrapper-food-quantitative">
+                        <h5 className="CardName-food">{food.foodName}</h5>
+                        <h5 className="CardName-quantitative">
+                          Định lượng: <b>50g</b>
+                        </h5>
+                        <h5 className="CardName-caloFood">
+                          Calo: <b> {food.calo}</b>
+                        </h5>
+                      </div>
                     </Col>
                     <Col span={6} pull={18}>
                       <Image
-                        width={100}
+                        width={120}
+                        height={80}
                         src={`http://localhost:8080/food/${food.id}/image`}
                       />
                     </Col>
+                    <Button className="Button-infomation-getuserdiet">
+                      Thông tin dinh dưỡng
+                    </Button>
                   </Row>
                 ))
               ) : (
-                <h2>Đang tải món ăn, xin bạn chờ một chút</h2>
+                <div>
+                  <div className="Messageloading-getUserDiet">
+                    <div className="title-name">
+                      Đang tải món ăn, xin bạn chờ một chút...
+                    </div>
+                    <Spinner animation="border" variant="primary" />
+                  </div>
+                </div>
               )}
-              {/* <Row className="paddingBottom_20">
-                <Col span={18} push={6}>
-                  <h5>Food</h5>
-                  About
-                </Col>
-                <Col span={6} pull={18}>
-                  <Image
-                    width={100}
-                    src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2020/01/24/0/FNK_INSTANT-POT-HUMMUS-H_s4x3.jpg.rend.hgtvcom.616.462.suffix/1579879895817.jpeg"
-                  />
-                </Col>
-              </Row> */}
             </Card>
             {/* Tối */}
             <Card
               title="Bữa Tối"
               size="small"
-              extra={<Button onClick={changeBreakfast}>Đổi món</Button>}
+              extra={<Button onClick={changeDinner}>Đổi món</Button>}
             >
               {foods?.dinnerCalo ? (
-                <Row>Tổng calo cần xấp xỉ {foods.dinnerCalo.toFixed(2)}</Row>
+                <Row>
+                  <div className="CardTitle-Info_Calo">
+                    Tổng calo cần xấp xỉ
+                  </div>
+                  <div className="CardTitle-Info_Number">
+                    {foods.dinnerCalo.toFixed(2)}
+                  </div>
+                </Row>
               ) : (
                 <></>
               )}
@@ -163,32 +200,38 @@ const GetUserDiet = () => {
                 foods.dinner[dinnerIndex]?.map((food) => (
                   <Row className="padding_20">
                     <Col span={18} push={6}>
-                      <h5>{food.foodName}</h5>
-                      About
+                      <div className="wrapper-food-quantitative">
+                        <h5 className="CardName-food">{food.foodName}</h5>
+                        <h5 className="CardName-quantitative">
+                          Định lượng: <b>50g</b>
+                        </h5>
+                        <h5 className="CardName-caloFood">
+                          Calo: <b> {food.calo}</b>
+                        </h5>
+                      </div>
                     </Col>
                     <Col span={6} pull={18}>
                       <Image
-                        width={100}
+                        width={120}
+                        height={80}
                         src={`http://localhost:8080/food/${food.id}/image`}
                       />
                     </Col>
+                    <Button className="Button-infomation-getuserdiet">
+                      Thông tin dinh dưỡng
+                    </Button>
                   </Row>
                 ))
               ) : (
-                <h2>Đang tải món ăn, xin bạn chờ một chút</h2>
+                <div>
+                  <div className="Messageloading-getUserDiet">
+                    <div className="title-name">
+                      Đang tải món ăn, xin bạn chờ một chút...
+                    </div>
+                    <Spinner animation="border" variant="primary" />
+                  </div>
+                </div>
               )}
-              {/* <Row className="paddingBottom_20">
-                <Col span={18} push={6}>
-                  <h5>Food</h5>
-                  About
-                </Col>
-                <Col span={6} pull={18}>
-                  <Image
-                    width={100}
-                    src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2020/01/24/0/FNK_INSTANT-POT-HUMMUS-H_s4x3.jpg.rend.hgtvcom.616.462.suffix/1579879895817.jpeg"
-                  />
-                </Col>
-              </Row> */}
             </Card>
           </Space>
           {/* <Link to="/login"> */}

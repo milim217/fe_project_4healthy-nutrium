@@ -31,23 +31,23 @@
 }
 
 .Upload_image___userProfile {
-  width: 300px;
-  background-color: blanchedalmond;
+  /* background-color: blanchedalmond; */
   margin: 10px 0px 0px 0px;
 }
 
 .btn_upload_image__UploadmangeFile {
-  width: 300px;
+  width: 200px;
 }
 
 .information_user__UserProfile {
   letter-spacing: 1px;
-  text-align: left;
-  justify-content: center;
-  margin-top: 35px;
+  width: 100%;
+  /* text-align: left; */
+  /* justify-content: center; */
+  /* margin-top: 35px; */
   font-family: "Roboto Condensed", sans-serif;
-  padding-right: 20%;
-  float: right;
+  /* padding-right: 20%; */
+  float: left;
 }
 .information_user__UserProfile .informatione_user_cover__UserProfile {
   font-size: 15px;
