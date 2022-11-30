@@ -25,7 +25,7 @@ const GetUserDiet = () => {
   }, []);
 
   const changeBreakfast = (event) => {
-    if (breakfastIndex < foods.breakfast.length - 1) {
+    if (breakfastIndex < foods.breakfastOptions.length - 1) {
       setBreakfastIndex(breakfastIndex + 1);
     } else {
       setBreakfastIndex(0);
@@ -33,7 +33,7 @@ const GetUserDiet = () => {
   };
 
   const changeLunch = (event) => {
-    if (lunchIndex < foods.lunch.length - 1) {
+    if (lunchIndex < foods.lunchOptions.length - 1) {
       setLunchIndex(lunchIndex + 1);
     } else {
       setLunchIndex(0);
@@ -41,7 +41,7 @@ const GetUserDiet = () => {
   };
 
   const changeDinner = (event) => {
-    if (dinnerIndex < foods.dinner.length - 1) {
+    if (dinnerIndex < foods.dinnerOptions.length - 1) {
       setDinnerIndex(dinnerIndex + 1);
     } else {
       setDinnerIndex(0);
@@ -86,17 +86,15 @@ const GetUserDiet = () => {
               ) : (
                 <></>
               )}
-              {foods.breakfast ? (
-                foods.breakfast[breakfastIndex]?.map((food) => (
+              {foods.breakfastOptions ? (
+                foods.breakfastOptions[breakfastIndex]?.map((foodMass) => (
                   <Row className="padding_20">
                     <Col span={18} push={6}>
                       <div className="wrapper-food-quantitative">
-                        <h5 className="CardName-food">{food.foodName}</h5>
-                        <h5 className="CardName-quantitative">
-                          Định lượng: <b>50g</b>
-                        </h5>
+                        <h5 className="CardName-food">{foodMass.mass} suất {foodMass.food.foodName}</h5>
+                       
                         <h5 className="CardName-caloFood">
-                          Calo: <b> {food.calo}</b>
+                          Calo: <b> {foodMass.food.calo}</b>
                         </h5>
                       </div>
                     </Col>
@@ -104,7 +102,7 @@ const GetUserDiet = () => {
                       <Image
                         width={120}
                         height={80}
-                        src={`http://localhost:8080/food/${food.id}/image`}
+                        src={`http://localhost:8080/food/${foodMass.food.id}/image`}
                       />
                     </Col>
                     <Button className="Button-infomation-getuserdiet">
@@ -141,17 +139,15 @@ const GetUserDiet = () => {
               ) : (
                 <></>
               )}
-              {foods.lunch ? (
-                foods.lunch[lunchIndex]?.map((food) => (
+              {foods.lunchOptions ? (
+                foods.lunchOptions[lunchIndex]?.map((foodMass) => (
                   <Row className="padding_20">
                     <Col span={18} push={6}>
                       <div className="wrapper-food-quantitative">
-                        <h5 className="CardName-food">{food.foodName}</h5>
-                        <h5 className="CardName-quantitative">
-                          Định lượng: <b>50g</b>
-                        </h5>
+                        <h5 className="CardName-food">{foodMass.mass}  suất {foodMass.food.foodName}</h5>
+                      
                         <h5 className="CardName-caloFood">
-                          Calo: <b> {food.calo}</b>
+                          Calo: <b> {foodMass.food.calo}</b>
                         </h5>
                       </div>
                     </Col>
@@ -159,7 +155,7 @@ const GetUserDiet = () => {
                       <Image
                         width={120}
                         height={80}
-                        src={`http://localhost:8080/food/${food.id}/image`}
+                        src={`http://localhost:8080/food/${foodMass.food.id}/image`}
                       />
                     </Col>
                     <Button className="Button-infomation-getuserdiet">
@@ -196,17 +192,15 @@ const GetUserDiet = () => {
               ) : (
                 <></>
               )}
-              {foods.lunch ? (
-                foods.dinner[dinnerIndex]?.map((food) => (
+              {foods.dinnerOptions ? (
+                foods.dinnerOptions[dinnerIndex]?.map((foodMass) => (
                   <Row className="padding_20">
                     <Col span={18} push={6}>
                       <div className="wrapper-food-quantitative">
-                        <h5 className="CardName-food">{food.foodName}</h5>
-                        <h5 className="CardName-quantitative">
-                          Định lượng: <b>50g</b>
-                        </h5>
+                        <h5 className="CardName-food">{foodMass.mass} suất {foodMass.food.foodName}</h5>
+                        
                         <h5 className="CardName-caloFood">
-                          Calo: <b> {food.calo}</b>
+                          Calo: <b> {foodMass.food.calo}</b>
                         </h5>
                       </div>
                     </Col>
@@ -214,7 +208,7 @@ const GetUserDiet = () => {
                       <Image
                         width={120}
                         height={80}
-                        src={`http://localhost:8080/food/${food.id}/image`}
+                        src={`http://localhost:8080/food/${foodMass.food.id}/image`}
                       />
                     </Col>
                     <Button className="Button-infomation-getuserdiet">

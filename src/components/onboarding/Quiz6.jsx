@@ -14,47 +14,76 @@ import AlertMessage from "../alert/AlertMessage";
 const Quiz6 = () => {
   const history = useHistory();
   const [alert, setAlert] = useState(null);
-  const [morning, setMorning] = useState(1);
-  const [lunch, setLunch] = useState(1);
-  const [dinner, setDinner] = useState(1);
+  const [morning, setMorning] = useState(0);
+  const [lunch, setLunch] = useState(0);
+  const [dinner, setDinner] = useState(0);
 
   const onFormChange = (event) => {
     if (event.target.name == "morning") {
-      if (event.target.value < 1 || event.target.value > 2) {
-        setAlert({
-          type: "danger",
-          message: "Bạn chỉ được nhập tối đa 2 món trong buổi sáng",
-        });
-        setTimeout(() => setAlert(null), 2000);
-      } else {
         setMorning(event.target.value);
-      }
     } else if (event.target.name == "lunch") {
-      if (event.target.value < 1 || event.target.value > 4) {
-        setAlert({
-          type: "danger",
-          message: "Bạn chỉ được nhập tối đa 4 món trong buổi trưa",
-        });
-        setTimeout(() => setAlert(null), 2000);
-      } else {
         setLunch(event.target.value);
-      }
     } else {
-      setDinner(event.target.value);
-      if (event.target.value < 1 || event.target.value > 4) {
-        setAlert({
-          type: "danger",
-          message: "Bạn chỉ được nhập tối đa 4 món trong buổi tối",
-        });
-        setTimeout(() => setAlert(null), 2000);
-      } else {
         setDinner(event.target.value);
-      }
     }
   };
 
   const submit = (event) => {
     event.preventDefault();
+
+    if(!morning){
+      setAlert({
+        type: "danger",
+        message: "Vui lòng nhập số món cho bữa sáng",
+      });
+      setTimeout(() => setAlert(null), 2000);
+      return;
+    }
+
+    if(!lunch){
+      setAlert({
+        type: "danger",
+        message: "Vui lòng nhập số món cho bữa trưa",
+      });
+      setTimeout(() => setAlert(null), 2000);
+      return;
+    }
+
+    if(!dinner){
+      setAlert({
+        type: "danger",
+        message: "Vui lòng nhập số món cho bữa tối",
+      });
+      setTimeout(() => setAlert(null), 2000);
+      return;
+    }
+
+    if (morning < 1 || morning > 2) {
+      setAlert({
+        type: "danger",
+        message: "Bạn chỉ được nhập tối đa 2 món trong buổi sáng",
+      });
+      setTimeout(() => setAlert(null), 2000);
+      return;
+    }
+
+    if (lunch < 2 || lunch > 4) {
+      setAlert({
+        type: "danger",
+        message: "Bạn chỉ được nhập tối thiểu 2 món và tối đa 4 món trong buổi trưa",
+      });
+      setTimeout(() => setAlert(null), 2000);
+      return;
+    }
+
+    if (dinner < 2 || dinner > 4) {
+      setAlert({
+        type: "danger",
+        message: "Bạn chỉ được nhập tối thiểu 2 món và tối đa 4 món trong buổi tối",
+      });
+      setTimeout(() => setAlert(null), 2000);
+      return;
+    }
 
     let data;
     try {
@@ -91,14 +120,6 @@ const Quiz6 = () => {
     console.log("quiz-data = " + JSON.stringify(data));
     localStorage.setItem("quiz-data", JSON.stringify(data));
 
-    // // get diet
-    // FoodAPI.getDiet(data)
-    //   .then(res => {
-
-    //   })
-    //   .catch(err => {
-    //     console.log('f-food');
-    //   });
     history.push("/onboarding/GetUserDiet");
   };
 
