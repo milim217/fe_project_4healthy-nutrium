@@ -60,6 +60,7 @@ const Quiz5 = () => {
           <p>Hãy chọn loại thức ăn bạn muốn</p>
         </div>
         <div className="wrapper-table-option">
+          {/* check-box */}
           <Row gutter={[16, 16]}>
             {categories ? (
               categories.map((category) => (
