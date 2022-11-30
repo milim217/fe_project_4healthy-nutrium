@@ -17,7 +17,7 @@ const DetailIngredient = () => {
         <div className="wrapper-Img_sumary">
           <Row>
             <Col span={18} push={6}>
-              <Card title="Tóm tắt dinh dưỡng">
+              <Card title="Tóm tắt các chất dinh dưỡng chính">
                 <Card.Grid style={gridStyle}>
                   <div className="name_SumaryNutrition"> Calories</div>
                   <div className="data_SmaryNutrition"> 120</div>
