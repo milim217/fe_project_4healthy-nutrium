@@ -2,7 +2,7 @@ import React from "react";
 import HeaderUser from "../header/HeaderUser";
 import Footers from "../footer/footers";
 import "../../assets/style/user/quizpage.css";
-import { Card, Space } from "antd";
+import { Card, Space, Image } from "antd";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
@@ -10,6 +10,10 @@ import ChartBMI from "../chart/chartBMI";
 import ChartCalo from "../chart/chartCalo";
 import ModalChangeInfoUser_Summary from "../modal/ModalChangeInfoUser_Summary";
 import Notification from "../toats/Notification";
+import imageCalo from "../../assets/image/Calo_image.png";
+import imageFarina from "../../assets/image/Farina_image.png";
+import imageProtein from "../../assets/image/protein_image.jpg";
+import imageFat from "../../assets/image/Fat_Image.png";
 const summaryInfo = () => {
   return (
     <>
@@ -56,22 +60,38 @@ const summaryInfo = () => {
               </div>
             </Card>
             <Card title="Lượng Calo hàng ngày" size="small">
-              <ChartCalo></ChartCalo>
+              <div className="image_center">
+                <Image width={200} src={imageCalo} />
+              </div>
               <p className="center-text">
                 <p>Được khuyến nghị</p>2000 KCal
               </p>
             </Card>
             <Card title="Lượng chất bột đường hàng ngày" size="small">
+              <div className="image_center">
+                <Image width={200} src={imageFarina} />
+              </div>
               <p className="center-text">
                 <p>Được khuyến nghị</p>170 G
               </p>
             </Card>
             <Card title="Lượng đạm hàng ngày" size="small">
+              <div className="image_center">
+                <Image
+                  width={200}
+                  src={imageProtein}
+                  style={{ margin: "auto" }}
+                />
+              </div>
+
               <p className="center-text">
                 <p>Được khuyến nghị</p>50 G
               </p>
             </Card>
             <Card title="Lượng chất béo hàng ngày" size="small">
+              <div className="image_center">
+                <Image width={200} src={imageFat} />
+              </div>
               <p className="center-text">
                 <p>Được khuyến nghị</p>35 G
               </p>

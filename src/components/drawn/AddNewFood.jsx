@@ -13,22 +13,57 @@ import {
 } from "antd";
 import Ingredient_SelectionRender from "../selectionRender/Ingredient_SelectionRender";
 import UploadImageFile from "../../components/upload-image-avt/uploadImageFile";
+import AlertMessage from "../alert/AlertMessage";
+
 const { Option } = Select;
 
 const AddNewFood = () => {
   const [open, setOpen] = useState(false);
+  const [foodName, setfoodName] = useState(0);
+  const [recipe, setRecipe] = useState(null);
+  const [fat, setFat] = useState(null);
+  const [protein, setProtein] = useState(null);
+  const [carbon, setCarbon] = useState(null);
+  const [Calories, setCalories] = useState(null);
+  const [Fiber, setFiber] = useState(null);
+  const [alert, setAlert] = useState(null);
+  const [disableBtn, setDisableBtn] = useState(true);
+
   const showDrawer = () => {
     setOpen(true);
   };
   const onClose = () => {
     setOpen(false);
   };
+
+  const onFormChange = (event) => {
+    event.preventDefault();
+    if (event.target.name == "foodName") {
+      if (event.target.value == "") {
+        console.log("Không được để trống");
+        setAlert({
+          type: "danger",
+          message: "Không được để trống tên ",
+        });
+        setDisableBtn(true);
+      } else {
+        setfoodName(event.target.value);
+        setDisableBtn(false);
+      }
+    }
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+  };
+  console.log(foodName);
+
   return (
     <>
       <div
         style={{
           paddingTop: "20px",
-          margin: "2px 0px 0px 100px",
+          margin: "2px 0px 0px 300px",
           float: "right",
         }}
       >
@@ -52,17 +87,18 @@ const AddNewFood = () => {
         extra={
           <Space>
             <Button onClick={onClose}>Về Danh Sách</Button>
-            <Button onClick={onClose} type="primary">
+            <Button onClick={onSubmit} type="primary" disabled={disableBtn}>
               Thêm
             </Button>
           </Space>
         }
       >
+        <AlertMessage info={alert} />
         <Form layout="vertical" hideRequiredMark>
           <Row gutter={16}>
             <Col span={24}>
               <Form.Item
-                name="food_name"
+                name="foodName"
                 label="Tên món ăn:"
                 rules={[
                   {
@@ -71,7 +107,11 @@ const AddNewFood = () => {
                   },
                 ]}
               >
-                <Input placeholder="Tên món ăn" />
+                <Input
+                  name="foodName"
+                  placeholder="Tên món ăn"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -87,7 +127,10 @@ const AddNewFood = () => {
                   },
                 ]}
               >
-                <Input placeholder="Bạn hãy nhập công thức để có thể nấu ra món ăn này" />
+                <Input
+                  placeholder="Bạn hãy nhập công thức để có thể nấu ra món ăn này"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -103,7 +146,10 @@ const AddNewFood = () => {
                   },
                 ]}
               >
-                <Input placeholder="Hàm lượng chất béo món ăn chứa" />
+                <Input
+                  placeholder="Hàm lượng chất béo món ăn chứa"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -136,7 +182,7 @@ const AddNewFood = () => {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="Carbon"
+                name="Calories"
                 label="Hàm lượng Calories:"
                 rules={[
                   {
@@ -182,10 +228,7 @@ const AddNewFood = () => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item
-                name="Chọn hình ảnh món ăn"
-                label="Chọn hình ảnh món ăn:"
-              >
+              <Form.Item name="ImageFood" label="Chọn hình ảnh món ăn:">
                 <UploadImageFile></UploadImageFile>
               </Form.Item>
             </Col>

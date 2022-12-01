@@ -173,11 +173,11 @@ const EditFood = () => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="Chọn bữa ăn" label="Bữa ăn của món ăn này:">
+              <Form.Item name="Chọn bữa ăn" label="Món ăn này ăn vào bữa:">
                 <Select>
-                  <Option value="Sáng">Sáng</Option>
-                  <Option value="Trưa">Trưa</Option>
-                  <Option value="Tối">Tối</Option>
+                  <Option value="Sáng">Bữa Sáng</Option>
+                  <Option value="Trưa">Bữa Trưa</Option>
+                  <Option value="Tối">Bữa Tối</Option>
                 </Select>
               </Form.Item>
             </Col>

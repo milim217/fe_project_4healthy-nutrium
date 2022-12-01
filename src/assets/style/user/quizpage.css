@@ -230,3 +230,9 @@ input[type="checkbox"] {
   padding-top: 5px;
   padding-right: 10px;
 }
+
+.image_center {
+  margin: auto;
+  width: 38%;
+  padding-bottom: 30px;
+}
