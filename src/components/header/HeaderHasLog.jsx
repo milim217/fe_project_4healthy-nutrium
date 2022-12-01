@@ -9,7 +9,7 @@ import { Avatar } from "antd";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
 
-const HeaderUser = () => {
+const HeaderHasLog = () => {
   return (
     <>
       <div className="header-wrapper">
@@ -77,4 +77,4 @@ const HeaderUser = () => {
   );
 };
 
-export default HeaderUser;
+export default HeaderHasLog;

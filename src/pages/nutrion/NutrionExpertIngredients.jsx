@@ -15,13 +15,15 @@ import HeaderLayout from "../../components/header/HeaderAdmin";
 import "../../assets/style/admin/style.css";
 import SelectionFoods from "../../components/selection/SelectionFoods";
 import SelectionCategories from "../../components/selection/SelectionCategories";
-import SelectionDisplayPer from "../../components/selection/SelectionDisplayPer";
+import SelectionMealtypeFoodFilter from "../../components/selection/SelectionMealtypeFoodFilter";
 import SelectionSeasonFood from "../../components/selection/SelectionSeasonFood";
 import AddNewIngrendient from "../../components/drawn/AddNewIngrendient";
-const text = "Thành phần này sẽ được xoá khỏi danh sách?";
+import SelectionSeasonIngredient from "../../components/selection/SelectionSeasonIngredient";
+import EditIngrdient from "../../components/drawn/EditIngrdient";
+const text = "Nguyên Liệu này sẽ được xoá khỏi danh sách?";
 function NutrionExpertIngredients() {
   const confirm = () => {
-    message.info("Đã xoá thành phần thành công");
+    message.info("Đã xoá Nguyên Liệu thành công");
   };
   const columns = [
     {
@@ -30,7 +32,28 @@ function NutrionExpertIngredients() {
       justify: "center",
     },
     {
-      title: "Tên thành phần",
+      title: "Tên Nguyên Liệu",
+      dataIndex: "ingredient_name",
+      justify: "center",
+    },
+    {
+      title: "Ảnh Nguyên liệu",
+      dataIndex: "",
+      render: () => (
+        <Image
+          width={80}
+          src="https://i.pinimg.com/474x/dd/be/8b/ddbe8b9cb7292f037a8c8e8c62b74d73.jpg"
+        />
+      ),
+      justify: "center",
+    },
+    {
+      title: "Giới hạn tối thiểu",
+      dataIndex: "ingredient_name",
+      justify: "center",
+    },
+    {
+      title: "Giới hạn tối đa",
       dataIndex: "ingredient_name",
       justify: "center",
     },
@@ -60,26 +83,87 @@ function NutrionExpertIngredients() {
       justify: "center",
     },
     {
-      title: "Vitamin",
+      title: "Water",
+      dataIndex: "calories",
+      justify: "center",
+    },
+    {
+      title: "Fiber",
+      dataIndex: "calories",
+      justify: "center",
+    },
+    {
+      title: "Ash",
+      dataIndex: "calories",
+      justify: "center",
+    },
+    {
+      title: "Canxi",
+      dataIndex: "calories",
+      justify: "center",
+    },
+    {
+      title: "Iron",
+      dataIndex: "calories",
+      justify: "center",
+    },
+    {
+      title: "Zinc",
+      dataIndex: "calories",
+      justify: "center",
+    },
+    {
+      title: "Vitamin C",
       dataIndex: "vitamin",
       justify: "center",
     },
     {
-      title: "Micronutrium",
-      dataIndex: "micronutrium",
+      title: "Vitamin B1",
+      dataIndex: "vitamin",
+      justify: "center",
+    },
+    {
+      title: "Vitamin B2",
+      dataIndex: "vitamin",
+      justify: "center",
+    },
+    {
+      title: "Vitamin B3",
+      dataIndex: "vitamin",
+      justify: "center",
+    },
+    {
+      title: "Vitamin B6A",
+      dataIndex: "vitamin",
+      justify: "center",
+    },
+    {
+      title: "Vitamin D",
+      dataIndex: "vitamin",
+      justify: "center",
+    },
+    {
+      title: "Vitamin B12",
+      dataIndex: "vitamin",
+      justify: "center",
+    },
+    {
+      title: "Vitamin A",
+      dataIndex: "vitamin",
+      justify: "center",
+    },
+    {
+      title: "Vitamin A_rae",
+      dataIndex: "vitamin",
       justify: "center",
     },
 
     {
-      title: "Chỉnh sửa thành phần",
-      render: () => (
-        <Button type="primary" onClick={() => showModal()}>
-          Chỉnh sửa
-        </Button>
-      ),
+      title: "Chỉnh sửa Nguyên Liệu",
+      render: () => <EditIngrdient></EditIngrdient>,
     },
     {
-      title: "Xoá thành phần",
+      title: "Xoá Nguyên Liệu",
       dataIndex: "",
       key: "x",
       render: () => (
@@ -88,7 +172,7 @@ function NutrionExpertIngredients() {
             placement="bottomRight"
             title={text}
             onConfirm={confirm}
-            okText="Xoá thành phần"
+            okText="Xoá Nguyên Liệu"
             cancelText="Huỷ hành động"
           >
             <Button>Xoá</Button>
@@ -103,7 +187,6 @@ function NutrionExpertIngredients() {
   for (let i = 0; i < 100; i++) {
     data.push({
       id: `id ${i}`,
-      ingredient_name: `ingredient_name ${i}`,
       key: i,
       seasson_id: `seasson_id ${i}`,
       fat: `fat ${i}`,
@@ -144,7 +227,7 @@ function NutrionExpertIngredients() {
         <Breadcrumb.Item>
           <a href="">Trang chuyên gia dinh dưỡng</a>
         </Breadcrumb.Item>
-        <Breadcrumb.Item>Danh sách thành phần</Breadcrumb.Item>
+        <Breadcrumb.Item>Danh sách Nguyên Liệu</Breadcrumb.Item>
       </Breadcrumb>
       <div className="wrapper__listUser">
         <div className="add_new_user__listUser">
@@ -152,12 +235,16 @@ function NutrionExpertIngredients() {
         </div>
         <div className="search_user___listUser">
           <Search
-            placeholder="Nhập tên thành phần bạn cần phải tìm"
+            placeholder="Nhập tên Nguyên Liệu bạn cần phải tìm"
             allowClear
             enterButton="Tìm Kiếm"
             size="large"
             onSearch={onSearch}
           />
+        </div>
+        Lọc theo mùa
+        <div style={{ paddingTop: 0 }}>
+          <SelectionSeasonIngredient></SelectionSeasonIngredient>
         </div>
       </div>
 
@@ -166,18 +253,14 @@ function NutrionExpertIngredients() {
         columns={columns}
         dataSource={data}
         scroll={{
-          x: 1200,
-          y: 580,
+          x: 3700,
+          y: 500,
+        }}
+        expandable={{
+          columnWidth: "auto",
+          columnTitle: "auto",
         }}
       />
-      <Modal
-        title="Chỉnh sửa và cập nhật thành phần"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        Chỉnh sửa thành phần
-      </Modal>
     </div>
   );
 }

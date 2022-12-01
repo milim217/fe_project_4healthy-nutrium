@@ -9,13 +9,14 @@ import {
   Input,
   Row,
   Select,
+  Image,
   Space,
 } from "antd";
 import Ingredient_SelectionRender from "../selectionRender/Ingredient_SelectionRender";
 import UploadImageFile from "../../components/upload-image-avt/uploadImageFile";
 const { Option } = Select;
 
-const AddNewFood = () => {
+const EditFood = () => {
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
@@ -25,19 +26,9 @@ const AddNewFood = () => {
   };
   return (
     <>
-      <div
-        style={{
-          paddingTop: "20px",
-          margin: "2px 0px 0px 100px",
-          float: "right",
-        }}
-      >
-        <Button
-          type="primary"
-          onClick={showDrawer}
-          icon={<PlusOutlined className="plus_add_button" />}
-        >
-          Thêm món ăn
+      <div>
+        <Button type="primary" onClick={showDrawer}>
+          Sửa
         </Button>
       </div>
 
@@ -60,7 +51,20 @@ const AddNewFood = () => {
       >
         <Form layout="vertical" hideRequiredMark>
           <Row gutter={16}>
-            <Col span={24}>
+            <Col span={12}>
+              <Image
+                width={300}
+                height={250}
+                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              />
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="Sửa hình ảnh món ăn mới"
+                label="Sửa hình ảnh món ăn mới:"
+              >
+                <UploadImageFile></UploadImageFile>
+              </Form.Item>
               <Form.Item
                 name="food_name"
                 label="Tên món ăn:"
@@ -73,10 +77,6 @@ const AddNewFood = () => {
               >
                 <Input placeholder="Tên món ăn" />
               </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={24}>
-            <Col span={24}>
               <Form.Item
                 name="recipe"
                 label="Công thức nấu món này là:"
@@ -183,14 +183,6 @@ const AddNewFood = () => {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="Chọn hình ảnh món ăn"
-                label="Chọn hình ảnh món ăn:"
-              >
-                <UploadImageFile></UploadImageFile>
-              </Form.Item>
-            </Col>
-            <Col span={24}>
-              <Form.Item
                 name="Carbon"
                 label="Thành phần trong món ăn này"
                 rules={[
@@ -210,4 +202,4 @@ const AddNewFood = () => {
   );
 };
 
-export default AddNewFood;
+export default EditFood;

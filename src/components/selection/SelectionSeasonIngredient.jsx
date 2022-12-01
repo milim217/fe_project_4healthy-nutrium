@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { Select } from "antd";
 
-function SelectionCategories() {
+function SelectionSeasonIngredient() {
   const [placement, SetPlacement] = useState("bottomLeft");
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
   return (
     <>
-      <div>Lọc theo loại món ăn</div>
       <Select
         defaultValue="Xuân"
         style={{
@@ -38,4 +37,4 @@ function SelectionCategories() {
   );
 }
 
-export default SelectionCategories;
+export default SelectionSeasonIngredient;

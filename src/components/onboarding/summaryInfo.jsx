@@ -32,13 +32,13 @@ const summaryInfo = () => {
               size="small"
               extra={
                 <ModalChangeInfoUser_Summary
-                  age="20"
+                  age="Bác Sĩ"
                   kg="175"
                   cm="7"
                 ></ModalChangeInfoUser_Summary>
               }
             >
-              <p>20 tuổi</p>
+              <p>Bác Sĩ</p>
               <p>175 chiều cao (cm) </p>
               <p>77 cân nặng (kg)</p>
             </Card>
@@ -49,16 +49,31 @@ const summaryInfo = () => {
             <Card title="Lượng nước nạp vào" size="small">
               <div className="icon-water">
                 <div className="center-icon" />
-                <p className="center-text">3.1 L nước</p>
+                <p className="center-text">2L nước</p>
                 <p className="center-text">
-                  Lượng nước nạp vào được khuyến nghị cho bạn
+                  Lượng nước ít nhận một ngày của bạn cần cho cơ thể
                 </p>
               </div>
             </Card>
             <Card title="Lượng Calo hàng ngày" size="small">
               <ChartCalo></ChartCalo>
               <p className="center-text">
-                <p>Được khuyến nghị</p>1500 - 1600 Cal
+                <p>Được khuyến nghị</p>2000 KCal
+              </p>
+            </Card>
+            <Card title="Lượng chất bột đường hàng ngày" size="small">
+              <p className="center-text">
+                <p>Được khuyến nghị</p>170 G
+              </p>
+            </Card>
+            <Card title="Lượng đạm hàng ngày" size="small">
+              <p className="center-text">
+                <p>Được khuyến nghị</p>50 G
+              </p>
+            </Card>
+            <Card title="Lượng chất béo hàng ngày" size="small">
+              <p className="center-text">
+                <p>Được khuyến nghị</p>35 G
               </p>
             </Card>
           </Space>

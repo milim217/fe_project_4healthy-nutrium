@@ -3,21 +3,35 @@ import { Select } from "antd";
 
 function SelectionFoods() {
   const [placement, SetPlacement] = useState("bottomLeft");
-  const placementChange = (e) => {
-    SetPlacement(e.target.value);
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
   };
   return (
     <>
-      <div className="title_filter">Foods Types:</div>
+      <div>Lọc theo nguyên liệu</div>
       <Select
-        defaultValue="All food types"
-        style={{ width: 120 }}
-        dropdownMatchSelectWidth={false}
-        placement={placement}
+        defaultValue="Xuân"
+        style={{
+          width: 300,
+        }}
+        onChange={handleChange}
         options={[
-          { value: "food 1" },
-          { value: "food 2" },
-          { value: "food 3" },
+          {
+            value: "Xuân",
+            label: "Xuân",
+          },
+          {
+            value: "Hạ",
+            label: "Lucy",
+          },
+          {
+            value: "Thu",
+            label: "Thu",
+          },
+          {
+            value: "Đông",
+            label: "Đông",
+          },
         ]}
       />
     </>

@@ -3,21 +3,35 @@ import { Select } from "antd";
 
 function SelectionSeasonFood() {
   const [placement, SetPlacement] = useState("bottomLeft");
-  const placementChange = (e) => {
-    SetPlacement(e.target.value);
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
   };
   return (
     <>
-      <div className="title_filter">Sort by:</div>
+      <div> Lọc theo mùa</div>
       <Select
-        defaultValue="Fillter by seasson"
-        style={{ width: 120 }}
-        dropdownMatchSelectWidth={false}
-        placement={placement}
+        defaultValue="Xuân"
+        style={{
+          width: 300,
+        }}
+        onChange={handleChange}
         options={[
-          { value: "seasson 1" },
-          { value: "seasson 2" },
-          { value: "seasson 3" },
+          {
+            value: "Xuân",
+            label: "Xuân",
+          },
+          {
+            value: "Hạ",
+            label: "Lucy",
+          },
+          {
+            value: "Thu",
+            label: "Thu",
+          },
+          {
+            value: "Đông",
+            label: "Đông",
+          },
         ]}
       />
     </>

@@ -57,12 +57,40 @@ const HomeUser = () => (
                 </p>
               </Card.Grid>
               <Card.Grid style={gridStyle}>
+                Công việc của bạn là
+                <p>
+                  <b style={{ color: "#ff8000", fontSize: "30px" }}>Bác Sĩ</b>{" "}
+                </p>
+              </Card.Grid>
+              <Card.Grid style={gridStyle}>
                 Lượng calo cần tiêu thụ trên ngày
                 <p>
-                  <b style={{ color: "#ff8000", fontSize: "30px" }}>
-                    1500 - 1600
-                  </b>{" "}
-                  Cal
+                  <b style={{ color: "#ff8000", fontSize: "30px" }}>2000</b> cal
+                </p>
+              </Card.Grid>
+              <Card.Grid style={gridStyle}>
+                Lượng chất bột đường hàng ngày
+                <p>
+                  <b style={{ color: "#ff8000", fontSize: "30px" }}>170 </b> g
+                </p>
+              </Card.Grid>
+              <Card.Grid style={gridStyle}>
+                Lượng đạm hàng ngày
+                <p>
+                  <b style={{ color: "#ff8000", fontSize: "30px" }}>170</b> g
+                </p>
+              </Card.Grid>
+              <Card.Grid style={gridStyle}>
+                Lượng chất béo hàng ngày
+                <p>
+                  <b style={{ color: "#ff8000", fontSize: "30px" }}>50</b> g
+                </p>
+              </Card.Grid>
+              <Card.Grid style={gridStyle}>
+                Lượng nước nên uống hàng ngày
+                <p>
+                  <b style={{ color: "#ff8000", fontSize: "30px" }}>2</b> lít
+                  Nước
                 </p>
               </Card.Grid>
             </Card>

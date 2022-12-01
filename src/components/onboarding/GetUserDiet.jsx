@@ -80,7 +80,7 @@ const GetUserDiet = () => {
                     Tổng calo cần xấp xỉ
                   </div>
                   <div className="CardTitle-Info_Number">
-                    {foods.lunchCalo.toFixed(2)}
+                    {foods.breakfastCalo.toFixed(2)}
                   </div>
                 </Row>
               ) : (
@@ -91,8 +91,10 @@ const GetUserDiet = () => {
                   <Row className="padding_20">
                     <Col span={18} push={6}>
                       <div className="wrapper-food-quantitative">
-                        <h5 className="CardName-food">{foodMass.mass} suất {foodMass.food.foodName}</h5>
-                       
+                        <h5 className="CardName-food">
+                          {foodMass.mass} suất {foodMass.food.foodName}
+                        </h5>
+
                         <h5 className="CardName-caloFood">
                           Calo: <b> {foodMass.food.calo}</b>
                         </h5>
@@ -144,8 +146,10 @@ const GetUserDiet = () => {
                   <Row className="padding_20">
                     <Col span={18} push={6}>
                       <div className="wrapper-food-quantitative">
-                        <h5 className="CardName-food">{foodMass.mass}  suất {foodMass.food.foodName}</h5>
-                      
+                        <h5 className="CardName-food">
+                          {foodMass.mass} suất {foodMass.food.foodName}
+                        </h5>
+
                         <h5 className="CardName-caloFood">
                           Calo: <b> {foodMass.food.calo}</b>
                         </h5>
@@ -197,8 +201,10 @@ const GetUserDiet = () => {
                   <Row className="padding_20">
                     <Col span={18} push={6}>
                       <div className="wrapper-food-quantitative">
-                        <h5 className="CardName-food">{foodMass.mass} suất {foodMass.food.foodName}</h5>
-                        
+                        <h5 className="CardName-food">
+                          {foodMass.mass} suất {foodMass.food.foodName}
+                        </h5>
+
                         <h5 className="CardName-caloFood">
                           Calo: <b> {foodMass.food.calo}</b>
                         </h5>

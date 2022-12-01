@@ -14,9 +14,11 @@ import {
 import "../../assets/style/admin/style.css";
 import SelectionFoods from "../../components/selection/SelectionFoods";
 import SelectionCategories from "../../components/selection/SelectionCategories";
-import SelectionDisplayPer from "../../components/selection/SelectionDisplayPer";
+import SelectionMealtypeFoodFilter from "../../components/selection/SelectionMealtypeFoodFilter";
 import SelectionSeasonFood from "../../components/selection/SelectionSeasonFood";
 import AddNewFood from "../../components/drawn/AddNewFood";
+import Ingredient_SelectionRenderInListFood from "../../components/selectionRender/Ingredient_SelectionRenderInListFood";
+import EditFood from "../../components/drawn/EditFood";
 const text = "Bạn có chắc chắn muốn món ăn này khỏi danh sách?";
 
 const NutrionExpertFood = () => {
@@ -52,9 +54,15 @@ const NutrionExpertFood = () => {
       justify: "center",
     },
     {
+      title: "Bữa Ăn",
+      dataIndex: "age",
+      key: "age",
+      width: 150,
+    },
+    {
       title: "Mùa",
       dataIndex: "seasson_id",
-      justify: "center",
+      width: 150,
     },
     {
       title: "Công thức",
@@ -84,11 +92,7 @@ const NutrionExpertFood = () => {
 
     {
       title: "Chỉnh sửa món ăn",
-      render: () => (
-        <Button type="primary" onClick={() => showModal()}>
-          Chỉnh sửa
-        </Button>
-      ),
+      render: () => <EditFood></EditFood>,
     },
     {
       title: "Xoá món ăn",
@@ -111,6 +115,7 @@ const NutrionExpertFood = () => {
     },
   ];
 
+  // Dữ liệu giả cho danh sách
   const data = [];
   for (let i = 0; i < 100; i++) {
     data.push({
@@ -140,7 +145,7 @@ const NutrionExpertFood = () => {
     setIsModalVisible(false);
   };
 
-  // Tìm kiếm người dùng
+  // Tìm kiếm Food
   const { Search } = Input;
   const onSearch = (value) => console.log(value);
   return (
@@ -159,15 +164,36 @@ const NutrionExpertFood = () => {
         <Breadcrumb.Item>Danh sách món ăn</Breadcrumb.Item>
       </Breadcrumb>
       <div className="wrapper__listUser">
-        <div className="add_new_user__listUser">
-          <AddNewFood></AddNewFood>
+        {/* Thêm món ăn */}
+        {/* Filter */}
+        <div
+          style={{
+            padding: "10px 10px 10px 10px",
+            margin: 10,
+            display: "flex",
+          }}
+        >
+          {/* Nhập tìm kiếm món ăn qua nguyên liệu nhập vào */}
+          <div className="display_block">
+            <Ingredient_SelectionRenderInListFood></Ingredient_SelectionRenderInListFood>
+          </div>
+          {/* Lọc theo loại */}
+          <div className="display_block">
+            <SelectionCategories />
+          </div>
+          {/* Lọc theo kiểu bữa */}
+          <div className="display_block">
+            <SelectionMealtypeFoodFilter />
+          </div>
+          {/* Lọc theo mùa món ăn */}
+          <div className="display_block">
+            <SelectionSeasonFood></SelectionSeasonFood>
+          </div>
+          {/* Thêm món ăn mới vào danh sách */}
+          <div className="display_block">
+            <AddNewFood></AddNewFood>
+          </div>
         </div>
-        <Space>
-          <SelectionFoods />
-          <SelectionCategories />
-          <SelectionSeasonFood />
-          <SelectionDisplayPer />
-        </Space>
         <div className="search_user___listUser">
           <Search
             placeholder="Nhập tên món ăn cần tìm"
@@ -185,17 +211,9 @@ const NutrionExpertFood = () => {
         dataSource={data}
         scroll={{
           x: 1200,
-          y: 580,
+          y: 500,
         }}
       />
-      <Modal
-        title="Chỉnh sửa và cập nhật món ăn"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        Chỉnh sửa món ăn
-      </Modal>
     </div>
   );
 };

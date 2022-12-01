@@ -8,13 +8,14 @@ import {
   Form,
   Input,
   Row,
+  Image,
   Select,
   Space,
 } from "antd";
 import UploadImageFileIngredient from "../upload-image-avt/UploadImageFileIngredient";
 const { Option } = Select;
 
-const AddNewIngrendient = () => {
+const EditIngrdient = () => {
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
@@ -24,15 +25,11 @@ const AddNewIngrendient = () => {
   };
   return (
     <>
-      <Button
-        type="primary"
-        onClick={showDrawer}
-        icon={<PlusOutlined className="plus_add_button" />}
-      >
-        Thêm thành phần mới vào danh sách
+      <Button type="primary" onClick={showDrawer}>
+        Sửa
       </Button>
       <Drawer
-        title="Thêm thành phần mới vào danh sách"
+        title="Sửa nguyên liệu vào danh sách"
         width={720}
         onClose={onClose}
         open={open}
@@ -51,6 +48,13 @@ const AddNewIngrendient = () => {
         <Form layout="vertical" hideRequiredMark>
           <Row gutter={16}>
             <Col span={12}>
+              <Image
+                width={300}
+                height={250}
+                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              />
+            </Col>
+            <Col span={12}>
               <Form.Item
                 name="ingredient_name"
                 label="Tên thành phần:"
@@ -63,12 +67,7 @@ const AddNewIngrendient = () => {
               >
                 <Input placeholder="Tên thành phần" />
               </Form.Item>
-            </Col>{" "}
-            <Col span={12}>
-              <Form.Item
-                name="Chọn hình ảnh nguyên liệu"
-                label="Chọn hình ảnh nguyên liệu:"
-              >
+              <Form.Item name="Chọn hình ảnh nguyên liệu" label="Sửa hình ảnh">
                 <UploadImageFileIngredient></UploadImageFileIngredient>
               </Form.Item>
             </Col>
@@ -422,4 +421,4 @@ const AddNewIngrendient = () => {
   );
 };
 
-export default AddNewIngrendient;
+export default EditIngrdient;

@@ -14,12 +14,12 @@ import HeaderLayout from "../../components/header/HeaderAdmin";
 import AddNewUser from "../../components/drawn/AddNewUser";
 import "../../assets/style/admin/style.css";
 import Slidebar from "./SlidebarAdmin";
+import ModalDeleteListUser from "../../components/modal/ModalDeleteListUser";
+import ModalViewInfomationUser from "../../components/modal/ModalViewInfomationUser";
+import imageUserOfListUser from "../../assets/image/Img_User.png";
 const text = "Bạn có chắc chắn muốn xoá tài khoản này?";
 
 const ListUser = () => {
-  const confirm = () => {
-    message.info("Đã xoá tài khoản thành công");
-  };
   const columns = [
     {
       title: "Tên người dùng",
@@ -31,10 +31,7 @@ const ListUser = () => {
       dataIndex: "",
       render: () => (
         <>
-          <Image
-            width={80}
-            src="https://i.pinimg.com/474x/dd/be/8b/ddbe8b9cb7292f037a8c8e8c62b74d73.jpg"
-          />
+          <Image width={50} src={imageUserOfListUser} />
         </>
       ),
     },
@@ -44,7 +41,27 @@ const ListUser = () => {
       justify: "center",
     },
     {
+      title: "Địa chỉ",
+      dataIndex: "role",
+      justify: "center",
+    },
+    {
+      title: "Ngày sinh",
+      dataIndex: "role",
+      justify: "center",
+    },
+    {
+      title: "Số điện thoại",
+      dataIndex: "role",
+      justify: "center",
+    },
+    {
       title: "Vai trò",
+      dataIndex: "role",
+      justify: "center",
+    },
+    {
+      title: "Thông tin khác",
       dataIndex: "role",
       justify: "center",
     },
@@ -52,15 +69,16 @@ const ListUser = () => {
       title: "Trạng thái",
       dataIndex: "status",
       justify: "center",
-      render: () => <Tag color="green">Đã kích hoạt </Tag>,
+      render: () => (
+        <>
+          <Tag color="red">Đã vô hiệu hoá tài khoản </Tag>
+          {/* <Tag color="green">Đã kích hoạt </Tag> */}
+        </>
+      ),
     },
     {
       title: "Thông tin người dùng",
-      render: () => (
-        <Button type="primary" onClick={() => showModal()}>
-          Xem thông tin
-        </Button>
-      ),
+      render: () => <ModalViewInfomationUser></ModalViewInfomationUser>,
     },
     {
       title: "Hành động",
@@ -68,29 +86,13 @@ const ListUser = () => {
       key: "x",
       render: () => (
         <>
-          <Popconfirm
-            placement="left"
-            title={text}
-            onConfirm={confirm}
-            okText="Xoá tài khoản"
-            cancelText="Huỷ hành động"
-          >
-            <Button>Xoá Tài Khoản</Button>
-          </Popconfirm>
+          <ModalDeleteListUser></ModalDeleteListUser>
         </>
       ),
       justify: "center",
     },
   ];
 
-  const data2 = [
-    {
-      name: `name 1`,
-      key: 1,
-      email: `admin$1@gmail.com`,
-      role: `role number 1`,
-    },
-  ];
   const data = [];
   for (let i = 0; i < 5; i++) {
     data.push({
@@ -100,19 +102,6 @@ const ListUser = () => {
       role: `role number ${i}`,
     });
   }
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
 
   // Tìm kiếm người dùng
   const { Search } = Input;
@@ -154,19 +143,9 @@ const ListUser = () => {
           columns={columns}
           dataSource={data}
           scroll={{
-            x: 600,
+            x: 1200,
           }}
         />
-        <Modal
-          title="Thông tin tài khoản"
-          visible={isModalVisible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <p>Tên người dùng:</p>
-          <p>Email: </p>
-          <p>Địa chỉ: </p>
-        </Modal>
       </Slidebar>
     </div>
   );

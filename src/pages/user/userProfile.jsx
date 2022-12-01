@@ -2,7 +2,6 @@ import React from "react";
 import { Card, Space, Button, Form, Input, Row, Col, Image } from "antd";
 import HeaderLayout from "../../components/header/HeaderAdmin";
 import ChangePassword from "../../components/form/ChangePassword";
-import UploadImageFile from "../../components/upload-image-avt/uploadImageFile";
 import { Breadcrumb } from "antd";
 import HeaderUserHasLog from "../../components/header/HeaderHasLog";
 import Footers from "../../components/footer/footers";
@@ -47,7 +46,10 @@ const userProfile = () => {
                           <Input placeholder="input placeholder" />
                         </Form.Item>
                         <Form.Item label="Ngày sinh của bạn">
-                          <Input placeholder="input placeholder" />
+                          <Input
+                            placeholder="input placeholder"
+                            disabled={true}
+                          />
                         </Form.Item>
                         <Form.Item label="Giới tính">
                           <Input placeholder="input placeholder" />
@@ -55,7 +57,10 @@ const userProfile = () => {
                       </Col>
                       <Col span={12}>
                         <Form.Item label="Email của bạn">
-                          <Input placeholder="input placeholder" />
+                          <Input
+                            placeholder="input placeholder"
+                            disabled={true}
+                          />
                         </Form.Item>
                         <Form.Item label="Số điện thoại của bạn:">
                           <Input placeholder="input placeholder" />
@@ -80,13 +85,10 @@ const userProfile = () => {
                     <Col span={12}>
                       <>
                         <Image
-                          width={200}
+                          width={280}
                           src="https://i.pinimg.com/474x/dd/be/8b/ddbe8b9cb7292f037a8c8e8c62b74d73.jpg"
                           style={{}}
                         />
-                        <div className="Upload_image___userProfile">
-                          <UploadImageFile></UploadImageFile>
-                        </div>
                       </>
                     </Col>
 

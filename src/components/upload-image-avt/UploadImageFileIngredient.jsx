@@ -18,14 +18,11 @@ const props = {
     }
   },
 };
-const UploadImageFile = () => (
+const UploadImageFileIngredient = () => (
   <Upload {...props}>
-    <Button
-      icon={<UploadOutlined />}
-      style={{ padding: "0px 105px 0px 105px" }}
-    >
-      Tải ảnh món
+    <Button icon={<UploadOutlined />} style={{ padding: "0px 15px 0px 15px" }}>
+      Tải ảnh nguyên liệu
     </Button>
   </Upload>
 );
-export default UploadImageFile;
+export default UploadImageFileIngredient;

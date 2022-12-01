@@ -23,8 +23,12 @@ function ModalChangeInfoUser_Summary(props) {
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Tuổi</Form.Label>
-            <Form.Control type="text" placeholder="Tuổi:" value={props.age} />
+            <Form.Label>Công việc</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Công việc:"
+              value={props.age}
+            />
             <Form.Label>Chiều cao</Form.Label>
             <Form.Control
               type="text"
