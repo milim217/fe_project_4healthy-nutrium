@@ -11,16 +11,89 @@ import {
   Select,
   Space,
 } from "antd";
+import AlertMessage from "../alert/AlertMessage";
 const { Option } = Select;
-
 const AddNewUser = () => {
+  const [NameAccount, setNameAccount] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [address, setAddress] = useState(null);
+  const [dateTime, setDateTime] = useState(null);
   const [open, setOpen] = useState(false);
+  const [alert, setAlert] = useState(null);
+  const [disableBtn, setDisableBtn] = useState(true);
   const showDrawer = () => {
     setOpen(true);
   };
   const onClose = () => {
     setOpen(false);
   };
+
+  const onFormChange = (event) => {
+    event.preventDefault();
+    if (event.target.name == "NameAccount") {
+      if (event.target.value == "") {
+        setAlert({
+          type: "danger",
+          message: "Không được để trống tên người dùng ",
+        });
+        setDisableBtn(true);
+      } else {
+        setNameAccount(event.target.value);
+        setDisableBtn(false);
+      }
+    }
+    if (event.target.name == "email") {
+      if (event.target.value == "") {
+        setAlert({
+          type: "danger",
+          message: "Không được để trống Email ",
+        });
+        setDisableBtn(true);
+      } else {
+        setEmail(event.target.value);
+        setDisableBtn(false);
+      }
+    }
+    if (event.target.name == "password") {
+      if (event.target.value == "") {
+        setAlert({
+          type: "danger",
+          message: "Không được để trống Password ",
+        });
+        setDisableBtn(true);
+      } else {
+        setPassword(event.target.value);
+        setDisableBtn(false);
+      }
+    }
+    if (event.target.name == "phoneNumber") {
+      if (event.target.value == "") {
+        setAlert({
+          type: "danger",
+          message: "Không được để trống số điện thoại ",
+        });
+        setDisableBtn(true);
+      } else {
+        setPhoneNumber(event.target.value);
+        setDisableBtn(false);
+      }
+    }
+    if (event.target.name == "address") {
+      if (event.target.value == "") {
+        setAlert({
+          type: "danger",
+          message: "Không được để trống địa chỉ ",
+        });
+        setDisableBtn(true);
+      } else {
+        setAddress(event.target.value);
+        setDisableBtn(false);
+      }
+    }
+  };
+
   return (
     <>
       <Button
@@ -41,12 +114,13 @@ const AddNewUser = () => {
         extra={
           <Space>
             <Button onClick={onClose}>Về Danh Sách</Button>
-            <Button onClick={onClose} type="primary">
+            <Button onClick={onClose} type="primary" disabled={disableBtn}>
               Xác nhận
             </Button>
           </Space>
         }
       >
+        <AlertMessage info={alert} />
         <Form layout="vertical" hideRequiredMark>
           <Row gutter={16}>
             <Col span={12}>
@@ -60,7 +134,11 @@ const AddNewUser = () => {
                   },
                 ]}
               >
-                <Input placeholder="Nhập tên của chuyên gia dinh dưỡng ở đây" />
+                <Input
+                  name="NameAccount"
+                  placeholder="Nhập tên của chuyên gia dinh dưỡng ở đây"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -74,7 +152,11 @@ const AddNewUser = () => {
                   },
                 ]}
               >
-                <Input placeholder="Nhập Email" />
+                <Input
+                  name="email"
+                  placeholder="Nhập Email"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
             <Col span={24}>
@@ -88,7 +170,11 @@ const AddNewUser = () => {
                   },
                 ]}
               >
-                <Input placeholder="Nhập mật khẩu của bạn" />
+                <Input
+                  name="password"
+                  placeholder="Nhập mật khẩu của bạn"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -121,7 +207,11 @@ const AddNewUser = () => {
                   },
                 ]}
               >
-                <Input placeholder="Nhập Số điện thoại" />
+                <Input
+                  name="phoneNumber"
+                  placeholder="Nhập Số điện thoại"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -137,7 +227,11 @@ const AddNewUser = () => {
                   },
                 ]}
               >
-                <Input placeholder="Nhập thông tin địa chỉ ở đây" />
+                <Input
+                  placeholder="Nhập thông tin địa chỉ ở đây"
+                  name="address"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
             <Col span={24}>
