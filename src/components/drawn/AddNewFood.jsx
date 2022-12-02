@@ -19,14 +19,14 @@ const { Option } = Select;
 
 const AddNewFood = () => {
   const [open, setOpen] = useState(false);
-  const [foodName, setfoodName] = useState(0);
-  const [recipe, setRecipe] = useState(0);
-  const [fat, setFat] = useState(0);
-  const [protein, setProtein] = useState(0);
-  const [carbon, setCarbon] = useState(0);
-  const [Calories, setCalories] = useState(0);
-  const [Fiber, setFiber] = useState(0);
-  const [alert, setAlert] = useState(0);
+  const [foodName, setfoodName] = useState(null);
+  const [recipe, setRecipe] = useState(null);
+  const [fat, setFat] = useState(null);
+  const [protein, setProtein] = useState(null);
+  const [carbon, setCarbon] = useState(null);
+  const [Calories, setCalories] = useState(null);
+  const [Fiber, setFiber] = useState(null);
+  const [alert, setAlert] = useState(null);
   const [disableBtn, setDisableBtn] = useState(true);
 
   const showDrawer = () => {
@@ -134,14 +134,13 @@ const AddNewFood = () => {
   const onSubmit = (event) => {
     event.preventDefault();
   };
-  console.log(foodName);
 
   return (
     <>
       <div
         style={{
-          paddingTop: "20px",
-          float: "right",
+          paddingTop: "22px",
+          paddingLeft: "10px",
         }}
       >
         <Button

@@ -14,15 +14,125 @@ import {
 } from "antd";
 import Ingredient_SelectionRender from "../selectionRender/Ingredient_SelectionRender";
 import UploadImageFile from "../../components/upload-image-avt/uploadImageFile";
-const { Option } = Select;
+import AlertMessage from "../alert/AlertMessage";
 
 const EditFood = () => {
   const [open, setOpen] = useState(false);
+  const { Option } = Select;
+  const [foodName, setfoodName] = useState(null);
+  const [recipe, setRecipe] = useState(null);
+  const [fat, setFat] = useState(null);
+  const [protein, setProtein] = useState(null);
+  const [carbon, setCarbon] = useState(null);
+  const [Calories, setCalories] = useState(null);
+  const [Fiber, setFiber] = useState(null);
+  const [alert, setAlert] = useState(null);
+  const [disableBtn, setDisableBtn] = useState(true);
   const showDrawer = () => {
     setOpen(true);
   };
   const onClose = () => {
     setOpen(false);
+  };
+
+  const onFormChange = (event) => {
+    event.preventDefault();
+    if (event.target.name == "foodName") {
+      if (event.target.value == "") {
+        console.log("Không được để trống");
+        setAlert({
+          type: "danger",
+          message: "Không được để trống tên ",
+        });
+        setTimeout(() => setAlert(null), 2000);
+        setDisableBtn(true);
+      } else {
+        setfoodName(event.target.value);
+        setDisableBtn(false);
+      }
+    }
+    if (event.target.name == "recipe") {
+      if (event.target.value == "") {
+        setAlert({
+          type: "danger",
+          message: "Không được để trống công thức ",
+        });
+        setTimeout(() => setAlert(null), 2000);
+        setDisableBtn(true);
+      } else {
+        setRecipe(event.target.value);
+        setDisableBtn(false);
+      }
+    }
+    if (event.target.name == "fat") {
+      if (event.target.value == "") {
+        setAlert({
+          type: "danger",
+          message: "Không được để trống chất béo ",
+        });
+        setTimeout(() => setAlert(null), 2000);
+        setDisableBtn(true);
+      } else {
+        setFat(event.target.value);
+        setDisableBtn(false);
+      }
+    }
+    if (event.target.name == "Protein") {
+      if (event.target.value == "") {
+        setAlert({
+          type: "danger",
+          message: "Không được để trống chất Protein ",
+        });
+        setTimeout(() => setAlert(null), 2000);
+        setDisableBtn(true);
+      } else {
+        setProtein(event.target.value);
+        setDisableBtn(false);
+      }
+    }
+    if (event.target.name == "Carbon") {
+      if (event.target.value == "") {
+        setAlert({
+          type: "danger",
+          message: "Không được để trống chất Carbon ",
+        });
+        setTimeout(() => setAlert(null), 2000);
+        setDisableBtn(true);
+      } else {
+        setCarbon(event.target.value);
+        setDisableBtn(false);
+      }
+    }
+    if (event.target.name == "Calories") {
+      if (event.target.value == "") {
+        setAlert({
+          type: "danger",
+          message: "Không được để trống Calories ",
+        });
+        setTimeout(() => setAlert(null), 2000);
+        setDisableBtn(true);
+      } else {
+        setCalories(event.target.value);
+        setDisableBtn(false);
+      }
+    }
+    if (event.target.name == "Fiber") {
+      if (event.target.value == "") {
+        setAlert({
+          type: "danger",
+          message: "Không được để trống Fiber ",
+        });
+        setTimeout(() => setAlert(null), 2000);
+        setDisableBtn(true);
+      } else {
+        setFiber(event.target.value);
+        setDisableBtn(false);
+      }
+    }
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
   };
   return (
     <>
@@ -43,12 +153,13 @@ const EditFood = () => {
         extra={
           <Space>
             <Button onClick={onClose}>Về Danh Sách</Button>
-            <Button onClick={onClose} type="primary">
+            <Button onClick={onSubmit} type="primary" disabled={disableBtn}>
               Thêm
             </Button>
           </Space>
         }
       >
+        <AlertMessage info={alert} />
         <Form layout="vertical" hideRequiredMark>
           <Row gutter={16}>
             <Col span={12}>
@@ -66,7 +177,6 @@ const EditFood = () => {
                 <UploadImageFile></UploadImageFile>
               </Form.Item>
               <Form.Item
-                name="food_name"
                 label="Tên món ăn:"
                 rules={[
                   {
@@ -75,10 +185,13 @@ const EditFood = () => {
                   },
                 ]}
               >
-                <Input placeholder="Tên món ăn" />
+                <Input
+                  name="foodName"
+                  placeholder="Tên món ăn"
+                  onChange={onFormChange}
+                />
               </Form.Item>
               <Form.Item
-                name="recipe"
                 label="Công thức nấu món này là:"
                 rules={[
                   {
@@ -87,14 +200,17 @@ const EditFood = () => {
                   },
                 ]}
               >
-                <Input placeholder="Bạn hãy nhập công thức để có thể nấu ra món ăn này" />
+                <Input
+                  name="recipe"
+                  placeholder="Bạn hãy nhập công thức để có thể nấu ra món ăn này"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={24}>
             <Col span={12}>
               <Form.Item
-                name="fat"
                 label="Hàm lượng chất béo:"
                 rules={[
                   {
@@ -103,12 +219,15 @@ const EditFood = () => {
                   },
                 ]}
               >
-                <Input placeholder="Hàm lượng chất béo món ăn chứa" />
+                <Input
+                  name="fat"
+                  placeholder="Hàm lượng chất béo món ăn chứa"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                name="Protein"
                 label="Hàm lượng Protein:"
                 rules={[
                   {
@@ -117,12 +236,15 @@ const EditFood = () => {
                   },
                 ]}
               >
-                <Input placeholder="Hàm lượng chất Protein món ăn chứa" />
+                <Input
+                  name="Protein"
+                  placeholder="Hàm lượng chất Protein món ăn chứa"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                name="Carbon"
                 label="Hàm lượng Carbon:"
                 rules={[
                   {
@@ -131,12 +253,15 @@ const EditFood = () => {
                   },
                 ]}
               >
-                <Input placeholder="Hàm lượng chất Carbon món ăn chứa" />
+                <Input
+                  name="Carbon"
+                  placeholder="Hàm lượng chất Carbon món ăn chứa"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                name="Carbon"
                 label="Hàm lượng Calories:"
                 rules={[
                   {
@@ -145,26 +270,33 @@ const EditFood = () => {
                   },
                 ]}
               >
-                <Input placeholder="Hàm lượng chất Calories món ăn chứa" />
+                <Input
+                  name="Calories"
+                  placeholder="Hàm lượng chất Calories món ăn chứa"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
-                name="Fiber"
                 label="Hàm lượng  Fiber:"
                 rules={[
                   {
                     required: true,
-                    message: "Calories chưa nhập",
+                    message: "Fiber chưa nhập",
                   },
                 ]}
               >
-                <Input placeholder="Hàm lượng chất Calories món ăn chứa" />
+                <Input
+                  name="Fiber"
+                  placeholder="Hàm lượng chất Fiber món ăn chứa"
+                  onChange={onFormChange}
+                />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item name="Chọn mùa" label="Mùa của món ăn này:">
-                <Select>
+                <Select defaultValue="Xuân">
                   <Option value="Xuân">Xuân</Option>
                   <Option value="Hạ">Hạ</Option>
                   <Option value="Thu">Thu</Option>
@@ -174,7 +306,7 @@ const EditFood = () => {
             </Col>
             <Col span={12}>
               <Form.Item name="Chọn bữa ăn" label="Món ăn này ăn vào bữa:">
-                <Select>
+                <Select defaultValue="Sáng">
                   <Option value="Sáng">Bữa Sáng</Option>
                   <Option value="Trưa">Bữa Trưa</Option>
                   <Option value="Tối">Bữa Tối</Option>
@@ -183,7 +315,7 @@ const EditFood = () => {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="Carbon"
+                name="ingredient"
                 label="Thành phần trong món ăn này"
                 rules={[
                   {
