@@ -141,7 +141,6 @@ const AddNewFood = () => {
       <div
         style={{
           paddingTop: "20px",
-          margin: "2px 0px 0px 300px",
           float: "right",
         }}
       >
