@@ -23,20 +23,6 @@ const Quiz1 = () => {
           </p>
         </div>
         <div className="wrapper-table-option">
-          {/* <Space direction="vertical" size="middle" style={{ display: "flex" }}>
-            <Card title="Card" size="small">
-              <p>Card content</p>
-              <p>Card content</p>
-            </Card>
-            <Card title="Card" size="small">
-              <p>Card content</p>
-              <p>Card content</p>
-            </Card>
-            <Card title="Card" size="small">
-              <p>Card content</p>
-              <p>Card content</p>
-            </Card>
-          </Space> */}
           <Link to="/onboarding/quiz2">
             <Button variant="success" className="button_Link">
               Tiếp tục
