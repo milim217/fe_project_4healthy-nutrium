@@ -7,14 +7,19 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
 import { useHistory } from "react-router-dom";
-
 import JobAPI from "../../service/Actions/JobAPI";
+import Spinner from "react-bootstrap/Spinner";
+import AlertMessage from "../alert/AlertMessage";
+import { Row, Col } from "antd";
+import ModalAddNewFoodQuiz5 from "../modal/ModalAddNewFoodQuiz5";
+
 
 const Quiz4 = () => {
   const history = useHistory();
 
   const [jobs, setJobs] = useState([]);
-  const [value, setValue] = useState(null);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     JobAPI.getAll()
@@ -22,26 +27,34 @@ const Quiz4 = () => {
         setJobs(res.data);
         console.log("data = " + JSON.stringify(res.data));
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, []);
 
   const onChange = (e) => {
-    setValue(e.target.value);
+    setSelectedJob(e.target.value);
   };
 
   const submit = (event) => {
     event.preventDefault();
 
+    if (selectedJob === null) {
+      setAlert({
+        type: "danger",
+        message: "Vui lòng chọn công việc của bạn",
+      });
+      return;
+    }
+
     let data;
     try {
       data = JSON.parse(localStorage.getItem("quiz-data"));
-      data.job = value;
+      data.job = selectedJob;
     } catch (error) {
       data = {
         user: null,
         height: null,
         weight: null,
-        job: value,
+        job: selectedJob,
         categories: null,
         counts: null,
       };
@@ -60,10 +73,13 @@ const Quiz4 = () => {
         </div>
         <div className="wrapper-title-quiz">
           <p>Công việc của bạn là gì?</p>
+          <AlertMessage info={alert} />
         </div>
         <div className="wrapper-table-option">
-          <Radio.Group onChange={onChange} value={value} size="large">
-            <Space direction="vertical">
+
+          {/* check-box */}
+          <Row gutter={[16, 16]}>
+            <Radio.Group onChange={onChange} value={selectedJob} size="large">
               {jobs ? (
                 jobs.map((job) => (
                   <Radio value={job} className="btn-radio-quiz">
@@ -71,10 +87,10 @@ const Quiz4 = () => {
                   </Radio>
                 ))
               ) : (
-                <h2>Bạn vui lòng, quá trình đang thực hiện</h2>
+                <><Spinner animation="border" variant="primary" /></>
               )}
-            </Space>
-          </Radio.Group>
+            </Radio.Group>
+          </Row>
           <Button variant="success" className="button_Link" onClick={submit}>
             Tiếp tục
           </Button>

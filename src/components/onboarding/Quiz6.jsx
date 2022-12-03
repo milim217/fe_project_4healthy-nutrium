@@ -17,6 +17,7 @@ const Quiz6 = () => {
   const [morning, setMorning] = useState(0);
   const [lunch, setLunch] = useState(0);
   const [dinner, setDinner] = useState(0);
+  const [user, setUser] = useState(null);
 
   const onFormChange = (event) => {
     if (event.target.name == "morning") {
@@ -28,8 +29,8 @@ const Quiz6 = () => {
     }
   };
 
-  const submit = (event) => {
-    event.preventDefault();
+  const checkInput = () => {
+    let check = true;
 
     if(!morning){
       setAlert({
@@ -37,7 +38,7 @@ const Quiz6 = () => {
         message: "Vui lòng nhập số món cho bữa sáng",
       });
       setTimeout(() => setAlert(null), 2000);
-      return;
+      check = false;
     }
 
     if(!lunch){
@@ -46,7 +47,7 @@ const Quiz6 = () => {
         message: "Vui lòng nhập số món cho bữa trưa",
       });
       setTimeout(() => setAlert(null), 2000);
-      return;
+      check = false;
     }
 
     if(!dinner){
@@ -55,7 +56,7 @@ const Quiz6 = () => {
         message: "Vui lòng nhập số món cho bữa tối",
       });
       setTimeout(() => setAlert(null), 2000);
-      return;
+      check = false;
     }
 
     if (morning < 1 || morning > 2) {
@@ -64,7 +65,7 @@ const Quiz6 = () => {
         message: "Bạn chỉ được nhập tối đa 2 món trong buổi sáng",
       });
       setTimeout(() => setAlert(null), 2000);
-      return;
+      check = false;
     }
 
     if (lunch < 2 || lunch > 4) {
@@ -73,7 +74,7 @@ const Quiz6 = () => {
         message: "Bạn chỉ được nhập tối thiểu 2 món và tối đa 4 món trong buổi trưa",
       });
       setTimeout(() => setAlert(null), 2000);
-      return;
+      check = false;
     }
 
     if (dinner < 2 || dinner > 4) {
@@ -82,6 +83,16 @@ const Quiz6 = () => {
         message: "Bạn chỉ được nhập tối thiểu 2 món và tối đa 4 món trong buổi tối",
       });
       setTimeout(() => setAlert(null), 2000);
+      check = false;
+    }
+
+    return check;
+  }
+
+  async function submit(event){
+    event.preventDefault();
+
+    if(!checkInput()){
       return;
     }
 
@@ -91,18 +102,13 @@ const Quiz6 = () => {
       data.counts = [morning, lunch, dinner];
 
       try {
-        const user = JSON.parse(localStorage.getItem("user"));
-        console.log("user = " + JSON.stringify(user));
+        let u = JSON.parse(localStorage.getItem("user"));
         // get current user
-        UserAPI.getByEmail(user.sub)
+        data.user = await UserAPI.getByEmail(u.sub)
           .then((res) => {
-            // data.user = JSON.stringify(res.data);
-            data.user = JSON.stringify(res.data);
-            console.log("user new = " + JSON.stringify(res.data));
-          })
-          .catch((err) => {
-            console.log("f-user");
+            return res.data;
           });
+
       } catch (error) {
         history.push("/login");
       }

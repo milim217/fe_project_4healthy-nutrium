@@ -8,24 +8,27 @@ import Progress from "../progress/Progress";
 import FoodAPI from "../../service/Actions/FoodAPI";
 import Spinner from "react-bootstrap/Spinner";
 import React, { useEffect, useState } from "react";
+import DietAPI from "../../service/Actions/DietAPI";
+import Moment from 'moment';
 
 const GetUserDiet = () => {
-  const [foods, setFoods] = useState([]);
+  const [diet, setDiet] = useState([]);
   const [breakfastIndex, setBreakfastIndex] = useState(0);
   const [lunchIndex, setLunchIndex] = useState(0);
   const [dinnerIndex, setDinnerIndex] = useState(0);
 
   useEffect(() => {
     const quizData = JSON.parse(localStorage.getItem("quiz-data"));
-    FoodAPI.getDiet(quizData)
+    DietAPI.getDietOptions(quizData)
       .then((res) => {
-        setFoods(res.data);
+        console.log('data = ' + JSON.stringify(res.data));
+        setDiet(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, []);
 
   const changeBreakfast = (event) => {
-    if (breakfastIndex < foods.breakfastOptions.length - 1) {
+    if (breakfastIndex < diet.breakfastOptions.length - 1) {
       setBreakfastIndex(breakfastIndex + 1);
     } else {
       setBreakfastIndex(0);
@@ -33,7 +36,7 @@ const GetUserDiet = () => {
   };
 
   const changeLunch = (event) => {
-    if (lunchIndex < foods.lunchOptions.length - 1) {
+    if (lunchIndex < diet.lunchOptions.length - 1) {
       setLunchIndex(lunchIndex + 1);
     } else {
       setLunchIndex(0);
@@ -41,16 +44,54 @@ const GetUserDiet = () => {
   };
 
   const changeDinner = (event) => {
-    if (dinnerIndex < foods.dinnerOptions.length - 1) {
+    if (dinnerIndex < diet.dinnerOptions.length - 1) {
       setDinnerIndex(dinnerIndex + 1);
     } else {
       setDinnerIndex(0);
     }
   };
 
-  const save = (event) => {
+  async function saveDiet(event) {
     event.preventDefault();
-  };
+    
+    let today = new Date();
+    // let toDayStr = new Date(today.toLocaleString("en-US", {t5imeZone: "Asia/Jakarta"}));
+    let toDayStr = Moment(today).format('yyyy-MM-DD HH:mm:ss');
+
+    let data = {
+      user: diet.user,
+      job: diet.job,
+      weight: diet.weight,
+      height: diet.height,
+      date: toDayStr,
+      breakfastCalo: diet?.breakfastCalo,
+      lunchCalo: diet?.lunchCalo,
+      dinnerCalo: diet?.dinnerCalo,
+      breakfastCarb: diet?.breakfastCarb,
+      lunchCarb: diet?.lunchCarb,
+      dinnerCarb: diet?.dinnerCarb,
+      breakfastProtein: diet?.breakfastProtein,
+      lunchProtein: diet?.lunchProtein,
+      dinnerProtein: diet?.dinnerProtein,
+      breakfastFat: diet?.breakfastFat,
+      lunchFat: diet?.lunchFat,
+      dinnerFat: diet?.dinnerFat,
+      breakfast: diet?.breakfastOptions[breakfastIndex],
+      lunch: diet?.lunchOptions[lunchIndex],
+      dinner: diet?.dinnerOptions[dinnerIndex]
+    };
+
+    await DietAPI.save(data)
+      .then(res => {
+        console.log(1)
+      })
+      .catch(e => {
+        console.log(0)
+      });
+
+
+
+  }
 
   return (
     <>
@@ -61,6 +102,7 @@ const GetUserDiet = () => {
         </div>
         <div className="wrapper-title-quiz">
           <p>
+            {" "}
             <a style={{ color: "#ff8000" }}>Hoàn thành!!</a> dưới đây là kế
             hoạch cho bữa ăn hàng ngày của bạn
           </p>
@@ -73,25 +115,25 @@ const GetUserDiet = () => {
               size="small"
               extra={<Button onClick={changeBreakfast}>Đổi món</Button>}
             >
-              {foods?.breakfastCalo ? (
+              {diet?.breakfastCalo ? (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
                   </div>
                   <div className="CardTitle-Info_Number">
-                    {foods.breakfastCalo.toFixed(2)}
+                    {diet.breakfastCalo}
                   </div>
                 </Row>
               ) : (
                 <></>
               )}
-              {foods.breakfastOptions ? (
-                foods.breakfastOptions[breakfastIndex]?.map((foodMass) => (
+              {diet.breakfastOptions ? (
+                diet.breakfastOptions[breakfastIndex]?.map((foodMass) => (
                   <Row className="padding_20">
                     <Col span={18} push={6}>
                       <div className="wrapper-food-quantitative">
                         <h5 className="CardName-food">
-                          {foodMass.mass} suất {foodMass.food.foodName}
+                          {foodMass.mass.toFixed(1)} suất {foodMass.food.foodName}
                         </h5>
 
                         <h5 className="CardName-caloFood">
@@ -115,7 +157,7 @@ const GetUserDiet = () => {
                 <div>
                   <div className="Messageloading-getUserDiet">
                     <div className="title-name">
-                      Đang tải món ăn, xin bạn chờ một chút...
+                      Đang tải món ăn.......
                     </div>
                     <Spinner animation="border" variant="primary" />
                   </div>
@@ -128,25 +170,25 @@ const GetUserDiet = () => {
               size="small"
               extra={<Button onClick={changeLunch}>Đổi món</Button>}
             >
-              {foods?.lunchCalo ? (
+              {diet?.lunchCalo ? (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
                   </div>
                   <div className="CardTitle-Info_Number">
-                    {foods.lunchCalo.toFixed(2)}
+                    {diet.lunchCalo}
                   </div>
                 </Row>
               ) : (
                 <></>
               )}
-              {foods.lunchOptions ? (
-                foods.lunchOptions[lunchIndex]?.map((foodMass) => (
+              {diet.lunchOptions ? (
+                diet.lunchOptions[lunchIndex]?.map((foodMass) => (
                   <Row className="padding_20">
                     <Col span={18} push={6}>
                       <div className="wrapper-food-quantitative">
                         <h5 className="CardName-food">
-                          {foodMass.mass} suất {foodMass.food.foodName}
+                          {foodMass.mass.toFixed(1)} suất {foodMass.food.foodName}
                         </h5>
 
                         <h5 className="CardName-caloFood">
@@ -170,7 +212,7 @@ const GetUserDiet = () => {
                 <div>
                   <div className="Messageloading-getUserDiet">
                     <div className="title-name">
-                      Đang tải món ăn, xin bạn chờ một chút...
+                      Đang tải món ăn....
                     </div>
                     <Spinner animation="border" variant="primary" />
                   </div>
@@ -183,25 +225,25 @@ const GetUserDiet = () => {
               size="small"
               extra={<Button onClick={changeDinner}>Đổi món</Button>}
             >
-              {foods?.dinnerCalo ? (
+              {diet?.dinnerCalo ? (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
                   </div>
                   <div className="CardTitle-Info_Number">
-                    {foods.dinnerCalo.toFixed(2)}
+                    {diet.dinnerCalo}
                   </div>
                 </Row>
               ) : (
                 <></>
               )}
-              {foods.dinnerOptions ? (
-                foods.dinnerOptions[dinnerIndex]?.map((foodMass) => (
+              {diet.dinnerOptions ? (
+                diet.dinnerOptions[dinnerIndex]?.map((foodMass) => (
                   <Row className="padding_20">
                     <Col span={18} push={6}>
                       <div className="wrapper-food-quantitative">
                         <h5 className="CardName-food">
-                          {foodMass.mass} suất {foodMass.food.foodName}
+                          {foodMass.mass.toFixed(1)} suất {foodMass.food.foodName}
                         </h5>
 
                         <h5 className="CardName-caloFood">
@@ -225,7 +267,7 @@ const GetUserDiet = () => {
                 <div>
                   <div className="Messageloading-getUserDiet">
                     <div className="title-name">
-                      Đang tải món ăn, xin bạn chờ một chút...
+                      Đang tải món ăn...
                     </div>
                     <Spinner animation="border" variant="primary" />
                   </div>
@@ -234,7 +276,7 @@ const GetUserDiet = () => {
             </Card>
           </Space>
           {/* <Link to="/login"> */}
-          <Button variant="success" className="button_Link" onclick={save}>
+          <Button variant="success" className="button_Link" onClick={saveDiet}>
             Lưu thực đơn
           </Button>
           {/* </Link> */}
