@@ -61,7 +61,6 @@ const GetUserDiet = () => {
         </div>
         <div className="wrapper-title-quiz">
           <p>
-            {" "}
             <a style={{ color: "#ff8000" }}>Hoàn thành!!</a> dưới đây là kế
             hoạch cho bữa ăn hàng ngày của bạn
           </p>

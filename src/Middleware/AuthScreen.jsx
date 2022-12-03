@@ -31,9 +31,9 @@ const Auth = ({ authRoute }) => {
     body = (
       <>
         {authRoute === "login" && <LoginForm />}
-        {/* {authRoute === "register" && <RegisterForm />}
+        {authRoute === "register" && <RegisterForm />}
         {authRoute === "sendmail" && <SendMailForm />}
-        {authRoute === "resetpassword" && <ResetPasswordForm />} */}
+        {authRoute === "resetpassword" && <ResetPasswordForm />}
       </>
     );
   }

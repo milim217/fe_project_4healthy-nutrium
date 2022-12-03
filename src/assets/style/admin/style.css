@@ -58,3 +58,7 @@
   display: inline-block;
   padding-right: 10px;
 }
+
+.errorMSG {
+  color: red;
+}
