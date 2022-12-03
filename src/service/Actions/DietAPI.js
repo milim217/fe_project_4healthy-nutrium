@@ -11,6 +11,11 @@ const DietInfoAPI = {
   save(data) {
     const url = `/diet`;
     return AxiosList.normalAxios.post(url,data);
+  },
+
+  getByUserID(uid) {
+    const url = `/diet/` +uid;
+    return AxiosList.normalAxios.get(url);
   }
 
 }

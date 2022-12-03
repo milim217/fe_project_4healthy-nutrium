@@ -1,16 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Card, Col, Row, Image } from "antd";
 import Footers from "../../components/footer/footers";
 import "../../assets/style/user/UserPersonalSchedule.css";
-import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
-import Table from "react-bootstrap/Table";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 import HeaderHasLog from "../../components/header/HeaderHasLog";
 import ModalDetailFood from "../../components/modal/ModalDetailFood";
+import DietAPI from "../../service/Actions/DietAPI";
+import { useHistory } from "react-router-dom";
+import AuthUtil from "../../service/utils/AuthUtil";
 
 const { Header, Footer, Content } = Layout;
 const UserPersonalSchedule = () => {
+
+  const history = useHistory();
+  const [diet, setDiet] = useState([]);
+  const [dateStr, setDateStr] = useState('');
+
+
+  useEffect(() => {
+    // check user
+    let user = AuthUtil.getUserFromToken();
+    if (user) {
+      user.then(res => {
+        getDiet(res.data);
+      });
+    }
+    else {
+      history.push('/login');
+    }
+  }, []);
+
+  function getDiet(user) {
+    DietAPI.getByUserID(user.id)
+      .then(res => {
+        let d = res.data;
+        let dietDate = new Date(d.date);
+        console.log(dietDate);
+        let str = 'Ngày ' + dietDate.getDate() + ', tháng ' + dietDate.getMonth() + ', năm ' + dietDate.getFullYear();
+        setDateStr(str);
+        setDiet(d);
+
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
   return (
     <div>
       <HeaderHasLog></HeaderHasLog>
@@ -18,9 +52,9 @@ const UserPersonalSchedule = () => {
         <div className="site-card-wrapper">
           <div className="title-card-wrapper">
             <div className="title-card-time-schedule">
-              Ngày 01, tháng 01, năm 2020
+              {dateStr}
             </div>
-            <div className="title-card-amount-calo">1500 calo</div>
+            <div className="title-card-amount-calo">{diet?.breakfastCalo + diet?.lunchCalo + diet?.dinnerCalo} calo</div>
           </div>
 
           <Row gutter={16}>
@@ -28,108 +62,89 @@ const UserPersonalSchedule = () => {
               <Card
                 title="Sáng"
                 bordered={false}
-                extra={<ModalDetailFood></ModalDetailFood>}
+                extra={<ModalDetailFood foods={diet.breakfast}></ModalDetailFood>}
               >
-                <Row className="padding_20">
-                  <Col span={18} push={6}>
-                    <div className="wrapper-about">
-                      <h5 className="about-title">Food</h5>
-                      <div className="about-detail">about</div>
-                    </div>
-                  </Col>
-                  <Col span={6} pull={18}>
-                    <Image
-                      width={100}
-                      src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2020/01/24/0/FNK_INSTANT-POT-HUMMUS-H_s4x3.jpg.rend.hgtvcom.616.462.suffix/1579879895817.jpeg"
-                    />
-                  </Col>
-                </Row>
-                <Row className="padding_20">
-                  <Col span={18} push={6}>
-                    <div className="wrapper-about">
-                      <h5 className="about-title">Food</h5>
-                      <div className="about-detail">about</div>
-                    </div>
-                  </Col>
-                  <Col span={6} pull={18}>
-                    <Image
-                      width={100}
-                      src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2020/01/24/0/FNK_INSTANT-POT-HUMMUS-H_s4x3.jpg.rend.hgtvcom.616.462.suffix/1579879895817.jpeg"
-                    />
-                  </Col>
-                </Row>
+                {
+                  diet ? (
+                    diet.breakfast?.map((foodMass) => (
+                      <Row className="padding_20">
+                        <Col span={18} push={6}>
+                          <div className="wrapper-about">
+                            <h5 className="about-title">{foodMass.mass.toFixed(1)} suất {foodMass.food.foodName}</h5>
+                          </div>
+                        </Col>
+                        <Col span={6} pull={18}>
+                          <Image
+                            width={100}
+                            src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                          />
+                        </Col>
+                      </Row>
+                    ))
+                  )
+                    :
+                    (<></>)
+                }
               </Card>
             </Col>
             <Col span={8}>
               <Card
                 title="Trưa"
                 bordered={false}
-                extra={<ModalDetailFood></ModalDetailFood>}
+                extra={<ModalDetailFood foods={diet.lunch}></ModalDetailFood>}
               >
-                <Row className="padding_20">
-                  <Col span={18} push={6}>
-                    <div className="wrapper-about">
-                      <h5 className="about-title">Food</h5>
-                      <div className="about-detail">about</div>
-                    </div>
-                  </Col>
-                  <Col span={6} pull={18}>
-                    <Image
-                      width={100}
-                      src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2020/01/24/0/FNK_INSTANT-POT-HUMMUS-H_s4x3.jpg.rend.hgtvcom.616.462.suffix/1579879895817.jpeg"
-                    />
-                  </Col>
-                </Row>
-                <Row className="padding_20">
-                  <Col span={18} push={6}>
-                    <div className="wrapper-about">
-                      <h5 className="about-title">Food</h5>
-                      <div className="about-detail">about</div>
-                    </div>
-                  </Col>
-                  <Col span={6} pull={18}>
-                    <Image
-                      width={100}
-                      src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2020/01/24/0/FNK_INSTANT-POT-HUMMUS-H_s4x3.jpg.rend.hgtvcom.616.462.suffix/1579879895817.jpeg"
-                    />
-                  </Col>
-                </Row>
+                {
+                  diet ?
+                    (
+                      diet.lunch?.map((foodMass) => (
+                        <Row className="padding_20">
+                          <Col span={18} push={6}>
+                            <div className="wrapper-about">
+                              <h5 className="about-title">{foodMass.mass.toFixed(1)} suất {foodMass.food.foodName}</h5>
+                            </div>
+                          </Col>
+                          <Col span={6} pull={18}>
+                            <Image
+                              width={100}
+                              src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                            />
+                          </Col>
+                        </Row>
+                      ))
+                    )
+                    :
+                    (<></>)
+                }
               </Card>
             </Col>
             <Col span={8}>
               <Card
                 title="Tối  "
                 bordered={false}
-                extra={<ModalDetailFood></ModalDetailFood>}
+                extra={<ModalDetailFood foods={diet.dinner}></ModalDetailFood>}
               >
-                <Row className="padding_20">
-                  <Col span={18} push={6}>
-                    <div className="wrapper-about">
-                      <h5 className="about-title">Food</h5>
-                      <div className="about-detail">about</div>
-                    </div>
-                  </Col>
-                  <Col span={6} pull={18}>
-                    <Image
-                      width={100}
-                      src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2020/01/24/0/FNK_INSTANT-POT-HUMMUS-H_s4x3.jpg.rend.hgtvcom.616.462.suffix/1579879895817.jpeg"
-                    />
-                  </Col>
-                </Row>
-                <Row className="padding_20">
-                  <Col span={18} push={6}>
-                    <div className="wrapper-about">
-                      <h5 className="about-title">Food</h5>
-                      <div className="about-detail">about</div>
-                    </div>
-                  </Col>
-                  <Col span={6} pull={18}>
-                    <Image
-                      width={100}
-                      src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2020/01/24/0/FNK_INSTANT-POT-HUMMUS-H_s4x3.jpg.rend.hgtvcom.616.462.suffix/1579879895817.jpeg"
-                    />
-                  </Col>
-                </Row>
+                {
+                diet ?
+                    (
+                      diet.dinner?.map((foodMass) => (
+                        <Row className="padding_20">
+                          <Col span={18} push={6}>
+                            <div className="wrapper-about">
+                              <h5 className="about-title">{foodMass.mass.toFixed(1)} suất {foodMass.food.foodName}</h5>
+                            </div>
+                          </Col>
+                          <Col span={6} pull={18}>
+                            <Image
+                              width={100}
+                              src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                            />
+                          </Col>
+                        </Row>
+                      ))
+                    )
+                    :
+                    (<></>)
+                }
               </Card>
             </Col>
           </Row>
