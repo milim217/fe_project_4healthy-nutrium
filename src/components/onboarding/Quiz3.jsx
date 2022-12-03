@@ -13,6 +13,7 @@ import AlertMessage from "../alert/AlertMessage";
 const Quiz3 = () => {
   const history = useHistory();
   const [alert, setAlert] = useState(null);
+  const [alert1, setAlert1] = useState(null);
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState(0);
 
@@ -23,37 +24,43 @@ const Quiz3 = () => {
 
   const onFormChange = (event) => {
     if (event.target.name == "height") {
-      if (event.target.value < minHeight || event.target.value > maxHeight) {
-        setAlert({
-          type: "danger",
-          message: "Chiều cao phải lớn hơn 50 và bé hơn 250",
-        });
-        setTimeout(() => setAlert(null), 2000);
-      } else {
-        setHeight(event.target.value);
-      }
+      setHeight(event.target.value);
     } else {
-      if (event.target.value < minWeight || event.target.value > maxWeight) {
-        setAlert({
-          type: "danger",
-          message: "Cân năng phải lớn hơn 10 và bé hơn 200",
-        });
-        setTimeout(() => setAlert(null), 2000);
-      } else {
-        setWeight(event.target.value);
-      }
+      setWeight(event.target.value);
     }
   };
 
-  // const disbale = (event) => {
-  //   event.preventDefault();
-  //   if (event.target.value === null) {
+  const checkInput = () => {
+    let check = true;
+    if (height < minHeight || height > maxHeight) {
+      setAlert({
+        type: "danger",
+        message: "Vui lòng nhập chiều cao trong khoảng 50-250 cm",
+      });
+      check = false;
+    } else {
+      setAlert(null);
+    }
 
-  //   }
-  // }
+    if (weight < minWeight || weight > maxWeight) {
+      setAlert1({
+        type: "danger",
+        message: "Vui lòng nhập chiều cao trong khoảng 10-200 kg",
+      });
+      check = false;
+    } else {
+      setAlert1(null)
+    }
+
+    return check;
+  }
 
   const submit = (event) => {
     event.preventDefault();
+
+    if (!checkInput()) {
+      return;
+    }
 
     let data;
     try {
@@ -91,7 +98,6 @@ const Quiz3 = () => {
             <Form required>
               <Card title="Chiều cao của bạn là: " size="small">
                 <AlertMessage info={alert} />
-
                 <Input
                   placeholder="Chiều cao"
                   className="InputText_Quiz"
@@ -104,6 +110,7 @@ const Quiz3 = () => {
                 />
               </Card>
               <Card title="Cân nặng của bạn là" size="small">
+                <AlertMessage info={alert1} />
                 <Input
                   placeholder="Cân nặng"
                   className="InputText_Quiz"
@@ -115,16 +122,13 @@ const Quiz3 = () => {
                   onChange={onFormChange}
                 />
               </Card>
-              {/* <Link to="/onboarding/quiz4"> */}
               <Button
                 variant="success"
                 className="button_Link"
                 onClick={submit}
-                // disabled={disbale}
               >
                 Tiếp tục
               </Button>
-              {/* </Link> */}
             </Form>
           </Space>
         </div>

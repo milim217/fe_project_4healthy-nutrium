@@ -11,18 +11,31 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import ModalAddNewFoodQuiz5 from "../modal/ModalAddNewFoodQuiz5";
+import AlertMessage from "../alert/AlertMessage";
+
 const Quiz5 = () => {
   const history = useHistory();
   const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(new Set());
 
   useEffect(() => {
     CategoryAPI.getAll()
       .then((res) => {
-        setCategories(res.data);
-        console.log("data = " + JSON.stringify(res.data));
+        setCategories(res.data);        
       })
       .catch((err) => {});
   }, []);
+
+  const onCheckBoxChange = (e) => {
+    let category = categories[parseInt(e.target.name)];
+     if(selectedCategories.has(category)){
+      selectedCategories.delete(category);
+     }
+     else{
+      selectedCategories.add(category);
+     }
+     setSelectedCategories(selectedCategories);
+  }
 
   const submit = (event) => {
     event.preventDefault();
@@ -30,22 +43,20 @@ const Quiz5 = () => {
     let data;
     try {
       data = JSON.parse(localStorage.getItem("quiz-data"));
-      console.log(1);
-      data.categories = categories;
+      data.categories = Array.from(selectedCategories);
     } catch (error) {
-      console.log(0);
       data = {
         user: null,
         height: null,
         weight: null,
         job: null,
-        categories: categories,
+        categories: Array.from(selectedCategories),
         counts: null,
       };
     }
 
     console.log(JSON.stringify(data));
-    localStorage.setItem("quiz-data", JSON.stringify(data));
+    localStorage.setItem("quiz-data",JSON.stringify(data));
     history.push("/onboarding/quiz6");
   };
 
@@ -60,18 +71,20 @@ const Quiz5 = () => {
           <p>Hãy chọn loại thức ăn bạn muốn</p>
         </div>
         <div className="wrapper-table-option">
+        <AlertMessage info={alert} />
           {/* check-box */}
           <Row gutter={[16, 16]}>
             {categories ? (
-              categories.map((category) => (
+              categories.map((category,i) => (
                 <Col span={8}>
                   <Form>
                     <Form.Check
-                      name="group1"
+                      name={`${i}`}
                       type="checkbox"
                       id="custom-switch"
                       label={category.categoryName}
                       className={"checked"}
+                      onChange = {onCheckBoxChange}
                     ></Form.Check>
                   </Form>
                 </Col>
