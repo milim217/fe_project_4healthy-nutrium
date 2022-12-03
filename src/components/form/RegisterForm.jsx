@@ -146,11 +146,11 @@ const RegisterForm = () => {
         <Form.Group>
           <Radio.Group
             onChange={onChangeGender}
-            defaultValue="Nữ"
-            preventDefault="Nữ"
+            defaultValue="Female"
+            preventDefault="Female"
           >
             <Radio.Button value="false">Nữ</Radio.Button>
-            <Radio.Button value="true">Nam</Radio.Button>
+            <Radio.Button value="true">Male</Radio.Button>
           </Radio.Group>
         </Form.Group>
 
