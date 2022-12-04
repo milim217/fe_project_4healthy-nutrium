@@ -45,11 +45,11 @@ const Routes = () => {
         path="/resetpassword"
         component={ResetPasswordForm}
       />
-      <ProtectedRoute path="/admin/listuser" component={ListUser} />
-      <ProtectedRoute path="/admin/dashboard" component={DashboardAdmin} />
+      <Route path="/admin/listuser" component={ListUser} />
+      <Route path="/admin/dashboard" component={DashboardAdmin} />
       <Route exact path="/home" component={HomePage} />
-      <ProtectedRoute exact path="/homeuser/profile" component={UserProfile} />
-      <ProtectedRoute
+      <Route exact path="/homeuser/profile" component={UserProfile} />
+      <Route
         exact
         path="/nutrionexpert"
         component={NutrionExpertPage}
@@ -95,26 +95,26 @@ const Routes = () => {
         component={GetUserDiet}
       ></Route>
       <Route exact path="/schedule" component={UserPersonalSchedule}></Route>
-      <ProtectedRoute
+      <Route
         exact
         path="/homeuser"
         component={HomeUser}
-      ></ProtectedRoute>
-      <ProtectedRoute
+      ></Route>
+      <Route
         exact
         path="/libary"
         component={LibaryPage}
-      ></ProtectedRoute>
-      <ProtectedRoute
+      ></Route>
+      <Route
         exact
         path="/detailfood"
         component={DetailFood}
-      ></ProtectedRoute>
-      <ProtectedRoute
+      ></Route>
+      <Route
         exact
         path="/detailingredient"
         component={DetailIngredient}
-      ></ProtectedRoute>
+      ></Route>
       <Route exact path="/admin/add-nutrient" component={AddNewUser}></Route>
     </div>
   );
