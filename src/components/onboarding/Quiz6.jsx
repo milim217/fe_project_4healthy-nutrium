@@ -57,10 +57,10 @@ const Quiz6 = () => {
       check = false;
     }
 
-    if (morning < 1 || morning > 2) {
+    if (morning < 1 || morning > 4) {
       setAlert({
         type: "danger",
-        message: "Bạn chỉ được nhập tối đa 2 món trong buổi sáng",
+        message: "Bạn chỉ được nhập tối đa 4 món trong buổi sáng",
       });
       setTimeout(() => setAlert(null), 2000);
       check = false;
@@ -145,7 +145,7 @@ const Quiz6 = () => {
     console.log("quiz-data = " + JSON.stringify(data));
     localStorage.setItem("quiz-data", JSON.stringify(data));
 
-    // history.push("/onboarding/GetUserDiet");
+    history.push("/onboarding/GetUserDiet");
   };
 
   return (

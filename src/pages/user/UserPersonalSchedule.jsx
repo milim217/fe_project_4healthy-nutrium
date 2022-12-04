@@ -53,7 +53,12 @@ const UserPersonalSchedule = () => {
             <div className="title-card-time-schedule">
               {dateStr}
             </div>
-            <div className="title-card-amount-calo">{diet?.breakfastCalo + diet?.lunchCalo + diet?.dinnerCalo} calo</div>
+            {
+              diet?
+              <div className="title-card-amount-calo">{diet?.breakfastCalo + diet?.lunchCalo + diet?.dinnerCalo} calo</div>
+              :
+              <></>
+            }
           </div>
 
           <Row gutter={16}>

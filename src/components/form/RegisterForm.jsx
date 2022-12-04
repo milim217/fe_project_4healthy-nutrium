@@ -128,7 +128,7 @@ const RegisterForm = () => {
         return;
       }
       // add user
-      UserAPI.add(registerForm)
+      UserAPI.addUser(registerForm)
       .then(res => {
         setAlert({ type: "success", message: "Đăng kí tài khoản thành công" });
         setTimeout(() => setAlert(null), 5000);
