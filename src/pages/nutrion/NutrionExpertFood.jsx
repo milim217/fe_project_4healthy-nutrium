@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   Button,
@@ -19,9 +19,20 @@ import SelectionSeasonFood from "../../components/selection/SelectionSeasonFood"
 import AddNewFood from "../../components/drawn/AddNewFood";
 import Ingredient_SelectionRenderInListFood from "../../components/selectionRender/Ingredient_SelectionRenderInListFood";
 import EditFood from "../../components/drawn/EditFood";
-const text = "Bạn có chắc chắn muốn món ăn này khỏi danh sách?";
+import FoodAPI from "../../service/Actions/FoodAPI";
 
+const text = "Bạn có chắc chắn muốn món ăn này khỏi danh sách?";
 const NutrionExpertFood = () => {
+  const [food, setFood] = useState([]);
+  useEffect(() => {
+    FoodAPI.getAll()
+      .then((res) => {
+        console.log("data = " + JSON.stringify(res.data));
+        setFood(res.data);
+      })
+      .catch((err) => {});
+  }, []);
+
   const confirm = () => {
     message.info("Đã xoá món ăn thành công");
   };
@@ -38,15 +49,7 @@ const NutrionExpertFood = () => {
     },
     {
       title: "Ảnh món ăn",
-      dataIndex: "",
-      render: () => (
-        <>
-          <Image
-            width={80}
-            src="https://i.pinimg.com/474x/dd/be/8b/ddbe8b9cb7292f037a8c8e8c62b74d73.jpg"
-          />
-        </>
-      ),
+      dataIndex: "imageFood",
     },
     {
       title: "Loại món ăn",
@@ -55,8 +58,7 @@ const NutrionExpertFood = () => {
     },
     {
       title: "Bữa Ăn",
-      dataIndex: "age",
-      key: "age",
+      dataIndex: "mealType",
       width: 150,
     },
     {
@@ -117,20 +119,50 @@ const NutrionExpertFood = () => {
 
   // Dữ liệu giả cho danh sách
   const data = [];
-  for (let i = 0; i < 100; i++) {
-    data.push({
-      id: `id ${i}`,
-      food_name: `food_name ${i}`,
-      key: i,
-      category_id: `category_id${i}@gmail.com`,
-      seasson_id: `seasson_id ${i}`,
-      recipe: `recipe ${i}`,
-      fat: `fat ${i}`,
-      protein: `protein ${i}`,
-      carbon: `carbon ${i}`,
-      calories: `calories ${i}`,
-    });
-  }
+  food
+    ? food.map((foodValue) =>
+        data.push({
+          id: foodValue.id,
+          food_name: foodValue.foodName,
+          category_id: foodValue.category.categoryName,
+          mealType: foodValue.meals.map((m) => m.mealName + " "),
+          seasson_id: foodValue.seasons.map((s) => s.seasonName + " "),
+          recipe: foodValue.recipe,
+          fat: foodValue.ingredientMasses.map((f) => f.ingredient.fat + ""),
+          protein: foodValue.ingredientMasses.map(
+            (p) => p.ingredient.protein + ""
+          ),
+          carbon: foodValue.ingredientMasses.map((p) => p.ingredient.carb + ""),
+          calories: foodValue.ingredientMasses.map(
+            (calo) => calo.ingredient.calo + ""
+          ),
+          imageFood: {
+            render: () => (
+              <>
+                <Image
+                  width={80}
+                  src={`http://localhost:8080/food/${foodValue.id}/image`}
+                />
+              </>
+            ),
+          },
+        })
+      )
+    : console.log("error");
+  // for (let i = 0; i < 100; i++) {
+  //   data.push({
+  //     id: `id ${i}`,
+  //     food_name: `food_name ${i}`,
+  //     key: i,
+  //     category_id: `category_id${i}@gmail.com`,
+  //     seasson_id: `seasson_id ${i}`,
+  //     recipe: `recipe ${i}`,
+  //     fat: `fat ${i}`,
+  //     protein: `protein ${i}`,
+  //     carbon: `carbon ${i}`,
+  //     calories: `calories ${i}`,
+  //   });
+  // }
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -211,7 +243,7 @@ const NutrionExpertFood = () => {
         dataSource={data}
         scroll={{
           x: 1200,
-          y: 500,
+          y: 480,
         }}
       />
     </div>

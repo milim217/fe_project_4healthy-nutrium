@@ -1,5 +1,6 @@
 import React from "react";
 import HeaderUser from "../header/HeaderUser";
+import HeaderHasLog from "../header/HeaderHasLog";
 import Footers from "../footer/footers";
 import "../../assets/style/user/quizpage.css";
 import { Card, Space, Image } from "antd";
@@ -17,7 +18,7 @@ import imageFat from "../../assets/image/Fat_Image.png";
 const summaryInfo = () => {
   return (
     <>
-      <HeaderUser></HeaderUser>
+      <HeaderHasLog></HeaderHasLog>
       <div className="wrapper-quiz_page">
         <Notification
           message="lưu thành công"

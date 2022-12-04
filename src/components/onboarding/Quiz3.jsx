@@ -49,11 +49,25 @@ const Quiz3 = () => {
       });
       check = false;
     } else {
-      setAlert1(null)
+      setAlert1(null);
+    }
+    if (weight == "") {
+      setAlert1({
+        type: "danger",
+        message: "Vui lòng nhập cân nặng",
+      });
+      check = false;
+    }
+    if (height == "") {
+      setAlert({
+        type: "danger",
+        message: "Vui lòng nhập chiều cao",
+      });
+      check = false;
     }
 
     return check;
-  }
+  };
 
   const submit = (event) => {
     event.preventDefault();

@@ -42,7 +42,6 @@ const EditIngrdient = () => {
     vitaminB3: "",
     vitaminB6A: "",
     vitaminD: "",
-    vitaminD: "",
     vitaminB12: "",
     vitaminA: "",
     vitaminA_rae: "",

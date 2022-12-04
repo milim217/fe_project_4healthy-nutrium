@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../../assets/style/user/header_footer.css";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -8,7 +8,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
-
+import { AuthContext } from "../../service/Actions/AuthAPI";
 const HeaderHasLog = () => {
   return (
     <>

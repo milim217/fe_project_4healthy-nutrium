@@ -10,7 +10,7 @@ import {
   Modal,
   Input,
 } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HeaderLayout from "../../components/header/HeaderAdmin";
 import "../../assets/style/admin/style.css";
 import SelectionFoods from "../../components/selection/SelectionFoods";
@@ -20,8 +20,22 @@ import SelectionSeasonFood from "../../components/selection/SelectionSeasonFood"
 import AddNewIngrendient from "../../components/drawn/AddNewIngrendient";
 import SelectionSeasonIngredient from "../../components/selection/SelectionSeasonIngredient";
 import EditIngrdient from "../../components/drawn/EditIngrdient";
+import IngredientAPI from "../../service/Actions/IngredientAPI";
+import FoodAPI from "../../service/Actions/FoodAPI";
 const text = "Nguyên Liệu này sẽ được xoá khỏi danh sách?";
+
 function NutrionExpertIngredients() {
+  const [Ingredient, setIngredient] = useState([]);
+
+  useEffect(() => {
+    IngredientAPI.getAll()
+      .then((res) => {
+        console.log("data = " + JSON.stringify(res.data));
+        setIngredient(res.data);
+      })
+      .catch((err) => {});
+  }, []);
+
   const confirm = () => {
     message.info("Đã xoá Nguyên Liệu thành công");
   };
@@ -38,23 +52,26 @@ function NutrionExpertIngredients() {
     },
     {
       title: "Ảnh Nguyên liệu",
-      dataIndex: "",
-      render: () => (
-        <Image
-          width={80}
-          src="https://i.pinimg.com/474x/dd/be/8b/ddbe8b9cb7292f037a8c8e8c62b74d73.jpg"
-        />
-      ),
+      dataIndex: "image_ingredient",
+      // render: () =>
+      //   Ingredient
+      //     ? Ingredient.map((IngredientValue) => (
+      //         <Image
+      //           width={80}
+      //           src={`http://localhost:8080/food/${IngredientValue.id}/image`}
+      //         />
+      //       ))
+      //     : console.log("error"),
       justify: "center",
     },
     {
       title: "Giới hạn tối thiểu",
-      dataIndex: "ingredient_name",
+      dataIndex: "min_limit",
       justify: "center",
     },
     {
       title: "Giới hạn tối đa",
-      dataIndex: "ingredient_name",
+      dataIndex: "max_limit",
       justify: "center",
     },
     {
@@ -84,77 +101,77 @@ function NutrionExpertIngredients() {
     },
     {
       title: "Water",
-      dataIndex: "calories",
+      dataIndex: "water",
       justify: "center",
     },
     {
       title: "Fiber",
-      dataIndex: "calories",
+      dataIndex: "fiber",
       justify: "center",
     },
     {
       title: "Ash",
-      dataIndex: "calories",
+      dataIndex: "ash",
       justify: "center",
     },
     {
       title: "Canxi",
-      dataIndex: "calories",
+      dataIndex: "canxi",
       justify: "center",
     },
     {
       title: "Iron",
-      dataIndex: "calories",
+      dataIndex: "iron",
       justify: "center",
     },
     {
       title: "Zinc",
-      dataIndex: "calories",
+      dataIndex: "zinc",
       justify: "center",
     },
     {
       title: "Vitamin C",
-      dataIndex: "vitamin",
+      dataIndex: "vitaminC",
       justify: "center",
     },
     {
       title: "Vitamin B1",
-      dataIndex: "vitamin",
+      dataIndex: "vitaminB1",
       justify: "center",
     },
     {
       title: "Vitamin B2",
-      dataIndex: "vitamin",
+      dataIndex: "vitaminB2",
       justify: "center",
     },
     {
       title: "Vitamin B3",
-      dataIndex: "vitamin",
+      dataIndex: "vitaminB3",
       justify: "center",
     },
     {
       title: "Vitamin B6A",
-      dataIndex: "vitamin",
+      dataIndex: "vitaminB6A",
       justify: "center",
     },
     {
       title: "Vitamin D",
-      dataIndex: "vitamin",
+      dataIndex: "vitaminD",
       justify: "center",
     },
     {
       title: "Vitamin B12",
-      dataIndex: "vitamin",
+      dataIndex: "vitaminB12",
       justify: "center",
     },
     {
       title: "Vitamin A",
-      dataIndex: "vitamin",
+      dataIndex: "vitaminA",
       justify: "center",
     },
     {
       title: "Vitamin A_rae",
-      dataIndex: "vitamin",
+      dataIndex: "vitaminArea",
       justify: "center",
     },
 
@@ -184,19 +201,46 @@ function NutrionExpertIngredients() {
   ];
 
   const data = [];
-  for (let i = 0; i < 100; i++) {
-    data.push({
-      id: `id ${i}`,
-      key: i,
-      seasson_id: `seasson_id ${i}`,
-      fat: `fat ${i}`,
-      protein: `protein ${i}`,
-      carbon: `carbon ${i}`,
-      calories: `calories ${i}`,
-      vitamin: `vitamin ${i}`,
-      micronutrium: `micronutrium ${i}`,
-    });
-  }
+  Ingredient
+    ? Ingredient.map((ingredientValue) =>
+        data.push({
+          id: ingredientValue.id,
+          ingredient_name: ingredientValue.ingredientName,
+          min_limit: ingredientValue.minLimit,
+          max_limit: ingredientValue.maxLimit,
+          seasson_id: ingredientValue.seasons.map((s) => s.seasonName + " "),
+          fat: ingredientValue.fat,
+          protein: ingredientValue.protein,
+          carbon: ingredientValue.carb,
+          calories: ingredientValue.calo,
+          water: ingredientValue.water,
+          fiber: ingredientValue.fiber,
+          ash: ingredientValue.ash,
+          canxi: ingredientValue.canxi,
+          iron: ingredientValue.iron,
+          zinc: ingredientValue.zinc,
+          vitaminC: ingredientValue.vitaminC,
+          vitaminB1: ingredientValue.vitaminB1,
+          vitaminB2: ingredientValue.vitaminB2,
+          vitaminB3: ingredientValue.vitaminB3,
+          vitaminB6A: ingredientValue.vitaminB6A,
+          vitaminD: ingredientValue.vitaminD,
+          vitaminB12: ingredientValue.vitaminB12,
+          vitaminA: ingredientValue.vitaminA,
+          vitaminArea: ingredientValue.vitaminARae,
+          image_ingredient: {
+            render: () => (
+              <>
+                <Image
+                  width={80}
+                  src={`http://localhost:8080/food/${ingredientValue.id}/image`}
+                />
+              </>
+            ),
+          },
+        })
+      )
+    : console.log("error");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
