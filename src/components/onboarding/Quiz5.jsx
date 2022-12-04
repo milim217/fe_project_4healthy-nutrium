@@ -3,7 +3,6 @@ import HeaderUser from "../header/HeaderUser";
 import Footers from "../footer/footers";
 import "../../assets/style/user/quizpage.css";
 import { Row, Col } from "antd";
-import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
 import CategoryAPI from "../../service/Actions/CategoryAPI";

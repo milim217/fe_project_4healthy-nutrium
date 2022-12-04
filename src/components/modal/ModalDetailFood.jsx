@@ -9,7 +9,7 @@ const ModalDetailFood = (props) => {
   useEffect(() => {
     console.log(props.foods);
     setFoods(props.foods);
-  }, []);
+  });
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -57,7 +57,7 @@ const ModalDetailFood = (props) => {
                           textAlign: "center",
                         }}
                       >
-                        <p className="content-card-detailFood">{foodMass.mass*foodMass.food.calo}</p>
+                        <p className="content-card-detailFood">{(foodMass.mass*foodMass.food.calo).toFixed(1)}</p>
                       </Card>
                     </Col>
                     <Col span={6}>
@@ -70,7 +70,7 @@ const ModalDetailFood = (props) => {
                           textAlign: "center",
                         }}
                       >
-                        <p className="content-card-detailFood"> {foodMass.mass*foodMass.food.carb} g</p>
+                        <p className="content-card-detailFood"> {(foodMass.mass*foodMass.food.carb).toFixed(1)} g</p>
                       </Card>
                     </Col>
                     <Col span={6}>
@@ -83,7 +83,7 @@ const ModalDetailFood = (props) => {
                         }}
                         bordered={false}
                       >
-                        <p className="content-card-detailFood"> {foodMass.mass*foodMass.food.fat} g</p>
+                        <p className="content-card-detailFood"> {(foodMass.mass*foodMass.food.fat).toFixed(1)} g</p>
                       </Card>
                     </Col>
                     <Col span={6}>
@@ -96,7 +96,7 @@ const ModalDetailFood = (props) => {
                         }}
                         bordered={false}
                       >
-                        <p className="content-card-detailFood"> {foodMass.mass*foodMass.food.protein} g</p>
+                        <p className="content-card-detailFood"> {(foodMass.mass*foodMass.food.protein).toFixed(1)} g</p>
                       </Card>
                     </Col>
                   </Row>

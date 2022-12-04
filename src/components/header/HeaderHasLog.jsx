@@ -3,13 +3,19 @@ import "../../assets/style/user/header_footer.css";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Button from "react-bootstrap/Button";
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar } from "antd";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const HeaderHasLog = () => {
+
+  const history = useHistory();
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    history.push('/login');
+  }
+
   return (
     <>
       <div className="header-wrapper">
@@ -51,7 +57,6 @@ const HeaderHasLog = () => {
                 </Nav>
                 <Nav>
                   <NavDropdown
-                    title="NameUser"
                     id="basic-nav-dropdown"
                     className="text-nav-link"
                   >
@@ -61,7 +66,7 @@ const HeaderHasLog = () => {
                       </NavDropdown.Item>
                     </Link>
                     <NavDropdown.Divider />
-                    <Link to={"/home"}>
+                    <Link onClick={logout}>
                       <NavDropdown.Item href="#action/3.2">
                         Đăng xuất
                       </NavDropdown.Item>

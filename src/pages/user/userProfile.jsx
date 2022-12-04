@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Space, Button, Form, Input, Row, Col, Image } from "antd";
-import HeaderLayout from "../../components/header/HeaderAdmin";
 import ChangePassword from "../../components/form/ChangePassword";
 import { Breadcrumb } from "antd";
 import HeaderUserHasLog from "../../components/header/HeaderHasLog";
 import Footers from "../../components/footer/footers";
 import SlidebarUser from "./SlidbarUser";
+import AuthUtil from "../../service/utils/AuthUtil";
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
-const userProfile = () => {
+const UserProfile = () => {
+
+  const history = useHistory();
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+
+    let u = AuthUtil.getUserFromToken();
+    if (u) {
+      u.then((res) => {
+        return res.data;
+      });
+    }
+    else {
+      history.push('/login');
+    }
+  }, []);
+
   return (
     <div>
       <HeaderUserHasLog></HeaderUserHasLog>
@@ -169,4 +189,4 @@ const userProfile = () => {
   );
 };
 
-export default userProfile;
+export default UserProfile;

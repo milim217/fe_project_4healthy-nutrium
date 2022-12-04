@@ -5,24 +5,26 @@ import DashboardAdmin from "../pages/admin/DashboardAdmin";
 import UserPersonalSchedule from "../pages/user/UserPersonalSchedule";
 import ListUser from "../pages/admin/ListUser";
 import NutrionExpertPage from "../pages/nutrion/NutrionExpertPage";
-import userProfile from "../pages/user/userProfile";
+import UserProfile from "../pages/user/UserProfile";
 import Landing from "../Landing";
 import { Route } from "react-router-dom";
-// Kiểm tra trước khi Router
 import ProtectedRoute from "../Middleware/ProtectedRoute";
-import Auth from "../Middleware/AuthScreen";
 import Quiz1 from "../components/onboarding/Quiz1";
 import Quiz2 from "../components/onboarding/Quiz2";
 import Quiz3 from "../components/onboarding/Quiz3";
 import Quiz4 from "../components/onboarding/Quiz4";
 import Quiz5 from "../components/onboarding/Quiz5";
 import Quiz6 from "../components/onboarding/Quiz6";
+import AddNewUser from "../components/drawn/AddNewUser";
 import summaryInfo from "../components/onboarding/summaryInfo";
 import pageLoadingQuiz from "../components/onboarding/pageLoadingQuiz";
 import GetUserDiet from "../components/onboarding/GetUserDiet";
 import LibaryPage from "../pages/user/libaryPage";
 import DetailFood from "../pages/user/DetailFood";
 import DetailIngredient from "../pages/user/DetailIngredient";
+import LoginForm from "../components/form/LoginForm";
+import ResetPasswordForm from "../components/form/ResetPasswordForm";
+import RegisterForm from "../components/form/RegisterForm";
 
 const Routes = () => {
   return (
@@ -31,27 +33,22 @@ const Routes = () => {
       <Route
         exact
         path="/login"
-        render={(props) => <Auth {...props} authRoute="login" />}
+        component={LoginForm}
       />
       <Route
         exact
         path="/register"
-        render={(props) => <Auth {...props} authRoute="register" />}
-      />
-      <Route
-        exact
-        path="/sendmail"
-        render={(props) => <Auth {...props} authRoute="sendmail" />}
+        component={RegisterForm}
       />
       <Route
         exact
         path="/resetpassword"
-        render={(props) => <Auth {...props} authRoute="resetpassword" />}
+        component={ResetPasswordForm}
       />
       <ProtectedRoute path="/admin/listuser" component={ListUser} />
       <ProtectedRoute path="/admin/dashboard" component={DashboardAdmin} />
       <Route exact path="/home" component={HomePage} />
-      <ProtectedRoute exact path="/homeuser/profile" component={userProfile} />
+      <ProtectedRoute exact path="/homeuser/profile" component={UserProfile} />
       <ProtectedRoute
         exact
         path="/nutrionexpert"
@@ -118,6 +115,7 @@ const Routes = () => {
         path="/detailingredient"
         component={DetailIngredient}
       ></ProtectedRoute>
+      <Route exact path="/admin/add-nutrient" component={AddNewUser}></Route>
     </div>
   );
 };

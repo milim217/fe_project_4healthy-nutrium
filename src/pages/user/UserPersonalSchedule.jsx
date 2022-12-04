@@ -38,7 +38,6 @@ const UserPersonalSchedule = () => {
         let str = 'Ngày ' + dietDate.getDate() + ', tháng ' + dietDate.getMonth() + ', năm ' + dietDate.getFullYear();
         setDateStr(str);
         setDiet(d);
-
       })
       .catch(e => {
         console.log(e);
