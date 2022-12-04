@@ -2,14 +2,13 @@ import HeaderUser from "../header/HeaderUser";
 import Footers from "../footer/footers";
 import "../../assets/style/user/quizpage.css";
 import { Card, Space, Input } from "antd";
-import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import FoodAPI from "../../service/Actions/FoodAPI";
 import UserAPI from "../../service/Actions/UserAPI";
 import AlertMessage from "../alert/AlertMessage";
+import AuthUtil from "../../service/utils/AuthUtil";
 
 const Quiz6 = () => {
   const history = useHistory();
@@ -17,22 +16,21 @@ const Quiz6 = () => {
   const [morning, setMorning] = useState(0);
   const [lunch, setLunch] = useState(0);
   const [dinner, setDinner] = useState(0);
-  const [user, setUser] = useState(null);
 
   const onFormChange = (event) => {
     if (event.target.name == "morning") {
-        setMorning(event.target.value);
+      setMorning(event.target.value);
     } else if (event.target.name == "lunch") {
-        setLunch(event.target.value);
+      setLunch(event.target.value);
     } else {
-        setDinner(event.target.value);
+      setDinner(event.target.value);
     }
   };
 
   const checkInput = () => {
     let check = true;
 
-    if(!morning){
+    if (!morning) {
       setAlert({
         type: "danger",
         message: "Vui lòng nhập số món cho bữa sáng",
@@ -41,7 +39,7 @@ const Quiz6 = () => {
       check = false;
     }
 
-    if(!lunch){
+    if (!lunch) {
       setAlert({
         type: "danger",
         message: "Vui lòng nhập số món cho bữa trưa",
@@ -50,7 +48,7 @@ const Quiz6 = () => {
       check = false;
     }
 
-    if(!dinner){
+    if (!dinner) {
       setAlert({
         type: "danger",
         message: "Vui lòng nhập số món cho bữa tối",
@@ -89,10 +87,10 @@ const Quiz6 = () => {
     return check;
   }
 
-  async function submit(event){
+  async function submit(event) {
     event.preventDefault();
 
-    if(!checkInput()){
+    if (!checkInput()) {
       return;
     }
 
@@ -101,17 +99,16 @@ const Quiz6 = () => {
       data = JSON.parse(localStorage.getItem("quiz-data"));
       data.counts = [morning, lunch, dinner];
 
-      try {
-        let u = JSON.parse(localStorage.getItem("user"));
-        // get current user
-        data.user = await UserAPI.getByEmail(u.sub)
-          .then((res) => {
-            return res.data;
-          });
-
-      } catch (error) {
+      let user = AuthUtil.getUserFromToken();
+      if (user) {
+        await user.then(res => {
+          data.user = res.data;
+        });
+      }
+      else {
         history.push("/login");
       }
+
     } catch (error) {
       data = {
         user: null,
@@ -123,10 +120,32 @@ const Quiz6 = () => {
       };
     }
 
+    let mess = '';
+
+    if (data.height === null || data.weight === null) {
+      mess += " [chiều cao, cân nặng]";
+    }
+    if (data.job === null) {
+      mess += " [công việc]";
+    }
+    if (data.categories === null) {
+      mess += " [loại thức ăn bạn muốn]";
+    }
+
+    if (mess !== '') {
+      mess = "Vui lòng chọn lại những thông tin sau:" + mess;
+      setAlert({
+        type: "danger",
+        message: mess,
+      });
+      setTimeout(() => setAlert(null), 5000);
+      return;
+    }
+
     console.log("quiz-data = " + JSON.stringify(data));
     localStorage.setItem("quiz-data", JSON.stringify(data));
 
-    history.push("/onboarding/GetUserDiet");
+    // history.push("/onboarding/GetUserDiet");
   };
 
   return (

@@ -1,21 +1,21 @@
 import HeaderUser from "../header/HeaderUser";
 import Footers from "../footer/footers";
 import "../../assets/style/user/quizpage.css";
-import { Card, Space, Input, Row, Col, Image } from "antd";
-import { Link } from "react-router-dom";
+import { Card, Space, Row, Col, Image } from "antd";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
-import FoodAPI from "../../service/Actions/FoodAPI";
 import Spinner from "react-bootstrap/Spinner";
 import React, { useEffect, useState } from "react";
 import DietAPI from "../../service/Actions/DietAPI";
 import Moment from "moment";
+import AlertMessage from "../alert/AlertMessage";
 
 const GetUserDiet = () => {
   const [diet, setDiet] = useState([]);
   const [breakfastIndex, setBreakfastIndex] = useState(0);
   const [lunchIndex, setLunchIndex] = useState(0);
   const [dinnerIndex, setDinnerIndex] = useState(0);
+  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     const quizData = JSON.parse(localStorage.getItem("quiz-data"));
@@ -82,11 +82,14 @@ const GetUserDiet = () => {
     };
 
     await DietAPI.save(data)
+
       .then((res) => {
-        console.log(1);
+        setAlert({ type: "success", message: "Lưu thực đơn thành công" });
+        setTimeout(() => setAlert(null), 5000);
       })
       .catch((e) => {
-        console.log(0);
+        setAlert({ type: "success", message: "Lưu thực đơn không thành công" });
+        setTimeout(() => setAlert(null), 5000);
       });
   }
 
@@ -105,6 +108,7 @@ const GetUserDiet = () => {
           </p>
         </div>
         <div className="wrapper-table-option">
+          <AlertMessage info={alert} />
           <Space direction="vertical" size="middle" style={{ display: "flex" }}>
             {/* Sáng */}
             <Card
