@@ -50,7 +50,7 @@ const Slidebar = ({ children }) => {
             {
               key: "/nutrionexpert/ingredients",
               // icon: <UploadOutlined />,
-              label: "Danh sách thành phần",
+              label: "Danh sách nguyên liệu",
             },
             {
               key: "/home",

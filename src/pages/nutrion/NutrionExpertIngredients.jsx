@@ -227,7 +227,7 @@ function NutrionExpertIngredients() {
         <Breadcrumb.Item>
           <a href="">Trang chuyên gia dinh dưỡng</a>
         </Breadcrumb.Item>
-        <Breadcrumb.Item>Danh sách Nguyên Liệu</Breadcrumb.Item>
+        <Breadcrumb.Item>Danh sách nguyên liệu</Breadcrumb.Item>
       </Breadcrumb>
       <div className="wrapper__listUser">
         <div className="add_new_user__listUser">
@@ -235,7 +235,7 @@ function NutrionExpertIngredients() {
         </div>
         <div className="search_user___listUser">
           <Search
-            placeholder="Nhập tên Nguyên Liệu bạn cần phải tìm"
+            placeholder="Nhập tên nguyên liệu bạn cần phải tìm"
             allowClear
             enterButton="Tìm Kiếm"
             size="large"
