@@ -71,8 +71,9 @@ body {
   background-color: white;
   width: 80%;
   margin: auto;
-  padding-left: 36%;
+  padding-left: 33.3333333%;
   padding-bottom: 10px;
+  padding-top: 20px;
 }
 
 .name_food_DetailPage {
