@@ -1,7 +1,6 @@
 import React from "react";
 import HomePage from "../pages/user/HomePage";
 import HomeUser from "../pages/user/HomeUser";
-import DashboardAdmin from "../pages/admin/DashboardAdmin";
 import UserPersonalSchedule from "../pages/user/UserPersonalSchedule";
 import ListUser from "../pages/admin/ListUser";
 import NutrionExpertPage from "../pages/nutrion/NutrionExpertPage";
@@ -25,7 +24,6 @@ import DetailIngredient from "../pages/user/DetailIngredient";
 import LoginForm from "../components/form/LoginForm";
 import ResetPasswordForm from "../components/form/ResetPasswordForm";
 import RegisterForm from "../components/form/RegisterForm";
-import NutrionExpertFood from "../pages/nutrion/NutrionExpertFood";
 
 const Routes = () => {
   return (
@@ -35,17 +33,9 @@ const Routes = () => {
       <Route exact path="/register" component={RegisterForm} />
       <Route exact path="/resetpassword" component={ResetPasswordForm} />
       <Route path="/admin/listuser" component={ListUser} />
-      {/* <Route path="/admin/dashboard" component={DashboardAdmin} /> */}
       <Route exact path="/home" component={HomePage} />
       <Route exact path="/homeuser/profile" component={UserProfile} />
       <Route exact path="/nutrionexpert" component={NutrionExpertPage} />
-      {/* <Route
-        exact
-        path="/nutrionexpert/information"
-        render={(props) => (
-          <NutrionExpertPage {...props} changePage="information" />
-        )}
-      /> */}
       <Route
         exact
         path="/nutrionexpert/food"

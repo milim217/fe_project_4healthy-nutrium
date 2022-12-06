@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PageHeader, Avatar, Dropdown, Modal, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import NutrionExpertInformation from "../../pages/nutrion/NutrionExpertInformation";
+import AdminInfomation from "../../pages/admin/AdminInfomation";
 const HeaderLayout = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -76,7 +76,7 @@ const HeaderLayout = (props) => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <NutrionExpertInformation></NutrionExpertInformation>
+        <AdminInfomation></AdminInfomation>
       </Modal>
     </PageHeader>
   );
