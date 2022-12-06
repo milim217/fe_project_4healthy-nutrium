@@ -5,7 +5,7 @@ import { useState } from "react";
 import AlertMessage from "../alert/AlertMessage";
 import { DatePicker, Radio } from "antd";
 import UserAPI from "../../service/Actions/UserAPI";
-import Moment from 'moment';
+import Moment from "moment";
 import moment from "moment";
 
 const RegisterForm = () => {
@@ -20,7 +20,7 @@ const RegisterForm = () => {
     dob: "01/01/2000",
     phone: "",
     gender: "false",
-    code: ""
+    code: "",
   });
   const { username, password, name, address, dob, phone, gender } =
     registerForm;
@@ -30,7 +30,7 @@ const RegisterForm = () => {
   function onSelectDate(dateValue, dateString) {
     let dateParts = dateString.split("/");
     let date = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-    let dateStr = Moment(date).format('yyyy-MM-DD');
+    let dateStr = Moment(date).format("yyyy-MM-DD");
 
     setDate(dateStr);
     setRegisterForm({
@@ -62,45 +62,49 @@ const RegisterForm = () => {
   const checkIput = () => {
     let check = true;
     if (password !== confirmPassword) {
-      setAlert({ type: "danger", message: "Vui lòng nhập 2 mật khẩu giống nhau" });
+      setAlert({
+        type: "danger",
+        message: "Vui lòng nhập 2 mật khẩu giống nhau",
+      });
       setTimeout(() => setAlert(null), 5000);
       check = false;
     }
     return check;
-  }
+  };
 
   async function sendEmail() {
     let email = registerForm.email;
     if (email !== "") {
       let user = await UserAPI.getByEmail([email])
-        .then(res => {
+        .then((res) => {
           return res.data;
         })
-        .catch(e => {
+        .catch((e) => {
           return null;
         });
 
       if (user) {
-        setAlert({ type: "danger", message: "Vui lòng nhập email chưa đăng ký" });
+        setAlert({
+          type: "danger",
+          message: "Vui lòng nhập email chưa đăng ký",
+        });
         setTimeout(() => setAlert(null), 5000);
-      }
-      else {
+      } else {
         UserAPI.sendRegisterCode([email])
-          .then(res => {
+          .then((res) => {
             console.log(res);
           })
-          .catch(e => {
+          .catch((e) => {
             setAlert({ type: "danger", message: "Lỗi gửi email" });
             setTimeout(() => setAlert(null), 5000);
           });
       }
-
     }
   }
 
   const register = async (event) => {
     event.preventDefault();
-    console.log('inputted Data = ' + JSON.stringify(registerForm));
+    console.log("inputted Data = " + JSON.stringify(registerForm));
 
     if (!checkIput()) {
       return;
@@ -108,10 +112,10 @@ const RegisterForm = () => {
 
     // call api lấy email từ code
     let email = await UserAPI.getRegisterUser(registerForm.code)
-      .then(res => {
+      .then((res) => {
         return res.data;
       })
-      .catch(e => {
+      .catch((e) => {
         setAlert({ type: "danger", message: e.response.data.message });
         setTimeout(() => setAlert(null), 5000);
         return null;
@@ -123,20 +127,26 @@ const RegisterForm = () => {
       // check email từ code có trùng vs email nhập
       if (email !== inputtedEmail) {
         console.log("Mã xác thực không dành cho email " + inputtedEmail);
-        setAlert({ type: "danger", message: "Mã xác thực không dành cho email " + inputtedEmail });
+        setAlert({
+          type: "danger",
+          message: "Mã xác thực không dành cho email " + inputtedEmail,
+        });
         setTimeout(() => setAlert(null), 5000);
         return;
       }
       // add user
       UserAPI.addUser(registerForm)
-      .then(res => {
-        setAlert({ type: "success", message: "Đăng kí tài khoản thành công" });
-        setTimeout(() => setAlert(null), 5000);
-      })
-      .catch(e => {
-        setAlert({ type: "danger", message: e.response.data.message });
-        setTimeout(() => setAlert(null), 5000);
-      });
+        .then((res) => {
+          setAlert({
+            type: "success",
+            message: "Đăng kí tài khoản thành công",
+          });
+          setTimeout(() => setAlert(null), 5000);
+        })
+        .catch((e) => {
+          setAlert({ type: "danger", message: e.response.data.message });
+          setTimeout(() => setAlert(null), 5000);
+        });
     }
     // không lấy đc email từ code
     else {
@@ -220,10 +230,18 @@ const RegisterForm = () => {
                   </Radio.Group>
                 </Form.Group>
 
-                <Button variant="success" className="btn_register_1" onClick={sendEmail}>
+                <Button
+                  variant="success"
+                  className="btn_SendEmail"
+                  onClick={sendEmail}
+                >
                   Gửi mã xác thực Email
                 </Button>
-                <Button variant="success" className="btn_register_1" type="submit">
+                <Button
+                  variant="success"
+                  className="btn_register"
+                  type="submit"
+                >
                   Đăng kí
                 </Button>
               </Form>
@@ -240,7 +258,6 @@ const RegisterForm = () => {
           </div>
         </div>
       </div>
-
     </>
   );
 };

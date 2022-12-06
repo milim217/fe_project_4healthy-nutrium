@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PageHeader, Avatar, Dropdown, Modal, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import NutrionExpertInformation from "../../pages/nutrion/NutrionExpertInformation";
-const HeaderLayout = (props) => {
+const HeaderNutritionExpertManager = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -46,7 +46,7 @@ const HeaderLayout = (props) => {
         }}
       >
         <div className="name_account_listPage"> Tên của tài khoản </div>
-        <div className="type_account_listPage"> Quản trị viên </div>
+        <div className="type_account_listPage"> Chuyên gia dinh dưỡng </div>
         <Dropdown
           menu={{
             items,
@@ -82,4 +82,4 @@ const HeaderLayout = (props) => {
   );
 };
 
-export default HeaderLayout;
+export default HeaderNutritionExpertManager;

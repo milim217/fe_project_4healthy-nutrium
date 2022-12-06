@@ -38,11 +38,6 @@ const Slidebar = ({ children }) => {
           defaultSelectedKeys={["/"]}
           items={[
             {
-              key: "/admin/dashboard",
-              icon: <UserOutlined />,
-              label: "Thống kê người dùng",
-            },
-            {
               key: "/admin/listuser",
               icon: <UserSwitchOutlined />,
               label: "Danh sách người dùng",

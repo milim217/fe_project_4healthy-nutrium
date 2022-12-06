@@ -8,9 +8,7 @@ import UserAPI from "../../service/Actions/UserAPI";
 import jwt from "jwt-decode";
 import { useHistory } from "react-router-dom";
 
-
 const LoginForm = () => {
-
   const history = useHistory();
 
   // Local state
@@ -28,22 +26,22 @@ const LoginForm = () => {
     event.preventDefault();
 
     UserAPI.login(loginForm)
-      .then(res => {
+      .then((res) => {
         const token = res.data.access_token;
         const user = jwt(token);
-        localStorage.setItem('token', JSON.stringify(token));
+        localStorage.setItem("token", JSON.stringify(token));
         if (user.role === "ADMIN") {
-          history.push('/admin/dashboard');
+          history.push("/admin/dashboard");
           console.log("Account ADMIN");
         } else if (user.role === "USER") {
-          history.push('/homeuser');
+          history.push("/homeuser");
           console.log("Account USER");
         } else {
-          history.push('/nutrionexpert/information');
+          history.push("/nutrionexpert/food");
           console.log("Account NUTRIENT");
         }
       })
-      .catch(e => {
+      .catch((e) => {
         setAlert({ type: "danger", message: "Sai tên đăng nhập/mật khẩu" });
         setTimeout(() => setAlert(null), 5000);
       });
@@ -75,7 +73,11 @@ const LoginForm = () => {
                     onChange={onChangeLoginForm}
                   />
                 </Form.Group>
-                <Button variant="success" className="btn_loginForm_1" type="submit">
+                <Button
+                  variant="success"
+                  className="btn_loginForm_1"
+                  type="submit"
+                >
                   Đăng nhập
                 </Button>
               </Form>

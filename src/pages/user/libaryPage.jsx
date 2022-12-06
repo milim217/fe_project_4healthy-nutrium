@@ -7,21 +7,21 @@ import CardGroupIngredient from "../../components/groupCard/CardGroupIngredient"
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Form from "react-bootstrap/Form";
-import Pagination from "react-bootstrap/Pagination";
-import { Input, Select } from "antd";
+// import Pagination from "react-bootstrap/Pagination";
+import { Input, Select, Pagination } from "antd";
 //Lấy giá trị search
 const { Search } = Input;
 const onSearch = (value) => console.log(value);
 //Phân trang
-let active = 2;
-let items = [];
-for (let number = 1; number <= 5; number++) {
-  items.push(
-    <Pagination.Item key={number} active={number === active}>
-      {number}
-    </Pagination.Item>
-  );
-}
+// let active = 2;
+// let items = [];
+// for (let number = 1; number <= 5; number++) {
+//   items.push(
+//     <Pagination.Item key={number} active={number === active}>
+//       {number}
+//     </Pagination.Item>
+//   );
+// }
 const LibaryPage = () => {
   return (
     <div>
@@ -153,7 +153,8 @@ const LibaryPage = () => {
         </Tabs>
       </div>
       <div className="Pageination_libaryPage">
-        <Pagination>{items}</Pagination>
+        <Pagination defaultCurrent={1} total={50} />;
+        {/* <Pagination>{items}</Pagination> */}
       </div>
 
       <Footers></Footers>

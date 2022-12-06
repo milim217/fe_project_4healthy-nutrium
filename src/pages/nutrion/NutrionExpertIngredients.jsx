@@ -11,7 +11,7 @@ import {
   Input,
 } from "antd";
 import React, { useState, useEffect } from "react";
-import HeaderLayout from "../../components/header/HeaderAdmin";
+import HeaderLayout from "../../components/header/HeaderNutritionExpertManager";
 import "../../assets/style/admin/style.css";
 import SelectionFoods from "../../components/selection/SelectionFoods";
 import SelectionCategories from "../../components/selection/SelectionCategories";

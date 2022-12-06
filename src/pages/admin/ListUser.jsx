@@ -1,13 +1,15 @@
 import {
   Table,
-  Button,
-  message,
   Tag,
   Image,
   Popconfirm,
   Breadcrumb,
   Modal,
   Input,
+  Card,
+  Row,
+  Col,
+  Statistic,
 } from "antd";
 import React, { useState } from "react";
 import HeaderLayout from "../../components/header/HeaderAdmin";
@@ -109,6 +111,7 @@ const ListUser = () => {
   return (
     <div>
       <HeaderLayout title={"Danh sách người dùng"}></HeaderLayout>
+
       <Slidebar>
         {/* đường dẫn */}
         <Breadcrumb
@@ -116,6 +119,7 @@ const ListUser = () => {
             paddingLeft: "10px",
             paddingTop: "5px",
             paddingBottom: "10px",
+            marginTop: "10px",
           }}
         >
           <Breadcrumb.Item>
@@ -123,6 +127,24 @@ const ListUser = () => {
           </Breadcrumb.Item>
           <Breadcrumb.Item>Danh sách người dùng</Breadcrumb.Item>
         </Breadcrumb>
+        <Card bordered={false} className="border-1">
+          <Row gutter={24}>
+            <Col span={12}>
+              <Statistic
+                title="Số lượng người dùng"
+                value={112893}
+                precision={2}
+              />
+            </Col>
+            <Col span={12}>
+              <Statistic
+                title="Số lượng chuyên gia phân tích"
+                value={5}
+                precision={2}
+              />
+            </Col>
+          </Row>
+        </Card>
         <div className="wrapper__listUser">
           <div className="add_new_user__listUser">
             <AddNewUser></AddNewUser>

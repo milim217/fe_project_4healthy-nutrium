@@ -74,7 +74,7 @@
   margin-left: 5px;
 }
 
-.landing-inner-second form .btn_register_1 {
+.landing-inner-second form .btn_register {
   background-color: #3b89f7;
   border-color: #3b89f7;
   color: #fff;
@@ -93,7 +93,7 @@
   font-family: "Takeaway Sans", sans-serif;
   font-size: 16px;
   line-height: 24px;
-  float: right;
+  float: left;
 }
 
 .btn_send_mail_register_account {
@@ -223,4 +223,25 @@
   font-size: 16px;
   line-height: 24px;
   float: left;
+}
+.btn_SendEmail {
+  background-color: #3b89f7;
+  border-color: #3b89f7;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 4px 16px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 56px;
+  width: 160px;
+  font-family: "Takeaway Sans", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  float: right;
 }

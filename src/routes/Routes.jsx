@@ -25,42 +25,27 @@ import DetailIngredient from "../pages/user/DetailIngredient";
 import LoginForm from "../components/form/LoginForm";
 import ResetPasswordForm from "../components/form/ResetPasswordForm";
 import RegisterForm from "../components/form/RegisterForm";
+import NutrionExpertFood from "../pages/nutrion/NutrionExpertFood";
 
 const Routes = () => {
   return (
     <div>
       <Route exact path="/" component={Landing} />
-      <Route
-        exact
-        path="/login"
-        component={LoginForm}
-      />
-      <Route
-        exact
-        path="/register"
-        component={RegisterForm}
-      />
-      <Route
-        exact
-        path="/resetpassword"
-        component={ResetPasswordForm}
-      />
+      <Route exact path="/login" component={LoginForm} />
+      <Route exact path="/register" component={RegisterForm} />
+      <Route exact path="/resetpassword" component={ResetPasswordForm} />
       <Route path="/admin/listuser" component={ListUser} />
-      <Route path="/admin/dashboard" component={DashboardAdmin} />
+      {/* <Route path="/admin/dashboard" component={DashboardAdmin} /> */}
       <Route exact path="/home" component={HomePage} />
       <Route exact path="/homeuser/profile" component={UserProfile} />
-      <Route
-        exact
-        path="/nutrionexpert"
-        component={NutrionExpertPage}
-      />
-      <Route
+      <Route exact path="/nutrionexpert" component={NutrionExpertPage} />
+      {/* <Route
         exact
         path="/nutrionexpert/information"
         render={(props) => (
           <NutrionExpertPage {...props} changePage="information" />
         )}
-      />
+      /> */}
       <Route
         exact
         path="/nutrionexpert/food"
@@ -95,21 +80,9 @@ const Routes = () => {
         component={GetUserDiet}
       ></Route>
       <Route exact path="/schedule" component={UserPersonalSchedule}></Route>
-      <Route
-        exact
-        path="/homeuser"
-        component={HomeUser}
-      ></Route>
-      <Route
-        exact
-        path="/libary"
-        component={LibaryPage}
-      ></Route>
-      <Route
-        exact
-        path="/detailfood"
-        component={DetailFood}
-      ></Route>
+      <Route exact path="/homeuser" component={HomeUser}></Route>
+      <Route exact path="/libary" component={LibaryPage}></Route>
+      <Route exact path="/detailfood" component={DetailFood}></Route>
       <Route
         exact
         path="/detailingredient"

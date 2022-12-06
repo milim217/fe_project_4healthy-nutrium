@@ -37,11 +37,11 @@ const Slidebar = ({ children }) => {
           mode="inline"
           defaultSelectedKeys={["/"]}
           items={[
-            {
-              key: "/nutrionexpert/information",
-              // icon: <UserOutlined />,
-              label: "Thông tin của bạn",
-            },
+            // {
+            //   key: "/nutrionexpert/information",
+            //   // icon: <UserOutlined />,
+            //   label: "Thông tin của bạn",
+            // },
             {
               key: "/nutrionexpert/food",
               // icon: <UserSwitchOutlined />,
