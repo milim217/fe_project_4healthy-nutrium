@@ -50,6 +50,9 @@ const NutrionExpertFood = () => {
     {
       title: "Ảnh món ăn",
       dataIndex: "imageFood",
+      render: (imageFood) => {
+        return <Image width={80} height={60} src={imageFood} />;
+      },
     },
     {
       title: "Loại món ăn",
@@ -136,16 +139,7 @@ const NutrionExpertFood = () => {
           calories: foodValue.ingredientMasses.map(
             (calo) => calo.ingredient.calo + ""
           ),
-          imageFood: {
-            render: () => (
-              <>
-                <Image
-                  width={80}
-                  src={`http://localhost:8080/food/${foodValue.id}/image`}
-                />
-              </>
-            ),
-          },
+          imageFood: `http://localhost:8080/food/${foodValue.id}/image`,
         })
       )
     : console.log("error");

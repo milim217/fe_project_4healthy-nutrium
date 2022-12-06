@@ -53,15 +53,9 @@ function NutrionExpertIngredients() {
     {
       title: "Ảnh Nguyên liệu",
       dataIndex: "image_ingredient",
-      // render: () =>
-      //   Ingredient
-      //     ? Ingredient.map((IngredientValue) => (
-      //         <Image
-      //           width={80}
-      //           src={`http://localhost:8080/food/${IngredientValue.id}/image`}
-      //         />
-      //       ))
-      //     : console.log("error"),
+      render: (imageIngredient) => {
+        return <Image width={80} height={60} src={imageIngredient} />;
+      },
       justify: "center",
     },
     {
@@ -228,16 +222,7 @@ function NutrionExpertIngredients() {
           vitaminB12: ingredientValue.vitaminB12,
           vitaminA: ingredientValue.vitaminA,
           vitaminArea: ingredientValue.vitaminARae,
-          image_ingredient: {
-            render: () => (
-              <>
-                <Image
-                  width={80}
-                  src={`http://localhost:8080/food/${ingredientValue.id}/image`}
-                />
-              </>
-            ),
-          },
+          image_ingredient: `http://localhost:8080/ingredient/${ingredientValue.id}/image`,
         })
       )
     : console.log("error");
