@@ -45,8 +45,8 @@ const HeaderLayout = (props) => {
           top: "20px",
         }}
       >
-        <div className="name_account_listPage"> Tên của tài khoản </div>
-        <div className="type_account_listPage"> Quản trị viên </div>
+        <div className="name_account_admin"> Tên của tài khoản </div>
+        <div className="type_account_admin"> Quản trị viên </div>
         <Dropdown
           menu={{
             items,

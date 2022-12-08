@@ -143,20 +143,7 @@ const NutrionExpertFood = () => {
         })
       )
     : console.log("error");
-  // for (let i = 0; i < 100; i++) {
-  //   data.push({
-  //     id: `id ${i}`,
-  //     food_name: `food_name ${i}`,
-  //     key: i,
-  //     category_id: `category_id${i}@gmail.com`,
-  //     seasson_id: `seasson_id ${i}`,
-  //     recipe: `recipe ${i}`,
-  //     fat: `fat ${i}`,
-  //     protein: `protein ${i}`,
-  //     carbon: `carbon ${i}`,
-  //     calories: `calories ${i}`,
-  //   });
-  // }
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {

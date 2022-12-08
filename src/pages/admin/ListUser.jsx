@@ -11,7 +11,7 @@ import {
   Col,
   Statistic,
 } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HeaderLayout from "../../components/header/HeaderAdmin";
 import AddNewUser from "../../components/drawn/AddNewUser";
 import "../../assets/style/admin/style.css";
@@ -19,9 +19,31 @@ import Slidebar from "./SlidebarAdmin";
 import ModalDeleteListUser from "../../components/modal/ModalDeleteListUser";
 import ModalViewInfomationUser from "../../components/modal/ModalViewInfomationUser";
 import imageUserOfListUser from "../../assets/image/Img_User.png";
+import UserAPI from "../../service/Actions/UserAPI";
 const text = "Bạn có chắc chắn muốn xoá tài khoản này?";
 
 const ListUser = () => {
+  const [listuser, setListUser] = useState([]);
+  useEffect(() => {
+    UserAPI.getAll()
+      .then((res) => {
+        // console.log("data = " + JSON.stringify(res.data));
+        setListUser(res.data);
+      })
+      .catch((err) => {});
+  }, []);
+
+  const valueNutriExpert = listuser.map(
+    (listUserNutritionExpert) => listUserNutritionExpert.role.name
+  );
+  var sizeRoleNutritionExpertUser = 0;
+  const RoleList = Object.values(valueNutriExpert);
+  RoleList.forEach((RoleList) => {
+    if (RoleList === "NUTRIENT_EXPERT") {
+      sizeRoleNutritionExpertUser++;
+    }
+  });
+
   const columns = [
     {
       title: "Tên người dùng",
@@ -30,7 +52,7 @@ const ListUser = () => {
     },
     {
       title: "Ảnh Người Dùng",
-      dataIndex: "",
+      dataIndex: "image_user",
       render: () => (
         <>
           <Image width={50} src={imageUserOfListUser} />
@@ -44,39 +66,39 @@ const ListUser = () => {
     },
     {
       title: "Địa chỉ",
-      dataIndex: "role",
+      dataIndex: "address_user",
       justify: "center",
     },
     {
       title: "Ngày sinh",
-      dataIndex: "role",
+      dataIndex: "Birth_Of_Date",
       justify: "center",
     },
     {
       title: "Số điện thoại",
-      dataIndex: "role",
+      dataIndex: "phoneNumber_user",
       justify: "center",
     },
     {
       title: "Vai trò",
-      dataIndex: "role",
-      justify: "center",
-    },
-    {
-      title: "Thông tin khác",
-      dataIndex: "role",
+      dataIndex: "roleUser",
       justify: "center",
     },
     {
       title: "Trạng thái",
       dataIndex: "status",
       justify: "center",
-      render: () => (
+      render: (status) => (
         <>
-          <Tag color="red">Đã vô hiệu hoá tài khoản </Tag>
-          {/* <Tag color="green">Đã kích hoạt </Tag> */}
+          {!status && <Tag color="red">Vô hiệu hoá</Tag>}
+          {status && <Tag color="green">Đã kích hoạt </Tag>}
         </>
       ),
+    },
+    {
+      title: "Thông tin khác",
+      dataIndex: "role",
+      justify: "center",
     },
     {
       title: "Thông tin người dùng",
@@ -96,14 +118,19 @@ const ListUser = () => {
   ];
 
   const data = [];
-  for (let i = 0; i < 5; i++) {
-    data.push({
-      name: `name ${i}`,
-      key: i,
-      email: `admin${i}@gmail.com`,
-      role: `role number ${i}`,
-    });
-  }
+  listuser
+    ? listuser.map((listUser) =>
+        data.push({
+          email: listUser.email,
+          name: listUser.name,
+          address_user: listUser.address,
+          Birth_Of_Date: listUser.dob,
+          phoneNumber_user: listUser.phone,
+          roleUser: listUser.role.name,
+          status: listUser.status,
+        })
+      )
+    : console.log("error");
 
   // Tìm kiếm người dùng
   const { Search } = Input;
@@ -132,14 +159,14 @@ const ListUser = () => {
             <Col span={12}>
               <Statistic
                 title="Số lượng người dùng"
-                value={112893}
+                value={listuser.length}
                 precision={2}
               />
             </Col>
             <Col span={12}>
               <Statistic
                 title="Số lượng chuyên gia phân tích"
-                value={5}
+                value={sizeRoleNutritionExpertUser}
                 precision={2}
               />
             </Col>
@@ -166,6 +193,7 @@ const ListUser = () => {
           dataSource={data}
           scroll={{
             x: 1200,
+            y: 450,
           }}
         />
       </Slidebar>

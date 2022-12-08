@@ -81,3 +81,20 @@
   height: auto;
   font-weight: 900;
 }
+.name_account_admin {
+  position: absolute;
+  right: 5px;
+  padding-top: 5px;
+  min-width: 185px;
+  height: auto;
+}
+
+.type_account_admin {
+  position: absolute;
+  right: 5px;
+  top: 25px;
+  min-width: 185px;
+  width: auto;
+  height: auto;
+  font-weight: 900;
+}

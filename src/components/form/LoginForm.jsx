@@ -31,7 +31,7 @@ const LoginForm = () => {
         const user = jwt(token);
         localStorage.setItem("token", JSON.stringify(token));
         if (user.role === "ADMIN") {
-          history.push("/admin/dashboard");
+          history.push("/admin/listuser");
           console.log("Account ADMIN");
         } else if (user.role === "USER") {
           history.push("/homeuser");
