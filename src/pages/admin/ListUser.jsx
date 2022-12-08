@@ -37,10 +37,18 @@ const ListUser = () => {
     (listUserNutritionExpert) => listUserNutritionExpert.role.name
   );
   var sizeRoleNutritionExpertUser = 0;
+  var sizeRoleAdmin = 0;
+  var sizeRoleUser = 0;
   const RoleList = Object.values(valueNutriExpert);
   RoleList.forEach((RoleList) => {
     if (RoleList === "NUTRIENT_EXPERT") {
       sizeRoleNutritionExpertUser++;
+    }
+    if (RoleList === "ADMIN") {
+      sizeRoleAdmin++;
+    }
+    if (RoleList === "USER") {
+      sizeRoleUser++;
     }
   });
 
@@ -101,7 +109,7 @@ const ListUser = () => {
       justify: "center",
     },
     {
-      title: "Thông tin người dùng",
+      title: "Thông tin chi tiết",
       render: () => <ModalViewInfomationUser></ModalViewInfomationUser>,
     },
     {
@@ -156,18 +164,32 @@ const ListUser = () => {
         </Breadcrumb>
         <Card bordered={false} className="border-1">
           <Row gutter={24}>
-            <Col span={12}>
+            <Col span={6}>
               <Statistic
-                title="Số lượng người dùng"
+                title="Số lượng tài khoản"
                 value={listuser.length}
-                precision={2}
+                precision={0}
               />
             </Col>
-            <Col span={12}>
+            <Col span={6}>
               <Statistic
                 title="Số lượng chuyên gia phân tích"
                 value={sizeRoleNutritionExpertUser}
-                precision={2}
+                precision={0}
+              />
+            </Col>
+            <Col span={6}>
+              <Statistic
+                title="Số lượng quản trị viên"
+                value={sizeRoleAdmin}
+                precision={0}
+              />
+            </Col>
+            <Col span={6}>
+              <Statistic
+                title="Số lượng người dùng"
+                value={sizeRoleUser}
+                precision={0}
               />
             </Col>
           </Row>
