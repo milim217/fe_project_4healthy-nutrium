@@ -1,62 +1,151 @@
-import React, { useEffect } from "react";
 import HeaderUser from "../header/HeaderUser";
 import Footers from "../footer/footers";
 import "../../assets/style/user/quizpage.css";
-import { Row, Col } from "antd";
+import { Card, Space, Input } from "antd";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
-import CategoryAPI from "../../service/Actions/CategoryAPI";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import Form from "react-bootstrap/Form";
-import ModalAddNewFoodQuiz5 from "../modal/ModalAddNewFoodQuiz5";
+import UserAPI from "../../service/Actions/UserAPI";
 import AlertMessage from "../alert/AlertMessage";
+import AuthUtil from "../../service/utils/AuthUtil";
 
-const Quiz5 = () => {
+const Quiz6 = () => {
   const history = useHistory();
-  const [categories, setCategories] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState(new Set());
+  const [alert, setAlert] = useState(null);
+  const [morning, setMorning] = useState(0);
+  const [lunch, setLunch] = useState(0);
+  const [dinner, setDinner] = useState(0);
 
-  useEffect(() => {
-    CategoryAPI.getAll()
-      .then((res) => {
-        setCategories(res.data);        
-      })
-      .catch((err) => {});
-  }, []);
+  const onFormChange = (event) => {
+    if (event.target.name == "morning") {
+      setMorning(event.target.value);
+    } else if (event.target.name == "lunch") {
+      setLunch(event.target.value);
+    } else {
+      setDinner(event.target.value);
+    }
+  };
 
-  const onCheckBoxChange = (e) => {
-    let category = categories[parseInt(e.target.name)];
-     if(selectedCategories.has(category)){
-      selectedCategories.delete(category);
-     }
-     else{
-      selectedCategories.add(category);
-     }
-     setSelectedCategories(selectedCategories);
+  const checkInput = () => {
+    let check = true;
+
+    if (!morning) {
+      setAlert({
+        type: "danger",
+        message: "Vui lòng nhập số món cho bữa sáng",
+      });
+      setTimeout(() => setAlert(null), 2000);
+      check = false;
+    }
+
+    if (!lunch) {
+      setAlert({
+        type: "danger",
+        message: "Vui lòng nhập số món cho bữa trưa",
+      });
+      setTimeout(() => setAlert(null), 2000);
+      check = false;
+    }
+
+    if (!dinner) {
+      setAlert({
+        type: "danger",
+        message: "Vui lòng nhập số món cho bữa tối",
+      });
+      setTimeout(() => setAlert(null), 2000);
+      check = false;
+    }
+
+    if (morning < 1 || morning > 4) {
+      setAlert({
+        type: "danger",
+        message: "Bạn chỉ được nhập tối đa 4 món trong buổi sáng",
+      });
+      setTimeout(() => setAlert(null), 2000);
+      check = false;
+    }
+
+    if (lunch < 2 || lunch > 4) {
+      setAlert({
+        type: "danger",
+        message: "Bạn chỉ được nhập tối thiểu 2 món và tối đa 4 món trong buổi trưa",
+      });
+      setTimeout(() => setAlert(null), 2000);
+      check = false;
+    }
+
+    if (dinner < 2 || dinner > 4) {
+      setAlert({
+        type: "danger",
+        message: "Bạn chỉ được nhập tối thiểu 2 món và tối đa 4 món trong buổi tối",
+      });
+      setTimeout(() => setAlert(null), 2000);
+      check = false;
+    }
+
+    return check;
   }
 
-  const submit = (event) => {
+  async function submit(event) {
     event.preventDefault();
+
+    if (!checkInput()) {
+      return;
+    }
 
     let data;
     try {
       data = JSON.parse(localStorage.getItem("quiz-data"));
-      data.categories = Array.from(selectedCategories);
+      data.counts = [morning, lunch, dinner];
+
+      let user = AuthUtil.getUserFromToken();
+      if (user) {
+        await user.then(res => {
+          data.user = res.data;
+        });
+      }
+      else {
+        history.push("/login");
+      }
+
     } catch (error) {
       data = {
         user: null,
         height: null,
         weight: null,
         job: null,
-        categories: Array.from(selectedCategories),
-        counts: null,
+        categories: null,
+        counts: [morning, lunch, dinner],
       };
     }
 
-    console.log(JSON.stringify(data));
-    localStorage.setItem("quiz-data",JSON.stringify(data));
-    history.push("/onboarding/quiz6");
+    let mess = '';
+
+    if (data.height === null || data.weight === null) {
+      mess += " [chiều cao, cân nặng]";
+    }
+    if (data.job === null) {
+      mess += " [công việc]";
+    }
+    if (data.categories === null) {
+      mess += " [loại thức ăn bạn muốn]";
+    }
+
+    if (mess !== '') {
+      mess = "Vui lòng chọn lại những thông tin sau:" + mess;
+      setAlert({
+        type: "danger",
+        message: mess,
+      });
+      setTimeout(() => setAlert(null), 5000);
+      return;
+    }
+
+    console.log("quiz-data = " + JSON.stringify(data));
+    localStorage.setItem("quiz-data", JSON.stringify(data));
+
+    history.push("/onboarding/GetUserDiet");
   };
 
   return (
@@ -64,38 +153,57 @@ const Quiz5 = () => {
       <HeaderUser></HeaderUser>
       <div className="wrapper-quiz_page">
         <div className="wrapper-ProgressBar">
-          <Progress per="75"></Progress>
+          <Progress per="95"></Progress>
         </div>
+
         <div className="wrapper-title-quiz">
-          <p>Hãy chọn loại thức ăn bạn muốn</p>
+          <p>Số lượng món ăn mà bạn ăn trong bữa Sáng | Trưa | Tối?</p>
         </div>
         <div className="wrapper-table-option">
-        <AlertMessage info={alert} />
-          {/* check-box */}
-          <Row gutter={[16, 16]}>
-            {categories ? (
-              categories.map((category,i) => (
-                <Col span={8}>
-                  <Form>
-                    <Form.Check
-                      name={`${i}`}
-                      type="checkbox"
-                      id="custom-switch"
-                      label={category.categoryName}
-                      className={"checked"}
-                      onChange = {onCheckBoxChange}
-                    ></Form.Check>
-                  </Form>
-                </Col>
-              ))
-            ) : (
-              <h2>Please add new food category</h2>
-            )}
-          </Row>
-          <ModalAddNewFoodQuiz5></ModalAddNewFoodQuiz5>
+          <Space direction="vertical" size="middle" style={{ display: "flex" }}>
+            <AlertMessage info={alert} />
+            <Card title="Sáng: " size="small">
+              <Input
+                placeholder="Nhập số món bạn ăn trong buổi sáng ( 1 - 2 )"
+                className="InputText_Quiz"
+                name="morning"
+                type="number"
+                min="1"
+                max="4"
+                required
+                onChange={onFormChange}
+              />
+            </Card>
+            <Card title="Trưa" size="small">
+              <Input
+                placeholder="Nhập số món bạn ăn trong buổi trưa ( 1 - 4 )"
+                className="InputText_Quiz"
+                name="lunch"
+                type="number"
+                min="1"
+                max="4"
+                required
+                onChange={onFormChange}
+              />
+            </Card>
+            <Card title="Tối" size="small">
+              <Input
+                placeholder="Nhập số món bạn ăn trong buổi tối ( 1 - 4 )"
+                className="InputText_Quiz"
+                name="dinner"
+                type="number"
+                min="1"
+                max="4"
+                required
+                onChange={onFormChange}
+              />
+            </Card>
+          </Space>
+          {/* <Link to="/onboarding/GetUserDiet"> */}
           <Button variant="success" className="button_Link" onClick={submit}>
             Tiếp tục
           </Button>
+          {/* </Link> */}
         </div>
       </div>
       <Footers></Footers>
@@ -103,4 +211,4 @@ const Quiz5 = () => {
   );
 };
 
-export default Quiz5;
+export default Quiz6;

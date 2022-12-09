@@ -1,7 +1,7 @@
 import HeaderUser from "../header/HeaderUser";
 import Footers from "../footer/footers";
 import "../../assets/style/user/quizpage.css";
-import { Card, Space, Row, Col, Image } from "antd";
+import { Card, Space, Row, Col, Image, Modal } from "antd";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
 import Spinner from "react-bootstrap/Spinner";
@@ -16,7 +16,20 @@ const GetUserDiet = () => {
   const [lunchIndex, setLunchIndex] = useState(0);
   const [dinnerIndex, setDinnerIndex] = useState(0);
   const [alert, setAlert] = useState(null);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const gridStyle = {
+    width: "20%",
+    textAlign: "center",
+  };
   useEffect(() => {
     const quizData = JSON.parse(localStorage.getItem("quiz-data"));
     DietAPI.getDietOptions(quizData)
@@ -96,13 +109,46 @@ const GetUserDiet = () => {
   return (
     <>
       <HeaderUser></HeaderUser>
+      {/* Modal mở ra ở đây */}
+      <Modal
+        title="Thông tin chi tiết"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={1000}
+      >
+        <Card title="0.5 suất Trứng khuấy ( mass trong dietaryinfo + tên món ăn)">
+          <Image
+            width={190}
+            height={140}
+            src={
+              "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574"
+            }
+          />
+          <Card.Grid style={gridStyle}>
+            Số lượng calo cần: 100( calories_need trong dietaryinfo)
+          </Card.Grid>
+          <Card.Grid style={gridStyle}>
+            {" "}
+            Số lượng chất béo cần: 100( fat_need trong dietaryinfo)
+          </Card.Grid>
+          <Card.Grid style={gridStyle}>
+            {" "}
+            Số lượng chất đạm cần: 100( protein_need trong dietaryinfo)
+          </Card.Grid>
+          <Card.Grid style={gridStyle}>
+            {" "}
+            Số lượng chất carbon cần: 100( carb_need trong dietaryinfo)
+          </Card.Grid>
+        </Card>
+      </Modal>
+
       <div className="wrapper-quiz_page">
         <div className="wrapper-ProgressBar">
           <Progress per="100"></Progress>
         </div>
         <div className="wrapper-title-quiz">
           <p>
-            {" "}
             <a style={{ color: "#ff8000" }}>Hoàn thành!!</a> dưới đây là kế
             hoạch cho bữa ăn hàng ngày của bạn
           </p>
@@ -130,30 +176,29 @@ const GetUserDiet = () => {
               )}
               {diet.breakfastOptions ? (
                 diet.breakfastOptions[breakfastIndex]?.map((foodMass) => (
-                  <Row className="padding_20">
-                    <Col span={18} push={6}>
-                      <div className="wrapper-food-quantitative">
-                        <h5 className="CardName-food">
-                          {foodMass.mass.toFixed(1)} suất{" "}
-                          {foodMass.food.foodName}
-                        </h5>
+                  <div onClick={showModal}>
+                    <Row className="padding_20">
+                      <Col span={18} push={6}>
+                        <div className="wrapper-food-quantitative">
+                          <h5 className="CardName-food">
+                            {foodMass.mass.toFixed(1)} suất{" "}
+                            {foodMass.food.foodName}
+                          </h5>
 
-                        <h5 className="CardName-caloFood">
-                          Calo: <b> {foodMass.food.calo}</b>
-                        </h5>
-                      </div>
-                    </Col>
-                    <Col span={6} pull={18}>
-                      <Image
-                        width={120}
-                        height={80}
-                        src={`http://localhost:8080/food/${foodMass.food.id}/image`}
-                      />
-                    </Col>
-                    <Button className="Button-infomation-getuserdiet">
-                      Thông tin dinh dưỡng
-                    </Button>
-                  </Row>
+                          <h5 className="CardName-caloFood">
+                            Calo: <b> {foodMass.food.calo}</b>
+                          </h5>
+                        </div>
+                      </Col>
+                      <Col span={6} pull={18}>
+                        <Image
+                          width={120}
+                          height={80}
+                          src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                        />
+                      </Col>
+                    </Row>
+                  </div>
                 ))
               ) : (
                 <div>
@@ -182,30 +227,29 @@ const GetUserDiet = () => {
               )}
               {diet.lunchOptions ? (
                 diet.lunchOptions[lunchIndex]?.map((foodMass) => (
-                  <Row className="padding_20">
-                    <Col span={18} push={6}>
-                      <div className="wrapper-food-quantitative">
-                        <h5 className="CardName-food">
-                          {foodMass.mass.toFixed(1)} suất{" "}
-                          {foodMass.food.foodName}
-                        </h5>
+                  <div onClick={showModal}>
+                    <Row className="padding_20">
+                      <Col span={18} push={6}>
+                        <div className="wrapper-food-quantitative">
+                          <h5 className="CardName-food">
+                            {foodMass.mass.toFixed(1)} suất{" "}
+                            {foodMass.food.foodName}
+                          </h5>
 
-                        <h5 className="CardName-caloFood">
-                          Calo: <b> {foodMass.food.calo}</b>
-                        </h5>
-                      </div>
-                    </Col>
-                    <Col span={6} pull={18}>
-                      <Image
-                        width={120}
-                        height={80}
-                        src={`http://localhost:8080/food/${foodMass.food.id}/image`}
-                      />
-                    </Col>
-                    <Button className="Button-infomation-getuserdiet">
-                      Thông tin dinh dưỡng
-                    </Button>
-                  </Row>
+                          <h5 className="CardName-caloFood">
+                            Calo: <b> {foodMass.food.calo}</b>
+                          </h5>
+                        </div>
+                      </Col>
+                      <Col span={6} pull={18}>
+                        <Image
+                          width={120}
+                          height={80}
+                          src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                        />
+                      </Col>
+                    </Row>
+                  </div>
                 ))
               ) : (
                 <div>
@@ -234,30 +278,29 @@ const GetUserDiet = () => {
               )}
               {diet.dinnerOptions ? (
                 diet.dinnerOptions[dinnerIndex]?.map((foodMass) => (
-                  <Row className="padding_20">
-                    <Col span={18} push={6}>
-                      <div className="wrapper-food-quantitative">
-                        <h5 className="CardName-food">
-                          {foodMass.mass.toFixed(1)} suất{" "}
-                          {foodMass.food.foodName}
-                        </h5>
+                  <div onClick={showModal}>
+                    <Row className="padding_20">
+                      <Col span={18} push={6}>
+                        <div className="wrapper-food-quantitative">
+                          <h5 className="CardName-food">
+                            {foodMass.mass.toFixed(1)} suất{" "}
+                            {foodMass.food.foodName}
+                          </h5>
 
-                        <h5 className="CardName-caloFood">
-                          Calo: <b> {foodMass.food.calo}</b>
-                        </h5>
-                      </div>
-                    </Col>
-                    <Col span={6} pull={18}>
-                      <Image
-                        width={120}
-                        height={80}
-                        src={`http://localhost:8080/food/${foodMass.food.id}/image`}
-                      />
-                    </Col>
-                    <Button className="Button-infomation-getuserdiet">
-                      Thông tin dinh dưỡng
-                    </Button>
-                  </Row>
+                          <h5 className="CardName-caloFood">
+                            Calo: <b> {foodMass.food.calo}</b>
+                          </h5>
+                        </div>
+                      </Col>
+                      <Col span={6} pull={18}>
+                        <Image
+                          width={120}
+                          height={80}
+                          src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                        />
+                      </Col>
+                    </Row>
+                  </div>
                 ))
               ) : (
                 <div>

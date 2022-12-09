@@ -1,93 +1,59 @@
+import React, { useState, useEffect } from "react";
 import HeaderUser from "../header/HeaderUser";
 import Footers from "../footer/footers";
 import "../../assets/style/user/quizpage.css";
-import { Card, Input, Space } from "antd";
+import { Card, Space, Input, Radio } from "antd";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import Progress from "../progress/Progress";
-import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import JobAPI from "../../service/Actions/JobAPI";
+import Spinner from "react-bootstrap/Spinner";
 import AlertMessage from "../alert/AlertMessage";
+import { Row, Col } from "antd";
+import ModalAddNewFoodQuiz5 from "../modal/ModalAddNewFoodQuiz5";
 
-const Quiz3 = () => {
+const Quiz4 = () => {
   const history = useHistory();
+
+  const [jobs, setJobs] = useState([]);
+  const [selectedJob, setSelectedJob] = useState(null);
   const [alert, setAlert] = useState(null);
-  const [alert1, setAlert1] = useState(null);
-  const [height, setHeight] = useState(0);
-  const [weight, setWeight] = useState(0);
 
-  const minHeight = 50;
-  const maxHeight = 250;
-  const minWeight = 10;
-  const maxWeight = 200;
+  useEffect(() => {
+    JobAPI.getAll()
+      .then((res) => {
+        setJobs(res.data);
+        console.log("data = " + JSON.stringify(res.data));
+      })
+      .catch((err) => {});
+  }, []);
 
-  const onFormChange = (event) => {
-    if (event.target.name == "height") {
-      setHeight(event.target.value);
-    } else {
-      setWeight(event.target.value);
-    }
-  };
-
-  const checkInput = () => {
-    let check = true;
-    if (height < minHeight || height > maxHeight) {
-      setAlert({
-        type: "danger",
-        message: "Vui lòng nhập chiều cao trong khoảng 50-250 cm",
-      });
-      check = false;
-    } else {
-      setAlert(null);
-    }
-
-    if (weight < minWeight || weight > maxWeight) {
-      setAlert1({
-        type: "danger",
-        message: "Vui lòng nhập chiều cao trong khoảng 10-200 kg",
-      });
-      check = false;
-    } else {
-      setAlert1(null);
-    }
-    if (weight == "") {
-      setAlert1({
-        type: "danger",
-        message: "Vui lòng nhập cân nặng",
-      });
-      check = false;
-    }
-    if (height == "") {
-      setAlert({
-        type: "danger",
-        message: "Vui lòng nhập chiều cao",
-      });
-      check = false;
-    }
-
-    return check;
+  const onChange = (e) => {
+    setSelectedJob(e.target.value);
   };
 
   const submit = (event) => {
     event.preventDefault();
 
-    if (!checkInput()) {
+    if (selectedJob === null) {
+      setAlert({
+        type: "danger",
+        message: "Vui lòng chọn công việc của bạn",
+      });
       return;
     }
 
     let data;
     try {
-      localStorage.removeItem("quiz-data");
       data = JSON.parse(localStorage.getItem("quiz-data"));
-      data.height = height;
-      data.weight = weight;
+      data.job = selectedJob;
     } catch (error) {
       data = {
         user: null,
-        height: height,
-        weight: weight,
-        job: null,
+        height: null,
+        weight: null,
+        job: selectedJob,
         categories: null,
         counts: null,
       };
@@ -102,49 +68,32 @@ const Quiz3 = () => {
       <HeaderUser></HeaderUser>
       <div className="wrapper-quiz_page">
         <div className="wrapper-ProgressBar">
-          <Progress per="25"></Progress>
+          <Progress per="50"></Progress>
         </div>
         <div className="wrapper-title-quiz">
-          <p>Bạn hãy nhập chiều cao và cân nặng của mình nhé</p>
+          <p>Công việc của bạn là gì?</p>
+          <AlertMessage info={alert} />
         </div>
         <div className="wrapper-table-option">
-          <Space direction="vertical" size="middle" style={{ display: "flex" }}>
-            <Form required>
-              <Card title="Chiều cao của bạn là: " size="small">
-                <AlertMessage info={alert} />
-                <Input
-                  placeholder="Chiều cao"
-                  className="InputText_Quiz"
-                  type="number"
-                  name="height"
-                  min={50}
-                  max={250}
-                  required
-                  onChange={onFormChange}
-                />
-              </Card>
-              <Card title="Cân nặng của bạn là" size="small">
-                <AlertMessage info={alert1} />
-                <Input
-                  placeholder="Cân nặng"
-                  className="InputText_Quiz"
-                  type="number"
-                  name="weight"
-                  min={10}
-                  max={200}
-                  required
-                  onChange={onFormChange}
-                />
-              </Card>
-              <Button
-                variant="success"
-                className="button_Link"
-                onClick={submit}
-              >
-                Tiếp tục
-              </Button>
-            </Form>
-          </Space>
+          {/* check-box */}
+          <Row gutter={[16, 16]}>
+            <Radio.Group onChange={onChange} value={selectedJob} size="large">
+              {jobs ? (
+                jobs.map((job) => (
+                  <Radio value={job} className="btn-radio-quiz">
+                    {job.jobName}
+                  </Radio>
+                ))
+              ) : (
+                <>
+                  <Spinner animation="border" variant="primary" />
+                </>
+              )}
+            </Radio.Group>
+          </Row>
+          <Button variant="success" className="button_Link" onClick={submit}>
+            Tiếp tục
+          </Button>
         </div>
       </div>
       <Footers></Footers>
@@ -152,4 +101,4 @@ const Quiz3 = () => {
   );
 };
 
-export default Quiz3;
+export default Quiz4;

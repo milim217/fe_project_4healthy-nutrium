@@ -222,17 +222,25 @@ const RegisterForm = () => {
                 <Form.Group>
                   <Radio.Group
                     onChange={onChangeGender}
-                    defaultValue="Female"
+                    defaultValue="false"
                     preventDefault="Female"
+                    size="large"
                   >
-                    <Radio.Button value="false">Nữ</Radio.Button>
-                    <Radio.Button value="true">Nam</Radio.Button>
+                    <Radio.Button
+                      className="radio_registerGender"
+                      value="false"
+                    >
+                      Nữ
+                    </Radio.Button>
+                    <Radio.Button className="radio_registerGender" value="true">
+                      Nam
+                    </Radio.Button>
                   </Radio.Group>
                 </Form.Group>
 
                 <Button
                   variant="success"
-                  className="btn_SendEmail"
+                  className="btn_SendEmail_Register"
                   onClick={sendEmail}
                 >
                   Gửi mã xác thực Email

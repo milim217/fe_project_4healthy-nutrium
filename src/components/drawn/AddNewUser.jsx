@@ -87,7 +87,7 @@ const AddNewUser = () => {
         address: values.address.trim(),
         date: values.date.trim(),
       });
-      console.log(addNewUserForm.gender);
+      // console.log(addNewUserForm.gender);
     },
   });
 
@@ -118,8 +118,8 @@ const AddNewUser = () => {
     formik.handleReset();
   };
   //Lấy dữ liệu
-  console.log(addNewUserForm);
-  console.log(addNewUserForm.gender);
+  // console.log(addNewUserForm);
+  // console.log(addNewUserForm.gender);
   // console.log(formik.errors.phoneNumber);
 
   return (

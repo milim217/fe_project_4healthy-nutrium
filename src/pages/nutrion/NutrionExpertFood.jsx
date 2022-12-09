@@ -187,9 +187,9 @@ const NutrionExpertFood = () => {
           }}
         >
           {/* Nhập tìm kiếm món ăn qua nguyên liệu nhập vào */}
-          <div className="display_block">
+          {/* <div className="display_block">
             <Ingredient_SelectionRenderInListFood></Ingredient_SelectionRenderInListFood>
-          </div>
+          </div> */}
           {/* Lọc theo loại */}
           <div className="display_block">
             <SelectionCategories />

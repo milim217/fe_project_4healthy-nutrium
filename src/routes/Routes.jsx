@@ -13,7 +13,7 @@ import Quiz2 from "../components/onboarding/Quiz2";
 import Quiz3 from "../components/onboarding/Quiz3";
 import Quiz4 from "../components/onboarding/Quiz4";
 import Quiz5 from "../components/onboarding/Quiz5";
-import Quiz6 from "../components/onboarding/Quiz6";
+// import Quiz6 from "../components/onboarding/Quiz6";
 import AddNewUser from "../components/drawn/AddNewUser";
 import summaryInfo from "../components/onboarding/summaryInfo";
 import pageLoadingQuiz from "../components/onboarding/pageLoadingQuiz";
@@ -53,7 +53,7 @@ const Routes = () => {
       <Route exact path="/onboarding/quiz3" component={Quiz3}></Route>
       <Route exact path="/onboarding/quiz4" component={Quiz4}></Route>
       <Route exact path="/onboarding/quiz5" component={Quiz5}></Route>
-      <Route exact path="/onboarding/quiz6" component={Quiz6}></Route>
+      {/* <Route exact path="/onboarding/quiz6" component={Quiz6}></Route> */}
       <Route
         exact
         path="/onboarding/summaryInfo"

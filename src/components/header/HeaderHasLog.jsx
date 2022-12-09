@@ -61,7 +61,7 @@ const HeaderHasLog = () => {
                   >
                     <Link to={"/homeuser/profile"}>
                       <NavDropdown.Item href="#action/3.1">
-                        Thông tin tài khoản
+                        Hồ sơ và bảo mật
                       </NavDropdown.Item>
                     </Link>
                     <NavDropdown.Divider />

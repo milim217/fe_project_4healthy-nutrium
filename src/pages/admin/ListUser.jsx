@@ -10,6 +10,7 @@ import {
   Row,
   Col,
   Statistic,
+  Button,
 } from "antd";
 import React, { useState, useEffect } from "react";
 import HeaderLayout from "../../components/header/HeaderAdmin";
@@ -24,10 +25,20 @@ const text = "Bạn có chắc chắn muốn xoá tài khoản này?";
 
 const ListUser = () => {
   const [listuser, setListUser] = useState([]);
+  const [deleteUserRow, setDeleteUserRow] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   useEffect(() => {
     UserAPI.getAll()
       .then((res) => {
-        // console.log("data = " + JSON.stringify(res.data));
         setListUser(res.data);
       })
       .catch((err) => {});
@@ -109,16 +120,23 @@ const ListUser = () => {
       justify: "center",
     },
     {
-      title: "Thông tin chi tiết",
-      render: () => <ModalViewInfomationUser></ModalViewInfomationUser>,
-    },
-    {
       title: "Hành động",
+      fixed: "right",
       dataIndex: "",
       key: "x",
-      render: () => (
+      render: (_, record) => (
         <>
-          <ModalDeleteListUser></ModalDeleteListUser>
+          {/* <ModalDeleteListUser> */}
+          <Button
+            type="primary"
+            onClick={() => {
+              showModal();
+              setDeleteUserRow(record.key);
+            }}
+          >
+            Vô hiệu hoá
+          </Button>
+          {/* </ModalDeleteListUser> */}
         </>
       ),
       justify: "center",
@@ -129,6 +147,7 @@ const ListUser = () => {
   listuser
     ? listuser.map((listUser) =>
         data.push({
+          key: listUser.id,
           email: listUser.email,
           name: listUser.name,
           address_user: listUser.address,
@@ -139,7 +158,8 @@ const ListUser = () => {
         })
       )
     : console.log("error");
-
+  // In xem đang xoá ở hàng có ID nào
+  console.log(deleteUserRow);
   // Tìm kiếm người dùng
   const { Search } = Input;
   const onSearch = (value) => console.log(value);
@@ -208,7 +228,17 @@ const ListUser = () => {
             />
           </div>
         </div>
-
+        {/* vô hiệu hoá tài khoản */}
+        <>
+          <Modal
+            title="Lý do tài khoản này bị vô hiệu hoá"
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <Input placeholder="Lý do xoá tài khoản này?" />
+          </Modal>
+        </>
         {/* thông tin tài khoản người dùng */}
         <Table
           columns={columns}

@@ -151,7 +151,12 @@ body {
 }
 
 .padding_20 {
-  padding-bottom: 20px;
+  padding: 10px;
+  /* margin-bottom: 20px; */
+}
+
+.padding_20:hover {
+  background-color: aliceblue;
 }
 .dropdown-multiSelectionChoose {
   width: 570px;

@@ -4,9 +4,11 @@
   border-bottom: 1px solid #1890ff;
 }
 
-/* .site-card-wrapper {
+.site-card-wrapper {
+  width: 80%;
+  margin: auto;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-} */
+}
 
 .border-1 {
   box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px,
@@ -97,4 +99,37 @@
   width: auto;
   height: auto;
   font-weight: 900;
+}
+
+.radio_registerGender {
+  width: 185px;
+  font-weight: 800;
+  padding-bottom: 50px;
+  padding-top: 15px;
+}
+
+.btn_SendEmail_Register {
+  background-color: #f73b6d;
+  border-color: #f73b6d;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 4px 16px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 56px;
+  width: 160px;
+  font-family: "Takeaway Sans", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  float: right;
+}
+.btn_SendEmail_Register:hover {
+  background-color: #ff1a57;
+  border-color: #f73b6d;
 }

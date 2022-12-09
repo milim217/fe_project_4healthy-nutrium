@@ -2,10 +2,12 @@ import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 import ModalDetailFood from "../modal/ModalDetailFood";
 import Button from "react-bootstrap/Button";
-import { Col, Row, Pagination } from "antd";
+import { Col, Row, Pagination, Select, Input } from "antd";
 import IngredientAPI from "../../service/Actions/IngredientAPI";
 import React, { useEffect, useState } from "react";
+const { Search } = Input;
 function CardGroupIngredient() {
+  const onSearch = (value) => console.log(value);
   const pageSize = 6;
   const [Ingredient, setIngredient] = useState([]);
   useEffect(() => {
@@ -18,6 +20,47 @@ function CardGroupIngredient() {
   }, []);
   return (
     <>
+      <div className="wrapper-search_select">
+        <div className="search-input-text_libaryPage">
+          Tìm Kiếm Món Ăn
+          <Search
+            placeholder="Nhập tên món ăn mà bạn cần tìm ở đây"
+            allowClear
+            enterButton="Tìm Kiếm"
+            size="large"
+            className="search-input-inside_libaryPage"
+            onSearch={onSearch}
+          />
+        </div>
+        {/* Lọc theo mùa*/}
+
+        <div className="wrapper_select-libary">
+          <div className="name-select_libary">Lọc theo mùa</div>
+          <Select
+            defaultValue="Xuân"
+            className="select-list_Libary"
+            bordered={false}
+            options={[
+              {
+                value: "jack",
+                label: "Xuân",
+              },
+              {
+                value: "lucy",
+                label: "Hạ",
+              },
+              {
+                value: "Yiminghe",
+                label: "Thu",
+              },
+              {
+                value: "Yiminghe",
+                label: "Đông",
+              },
+            ]}
+          />
+        </div>
+      </div>
       <Row gutter={[24, 24]}>
         {Ingredient ? (
           Ingredient.map((ingredientValue) => (
@@ -34,7 +77,7 @@ function CardGroupIngredient() {
                     {ingredientValue.ingredientName}
                   </Card.Title>
                 </Card.Body>
-                <Button variant="warning" href="/detailfood">
+                <Button className="btn_libaryFood" href="/detailfood">
                   Thông tin thêm
                 </Button>
                 {/* <ModalDetailFood></ModalDetailFood> */}

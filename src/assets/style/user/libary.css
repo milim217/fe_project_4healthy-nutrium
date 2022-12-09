@@ -12,27 +12,28 @@ body {
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  padding: 10px;
+  padding: 20px;
   font-weight: 1000;
-  color: #ff8000;
 }
 
 .group-card-libaryPage {
-  padding: 20px;
+  padding: 5px;
   /* max-width: 33.3333333%; */
   /* margin: 20px; */
 }
 
 .search-input-text_libaryPage {
-  width: 60%;
-  margin-right: 20px;
+  width: 70%;
+  margin-right: 5px;
+  color: #ce3232;
 }
 
 .search-input-inside_libaryPage {
   border-radius: 2px;
 }
+
 .search-input-inside_libaryPage .ant-input-search-button {
-  background-color: #ff8000;
+  background-color: #001529;
   font-weight: 1000;
   border: none;
 }
@@ -43,7 +44,9 @@ body {
 }
 
 .wrapper_select-libary {
-  margin-bottom: 30px;
+  margin-bottom: 50px;
+  margin-left: 10px;
+  margin-top: 5px;
 }
 
 .nav-fill > a {
@@ -63,8 +66,8 @@ body {
     rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;
   border-radius: 2px;
   margin-right: 10px;
-  padding-top: 3px;
-  padding-bottom: 3px;
+  /* padding-top: 4px;
+  padding-bottom: 3px; */
 }
 
 .Pageination_libaryPage {
@@ -95,10 +98,24 @@ body {
 .nameIngredient_boxDetailFood {
   padding-left: 20px;
   font-size: 26px;
-  color: #ff8000;
+  color: #001529;
   font-weight: 900;
 }
 
 .contentIngredient_boxDetailFood {
   padding-left: 20px;
+}
+
+.name-select_libary {
+  color: #ce3232;
+}
+
+.btn_libaryFood {
+  background-color: #001529;
+  border: none;
+  border-radius: 2px;
+}
+
+.btn_libaryFood:hover {
+  background-color: #ff8000;
 }

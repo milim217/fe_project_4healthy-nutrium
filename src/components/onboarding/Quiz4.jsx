@@ -1,65 +1,61 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import HeaderUser from "../header/HeaderUser";
 import Footers from "../footer/footers";
 import "../../assets/style/user/quizpage.css";
-import { Card, Space, Input, Radio } from "antd";
-import { Link } from "react-router-dom";
+import { Row, Col } from "antd";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
+import CategoryAPI from "../../service/Actions/CategoryAPI";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import JobAPI from "../../service/Actions/JobAPI";
-import Spinner from "react-bootstrap/Spinner";
-import AlertMessage from "../alert/AlertMessage";
-import { Row, Col } from "antd";
+import Form from "react-bootstrap/Form";
 import ModalAddNewFoodQuiz5 from "../modal/ModalAddNewFoodQuiz5";
+import AlertMessage from "../alert/AlertMessage";
 
-
-const Quiz4 = () => {
+const Quiz5 = () => {
   const history = useHistory();
-
-  const [jobs, setJobs] = useState([]);
-  const [selectedJob, setSelectedJob] = useState(null);
-  const [alert, setAlert] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(new Set());
 
   useEffect(() => {
-    JobAPI.getAll()
+    CategoryAPI.getAll()
       .then((res) => {
-        setJobs(res.data);
-        console.log("data = " + JSON.stringify(res.data));
+        setCategories(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }, []);
 
-  const onChange = (e) => {
-    setSelectedJob(e.target.value);
+  const onCheckBoxChange = (e) => {
+    let category = categories[parseInt(e.target.name)];
+    if (selectedCategories.has(category)) {
+      selectedCategories.delete(category);
+    } else {
+      selectedCategories.add(category);
+    }
+    setSelectedCategories(selectedCategories);
   };
+
+  const selectsAll = (event) => {};
 
   const submit = (event) => {
     event.preventDefault();
 
-    if (selectedJob === null) {
-      setAlert({
-        type: "danger",
-        message: "Vui lòng chọn công việc của bạn",
-      });
-      return;
-    }
-
     let data;
     try {
       data = JSON.parse(localStorage.getItem("quiz-data"));
-      data.job = selectedJob;
+      data.categories = Array.from(selectedCategories);
     } catch (error) {
       data = {
         user: null,
         height: null,
         weight: null,
-        job: selectedJob,
-        categories: null,
+        job: null,
+        categories: Array.from(selectedCategories),
         counts: null,
       };
     }
 
+    console.log(JSON.stringify(data));
     localStorage.setItem("quiz-data", JSON.stringify(data));
     history.push("/onboarding/quiz5");
   };
@@ -69,28 +65,42 @@ const Quiz4 = () => {
       <HeaderUser></HeaderUser>
       <div className="wrapper-quiz_page">
         <div className="wrapper-ProgressBar">
-          <Progress per="50"></Progress>
+          <Progress per="75"></Progress>
         </div>
         <div className="wrapper-title-quiz">
-          <p>Công việc của bạn là gì?</p>
-          <AlertMessage info={alert} />
+          <p>Hãy chọn loại thức ăn bạn muốn</p>
         </div>
         <div className="wrapper-table-option">
-
+          <AlertMessage info={alert} />
           {/* check-box */}
           <Row gutter={[16, 16]}>
-            <Radio.Group onChange={onChange} value={selectedJob} size="large">
-              {jobs ? (
-                jobs.map((job) => (
-                  <Radio value={job} className="btn-radio-quiz">
-                    {job.jobName}
-                  </Radio>
-                ))
-              ) : (
-                <><Spinner animation="border" variant="primary" /></>
-              )}
-            </Radio.Group>
+            {categories ? (
+              categories.map((category, i) => (
+                <Col span={8}>
+                  <Form>
+                    <Form.Check
+                      name={`${i}`}
+                      type="checkbox"
+                      id="custom-switch"
+                      label={category.categoryName}
+                      className={"checked"}
+                      onChange={onCheckBoxChange}
+                    ></Form.Check>
+                  </Form>
+                </Col>
+              ))
+            ) : (
+              <h2>Please add new food category</h2>
+            )}
           </Row>
+          <Button
+            className="btn-addmore_typeFood"
+            type="primary"
+            onClick={selectsAll}
+          >
+            Chọn tất cả
+          </Button>
+          {/* <ModalAddNewFoodQuiz5></ModalAddNewFoodQuiz5> */}
           <Button variant="success" className="button_Link" onClick={submit}>
             Tiếp tục
           </Button>
@@ -101,4 +111,4 @@ const Quiz4 = () => {
   );
 };
 
-export default Quiz4;
+export default Quiz5;
