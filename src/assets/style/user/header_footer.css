@@ -97,5 +97,7 @@ body {
 }
 .mt-4,
 .my-4 {
-  margin-top: 0px !important;
+  height: auto;
+  padding-top: 250px;
+  padding-bottom: 80px;
 }

@@ -36,7 +36,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 484px;
+  width: 500px;
   overflow-y: scroll;
   text-align: center;
   float: right;
@@ -49,7 +49,7 @@
 .landing-inner-second form h1,
 .landing-inner-second form h4,
 .landing-inner-second form p {
-  color: white;
+  color: red;
 }
 
 .landing-inner-second form input {

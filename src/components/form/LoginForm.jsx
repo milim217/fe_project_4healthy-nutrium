@@ -6,26 +6,49 @@ import { AuthContext } from "../../service/Actions/AuthAPI";
 import AlertMessage from "../alert/AlertMessage";
 import UserAPI from "../../service/Actions/UserAPI";
 import jwt from "jwt-decode";
+import "../../assets/style/common/App.css";
 import { useHistory } from "react-router-dom";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import FormList from "antd/lib/form/FormList";
 
 const LoginForm = () => {
   const history = useHistory();
-
+  const [alert, setAlert] = useState(null);
   // Local state
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
   });
 
-  const [alert, setAlert] = useState(null);
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
 
-  const onChangeLoginForm = (event) =>
-    setLoginForm({ ...loginForm, [event.target.name]: event.target.value });
+    //regex
 
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .required("Bạn không được để trống email")
+        .matches(
+          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+          "Bạn vui lòng nhập đúng định dạng email, ví dụ: email123@gmail.com"
+        ),
+      password: Yup.string().required("Bạn không được để trống password"),
+      // .matches(
+      //   /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,10}$/,
+      //   "Mật khẩu tối thiểu 8 - 10 ký tự, ít nhất chứa một chữ cái và một số:"
+      // ),
+    }),
+  });
   const login = (event) => {
     event.preventDefault();
-
-    UserAPI.login(loginForm)
+    UserAPI.login({
+      email: formik.values.email,
+      password: formik.values.password,
+    })
       .then((res) => {
         const token = res.data.access_token;
         const user = jwt(token);
@@ -60,23 +83,32 @@ const LoginForm = () => {
                     type="text"
                     placeholder="Email"
                     name="email"
+                    value={formik.values.email}
                     required
-                    onChange={onChangeLoginForm}
+                    onChange={formik.handleChange}
                   />
+                  {formik.errors.email && (
+                    <p className="errorMSG">{formik.errors.email}</p>
+                  )}
                 </Form.Group>
                 <Form.Group>
                   <Form.Control
                     type="password"
-                    placeholder="Password"
+                    placeholder="mật khẩu"
                     name="password"
+                    value={formik.values.password}
                     required
-                    onChange={onChangeLoginForm}
+                    onChange={formik.handleChange}
                   />
+                  {formik.errors.password && (
+                    <p className="errorMSG">{formik.errors.password}</p>
+                  )}
                 </Form.Group>
                 <Button
                   variant="success"
                   className="btn_loginForm_1"
                   type="submit"
+                  disabled={!formik.isValid}
                 >
                   Đăng nhập
                 </Button>

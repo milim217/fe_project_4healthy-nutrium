@@ -7,8 +7,48 @@ import { DatePicker, Radio } from "antd";
 import UserAPI from "../../service/Actions/UserAPI";
 import Moment from "moment";
 import moment from "moment";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const RegisterForm = () => {
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      username: "",
+      address: "",
+      phoneNumber: "",
+      ValidEmail: "",
+    },
+
+    //regex
+
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .required("Bạn không được để trống email")
+        .matches(
+          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+          "Bạn vui lòng nhập đúng định dạng email, ví dụ: email123@gmail.com"
+        ),
+      password: Yup.string()
+        .required("Bạn không được để trống mật khẩu")
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,10}$/,
+          "Mật khẩu tối thiểu 8 - 10 ký tự, ít nhất chứa một chữ cái và một số:"
+        ),
+      username: Yup.string().required("Bạn không được để trống tên tài khoản"),
+      address: Yup.string().required("Bạn không được để trống địa chỉ"),
+      phoneNumber: Yup.string()
+        .required("Bạn không được để trống số điện thoại")
+        .matches(
+          /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/,
+          "Số điện thoại gồm 10 số, và bắt đầu bằng số 0"
+        ),
+      ValidEmail: Yup.string().required(
+        "Bạn không được để trống Mã xác thực email"
+      ),
+    }),
+  });
   //Date
   const [dateValue, setDate] = useState(false);
   // Local state
@@ -22,8 +62,8 @@ const RegisterForm = () => {
     gender: "false",
     code: "",
   });
-  const { username, password, name, address, dob, phone, gender } =
-    registerForm;
+  // const { username, password, name, address, dob, phone, gender } =
+  //   registerForm;
 
   const [alert, setAlert] = useState(null);
 
@@ -53,15 +93,15 @@ const RegisterForm = () => {
     });
   };
 
-  const onChangeRegisterForm = (event) =>
-    setRegisterForm({
-      ...registerForm,
-      [event.target.name]: event.target.value,
-    });
+  // const onChangeRegisterForm = (event) =>
+  //   setRegisterForm({
+  //     ...registerForm,
+  //     [event.target.name]: event.target.value,
+  //   });
 
   const checkIput = () => {
     let check = true;
-    if (password !== confirmPassword) {
+    if (formik.values.password !== confirmPassword) {
       setAlert({
         type: "danger",
         message: "Vui lòng nhập 2 mật khẩu giống nhau",
@@ -73,7 +113,7 @@ const RegisterForm = () => {
   };
 
   async function sendEmail() {
-    let email = registerForm.email;
+    let email = formik.values.email;
     if (email !== "") {
       let user = await UserAPI.getByEmail([email])
         .then((res) => {
@@ -104,14 +144,26 @@ const RegisterForm = () => {
 
   const register = async (event) => {
     event.preventDefault();
-    console.log("inputted Data = " + JSON.stringify(registerForm));
+    console.log(
+      "inputted Data = " +
+        JSON.stringify({
+          email: formik.values.email,
+          password: formik.values.password,
+          name: formik.values.username,
+          address: formik.values.address,
+          dob: registerForm.dob,
+          phone: formik.values.phoneNumber,
+          gender: registerForm.gender,
+          code: formik.values.ValidEmail,
+        })
+    );
 
     if (!checkIput()) {
       return;
     }
 
     // call api lấy email từ code
-    let email = await UserAPI.getRegisterUser(registerForm.code)
+    let email = await UserAPI.getRegisterUser(formik.values.ValidEmail)
       .then((res) => {
         return res.data;
       })
@@ -123,7 +175,7 @@ const RegisterForm = () => {
 
     // lấy đc email từ code
     if (email) {
-      let inputtedEmail = registerForm.email;
+      let inputtedEmail = formik.values.email;
       // check email từ code có trùng vs email nhập
       if (email !== inputtedEmail) {
         console.log("Mã xác thực không dành cho email " + inputtedEmail);
@@ -135,7 +187,16 @@ const RegisterForm = () => {
         return;
       }
       // add user
-      UserAPI.addUser(registerForm)
+      UserAPI.addUser({
+        email: formik.values.email,
+        password: formik.values.password,
+        name: formik.values.username,
+        address: formik.values.address,
+        dob: registerForm.dob,
+        phone: formik.values.phoneNumber,
+        gender: registerForm.gender,
+        code: formik.values.ValidEmail,
+      })
         .then((res) => {
           setAlert({
             type: "success",
@@ -167,16 +228,24 @@ const RegisterForm = () => {
                     type="email"
                     placeholder="Email"
                     name="email"
+                    value={formik.values.email}
                     required
-                    onChange={onChangeRegisterForm}
+                    onChange={formik.handleChange}
                   />
+                  {formik.errors.email && (
+                    <p className="errorMSG">{formik.errors.email}</p>
+                  )}
                   <Form.Control
                     type="password"
                     placeholder="Mật khẩu"
                     name="password"
+                    value={formik.values.password}
                     required
-                    onChange={onChangeRegisterForm}
+                    onChange={formik.handleChange}
                   />
+                  {formik.errors.password && (
+                    <p className="errorMSG">{formik.errors.password}</p>
+                  )}
                   <Form.Control
                     type="password"
                     placeholder="Nhập lại mật khẩu"
@@ -186,24 +255,36 @@ const RegisterForm = () => {
                   <Form.Control
                     type="text"
                     placeholder="Tên của bạn"
-                    name="name"
+                    name="username"
                     required
-                    onChange={onChangeRegisterForm}
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
                   />
+                  {formik.errors.username && (
+                    <p className="errorMSG">{formik.errors.username}</p>
+                  )}
                   <Form.Control
                     type="text"
                     placeholder="Địa chỉ"
+                    value={formik.values.address}
                     name="address"
                     required
-                    onChange={onChangeRegisterForm}
+                    onChange={formik.handleChange}
                   />
+                  {formik.errors.address && (
+                    <p className="errorMSG">{formik.errors.address}</p>
+                  )}
                   <Form.Control
                     type="text"
                     placeholder="Số điện thoại"
-                    name="phone"
+                    value={formik.values.phoneNumber}
+                    name="phoneNumber"
                     required
-                    onChange={onChangeRegisterForm}
+                    onChange={formik.handleChange}
                   />
+                  {formik.errors.phoneNumber && (
+                    <p className="errorMSG">{formik.errors.phoneNumber}</p>
+                  )}
                   <DatePicker
                     defaultValue={moment("01/01/2000", "DD/MM/YYYY")}
                     name="date"
@@ -214,10 +295,13 @@ const RegisterForm = () => {
                   <Form.Control
                     type="text"
                     placeholder="Mã xác thực email"
-                    name="code"
+                    name="ValidEmail"
                     required
-                    onChange={onChangeRegisterForm}
+                    onChange={formik.handleChange}
                   />
+                  {formik.errors.ValidEmail && (
+                    <p className="errorMSG">{formik.errors.ValidEmail}</p>
+                  )}
                 </Form.Group>
                 <Form.Group>
                   <Radio.Group
