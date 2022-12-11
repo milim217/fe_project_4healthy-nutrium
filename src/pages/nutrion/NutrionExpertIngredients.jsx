@@ -172,6 +172,7 @@ function NutrionExpertIngredients() {
     {
       title: "Chỉnh sửa Nguyên Liệu",
       render: () => <EditIngrdient></EditIngrdient>,
+      fixed: "right",
     },
     {
       title: "Xoá Nguyên Liệu",
@@ -191,6 +192,7 @@ function NutrionExpertIngredients() {
         </>
       ),
       justify: "center",
+      fixed: "right",
     },
   ];
 

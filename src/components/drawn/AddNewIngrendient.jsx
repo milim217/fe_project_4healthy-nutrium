@@ -3,7 +3,8 @@ import { PlusOutlined } from "@ant-design/icons";
 import {
   Button,
   Col,
-  DatePicker,
+  Checkbox,
+  Divider,
   Drawer,
   Form,
   Input,
@@ -11,42 +12,59 @@ import {
   Select,
   Space,
 } from "antd";
+import AlertDiv from "../alert/AlertDiv";
 import UploadImageFileIngredient from "../upload-image-avt/UploadImageFileIngredient";
+import AlertMessage from "../alert/AlertMessage";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-// import AlertMessage from "../alert/AlertMessage";
+
+//List mùa
+const CheckboxGroup = Checkbox.Group;
+const seassonList = ["Xuân", "Hạ", "Thu", "Đông"];
+const SeassonValueDefault = ["Xuân"];
 const { Option } = Select;
 
 const AddNewIngrendient = () => {
   const [open, setOpen] = useState(false);
+  // Mùa của thành phần
+  const [checkedSessonList, setcheckedSessonList] =
+    useState(SeassonValueDefault);
+  const [indeterminate, setIndeterminate] = useState(true);
+  const [checkAll, setCheckAll] = useState(false);
+  const [alert, setAlert] = useState(null);
+  const onChange = (list) => {
+    setcheckedSessonList(list);
+    setIndeterminate(!!list.length && list.length < seassonList.length);
+    setCheckAll(list.length === seassonList.length);
+    if (list.length === 0) {
+      console.log("List rỗng");
+      setAlert({
+        message: "Không được để trống mùa",
+      });
+      setTimeout(() => setAlert(null), 2000);
+    }
+  };
+  const onCheckAllChange = (e) => {
+    setcheckedSessonList(e.target.checked ? seassonList : []);
+    setIndeterminate(false);
+    setCheckAll(e.target.checked);
+    if (e.target.checked == []) {
+      console.log("List rỗng");
+      setAlert({
+        message: "Không được để trống mùa",
+      });
+      setTimeout(() => setAlert(null), 2000);
+    }
+  };
 
-  // Form Thêm nguyên liệu
-  const [AddNewIngrendient, setAddNewIngredient] = useState({
-    ingredientName: "",
-    fat: "",
-    protein: "",
-    carbon: "",
-    calories: "",
-    vitamin: "",
-    wate: "",
-    fiber: "",
-    ash: "",
-    canxi: "",
-    iron: "",
-    zinc: "",
-    vitaminC: "",
-    vitaminB1: "",
-    vitaminB2: "",
-    vitaminB3: "",
-    vitaminB6A: "",
-    vitaminD: "",
-    vitaminB12: "",
-    vitaminA: "",
-    vitaminA_rae: "",
-    minLimit: "",
-    maxLimit: "",
-    seassonFood: "Xuân",
-  });
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+    document.getElementById("formAddNewIngredientInput").reset();
+    formik.handleReset();
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -207,56 +225,38 @@ const AddNewIngrendient = () => {
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
     }),
-    //onsubmit ở formik
-    onSubmit: (values) => {
-      //formik tự biết khi nhập sai sẽ không submit còn khi đúng hết mới cho submit
-      console.log("Has Done!");
-      setAddNewIngredient({
-        ...AddNewIngrendient,
-        ingredientName: values.ingredientName,
-        fat: values.fat,
-        protein: values.protein,
-        carbon: values.carbon,
-        calories: values.calories,
-        vitamin: values.vitamin,
-        wate: values.wate,
-        fiber: values.fiber,
-        ash: values.ash,
-        canxi: values.canxi,
-        iron: values.iron,
-        zinc: values.zinc,
-        vitaminC: values.vitaminC,
-        vitaminB1: values.vitaminB1,
-        vitaminB2: values.vitaminB2,
-        vitaminB3: values.vitaminB3,
-        vitaminB6A: values.vitaminB6A,
-        vitaminD: values.vitaminD,
-        vitaminB12: values.vitaminB12,
-        vitaminA: values.vitaminB12,
-        vitaminA_rae: values.vitaminA_rae,
-        minLimit: values.minLimit,
-        maxLimit: values.maxLimit,
-      });
-      // Nếu lấy giá trị từ form thì lấy từ addNewIngredient
-      // console.log(AddNewIngrendient.seassonFood);
-      document.getElementById("formAddNewIngredientInput").reset();
-    },
   });
 
-  const onChangeSeasson = (value) => {
-    setAddNewIngredient({
-      ...AddNewIngrendient,
-      seassonFood: value,
-    });
-  };
-
-  const showDrawer = () => {
-    setOpen(true);
-  };
-  const onClose = () => {
-    setOpen(false);
-    document.getElementById("formAddNewIngredientInput").reset();
-    formik.handleReset();
+  const onSubmit = () => {
+    const AddNewIngrendient = {
+      ingredientName: formik.values.ingredientName,
+      fat: formik.values.fat,
+      protein: formik.values.protein,
+      carbon: formik.values.carbon,
+      calories: formik.values.calories,
+      vitamin: formik.values.vitamin,
+      wate: formik.values.wate,
+      fiber: formik.values.fiber,
+      ash: formik.values.ash,
+      canxi: formik.values.canxi,
+      iron: formik.values.iron,
+      zinc: formik.values.zinc,
+      vitaminC: formik.values.vitaminC,
+      vitaminB1: formik.values.vitaminB1,
+      vitaminB2: formik.values.vitaminB2,
+      vitaminB3: formik.values.vitaminB3,
+      vitaminB6A: formik.values.vitaminB6A,
+      vitaminD: formik.values.vitaminD,
+      vitaminB12: formik.values.vitaminB12,
+      vitaminA: formik.values.vitaminB12,
+      vitaminA_rae: formik.values.vitaminA_rae,
+      minLimit: formik.values.minLimit,
+      maxLimit: formik.values.maxLimit,
+      seassonFood: checkedSessonList,
+    };
+    console.log(AddNewIngrendient);
+    //Xoá dữ liệu khi submit thành công vào api
+    // document.getElementById("formAddNewIngredientInput").reset();
   };
 
   return (
@@ -280,7 +280,7 @@ const AddNewIngrendient = () => {
           <Space>
             <Button onClick={onClose}>Về Danh Sách</Button>
             <Button
-              onClick={formik.handleSubmit}
+              onClick={onSubmit}
               type="primary"
               disabled={!formik.isValid}
             >
@@ -314,31 +314,34 @@ const AddNewIngrendient = () => {
           </Row>
           <Row gutter={24}>
             <Col span={12}>
-              <Form.Item name="seassonFood" label="Mùa của nguyên liệu này:">
-                <Select
-                  placeholder="Chọn mùa"
-                  defaultValue={"Xuân"}
-                  onChange={onChangeSeasson}
-                  options={[
-                    {
-                      value: "spring",
-                      label: "Xuân",
-                    },
-                    {
-                      value: "summer",
-                      label: "Hạ",
-                    },
-                    {
-                      value: "fall",
-                      label: "Thu",
-                    },
-                    {
-                      value: "winter",
-                      label: "Đông",
-                    },
-                  ]}
-                ></Select>
+              <Form.Item
+                name="seassonFood"
+                label="Mùa của nguyên liệu này:"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please pick an item!",
+                  },
+                ]}
+              >
+                <Checkbox
+                  indeterminate={indeterminate}
+                  onChange={onCheckAllChange}
+                  defaultChecked={true}
+                  checked={checkAll}
+                  required
+                >
+                  Chọn cả bốn mùa
+                </Checkbox>
+                <Divider />
+                <CheckboxGroup
+                  options={seassonList}
+                  value={checkedSessonList}
+                  onChange={onChange}
+                  required
+                />
               </Form.Item>
+              <AlertDiv info={alert} />
             </Col>
             <Col span={12}>
               <Form.Item label="Hàm lượng chất béo:" name="fat">

@@ -98,6 +98,7 @@ const NutrionExpertFood = () => {
     {
       title: "Chỉnh sửa món ăn",
       render: () => <EditFood></EditFood>,
+      fixed: "right",
     },
     {
       title: "Xoá món ăn",
@@ -117,6 +118,7 @@ const NutrionExpertFood = () => {
         </>
       ),
       justify: "center",
+      fixed: "right",
     },
   ];
 
