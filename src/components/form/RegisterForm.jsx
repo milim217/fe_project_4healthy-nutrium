@@ -19,6 +19,7 @@ const RegisterForm = () => {
       address: "",
       phoneNumber: "",
       ValidEmail: "",
+      ReEnterPassword: "",
     },
 
     //regex
@@ -38,6 +39,18 @@ const RegisterForm = () => {
         ),
       username: Yup.string().required("Bạn không được để trống tên tài khoản"),
       address: Yup.string().required("Bạn không được để trống địa chỉ"),
+      date: Yup.string()
+        .required("Bạn không được để trống ngày sinh")
+        .matches(
+          /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/,
+          "Ngày sinh phải đúng định dạng Năm-tháng-Ngày VD: 2000-07-01"
+        ),
+      ReEnterPassword: Yup.string()
+        .required("Bạn không được để trống nhập lại mật khẩu")
+        .oneOf(
+          [Yup.ref("password"), null],
+          "mật khẩu nhập lại phải trùng với mật khẩu bạn đã nhập"
+        ),
       phoneNumber: Yup.string()
         .required("Bạn không được để trống số điện thoại")
         .matches(
@@ -57,7 +70,7 @@ const RegisterForm = () => {
     password: "",
     name: "",
     address: "",
-    dob: "01/01/2000",
+    dob: "",
     phone: "",
     gender: "false",
     code: "",
@@ -67,22 +80,22 @@ const RegisterForm = () => {
 
   const [alert, setAlert] = useState(null);
 
-  function onSelectDate(dateValue, dateString) {
-    let dateParts = dateString.split("/");
-    let date = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-    let dateStr = Moment(date).format("yyyy-MM-DD");
+  // function onSelectDate(dateValue, dateString) {
+  //   let dateParts = dateString.split("/");
+  //   let date = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+  //   let dateStr = Moment(date).format("yyyy-MM-DD");
 
-    setDate(dateStr);
-    setRegisterForm({
-      ...registerForm,
-      dob: dateStr,
-    });
-  }
-  //password
-  const [confirmPassword, setConfirmPassword] = useState(false);
-  const onChangePassInput = (e) => {
-    setConfirmPassword(e.target.value);
-  };
+  //   setDate(dateStr);
+  //   setRegisterForm({
+  //     ...registerForm,
+  //     dob: dateStr,
+  //   });
+  // }
+  // //password
+  // const [confirmPassword, setConfirmPassword] = useState(false);
+  // const onChangePassInput = (e) => {
+  //   setConfirmPassword(e.target.value);
+  // };
 
   // Gender
   const onChangeGender = (e) => {
@@ -99,18 +112,18 @@ const RegisterForm = () => {
   //     [event.target.name]: event.target.value,
   //   });
 
-  const checkIput = () => {
-    let check = true;
-    if (formik.values.password !== confirmPassword) {
-      setAlert({
-        type: "danger",
-        message: "Vui lòng nhập 2 mật khẩu giống nhau",
-      });
-      setTimeout(() => setAlert(null), 5000);
-      check = false;
-    }
-    return check;
-  };
+  // const checkIput = () => {
+  //   let check = true;
+  //   if (formik.values.password !== formik.) {
+  //     setAlert({
+  //       type: "danger",
+  //       message: "Vui lòng nhập 2 mật khẩu giống nhau",
+  //     });
+  //     setTimeout(() => setAlert(null), 5000);
+  //     check = false;
+  //   }
+  //   return check;
+  // };
 
   async function sendEmail() {
     let email = formik.values.email;
@@ -151,16 +164,16 @@ const RegisterForm = () => {
           password: formik.values.password,
           name: formik.values.username,
           address: formik.values.address,
-          dob: registerForm.dob,
+          dob: formik.values.date,
           phone: formik.values.phoneNumber,
           gender: registerForm.gender,
           code: formik.values.ValidEmail,
         })
     );
 
-    if (!checkIput()) {
-      return;
-    }
+    // if (!checkIput()) {
+    //   return;
+    // }
 
     // call api lấy email từ code
     let email = await UserAPI.getRegisterUser(formik.values.ValidEmail)
@@ -192,7 +205,7 @@ const RegisterForm = () => {
         password: formik.values.password,
         name: formik.values.username,
         address: formik.values.address,
-        dob: registerForm.dob,
+        dob: formik.values.date,
         phone: formik.values.phoneNumber,
         gender: registerForm.gender,
         code: formik.values.ValidEmail,
@@ -249,9 +262,13 @@ const RegisterForm = () => {
                   <Form.Control
                     type="password"
                     placeholder="Nhập lại mật khẩu"
+                    name="ReEnterPassword"
                     required
-                    onChange={onChangePassInput}
+                    onChange={formik.handleChange}
                   />
+                  {formik.errors.ReEnterPassword && (
+                    <p className="errorMSG">{formik.errors.ReEnterPassword}</p>
+                  )}
                   <Form.Control
                     type="text"
                     placeholder="Tên của bạn"
@@ -285,13 +302,20 @@ const RegisterForm = () => {
                   {formik.errors.phoneNumber && (
                     <p className="errorMSG">{formik.errors.phoneNumber}</p>
                   )}
-                  <DatePicker
-                    defaultValue={moment("01/01/2000", "DD/MM/YYYY")}
+                  <Form.Control
+                    // defaultValue={moment("01/01/2000", "DD/MM/YYYY")}
+                    type="text"
                     name="date"
-                    style={{ width: "100%" }}
-                    format={"DD/MM/YYYY"}
-                    onChange={onSelectDate}
+                    placeholder="Ngày sinh của bạn"
+                    value={formik.values.date}
+                    // style={{ width: "100%" }}
+                    // format={"DD/MM/YYYY"}
+                    required
+                    onChange={formik.handleChange}
                   />
+                  {formik.errors.date && (
+                    <p className="errorMSG">{formik.errors.date}</p>
+                  )}
                   <Form.Control
                     type="text"
                     placeholder="Mã xác thực email"
