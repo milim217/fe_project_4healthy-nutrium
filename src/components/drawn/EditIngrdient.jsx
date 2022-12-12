@@ -693,7 +693,7 @@ const EditIngrdient = () => {
       fat: "",
       protein: "",
       carbon: "",
-      Calories: "",
+      calories: "",
       vitamin: "",
       wate: "",
       fiber: "",
@@ -736,7 +736,7 @@ const EditIngrdient = () => {
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
-      Calories: Yup.string()
+      calories: Yup.string()
         .required("Bạn không được để trống hàm lượng chât calories")
         .matches(
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
@@ -1006,8 +1006,8 @@ const EditIngrdient = () => {
                   name="calories"
                   onChange={formik.handleChange}
                 />
-                {formik.errors.Calories && (
-                  <p className="errorMSG">{formik.errors.Calories}</p>
+                {formik.errors.calories && (
+                  <p className="errorMSG">{formik.errors.calories}</p>
                 )}
               </Form.Item>
             </Col>

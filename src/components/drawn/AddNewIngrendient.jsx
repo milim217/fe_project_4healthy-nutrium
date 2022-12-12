@@ -386,8 +386,8 @@ const AddNewIngrendient = () => {
                   name="calories"
                   onChange={formik.handleChange}
                 />
-                {formik.errors.Calories && (
-                  <p className="errorMSG">{formik.errors.Calories}</p>
+                {formik.errors.calories && (
+                  <p className="errorMSG">{formik.errors.calories}</p>
                 )}
               </Form.Item>
             </Col>
