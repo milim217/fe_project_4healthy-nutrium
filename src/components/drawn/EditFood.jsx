@@ -195,6 +195,7 @@ const EditFood = () => {
       seasonFood: checkedSessonList,
       mealType: checkedMealTypeList,
       ingredientFood: IngredientFoodValue.ingredientFood,
+      CategoryFood: CategoryFoodValue.CategoryFood,
     };
     console.log(editNewFoodForm);
     //
@@ -222,6 +223,26 @@ const EditFood = () => {
   const onChangeSelectIngredientFood = (value) => {
     setIngredientFoodValue({
       ingredientFood: value,
+    });
+    if (value == "") {
+      document.getElementById("btn_EditFood").disabled = true;
+    } else {
+      document.getElementById("btn_EditFood").disabled = false;
+    }
+  };
+  //
+  //
+  //
+  //Lấy giá trị của loại món ăn
+  //
+  //
+  //
+  const [CategoryFoodValue, setCategoryFoodValue] = useState({
+    CategoryFood: "",
+  });
+  const onChangeSelectCategoryFood = (value) => {
+    setCategoryFoodValue({
+      CategoryFood: value,
     });
     if (value == "") {
       document.getElementById("btn_EditFood").disabled = true;
@@ -484,6 +505,44 @@ const EditFood = () => {
                 </Option>
                 <Option value="water" label="water">
                   <div className="demo-option-label-item">water</div>
+                </Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              name="CategoryFood"
+              label="Món ăn này thuộc loại"
+              rules={[
+                {
+                  required: true,
+                  message: "Loại món ăn chưa nhập",
+                },
+              ]}
+            >
+              <Select
+                mode="multiple"
+                style={{
+                  width: "100%",
+                }}
+                name="CategoryFood"
+                placeholder="Chọn loại món ăn"
+                defaultValue={["Trứng"]}
+                onChange={onChangeSelectCategoryFood}
+                optionLabelProp="label"
+              >
+                <Option value="Trứng" label="Trứng">
+                  <div className="demo-option-label-item">Trứng</div>
+                </Option>
+                <Option value="Sữa" label="Sữa">
+                  <div className="demo-option-label-item">Sữa</div>
+                </Option>
+                <Option value="Bánh" label="Bánh">
+                  <div className="demo-option-label-item">Bánh</div>
+                </Option>
+                <Option value="Rau" label="Rau">
+                  <div className="demo-option-label-item">Rau</div>
+                </Option>
+                <Option value="Hoa Quả" label="Hoa Quả">
+                  <div className="demo-option-label-item">Hoa Quả</div>
                 </Option>
               </Select>
             </Form.Item>
