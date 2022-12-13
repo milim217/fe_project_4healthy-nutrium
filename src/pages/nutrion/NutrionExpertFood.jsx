@@ -133,14 +133,10 @@ const NutrionExpertFood = () => {
           mealType: foodValue.meals.map((m) => m.mealName + " "),
           seasson_id: foodValue.seasons.map((s) => s.seasonName + " "),
           recipe: foodValue.recipe,
-          fat: foodValue.ingredientMasses.map((f) => f.ingredient.fat + ""),
-          protein: foodValue.ingredientMasses.map(
-            (p) => p.ingredient.protein + ""
-          ),
-          carbon: foodValue.ingredientMasses.map((p) => p.ingredient.carb + ""),
-          calories: foodValue.ingredientMasses.map(
-            (calo) => calo.ingredient.calo + ""
-          ),
+          fat: foodValue.fat,
+          protein: foodValue.protein,
+          carbon: foodValue.carb,
+          calories: foodValue.calo,
           imageFood: `http://localhost:8080/food/${foodValue.id}/image`,
         })
       )
