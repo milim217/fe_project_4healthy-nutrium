@@ -15,8 +15,11 @@ import {
 } from "antd";
 import UploadImageFile from "../../components/upload-image-avt/uploadImageFile";
 import AlertDiv from "../alert/AlertDiv";
+import TableAddIngredientFood from "../../pages/nutrion/TableAddIngredientFood";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { propTypes } from "react-bootstrap/esm/Image";
+
 //List mùa
 const CheckboxGroup = Checkbox.Group;
 const seassonList = ["Xuân", "Hạ", "Thu", "Đông"];
@@ -191,6 +194,7 @@ const AddNewFood = () => {
       seasonFood: checkedSessonList,
       mealType: checkedMealTypeList,
       ingredientFood: IngredientFoodValue.ingredientFood,
+      hamluong: HamLuong.hamluongchat,
       CategoryFood: CategoryFoodValue.CategoryFood,
     };
     console.log(addNewFoodForm);
@@ -216,6 +220,14 @@ const AddNewFood = () => {
   const [IngredientFoodValue, setIngredientFoodValue] = useState({
     ingredientFood: "",
   });
+  const [HamLuong, setHamluong] = useState({
+    hamluongchat: "",
+  });
+  const callValueHamLuong = (ValueHamLuong) => {
+    setHamluong({
+      hamluongchat: ValueHamLuong,
+    });
+  };
   const onChangeSelectIngredientFood = (value) => {
     setIngredientFoodValue({
       ingredientFood: value,
@@ -473,32 +485,30 @@ const AddNewFood = () => {
               ]}
             >
               <Select
-                mode="multiple"
-                style={{
-                  width: "100%",
-                }}
-                name="ingredientFood"
-                placeholder="Chọn nguyên liệu"
-                defaultValue={["Calo"]}
+                showSearch
+                placeholder="Select a person"
+                optionFilterProp="children"
                 onChange={onChangeSelectIngredientFood}
-                optionLabelProp="label"
-              >
-                <Option value="Calo" label="Calo">
-                  <div className="demo-option-label-item">Calo</div>
-                </Option>
-                <Option value="fat" label="fat">
-                  <div className="demo-option-label-item">fat</div>
-                </Option>
-                <Option value="protein" label="protein">
-                  <div className="demo-option-label-item">protein</div>
-                </Option>
-                <Option value="carb" label="carb">
-                  <div className="demo-option-label-item">carb</div>
-                </Option>
-                <Option value="water" label="water">
-                  <div className="demo-option-label-item">water</div>
-                </Option>
-              </Select>
+                filterOption={(input, option) =>
+                  (option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+                options={[
+                  {
+                    value: "Calo",
+                    label: "Calo",
+                  },
+                  {
+                    value: "Fiber",
+                    label: "Fiber",
+                  },
+                ]}
+              />
+              <TableAddIngredientFood
+                ValueIngredient={IngredientFoodValue.ingredientFood}
+                getDataFromTable={callValueHamLuong}
+              ></TableAddIngredientFood>
             </Form.Item>
             <Form.Item
               name="CategoryFood"

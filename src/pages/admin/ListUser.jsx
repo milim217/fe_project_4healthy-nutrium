@@ -153,11 +153,19 @@ const ListUser = () => {
           address_user: listUser.address,
           Birth_Of_Date: listUser.dob,
           phoneNumber_user: listUser.phone,
-          roleUser: listUser.role.name,
+          roleUser:
+            listUser.role.name === "NUTRIENT_EXPERT"
+              ? "Chuyên gia dinh dưỡng"
+              : listUser.role.name === "ADMIN"
+              ? "Quản Trị Viên"
+              : listUser.role.name === "USER"
+              ? "Người Dùng"
+              : null,
           status: listUser.status,
         })
       )
     : console.log("error");
+
   // In xem đang xoá ở hàng có ID nào
   console.log(deleteUserRow);
   // Tìm kiếm người dùng
@@ -241,7 +249,7 @@ const ListUser = () => {
         </>
         {/* thông tin tài khoản người dùng */}
         <Table
-          columns={columns}
+          columns={columns.roleUser === "Quản Trị Viên" ? null : columns}
           dataSource={data}
           scroll={{
             x: 1200,
