@@ -140,7 +140,7 @@ function CardGroupFood() {
         )}
       </Row>
       <div className="Pageination_libaryPage">
-        <Pagination defaultCurrent={1} total={50} />;
+        <Pagination defaultCurrent={1} total={50} />
       </div>
     </>
   );

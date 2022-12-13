@@ -77,7 +77,7 @@ function CardGroupIngredient() {
                     {ingredientValue.ingredientName}
                   </Card.Title>
                 </Card.Body>
-                <Button className="btn_libaryFood" href="/detailfood">
+                <Button className="btn_libaryFood" href="/detailingredient">
                   Thông tin thêm
                 </Button>
                 {/* <ModalDetailFood></ModalDetailFood> */}
@@ -89,7 +89,7 @@ function CardGroupIngredient() {
         )}
       </Row>
       <div className="Pageination_libaryPage">
-        <Pagination defaultCurrent={1} total={50} />;
+        <Pagination defaultCurrent={1} total={50} />
       </div>
     </>
   );
