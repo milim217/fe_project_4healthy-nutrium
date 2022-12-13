@@ -114,25 +114,20 @@ const TableAddIngredientFood = (props) => {
         ) : null,
     },
   ];
-  const arrIngredient = [props.ValueIngredient];
-  //   var arrIngredienthasave = [];
-  //   var check = 0;
+  const arrIngredient = props.ValueIngredient;
+  var check = 0;
+  var arrIngredienthasave = [];
+
   const handleAdd = () => {
     const newData = {
       key: count,
       name: `${arrIngredient}`,
       hamluong: "0",
     };
-    setDataSource([...dataSource, newData]);
-    setCount(count + 1);
-
-    // dataSource.map((s) => arrIngredienthasave.push(s.name));
-    // if (arrIngredienthasave.indexOf(arrIngredient).length > 2) {
-    //   check++;
-    //   if (check >= 2) {
-    //     return;
-    //   }
-    // }
+    if (!dataSource.find((data) => data.name == arrIngredient)) {
+      setDataSource([...dataSource, newData]);
+      setCount(count + 1);
+    }
     // console.log(arrIngredient);
     // console.log(arrIngredienthasave);
   };
