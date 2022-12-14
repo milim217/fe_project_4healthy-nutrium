@@ -496,7 +496,7 @@ const EditFood = () => {
                 placeholder="Select a person"
                 optionFilterProp="children"
                 onChange={onChangeSelectIngredientFood}
-                defaultValue={"Calo"}
+                defaultValue={"Trứng"}
                 filterOption={(input, option) =>
                   (option?.label ?? "")
                     .toLowerCase()
@@ -504,12 +504,24 @@ const EditFood = () => {
                 }
                 options={[
                   {
-                    value: "Calo",
-                    label: "Calo",
+                    value: "Trứng",
+                    label: "Trứng",
                   },
                   {
-                    value: "Fiber",
-                    label: "Fiber",
+                    value: "Cơm",
+                    label: "Cơm",
+                  },
+                  {
+                    value: "Mì",
+                    label: "Mì",
+                  },
+                  {
+                    value: "Hoa Quả",
+                    label: "Hoa Quả",
+                  },
+                  {
+                    value: "Rau",
+                    label: "Rau",
                   },
                 ]}
               />

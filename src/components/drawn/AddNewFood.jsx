@@ -494,15 +494,27 @@ const AddNewFood = () => {
                     .toLowerCase()
                     .includes(input.toLowerCase())
                 }
-                defaultValue={"Calo"}
+                defaultValue={"Trứng"}
                 options={[
                   {
-                    value: "Calo",
-                    label: "Calo",
+                    value: "Trứng",
+                    label: "Trứng",
                   },
                   {
-                    value: "Fiber",
-                    label: "Fiber",
+                    value: "Cơm",
+                    label: "Cơm",
+                  },
+                  {
+                    value: "Mì",
+                    label: "Mì",
+                  },
+                  {
+                    value: "Hoa Quả",
+                    label: "Hoa Quả",
+                  },
+                  {
+                    value: "Rau",
+                    label: "Rau",
                   },
                 ]}
               />

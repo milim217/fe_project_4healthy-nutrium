@@ -43,19 +43,19 @@ function CardGroupIngredient() {
             options={[
               {
                 value: "jack",
-                label: "Xuân",
+                label: "Mùa Xuân",
               },
               {
                 value: "lucy",
-                label: "Hạ",
+                label: "Mùa Hạ",
               },
               {
                 value: "Yiminghe",
-                label: "Thu",
+                label: "Mùa Thu",
               },
               {
                 value: "Yiminghe",
-                label: "Đông",
+                label: "Mùa Đông",
               },
             ]}
           />

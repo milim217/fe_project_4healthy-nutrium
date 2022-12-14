@@ -43,15 +43,15 @@ function CardGroupFood() {
             bordered={false}
             options={[
               {
-                value: "jack",
+                value: "Trứng",
                 label: "Trứng",
               },
               {
-                value: "lucy",
+                value: "Rau",
                 label: "Rau",
               },
               {
-                value: "Yiminghe",
+                value: "Canh",
                 label: "Canh",
               },
             ]}
@@ -93,19 +93,19 @@ function CardGroupFood() {
             options={[
               {
                 value: "jack",
-                label: "Xuân",
+                label: "Mùa Xuân",
               },
               {
                 value: "lucy",
-                label: "Hạ",
+                label: "Mùa Hạ",
               },
               {
                 value: "Yiminghe",
-                label: "Thu",
+                label: "Mùa Thu",
               },
               {
                 value: "Yiminghe",
-                label: "Đông",
+                label: "Mùa Đông",
               },
             ]}
           />
