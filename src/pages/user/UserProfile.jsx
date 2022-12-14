@@ -209,10 +209,12 @@ const UserProfile = () => {
         </Form>
 
         <Modal
-          title="Basic Modal"
+          title="Thay đổi mật khẩu"
           open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
+          okText={"Xác Nhận"}
+          cancelText={"Huỷ"}
         >
           <Form.Item
             label="Nhập mật khẩu cũ"
