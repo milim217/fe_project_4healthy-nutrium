@@ -76,7 +76,6 @@ const HeaderLayout = (props) => {
         onOk={handleOk}
         okText={"Huỷ"}
         cancelButtonProps={{ style: { display: "none" } }}
-        footer={null}
       >
         <AdminInfomation></AdminInfomation>
       </Modal>
