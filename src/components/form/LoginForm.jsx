@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../service/Actions/AuthAPI";
+import { Input } from "antd";
 import AlertMessage from "../alert/AlertMessage";
 import UserAPI from "../../service/Actions/UserAPI";
 import jwt from "jwt-decode";
@@ -79,39 +80,42 @@ const LoginForm = () => {
               <Form className="my-4" onSubmit={login}>
                 <AlertMessage info={alert} />
                 <Form.Group>
-                  <Form.Control
-                    type="text"
-                    placeholder="Email"
-                    name="email"
-                    value={formik.values.email}
-                    required
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.email && (
-                    <p className="errorMSG">{formik.errors.email}</p>
-                  )}
+                  <Form.Group>
+                    <Input
+                      type="text"
+                      placeholder="Email"
+                      name="email"
+                      value={formik.values.email}
+                      required
+                      onChange={formik.handleChange}
+                      className="form_login_register"
+                    />
+                    {formik.errors.email && (
+                      <p className="errorMSG">{formik.errors.email}</p>
+                    )}
+                  </Form.Group>
+                  <Form.Group>
+                    <Input.Password
+                      placeholder="Mật khẩu"
+                      name="password"
+                      value={formik.values.password}
+                      required
+                      onChange={formik.handleChange}
+                      className="form_login_register"
+                    />
+                    {formik.errors.password && (
+                      <p className="errorMSG">{formik.errors.password}</p>
+                    )}
+                  </Form.Group>
+                  <Button
+                    variant="success"
+                    className="btn_loginForm_1"
+                    type="submit"
+                    disabled={!formik.isValid}
+                  >
+                    Đăng nhập
+                  </Button>
                 </Form.Group>
-                <Form.Group>
-                  <Form.Control
-                    type="password"
-                    placeholder="mật khẩu"
-                    name="password"
-                    value={formik.values.password}
-                    required
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.password && (
-                    <p className="errorMSG">{formik.errors.password}</p>
-                  )}
-                </Form.Group>
-                <Button
-                  variant="success"
-                  className="btn_loginForm_1"
-                  type="submit"
-                  disabled={!formik.isValid}
-                >
-                  Đăng nhập
-                </Button>
               </Form>
               <p>
                 <Link to="/register">

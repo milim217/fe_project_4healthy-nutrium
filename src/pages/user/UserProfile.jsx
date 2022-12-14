@@ -180,7 +180,7 @@ const UserProfile = () => {
               <Form.Item label="Cân Nặng:">
                 <Input placeholder="input placeholder" disabled={isDisable2} />
               </Form.Item>
-              <Space size={3}>
+              {/* <Space size={3}>
                 <Button
                   type="primary"
                   id="EditButton2"
@@ -203,7 +203,7 @@ const UserProfile = () => {
                 >
                   Huỷ
                 </Button>
-              </Space>
+              </Space> */}
             </Col>
           </Row>
         </Form>

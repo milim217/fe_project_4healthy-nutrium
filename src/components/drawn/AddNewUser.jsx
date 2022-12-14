@@ -38,6 +38,7 @@ const AddNewUser = () => {
       phoneNumber: "",
       address: "",
       date: "",
+      ComfirmPassword: "",
     },
 
     //Regex
@@ -59,6 +60,12 @@ const AddNewUser = () => {
         .matches(
           /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,10}$/,
           "Mật khẩu tối thiểu 8 - 10 ký tự, ít nhất chứa một chữ cái và một số:"
+        ),
+      ComfirmPassword: Yup.string()
+        .required("Bạn không được để trống nhập lại mật khẩu")
+        .oneOf(
+          [Yup.ref("password"), null],
+          "mật khẩu nhập lại phải trùng với mật khẩu bạn đã nhập"
         ),
       phoneNumber: Yup.string()
         .required("Bạn không được để trống số điện thoại")
@@ -132,7 +139,7 @@ const AddNewUser = () => {
         Thêm tài khoản chuyên gia dinh dưỡng
       </Button>
       <Drawer
-        title="Create a new account"
+        title="Tạo tài khoản chuyên gia dinh dưỡng"
         width={720}
         onClose={onClose}
         open={open}
@@ -183,7 +190,7 @@ const AddNewUser = () => {
             </Col>
             <Col span={24}>
               <Form.Item name="password" label="Mật khẩu">
-                <Input
+                <Input.Password
                   name="password"
                   placeholder="Nhập mật khẩu của bạn"
                   value={formik.values.password}
@@ -191,6 +198,19 @@ const AddNewUser = () => {
                 />
                 {formik.errors.password && (
                   <p className="errorMSG">{formik.errors.password}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item name="ComfirmPassword" label="Nhập lại mật khẩu:">
+                <Input.Password
+                  name="ComfirmPassword"
+                  placeholder="Nhập lại mật khẩu của bạn"
+                  value={formik.values.ComfirmPassword}
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.ComfirmPassword && (
+                  <p className="errorMSG">{formik.errors.ComfirmPassword}</p>
                 )}
               </Form.Item>
             </Col>

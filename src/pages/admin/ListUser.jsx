@@ -133,6 +133,7 @@ const ListUser = () => {
               showModal();
               setDeleteUserRow(record.key);
             }}
+            style={{ backgroundColor: "red", border: "none" }}
           >
             Vô hiệu hoá
           </Button>
@@ -233,6 +234,7 @@ const ListUser = () => {
               enterButton="Tìm Kiếm"
               size="large"
               onSearch={onSearch}
+              className="admin_search_button"
             />
           </div>
         </div>
@@ -243,6 +245,11 @@ const ListUser = () => {
             open={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}
+            okText={"Xác nhận"}
+            cancelText={"Huỷ"}
+            okButtonProps={{
+              style: { backgroundColor: "red", border: "none" },
+            }}
           >
             <Input placeholder="Lý do xoá tài khoản này?" />
           </Modal>

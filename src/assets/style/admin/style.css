@@ -133,3 +133,20 @@
   background-color: #ff1a57;
   border-color: #f73b6d;
 }
+
+.admin_search_button {
+  padding-left: 10px;
+}
+
+.admin_search_button button:hover {
+  background-color: #1890ff;
+}
+
+.admin_search_button button {
+  background-color: #1890ff;
+  padding-left: 10px;
+  margin-left: 10px;
+}
+.admin_search_button {
+  border: 2px;
+}

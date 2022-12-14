@@ -312,277 +312,8 @@ const AddNewIngrendient = () => {
               </Form.Item>
             </Col>
           </Row>
+          <Divider></Divider>
           <Row gutter={24}>
-            <Col span={12}>
-              <Form.Item
-                name="seassonFood"
-                label="Mùa của nguyên liệu này:"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please pick an item!",
-                  },
-                ]}
-              >
-                <Checkbox
-                  indeterminate={indeterminate}
-                  onChange={onCheckAllChange}
-                  defaultChecked={true}
-                  checked={checkAll}
-                  required
-                >
-                  Chọn cả bốn mùa
-                </Checkbox>
-                <Divider />
-                <CheckboxGroup
-                  options={seassonList}
-                  value={checkedSessonList}
-                  onChange={onChange}
-                  required
-                />
-              </Form.Item>
-              <AlertDiv info={alert} />
-            </Col>
-            <Col span={12}>
-              <Form.Item label="Hàm lượng chất béo:" name="fat">
-                <Input
-                  placeholder="Hàm lượng chất béo món ăn chứa"
-                  name="fat"
-                  onChange={formik.handleChange}
-                />
-                {formik.errors.fat && (
-                  <p className="errorMSG">{formik.errors.fat}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="Hàm lượng Protein:" name="protein">
-                <Input
-                  placeholder="Hàm lượng chất Protein món ăn chứa"
-                  name="protein"
-                  onChange={formik.handleChange}
-                />
-                {formik.errors.protein && (
-                  <p className="errorMSG">{formik.errors.protein}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="Hàm lượng Carbs:" name="carbon">
-                <Input
-                  placeholder="Hàm lượng chất Carbs món ăn chứa"
-                  name="carbon"
-                  onChange={formik.handleChange}
-                />
-                {formik.errors.carbon && (
-                  <p className="errorMSG">{formik.errors.carbon}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="calories" label="Hàm lượng Calories:">
-                <Input
-                  placeholder="Hàm lượng chất Calories món ăn chứa"
-                  name="calories"
-                  onChange={formik.handleChange}
-                />
-                {formik.errors.calories && (
-                  <p className="errorMSG">{formik.errors.calories}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="vitamin" label="Hàm lượng vitamin:">
-                <Input
-                  placeholder="Hàm lượng chất Vitamin món ăn chứa"
-                  name="vitamin"
-                  onChange={formik.handleChange}
-                />
-                {formik.errors.vitamin && (
-                  <p className="errorMSG">{formik.errors.vitamin}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="Hàm lượng Wate:" name="wate">
-                <Input
-                  placeholder="Hàm lượng chất Wate món ăn chứa"
-                  name="wate"
-                  onChange={formik.handleChange}
-                />
-                {formik.errors.wate && (
-                  <p className="errorMSG">{formik.errors.wate}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="fiber" label="Hàm lượng Fiber:">
-                <Input
-                  placeholder="Hàm lượng chất Fiber món ăn chứa"
-                  name="fiber"
-                  onChange={formik.handleChange}
-                />{" "}
-                {formik.errors.fiber && (
-                  <p className="errorMSG">{formik.errors.fiber}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="ash" label="Hàm lượng ash:">
-                <Input
-                  placeholder="Hàm lượng chất ash món ăn chứa"
-                  name="ash"
-                  onChange={formik.handleChange}
-                />
-                {formik.errors.ash && (
-                  <p className="errorMSG">{formik.errors.ash}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="canxi" label="Hàm lượng Canxi:">
-                <Input
-                  placeholder="Hàm lượng chất Canxi món ăn chứa"
-                  name="canxi"
-                  onChange={formik.handleChange}
-                />
-                {formik.errors.canxi && (
-                  <p className="errorMSG">{formik.errors.canxi}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="iron" label="Hàm lượng Iron:">
-                <Input
-                  placeholder="Hàm lượng chất Iron món ăn chứa"
-                  name="iron"
-                  onChange={formik.handleChange}
-                />{" "}
-                {formik.errors.iron && (
-                  <p className="errorMSG">{formik.errors.iron}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="zinc" label="Hàm lượng Zinc:">
-                <Input
-                  placeholder="Hàm lượng chất Zinc món ăn chứa"
-                  name="zinc"
-                  onChange={formik.handleChange}
-                />{" "}
-                {formik.errors.zinc && (
-                  <p className="errorMSG">{formik.errors.zinc}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="vitaminC" label="Hàm lượng VitaminC:">
-                <Input
-                  placeholder="Hàm lượng chất VitaminC món ăn chứa"
-                  name="vitaminC"
-                  onChange={formik.handleChange}
-                />
-                {formik.errors.vitaminC && (
-                  <p className="errorMSG">{formik.errors.vitaminC}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="vitaminB1" label="Hàm lượng VitaminB1:">
-                <Input
-                  placeholder="Hàm lượng chất VitaminB1 món ăn chứa"
-                  name="vitaminB1"
-                  onChange={formik.handleChange}
-                />{" "}
-                {formik.errors.vitaminB1 && (
-                  <p className="errorMSG">{formik.errors.vitaminB1}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="vitaminB2" label="Hàm lượng VitaminB2:">
-                <Input
-                  placeholder="Hàm lượng chất VitaminB2 món ăn chứa"
-                  name="vitaminB2"
-                  onChange={formik.handleChange}
-                />{" "}
-                {formik.errors.vitaminB2 && (
-                  <p className="errorMSG">{formik.errors.vitaminB2}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="vitaminB3" label="Hàm lượng VitaminB3:">
-                <Input
-                  placeholder="Hàm lượng chất VitaminB3 món ăn chứa"
-                  name="vitaminB3"
-                  onChange={formik.handleChange}
-                />{" "}
-                {formik.errors.vitaminB3 && (
-                  <p className="errorMSG">{formik.errors.vitaminB3}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="vitaminB6A" label="Hàm lượng VitaminB6A:">
-                <Input
-                  placeholder="Hàm lượng chất VitaminB6A món ăn chứa"
-                  name="vitaminB6A"
-                  onChange={formik.handleChange}
-                />{" "}
-                {formik.errors.vitaminB6A && (
-                  <p className="errorMSG">{formik.errors.vitaminB6A}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="vitaminD" label="Hàm lượng VitaminD:">
-                <Input
-                  placeholder="Hàm lượng chất VitaminD món ăn chứa"
-                  name="vitaminD"
-                  onChange={formik.handleChange}
-                />{" "}
-                {formik.errors.vitaminD && (
-                  <p className="errorMSG">{formik.errors.vitaminD}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="vitaminB12" label="Hàm lượng VitaminB12:">
-                <Input
-                  placeholder="Hàm lượng chất VitaminB12 món ăn chứa"
-                  name="vitaminB12"
-                  onChange={formik.handleChange}
-                />{" "}
-                {formik.errors.vitaminB12 && (
-                  <p className="errorMSG">{formik.errors.vitaminB12}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="vitaminA" label="Hàm lượng VitaminA:">
-                <Input
-                  placeholder="Hàm lượng chất VitaminA món ăn chứa"
-                  name="vitaminA"
-                  onChange={formik.handleChange}
-                />{" "}
-                {formik.errors.vitaminA && (
-                  <p className="errorMSG">{formik.errors.vitaminA}</p>
-                )}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="vitaminA_rae" label="Hàm lượng VitaminA_rae:">
-                <Input
-                  placeholder="Hàm lượng chất VitaminA_rae món ăn chứa"
-                  name="vitaminA_rae"
-                  onChange={formik.handleChange}
-                />{" "}
-                {formik.errors.vitaminA_rae && (
-                  <p className="errorMSG">{formik.errors.vitaminA_rae}</p>
-                )}
-              </Form.Item>
-            </Col>
             <Col span={12}>
               <Form.Item name="minLimit" label="Giới hạn tối thiểu:">
                 <Input
@@ -604,6 +335,283 @@ const AddNewIngrendient = () => {
                 />{" "}
                 {formik.errors.maxLimit && (
                   <p className="errorMSG">{formik.errors.maxLimit}</p>
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Divider></Divider>
+          <Col span={24}>
+            <Form.Item
+              name="seassonFood"
+              label="Mùa của nguyên liệu này:"
+              rules={[
+                {
+                  required: true,
+                  message: "Please pick an item!",
+                },
+              ]}
+            >
+              <Checkbox
+                indeterminate={indeterminate}
+                onChange={onCheckAllChange}
+                defaultChecked={true}
+                checked={checkAll}
+                required
+              >
+                Chọn cả bốn mùa
+              </Checkbox>
+              <Divider />
+              <CheckboxGroup
+                options={seassonList}
+                value={checkedSessonList}
+                onChange={onChange}
+                required
+              />
+            </Form.Item>
+            <AlertDiv info={alert} />
+          </Col>
+          <Divider></Divider>
+          <Row gutter={24}>
+            <Col span={12}>
+              <Form.Item label="Hàm lượng chất béo (/100g):" name="fat">
+                <Input
+                  placeholder="Hàm lượng chất béo món ăn chứa"
+                  name="fat"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.fat && (
+                  <p className="errorMSG">{formik.errors.fat}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Hàm lượng đạm(/100g):" name="protein">
+                <Input
+                  placeholder="Hàm lượng chất đạm món ăn chứa"
+                  name="protein"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.protein && (
+                  <p className="errorMSG">{formik.errors.protein}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Hàm lượng bột đường(/100g):" name="carbon">
+                <Input
+                  placeholder="Hàm lượng chất bột đường món ăn chứa"
+                  name="carbon"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.carbon && (
+                  <p className="errorMSG">{formik.errors.carbon}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="calories" label="Hàm lượng Calo(/100g):">
+                <Input
+                  placeholder="Hàm lượng Calo món ăn chứa"
+                  name="calories"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.calories && (
+                  <p className="errorMSG">{formik.errors.calories}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="vitamin" label="Hàm lượng vitamin(/100g):">
+                <Input
+                  placeholder="Hàm lượng chất Vitamin món ăn chứa"
+                  name="vitamin"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.vitamin && (
+                  <p className="errorMSG">{formik.errors.vitamin}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Hàm lượng nước(/100g):" name="wate">
+                <Input
+                  placeholder="Hàm lượng nước món ăn chứa"
+                  name="wate"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.wate && (
+                  <p className="errorMSG">{formik.errors.wate}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="fiber" label="Hàm lượng chất xơ(/100g):">
+                <Input
+                  placeholder="Hàm lượng chất chất xơ món ăn chứa"
+                  name="fiber"
+                  onChange={formik.handleChange}
+                />{" "}
+                {formik.errors.fiber && (
+                  <p className="errorMSG">{formik.errors.fiber}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="ash" label="Hàm lượng Tro(/100g):">
+                <Input
+                  placeholder="Hàm lượng Tro món ăn chứa"
+                  name="ash"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.ash && (
+                  <p className="errorMSG">{formik.errors.ash}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="canxi" label="Hàm lượng Canxi(/100g):">
+                <Input
+                  placeholder="Hàm lượng chất Canxi món ăn chứa"
+                  name="canxi"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.canxi && (
+                  <p className="errorMSG">{formik.errors.canxi}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="iron" label="Hàm lượng Sắt(/100g):">
+                <Input
+                  placeholder="Hàm lượng chất sắt món ăn chứa"
+                  name="iron"
+                  onChange={formik.handleChange}
+                />{" "}
+                {formik.errors.iron && (
+                  <p className="errorMSG">{formik.errors.iron}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="zinc" label="Hàm lượng kẽm(/100g):">
+                <Input
+                  placeholder="Hàm lượng chất kẽm món ăn chứa"
+                  name="zinc"
+                  onChange={formik.handleChange}
+                />{" "}
+                {formik.errors.zinc && (
+                  <p className="errorMSG">{formik.errors.zinc}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="vitaminC" label="Hàm lượng VitaminC(/100g):">
+                <Input
+                  placeholder="Hàm lượng chất VitaminC món ăn chứa"
+                  name="vitaminC"
+                  onChange={formik.handleChange}
+                />
+                {formik.errors.vitaminC && (
+                  <p className="errorMSG">{formik.errors.vitaminC}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="vitaminB1" label="Hàm lượng VitaminB1(/100g):">
+                <Input
+                  placeholder="Hàm lượng chất VitaminB1 món ăn chứa"
+                  name="vitaminB1"
+                  onChange={formik.handleChange}
+                />{" "}
+                {formik.errors.vitaminB1 && (
+                  <p className="errorMSG">{formik.errors.vitaminB1}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="vitaminB2" label="Hàm lượng VitaminB2(/100g):">
+                <Input
+                  placeholder="Hàm lượng chất VitaminB2 món ăn chứa"
+                  name="vitaminB2"
+                  onChange={formik.handleChange}
+                />{" "}
+                {formik.errors.vitaminB2 && (
+                  <p className="errorMSG">{formik.errors.vitaminB2}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="vitaminB3" label="Hàm lượng VitaminB3(/100g):">
+                <Input
+                  placeholder="Hàm lượng chất VitaminB3 món ăn chứa"
+                  name="vitaminB3"
+                  onChange={formik.handleChange}
+                />{" "}
+                {formik.errors.vitaminB3 && (
+                  <p className="errorMSG">{formik.errors.vitaminB3}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="vitaminB6A" label="Hàm lượng VitaminB6A(/100g):">
+                <Input
+                  placeholder="Hàm lượng chất VitaminB6A món ăn chứa"
+                  name="vitaminB6A"
+                  onChange={formik.handleChange}
+                />{" "}
+                {formik.errors.vitaminB6A && (
+                  <p className="errorMSG">{formik.errors.vitaminB6A}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="vitaminD" label="Hàm lượng VitaminD(/100g):">
+                <Input
+                  placeholder="Hàm lượng chất VitaminD món ăn chứa"
+                  name="vitaminD"
+                  onChange={formik.handleChange}
+                />{" "}
+                {formik.errors.vitaminD && (
+                  <p className="errorMSG">{formik.errors.vitaminD}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="vitaminB12" label="Hàm lượng VitaminB12(/100g):">
+                <Input
+                  placeholder="Hàm lượng chất VitaminB12 món ăn chứa"
+                  name="vitaminB12"
+                  onChange={formik.handleChange}
+                />{" "}
+                {formik.errors.vitaminB12 && (
+                  <p className="errorMSG">{formik.errors.vitaminB12}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item name="vitaminA" label="Hàm lượng VitaminA(/100g):">
+                <Input
+                  placeholder="Hàm lượng chất VitaminA món ăn chứa"
+                  name="vitaminA"
+                  onChange={formik.handleChange}
+                />{" "}
+                {formik.errors.vitaminA && (
+                  <p className="errorMSG">{formik.errors.vitaminA}</p>
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="vitaminA_rae"
+                label="Hàm lượng VitaminA_rae(/100g):"
+              >
+                <Input
+                  placeholder="Hàm lượng chất VitaminA_rae món ăn chứa"
+                  name="vitaminA_rae"
+                  onChange={formik.handleChange}
+                />{" "}
+                {formik.errors.vitaminA_rae && (
+                  <p className="errorMSG">{formik.errors.vitaminA_rae}</p>
                 )}
               </Form.Item>
             </Col>

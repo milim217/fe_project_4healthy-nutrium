@@ -124,14 +124,15 @@ const NutrionExpertFood = () => {
 
   // Dữ liệu giả cho danh sách
   const data = [];
+  const body = <br></br>;
   food
     ? food.map((foodValue) =>
         data.push({
           id: foodValue.id,
           food_name: foodValue.foodName,
           category_id: foodValue.category.categoryName,
-          mealType: foodValue.meals.map((m) => m.mealName + " "),
-          seasson_id: foodValue.seasons.map((s) => s.seasonName + " "),
+          mealType: foodValue.meals.map((m) => m.mealName + ", "),
+          seasson_id: foodValue.seasons.map((s) => s.seasonName + ", "),
           recipe: foodValue.recipe,
           fat: foodValue.fat,
           protein: foodValue.protein,

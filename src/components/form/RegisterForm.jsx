@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import AlertMessage from "../alert/AlertMessage";
-import { DatePicker, Radio } from "antd";
+import { DatePicker, Radio, Input } from "antd";
 import UserAPI from "../../service/Actions/UserAPI";
 import Moment from "moment";
 import moment from "moment";
@@ -237,72 +237,92 @@ const RegisterForm = () => {
               <Form className="my-4" onSubmit={register}>
                 <AlertMessage info={alert} />
                 <Form.Group>
-                  <Form.Control
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    value={formik.values.email}
-                    required
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.email && (
-                    <p className="errorMSG">{formik.errors.email}</p>
-                  )}
-                  <Form.Control
-                    type="password"
-                    placeholder="Mật khẩu"
-                    name="password"
-                    value={formik.values.password}
-                    required
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.password && (
-                    <p className="errorMSG">{formik.errors.password}</p>
-                  )}
-                  <Form.Control
-                    type="password"
-                    placeholder="Nhập lại mật khẩu"
-                    name="ReEnterPassword"
-                    required
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.ReEnterPassword && (
-                    <p className="errorMSG">{formik.errors.ReEnterPassword}</p>
-                  )}
-                  <Form.Control
-                    type="text"
-                    placeholder="Tên của bạn"
-                    name="username"
-                    required
-                    value={formik.values.username}
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.username && (
-                    <p className="errorMSG">{formik.errors.username}</p>
-                  )}
-                  <Form.Control
-                    type="text"
-                    placeholder="Địa chỉ"
-                    value={formik.values.address}
-                    name="address"
-                    required
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.address && (
-                    <p className="errorMSG">{formik.errors.address}</p>
-                  )}
-                  <Form.Control
-                    type="text"
-                    placeholder="Số điện thoại"
-                    value={formik.values.phoneNumber}
-                    name="phoneNumber"
-                    required
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.phoneNumber && (
-                    <p className="errorMSG">{formik.errors.phoneNumber}</p>
-                  )}
-                  <Form.Control
+                  <Form.Group>
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      name="email"
+                      value={formik.values.email}
+                      required
+                      onChange={formik.handleChange}
+                      className="form_login_register"
+                    />
+                    {formik.errors.email && (
+                      <p className="errorMSG">{formik.errors.email}</p>
+                    )}
+                  </Form.Group>
+                  <Form.Group>
+                    <Input.Password
+                      type="password"
+                      placeholder="Mật khẩu"
+                      name="password"
+                      value={formik.values.password}
+                      required
+                      onChange={formik.handleChange}
+                      className="form_login_register"
+                    />
+                    {formik.errors.password && (
+                      <p className="errorMSG">{formik.errors.password}</p>
+                    )}
+                  </Form.Group>
+                  <Form.Group>
+                    <Input.Password
+                      type="password"
+                      placeholder="Nhập lại mật khẩu"
+                      name="ReEnterPassword"
+                      required
+                      onChange={formik.handleChange}
+                      className="form_login_register"
+                    />
+                    {formik.errors.ReEnterPassword && (
+                      <p className="errorMSG">
+                        {formik.errors.ReEnterPassword}
+                      </p>
+                    )}
+                  </Form.Group>
+                  <Form.Group>
+                    <Input
+                      type="text"
+                      placeholder="Tên của bạn"
+                      name="username"
+                      required
+                      value={formik.values.username}
+                      onChange={formik.handleChange}
+                      className="form_login_register"
+                    />
+                    {formik.errors.username && (
+                      <p className="errorMSG">{formik.errors.username}</p>
+                    )}
+                  </Form.Group>
+                  <Form.Group>
+                    <Input
+                      type="text"
+                      placeholder="Địa chỉ"
+                      value={formik.values.address}
+                      name="address"
+                      required
+                      onChange={formik.handleChange}
+                      className="form_login_register"
+                    />
+                    {formik.errors.address && (
+                      <p className="errorMSG">{formik.errors.address}</p>
+                    )}
+                  </Form.Group>
+                  <Form.Group>
+                    <Input
+                      type="text"
+                      placeholder="Số điện thoại"
+                      value={formik.values.phoneNumber}
+                      name="phoneNumber"
+                      required
+                      onChange={formik.handleChange}
+                      className="form_login_register"
+                    />
+                    {formik.errors.phoneNumber && (
+                      <p className="errorMSG">{formik.errors.phoneNumber}</p>
+                    )}
+                  </Form.Group>
+                  <Input
                     // defaultValue={moment("01/01/2000", "DD/MM/YYYY")}
                     type="text"
                     name="date"
@@ -312,16 +332,20 @@ const RegisterForm = () => {
                     // format={"DD/MM/YYYY"}
                     required
                     onChange={formik.handleChange}
+                    className="form_login_register"
                   />
                   {formik.errors.date && (
                     <p className="errorMSG">{formik.errors.date}</p>
                   )}
-                  <Form.Control
+                </Form.Group>
+                <Form.Group>
+                  <Input
                     type="text"
                     placeholder="Mã xác thực email"
                     name="ValidEmail"
                     required
                     onChange={formik.handleChange}
+                    className="form_login_register"
                   />
                   {formik.errors.ValidEmail && (
                     <p className="errorMSG">{formik.errors.ValidEmail}</p>

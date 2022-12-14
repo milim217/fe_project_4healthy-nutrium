@@ -74,7 +74,8 @@ const HeaderNutritionExpertManager = (props) => {
         title="Xem thông tin"
         open={isModalOpen}
         onOk={handleOk}
-        onCancel={handleCancel}
+        okText={"Huỷ"}
+        cancelButtonProps={{ style: { display: "none" } }}
       >
         <NutrionExpertInformation></NutrionExpertInformation>
       </Modal>

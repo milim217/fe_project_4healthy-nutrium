@@ -74,7 +74,9 @@ const HeaderLayout = (props) => {
         title="Xem thông tin"
         open={isModalOpen}
         onOk={handleOk}
-        onCancel={handleCancel}
+        okText={"Huỷ"}
+        cancelButtonProps={{ style: { display: "none" } }}
+        footer={null}
       >
         <AdminInfomation></AdminInfomation>
       </Modal>

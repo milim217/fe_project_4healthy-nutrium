@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { Input } from "antd";
 import UserAPI from "../../service/Actions/UserAPI";
 import AlertMessage from "../alert/AlertMessage";
 import { Link } from "react-router-dom";
 
-
 const ResetPasswordForm = () => {
-
   const [form, setForm] = useState({
     email: "",
     password: "",
     password2: "",
-    code: ""
+    code: "",
   });
   const [alert, setAlert] = useState(null);
 
@@ -21,14 +20,14 @@ const ResetPasswordForm = () => {
       ...form,
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
   async function getUserByEmail(email) {
     return await UserAPI.getByEmail(email)
-      .then(res => {
+      .then((res) => {
         return res.data;
       })
-      .catch(e => {
+      .catch((e) => {
         return null;
       });
   }
@@ -43,11 +42,11 @@ const ResetPasswordForm = () => {
       if (user) {
         // gửi mail
         UserAPI.sendForgotCode([email])
-          .then(res => {
+          .then((res) => {
             setAlert({ type: "success", message: res.data });
             setTimeout(() => setAlert(null), 5000);
           })
-          .catch(e => {
+          .catch((e) => {
             setAlert({ type: "danger", message: e.response.data.message });
             setTimeout(() => setAlert(null), 5000);
           });
@@ -64,12 +63,15 @@ const ResetPasswordForm = () => {
     let check = true;
 
     if (form.password !== form.password2) {
-      setAlert({ type: "danger", message: "Vui lòng nhập 2 mật khẩu giống nhau"});
+      setAlert({
+        type: "danger",
+        message: "Vui lòng nhập 2 mật khẩu giống nhau",
+      });
       setTimeout(() => setAlert(null), 5000);
       check = false;
     }
     return check;
-  }
+  };
 
   const changePassword = async (e) => {
     e.preventDefault();
@@ -80,10 +82,10 @@ const ResetPasswordForm = () => {
 
     // call api get user từ code
     let user = await UserAPI.getForgotUser(form.code)
-      .then(res => {
+      .then((res) => {
         return res.data;
       })
-      .catch(e => {
+      .catch((e) => {
         setAlert({ type: "danger", message: e.response.data.message });
         setTimeout(() => setAlert(null), 5000);
         return null;
@@ -94,7 +96,10 @@ const ResetPasswordForm = () => {
       let inputtedEmail = form.email;
       // check email từ code có trùng vs email nhập
       if (user.email !== inputtedEmail) {
-        setAlert({ type: "danger", message: "Mã xác thực không dành cho email " + inputtedEmail });
+        setAlert({
+          type: "danger",
+          message: "Mã xác thực không dành cho email " + inputtedEmail,
+        });
         setTimeout(() => setAlert(null), 5000);
         return;
       }
@@ -102,11 +107,11 @@ const ResetPasswordForm = () => {
       console.log(JSON.stringify(user));
       // đổi mật khẩu
       UserAPI.update(user)
-        .then(res => {
+        .then((res) => {
           setAlert({ type: "success", message: "Đổi mật khẩu thành công" });
           setTimeout(() => setAlert(null), 5000);
         })
-        .catch(e => {
+        .catch((e) => {
           setAlert({ type: "danger", message: e.response.data.message });
           setTimeout(() => setAlert(null), 5000);
         });
@@ -115,7 +120,7 @@ const ResetPasswordForm = () => {
     else {
       return;
     }
-  }
+  };
 
   return (
     <div className="landing">
@@ -125,38 +130,48 @@ const ResetPasswordForm = () => {
             <Form className="my-4" onSubmit={changePassword}>
               <AlertMessage info={alert} />
               <Form.Group>
-                <Form.Control
-                  placeholder="Email của bạn"
-                  className="form_send_mail"
-                  type="text"
-                  name="email"
-                  required
-                  onChange={updateForm}
-                />
-                <Form.Control
-                  placeholder="Nhập mật khẩu mới của bạn"
-                  className="form_send_mail"
-                  type="password"
-                  name="password"
-                  required
-                  onChange={updateForm}
-                />
-                <Form.Control
-                  placeholder="Nhập mật khẩu mới của bạn lần nữa"
-                  className="form_send_mail"
-                  type="password"
-                  name="password2"
-                  required
-                  onChange={updateForm}
-                />
-                <Form.Control
-                  placeholder="Nhập mã xác thực email"
-                  className="form_send_mail"
-                  type="text"
-                  name="code"
-                  required
-                  onChange={updateForm}
-                />
+                <Form.Group>
+                  <Input
+                    placeholder="Email của bạn"
+                    className="form_send_mail"
+                    type="text"
+                    name="email"
+                    required
+                    onChange={updateForm}
+                  />
+                </Form.Group>
+
+                <Form.Group>
+                  <Input.Password
+                    placeholder="Nhập mật khẩu mới của bạn"
+                    className="form_send_mail"
+                    type="password"
+                    name="password"
+                    required
+                    onChange={updateForm}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Input.Password
+                    placeholder="Nhập mật khẩu mới của bạn lần nữa"
+                    className="form_send_mail"
+                    type="password"
+                    name="password2"
+                    required
+                    onChange={updateForm}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Input
+                    placeholder="Nhập mã xác thực email"
+                    className="form_send_mail"
+                    type="text"
+                    name="code"
+                    required
+                    onChange={updateForm}
+                  />
+                </Form.Group>
+
                 <Button
                   variant="success"
                   className="btn_Return_ResetPasswordForm"

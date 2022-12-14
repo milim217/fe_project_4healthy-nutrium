@@ -58,10 +58,10 @@
   border: 1px solid #d7d7d7;
   border-radius: 2px;
   width: 100%;
-  height: 56px;
+  /* height: 56px; */
   padding: 15px 11px;
   font-family: "Takeaway Sans", sans-serif;
-  font-size: 16px;
+  /* font-size: 14px; */
   line-height: 24px;
   color: #0a3847;
 }
@@ -121,6 +121,11 @@
   height: 56px;
   padding: 20px;
 }
+.form_login_register {
+  height: 56px;
+  padding: 20px;
+}
+
 .btn_loginForm_1 {
   background-color: #3b89f7;
   border-color: #3b89f7;
@@ -250,4 +255,21 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.ant-input-affix-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  min-width: 0;
+  padding: 4px 11px;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 14px;
+  line-height: 1.5715;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  transition: all 0.3s;
+  display: inline-flex;
 }
