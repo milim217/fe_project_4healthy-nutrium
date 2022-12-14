@@ -100,4 +100,11 @@ body {
   height: auto;
   padding-top: 250px;
   padding-bottom: 80px;
+
+  margin-top: 0rem !important;
+}
+
+.pt-3,
+.py-3 {
+  padding-top: 1rem !important;
 }
