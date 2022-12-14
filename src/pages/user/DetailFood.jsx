@@ -5,7 +5,7 @@ import "../../assets/style/user/detailPage.css";
 import { Col, Row, Image, Card, Divider } from "antd";
 
 const gridStyle = {
-  width: "20%",
+  width: "33.33333%",
   height: "auto",
   textAlign: "center",
 };
@@ -20,23 +20,21 @@ const DetailFood = () => {
               <div className="name_food_DetailPage">Tên món ăn</div>
               <Card title="Thông tin dinh dưỡng">
                 <Card.Grid style={gridStyle}>
-                  <div className="name_SumaryNutrition_Food"> Calories</div>
+                  <div className="name_SumaryNutrition_Food"> Calo </div>
                   <div className="data_SmaryNutrition_Food"> 120</div>
                 </Card.Grid>
                 <Card.Grid style={gridStyle}>
-                  <div className="name_SumaryNutrition_Food"> Fat</div>
+                  <div className="name_SumaryNutrition_Food"> Chất béo </div>
                   <div className="data_SmaryNutrition_Food"> 120</div>
                 </Card.Grid>
                 <Card.Grid style={gridStyle}>
-                  <div className="name_SumaryNutrition_Food"> Carbs</div>
+                  <div className="name_SumaryNutrition_Food">
+                    Chất bột đường
+                  </div>
                   <div className="data_SmaryNutrition_Food"> 120</div>
                 </Card.Grid>
                 <Card.Grid style={gridStyle}>
-                  <div className="name_SumaryNutrition_Food"> Protein</div>
-                  <div className="data_SmaryNutrition_Food"> 120</div>
-                </Card.Grid>
-                <Card.Grid style={gridStyle}>
-                  <div className="name_SumaryNutrition_Food"> Fiber</div>
+                  <div className="name_SumaryNutrition_Food"> Chất đạm</div>
                   <div className="data_SmaryNutrition_Food"> 120</div>
                 </Card.Grid>
                 <Card.Grid style={gridStyle}>
