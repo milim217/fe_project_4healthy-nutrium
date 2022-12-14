@@ -110,7 +110,7 @@ const AddNewIngrendient = () => {
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
       carbon: Yup.string()
-        .required("Bạn không được để trống hàm lượng chât carbon")
+        .required("Bạn không được để trống hàm lượng chât carbs")
         .matches(
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
@@ -368,9 +368,9 @@ const AddNewIngrendient = () => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Hàm lượng Carbon:" name="carbon">
+              <Form.Item label="Hàm lượng Carbs:" name="carbon">
                 <Input
-                  placeholder="Hàm lượng chất Carbon món ăn chứa"
+                  placeholder="Hàm lượng chất Carbs món ăn chứa"
                   name="carbon"
                   onChange={formik.handleChange}
                 />

@@ -164,7 +164,7 @@ const EditFood = () => {
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
       carbon: Yup.string()
-        .required("Bạn không được để trống hàm lượng chất carbon")
+        .required("Bạn không được để trống hàm lượng chất carbs")
         .matches(
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
@@ -377,17 +377,17 @@ const EditFood = () => {
           </Col>
           <Col span={24}>
             <Form.Item
-              label="Hàm lượng Carbon:"
+              label="Hàm lượng Carbs:"
               rules={[
                 {
                   required: true,
-                  message: "Carbon chưa nhập",
+                  message: "Carbs chưa nhập",
                 },
               ]}
             >
               <Input
                 name="carbon"
-                placeholder="Hàm lượng chất carbon món ăn chứa"
+                placeholder="Hàm lượng chất Carbs món ăn chứa"
                 onChange={formik.handleChange}
               />
               {formik.errors.carbon && (

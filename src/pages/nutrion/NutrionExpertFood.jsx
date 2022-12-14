@@ -75,17 +75,17 @@ const NutrionExpertFood = () => {
       justify: "center",
     },
     {
-      title: "Fat",
+      title: "Chất béo",
       dataIndex: "fat",
       justify: "center",
     },
     {
-      title: "Protein",
+      title: "Chất đạm",
       dataIndex: "protein",
       justify: "center",
     },
     {
-      title: "Carbon",
+      title: "Chất bột đường",
       dataIndex: "carbon",
       justify: "center",
     },

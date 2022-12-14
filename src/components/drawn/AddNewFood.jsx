@@ -370,17 +370,17 @@ const AddNewFood = () => {
           </Col>
           <Col span={24}>
             <Form.Item
-              label="Hàm lượng Carbon:"
+              label="Hàm lượng Carb:"
               rules={[
                 {
                   required: true,
-                  message: "Carbon chưa nhập",
+                  message: "Carb chưa nhập",
                 },
               ]}
             >
               <Input
                 name="carbon"
-                placeholder="Hàm lượng chất carbon món ăn chứa"
+                placeholder="Hàm lượng chất carb món ăn chứa"
                 onChange={formik.handleChange}
               />
               {formik.errors.carbon && (
