@@ -124,6 +124,7 @@ const TableAddIngredientFood = (props) => {
       name: `${arrIngredient}`,
       hamluong: "0",
     };
+
     if (!dataSource.find((data) => data.name == arrIngredient)) {
       setDataSource([...dataSource, newData]);
       setCount(count + 1);

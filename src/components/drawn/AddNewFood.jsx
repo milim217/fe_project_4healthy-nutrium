@@ -494,6 +494,7 @@ const AddNewFood = () => {
                     .toLowerCase()
                     .includes(input.toLowerCase())
                 }
+                defaultValue={"Calo"}
                 options={[
                   {
                     value: "Calo",

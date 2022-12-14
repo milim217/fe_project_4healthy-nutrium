@@ -496,6 +496,7 @@ const EditFood = () => {
                 placeholder="Select a person"
                 optionFilterProp="children"
                 onChange={onChangeSelectIngredientFood}
+                defaultValue={"Calo"}
                 filterOption={(input, option) =>
                   (option?.label ?? "")
                     .toLowerCase()
