@@ -166,7 +166,7 @@ const AddNewUser = () => {
                 <Input
                   name="NameAccount"
                   placeholder="Nhập tên của chuyên gia dinh dưỡng ở đây"
-                  value={formik.values.name}
+                  value={formik.values.NameAccount}
                   onChange={formik.handleChange}
                 />
                 {formik.errors.NameAccount && (

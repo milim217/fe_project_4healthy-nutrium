@@ -272,6 +272,7 @@ const RegisterForm = () => {
                       name="ReEnterPassword"
                       required
                       onChange={formik.handleChange}
+                      value={formik.values.passwordNew}
                       className="form_login_register"
                     />
                     {formik.errors.ReEnterPassword && (

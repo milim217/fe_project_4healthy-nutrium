@@ -13,6 +13,8 @@ import {
 } from "antd";
 import { Breadcrumb, Divider } from "antd";
 import HeaderUserHasLog from "../../components/header/HeaderHasLog";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import Footers from "../../components/footer/footers";
 import SlidebarUser from "./SlidbarUser";
 import AuthUtil from "../../service/utils/AuthUtil";
@@ -20,6 +22,14 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
 const UserProfile = () => {
+  const layout = {
+    labelCol: {
+      span: 8,
+    },
+    wrapperCol: {
+      span: 16,
+    },
+  };
   const { Option } = Select;
   const history = useHistory();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,8 +38,14 @@ const UserProfile = () => {
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleOk = () => {
-    setIsModalOpen(false);
+  const resetPassword = () => {
+    const resetPasswordForm = {
+      oldPassword: formikResetPassword.values.oldPassword,
+      passwordNew: formikResetPassword.values.passwordNew,
+      cofirmPasswordNew: formikResetPassword.values.cofirmPasswordNew,
+    };
+    console.log(resetPasswordForm);
+    // setIsModalOpen(false);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -53,24 +69,104 @@ const UserProfile = () => {
     a.style.display = "block";
     setisDisable(true);
   };
-  const displayButton2 = () => {
-    var x = document.querySelector("#LuuButton2");
-    var y = document.querySelector("#HuyButton2");
-    var a = document.querySelector("#EditButton2");
-    x.style.display = "block";
-    y.style.display = "block";
-    a.style.display = "none";
-    setisDisable2(false);
+  const [genderForm, setGenderForm] = useState({
+    gender: "true",
+  });
+  //
+  //
+  // Nếu mà form đó cần chỉnh sửa thì mới dùng
+  //
+  //
+
+  // const displayButton2 = () => {
+  //   var x = document.querySelector("#LuuButton2");
+  //   var y = document.querySelector("#HuyButton2");
+  //   var a = document.querySelector("#EditButton2");
+  //   x.style.display = "block";
+  //   y.style.display = "block";
+  //   a.style.display = "none";
+  //   setisDisable2(false);
+  // };
+  // const showEditButton2 = () => {
+  //   var x = document.querySelector("#LuuButton2");
+  //   var y = document.querySelector("#HuyButton2");
+  //   var a = document.querySelector("#EditButton2");
+  //   x.style.display = "none";
+  //   y.style.display = "none";
+  //   a.style.display = "block";
+  //   setisDisable2(true);
+  // };
+
+  //
+  //
+  // Giới Tính
+  //
+  //
+  const onChangeGender = (value) => {
+    setGenderForm({
+      gender: value,
+    });
   };
-  const showEditButton2 = () => {
-    var x = document.querySelector("#LuuButton2");
-    var y = document.querySelector("#HuyButton2");
-    var a = document.querySelector("#EditButton2");
-    x.style.display = "none";
-    y.style.display = "none";
-    a.style.display = "block";
-    setisDisable2(true);
-  };
+
+  const formik = useFormik({
+    initialValues: {
+      NameAccount: "",
+      address: "",
+      phoneNumber: "",
+    },
+    //
+    //
+    //regex
+    //
+    //
+    validationSchema: Yup.object({
+      NameAccount: Yup.string()
+        .required("Bạn không được để trống tên tài khoản")
+        .matches(
+          /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
+          "Tên tài khoản chứa 8 - 20 ký tự, không chứa '.' và '_'"
+        ),
+      phoneNumber: Yup.string()
+        .required("Bạn không được để trống số điện thoại")
+        .matches(
+          /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/,
+          "Số điện thoại gồm 10 số, và bắt đầu bằng số 0"
+        ),
+      address: Yup.string().required("Bạn không được để trống địa chỉ"),
+    }),
+  });
+  const formikResetPassword = useFormik({
+    initialValues: {
+      oldPassword: "",
+      passwordNew: "",
+      cofirmPasswordNew: "",
+    },
+    //
+    //
+    //regex resetpassword
+    //
+    //
+    validationSchema: Yup.object({
+      oldPassword: Yup.string()
+        .required("Bạn không được để trống email")
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,10}$/,
+          "Mật khẩu tối thiểu 8 - 10 ký tự, ít nhất chứa một chữ cái và một số:"
+        ),
+      passwordNew: Yup.string()
+        .required("Bạn không được để trống mật khẩu mới")
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,10}$/,
+          "Mật khẩu tối thiểu 8 - 10 ký tự, ít nhất chứa một chữ cái và một số:"
+        ),
+      cofirmPasswordNew: Yup.string()
+        .required("Bạn không được để trống nhập lại mật khẩu mới")
+        .oneOf(
+          [Yup.ref("passwordNew"), null],
+          "mật khẩu nhập lại phải trùng với mật khẩu bạn đã nhập"
+        ),
+    }),
+  });
   useEffect(() => {
     let u = AuthUtil.getUserFromToken();
     if (u) {
@@ -81,6 +177,20 @@ const UserProfile = () => {
       history.push("/login");
     }
   }, []);
+  //
+  //
+  // Chỉnh sửa profile
+  //
+  //
+  const editProfile = () => {
+    const profileForm = {
+      name: formik.values.NameAccount,
+      address: formik.values.address,
+      phoneNumber: formik.values.phoneNumber,
+      gender: genderForm.gender,
+    };
+    console.log(profileForm);
+  };
 
   return (
     <div>
@@ -103,59 +213,102 @@ const UserProfile = () => {
           <Row gutter={24}>
             <Col span={4}></Col>
             <Col span={16}>
-              <Form.Item label="Tên của bạn">
-                <Input placeholder="input placeholder" disabled={isDisable} />
-              </Form.Item>
-              <Form.Item label="Ngày sinh của bạn">
-                <Input placeholder="input placeholder" disabled={true} />
-              </Form.Item>
-              <Form.Item label="Email của bạn">
-                <Input placeholder="input placeholder" disabled={true} />
-              </Form.Item>
-              <Form.Item
-                name="Giới tính"
-                label="Giới tính"
-                rules={[
-                  {
-                    required: true,
-                    message: "Bạn chưa chọn giới tính!",
-                  },
-                ]}
-              >
-                <Select
-                  defaultValue={{ value: "male", label: "Nam" }}
-                  disabled={isDisable}
+              <Form>
+                <Form.Item label="Tên của bạn">
+                  <Input
+                    placeholder="input placeholder"
+                    disabled={isDisable}
+                    name="NameAccount"
+                    value={formik.values.NameAccount}
+                    onChange={formik.handleChange}
+                  />
+                  {formik.errors.NameAccount && (
+                    <p className="errorMSG">{formik.errors.NameAccount}</p>
+                  )}
+                </Form.Item>
+                {/* Ngày sinh và Email không được sửa */}
+                <Form.Item label="Ngày sinh của bạn">
+                  <Input placeholder="input placeholder" disabled={true} />
+                </Form.Item>
+                <Form.Item label="Email của bạn">
+                  <Input placeholder="input placeholder" disabled={true} />
+                </Form.Item>
+                <Form.Item
+                  name="Giới tính"
+                  label="Giới tính"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Bạn chưa chọn giới tính!",
+                    },
+                  ]}
                 >
-                  <Option value="male">Nam</Option>
-                  <Option value="female">Nữ</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item label="Số điện thoại của bạn:">
-                <Input placeholder="input placeholder" disabled={isDisable} />
-              </Form.Item>
-              <Form.Item label="Địa chỉ của bạn:">
-                <Input placeholder="input placeholder" disabled={isDisable} />
-              </Form.Item>
-              <Space size={3}>
-                <Button type="primary" id="EditButton" onClick={displayButton}>
-                  Chỉnh sửa
-                </Button>
-                <Button
-                  type="primary"
-                  id="LuuButton"
-                  style={{ display: "none" }}
-                >
-                  Lưu
-                </Button>
-                <Button
-                  type="primary"
-                  id="HuyButton"
-                  style={{ display: "none" }}
-                  onClick={showEditButton}
-                >
-                  Huỷ
-                </Button>
-              </Space>
+                  <Select
+                    defaultValue="true"
+                    onChange={onChangeGender}
+                    options={[
+                      {
+                        value: "true",
+                        label: "Nam",
+                      },
+                      {
+                        value: "false",
+                        label: "Nữ",
+                      },
+                    ]}
+                  />
+                </Form.Item>
+                <Form.Item label="Số điện thoại của bạn:">
+                  <Input
+                    name="phoneNumber"
+                    placeholder="input placeholder"
+                    disabled={isDisable}
+                    value={formik.values.phoneNumber}
+                    onChange={formik.handleChange}
+                  />
+                  {formik.errors.phoneNumber && (
+                    <p className="errorMSG">{formik.errors.phoneNumber}</p>
+                  )}
+                </Form.Item>
+                <Form.Item label="Địa chỉ của bạn:">
+                  <Input
+                    placeholder="Nhập thông tin địa chỉ ở đây"
+                    name="address"
+                    value={formik.values.address}
+                    onChange={formik.handleChange}
+                    disabled={isDisable}
+                  />
+                  {formik.errors.address && (
+                    <p className="errorMSG">{formik.errors.address}</p>
+                  )}
+                </Form.Item>
+                <Space size={3}>
+                  <Button
+                    type="primary"
+                    id="EditButton"
+                    onClick={displayButton}
+                  >
+                    Chỉnh sửa
+                  </Button>
+                  <Button
+                    type="primary"
+                    onClick={editProfile}
+                    id="LuuButton"
+                    style={{ display: "none" }}
+                    disabled={!formik.isValid}
+                  >
+                    Lưu
+                  </Button>
+                  <Button
+                    type="primary"
+                    id="HuyButton"
+                    style={{ display: "none" }}
+                    onClick={showEditButton}
+                  >
+                    Huỷ
+                  </Button>
+                </Space>
+              </Form>
               <Button
                 type="primary"
                 onClick={showModal}
@@ -171,6 +324,7 @@ const UserProfile = () => {
           <Row gutter={24}>
             <Col span={4}></Col>
             <Col span={16}>
+              {/* Form này chỉ hiển thị chỉ số qua API cho người dùng */}
               <Form.Item label="Công việc của bạn:">
                 <Input placeholder="input placeholder" disabled={isDisable2} />
               </Form.Item>
@@ -211,48 +365,54 @@ const UserProfile = () => {
         <Modal
           title="Thay đổi mật khẩu"
           open={isModalOpen}
-          onOk={handleOk}
+          onOk={resetPassword}
           onCancel={handleCancel}
           okText={"Xác Nhận"}
           cancelText={"Huỷ"}
         >
-          <Form.Item
-            label="Nhập mật khẩu cũ"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập mật khẩu hiện tại của bạn!",
-              },
-            ]}
-          >
-            <Input.Password style={{ width: "285px", float: "right" }} />
-          </Form.Item>
+          <Form {...layout}>
+            <Form.Item label="Nhập mật khẩu cũ" name="OldPassword">
+              <Input.Password
+                name="oldPassword"
+                value={formikResetPassword.values.oldPassword}
+                onChange={formikResetPassword.handleChange}
+              />
+              {formikResetPassword.errors.oldPassword && (
+                <p className="errorMSG">
+                  {formikResetPassword.errors.oldPassword}
+                </p>
+              )}
+            </Form.Item>
 
-          <Form.Item
-            label="Nhập mật khẩu mới"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-          >
-            <Input.Password style={{ width: "285px", float: "right" }} />
-          </Form.Item>
-          <Form.Item
-            label="Nhập lại mật khẩu mới"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-          >
-            <Input.Password style={{ width: "285px", float: "right" }} />
-          </Form.Item>
+            <Form.Item label="Nhập mật khẩu mới" name="passwordNew">
+              <Input.Password
+                name="passwordNew"
+                placeholder="Nhập mật khẩu của bạn"
+                value={formikResetPassword.values.passwordNew}
+                onChange={formikResetPassword.handleChange}
+              />
+              {formikResetPassword.errors.passwordNew && (
+                <p className="errorMSG">
+                  {formikResetPassword.errors.passwordNew}
+                </p>
+              )}
+            </Form.Item>
+
+            <Form.Item label="Nhập mật khẩu mới" name="cofirmPasswordNew">
+              <Input.Password
+                name="cofirmPasswordNew"
+                placeholder="Nhập mật khẩu của bạn"
+                value={formikResetPassword.values.cofirmPasswordNew}
+                onChange={formikResetPassword.handleChange}
+              />
+
+              {formikResetPassword.errors.cofirmPasswordNew && (
+                <p className="errorMSG">
+                  {formikResetPassword.errors.cofirmPasswordNew}
+                </p>
+              )}
+            </Form.Item>
+          </Form>
         </Modal>
       </div>
       <Footers></Footers>
