@@ -256,6 +256,7 @@ const UserProfile = () => {
                         label: "Nữ",
                       },
                     ]}
+                    disabled={isDisable}
                   />
                 </Form.Item>
                 <Form.Item label="Số điện thoại của bạn:">
