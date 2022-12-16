@@ -328,6 +328,7 @@ const AddNewFood = () => {
   });
   const callValueMass = (dataSource) => {
     console.log(dataSource);
+    // Thêm mass vào object IngredientFoodValueArr
     // dataSource.forEach((element1) => {
     //   IngredientFoodValueArr.forEach(function (element) {
     //     element.mass = element1.mass;
