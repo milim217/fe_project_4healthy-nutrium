@@ -100,7 +100,6 @@ const MealTypeValueDefault = [
 const { Option } = Select;
 const AddNewFood = () => {
   const [alert2, setAlert2] = useState(null);
-  const [open, setOpen] = useState(false);
   //
   //
   //
@@ -108,6 +107,7 @@ const AddNewFood = () => {
   //
   //
   //
+  const [open, setOpen] = useState(false);
   const [checkedSessonList, setcheckedSessonList] =
     useState(SeassonValueDefault);
   const [indeterminate, setIndeterminate] = useState(true);
@@ -328,11 +328,11 @@ const AddNewFood = () => {
   });
   const callValueMass = (dataSource) => {
     console.log(dataSource);
-    dataSource.forEach((element1) => {
-      IngredientFoodValueArr.forEach(function (element) {
-        element.mass = element1.mass;
-      });
-    });
+    // dataSource.forEach((element1) => {
+    //   IngredientFoodValueArr.forEach(function (element) {
+    //     element.mass = element1.mass;
+    //   });
+    // });
 
     setMassFormTable({
       mass: dataSource,

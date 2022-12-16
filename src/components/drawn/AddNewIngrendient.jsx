@@ -65,7 +65,7 @@ const AddNewIngrendient = () => {
   //
   //
   //
-  // Mùa của món ăn
+  // Mùa của thành phần
   //
   //
   //
