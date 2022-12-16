@@ -89,13 +89,13 @@ const TableAddIngredientFood = (props) => {
   const defaultColumns = [
     {
       title: "Tên thành phần",
-      dataIndex: "name",
+      dataIndex: "ingredientName",
       width: "30%",
       editable: false,
     },
     {
       title: "Hàm Lượng",
-      dataIndex: "hamluong",
+      dataIndex: "mass",
       editable: true,
     },
     {
@@ -115,25 +115,26 @@ const TableAddIngredientFood = (props) => {
     },
   ];
   const arrIngredient = props.ValueIngredient;
-  var check = 0;
-  var arrIngredienthasave = [];
-
   const handleAdd = () => {
     const newData = {
       key: count,
-      name: `${arrIngredient}`,
-      hamluong: "0",
+      ingredientName: `${arrIngredient}`,
+      mass: "0",
     };
 
-    if (!dataSource.find((data) => data.name == arrIngredient)) {
+    if (!dataSource.find((data) => data.ingredientName == arrIngredient)) {
       setDataSource([...dataSource, newData]);
       setCount(count + 1);
     }
     // console.log(arrIngredient);
     // console.log(arrIngredienthasave);
   };
+
   const onsubmit = () => {
-    //Gửi giá trị từ form sang Add new food
+    //Gửi giá trị từ form sang Add
+    // dataSource.forEach(function (v) {
+    //   delete v.key;
+    // });
     props.getDataFromTable(dataSource);
   };
   const handleSave = (row) => {

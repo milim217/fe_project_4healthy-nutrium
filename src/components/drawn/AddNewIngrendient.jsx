@@ -20,24 +20,68 @@ import * as Yup from "yup";
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
-const seassonList = ["Xuân", "Hạ", "Thu", "Đông"];
-const SeassonValueDefault = ["Xuân"];
+const seassonList = [
+  {
+    label: "Xuân",
+    value: {
+      id: 1,
+      seasonName: "Spring",
+    },
+  },
+  {
+    label: "Hạ",
+    value: {
+      id: 2,
+      seasonName: "Summer",
+    },
+  },
+  {
+    label: "Thu",
+    value: {
+      id: 3,
+      seasonName: "Autumn",
+    },
+  },
+  {
+    label: "Đông",
+    value: {
+      id: 4,
+      seasonName: "Winter",
+    },
+  },
+];
+const SeassonValueDefault = [
+  {
+    label: "Xuân",
+    value: {
+      id: 1,
+      seasonName: "Spring",
+    },
+  },
+];
 const { Option } = Select;
 
 const AddNewIngrendient = () => {
+  //
+  //
+  //
+  // Mùa của món ăn
+  //
+  //
+  //
   const [open, setOpen] = useState(false);
-  // Mùa của thành phần
   const [checkedSessonList, setcheckedSessonList] =
     useState(SeassonValueDefault);
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
   const [alert, setAlert] = useState(null);
-  const onChange = (list) => {
+
+  const onChange_SeassonList = (list) => {
     setcheckedSessonList(list);
     setIndeterminate(!!list.length && list.length < seassonList.length);
     setCheckAll(list.length === seassonList.length);
     if (list.length === 0) {
-      console.log("List rỗng");
+      // console.log("List rỗng");
       setAlert({
         message: "Không được để trống mùa",
       });
@@ -45,7 +89,8 @@ const AddNewIngrendient = () => {
     }
   };
   const onCheckAllChange = (e) => {
-    setcheckedSessonList(e.target.checked ? seassonList : []);
+    const seassonListOnlyName = seassonList.map((data) => data.value);
+    setcheckedSessonList(e.target.checked ? seassonListOnlyName : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);
     if (e.target.checked == []) {
@@ -364,7 +409,7 @@ const AddNewIngrendient = () => {
               <CheckboxGroup
                 options={seassonList}
                 value={checkedSessonList}
-                onChange={onChange}
+                onChange={onChange_SeassonList}
                 required
               />
             </Form.Item>

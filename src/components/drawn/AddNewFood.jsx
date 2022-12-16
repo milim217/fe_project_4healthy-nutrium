@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   Button,
@@ -14,6 +14,8 @@ import {
   Row,
 } from "antd";
 import UploadImageFile from "../../components/upload-image-avt/uploadImageFile";
+import CategoryAPI from "../../service/Actions/CategoryAPI";
+import IngredientAPI from "../../service/Actions/IngredientAPI";
 import AlertDiv from "../alert/AlertDiv";
 import TableAddIngredientFood from "../../pages/nutrion/TableAddIngredientFood";
 import { useFormik } from "formik";
@@ -22,14 +24,82 @@ import { propTypes } from "react-bootstrap/esm/Image";
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
-const seassonList = ["Xuân", "Hạ", "Thu", "Đông"];
-const SeassonValueDefault = ["Xuân"];
+const seassonList = [
+  {
+    label: "Xuân",
+    value: {
+      id: 1,
+      seasonName: "Spring",
+    },
+  },
+  {
+    label: "Hạ",
+    value: {
+      id: 2,
+      seasonName: "Summer",
+    },
+  },
+  {
+    label: "Thu",
+    value: {
+      id: 3,
+      seasonName: "Autumn",
+    },
+  },
+  {
+    label: "Đông",
+    value: {
+      id: 4,
+      seasonName: "Winter",
+    },
+  },
+];
+const SeassonValueDefault = [
+  {
+    label: "Xuân",
+    value: {
+      id: 1,
+      seasonName: "Spring",
+    },
+  },
+];
 //list bữa ăn
-const MealTypeList = ["Bữa Sáng", "Bữa Trưa", "Bữa Tối"];
-const MealTypeValueDefault = ["Bữa Sáng"];
+const MealTypeList = [
+  {
+    label: "Bữa sáng",
+    value: {
+      id: 1,
+      mealName: "Bữa sáng",
+    },
+  },
+  {
+    label: "Bữa trưa",
+    value: {
+      id: 2,
+      mealName: "Bữa trưa",
+    },
+  },
+  {
+    label: "Bữa tối",
+    value: {
+      id: 3,
+      mealName: "Bữa tối",
+    },
+  },
+];
+const MealTypeValueDefault = [
+  {
+    label: "Bữa sáng",
+    value: {
+      id: 1,
+      mealName: "Bữa sáng",
+    },
+  },
+];
 
 const { Option } = Select;
 const AddNewFood = () => {
+  const [alert2, setAlert2] = useState(null);
   const [open, setOpen] = useState(false);
   //
   //
@@ -50,7 +120,7 @@ const AddNewFood = () => {
     setIndeterminate(!!list.length && list.length < seassonList.length);
     setCheckAll(list.length === seassonList.length);
     if (list.length === 0) {
-      console.log("List rỗng");
+      // console.log("List rỗng");
       setAlert({
         message: "Không được để trống mùa",
       });
@@ -61,7 +131,8 @@ const AddNewFood = () => {
     }
   };
   const onCheckAllChange = (e) => {
-    setcheckedSessonList(e.target.checked ? seassonList : []);
+    const seassonListOnlyName = seassonList.map((data) => data.value);
+    setcheckedSessonList(e.target.checked ? seassonListOnlyName : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);
     if (e.target.checked == []) {
@@ -105,11 +176,12 @@ const AddNewFood = () => {
     }
   };
   const onCheckAllChangeMealType = (e) => {
-    setcheckedMealTypeList(e.target.checked ? MealTypeList : []);
+    const MealTypeListOnlyName = MealTypeList.map((data) => data.value);
+    setcheckedMealTypeList(e.target.checked ? MealTypeListOnlyName : []);
     setIndeterminateMealType(false);
     setCheckAllMealType(e.target.checked);
     if (e.target.checked == []) {
-      console.log("List rỗng");
+      // console.log("List rỗng");
       setAlert1({
         message: "Không được để trống bữa ăn",
       });
@@ -137,7 +209,7 @@ const AddNewFood = () => {
       protein: "",
       carbon: "",
       Calories: "",
-      Fiber: "",
+      // Fiber: "",
     },
     //
     //Regex
@@ -173,29 +245,62 @@ const AddNewFood = () => {
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
-      Fiber: Yup.string()
-        .required("Bạn không được để trống hàm lượng chất Fiber")
-        .matches(
-          /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
-          "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
-        ),
+      // Fiber: Yup.string()
+      //   .required("Bạn không được để trống hàm lượng chất Fiber")
+      //   .matches(
+      //     /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
+      //     "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
+      //   ),
     }),
   });
 
   const onSubmit = () => {
+    const userData = massFormTable.mass;
+    //Kiểm tra loại món ăn
+    if (!CategoryFoodValue.categoryName && !CategoryFoodValue.categoryStatus) {
+      console.log("TEST/////");
+      setAlert2({
+        message: "Không được để trống loại món ăn",
+      });
+      setTimeout(() => setAlert2(null), 2000);
+      return;
+    }
+    // Kiểm tra bảng có rỗng không
+    if (!userData || userData.length == 0) {
+      return;
+    }
+    //Tạo ra một mảng mới chưa object + mass
+    console.log("INGREDIENT FOOD VALUE", IngredientFoodValue);
+    let ingredientMassses = IngredientFoodValueArr.map((data) => {
+      const findData = userData.find(
+        (userData) => userData.ingredientName == data.ingredientName
+      );
+      if (findData) {
+        return {
+          ingredient: data,
+          mass: findData.mass,
+        };
+      }
+      return;
+    });
+    //Xoá các thành phần underfined
+    ingredientMassses = ingredientMassses.filter(function (element) {
+      return element !== undefined;
+    });
     const addNewFoodForm = {
       foodName: formik.values.foodName.trim(),
+      img: "",
       recipe: formik.values.recipe.trim(),
       fat: formik.values.fat.trim(),
       protein: formik.values.protein.trim(),
-      carbon: formik.values.carbon.trim(),
-      Calories: formik.values.Calories.trim(),
-      Fiber: formik.values.Fiber.trim(),
-      seasonFood: checkedSessonList,
-      mealType: checkedMealTypeList,
-      ingredientFood: IngredientFoodValue.ingredientFood,
-      hamluong: HamLuong.hamluongchat,
-      CategoryFood: CategoryFoodValue.CategoryFood,
+      carb: formik.values.carbon.trim(),
+      calo: formik.values.Calories.trim(),
+      // Fiber: formik.values.Fiber.trim(),
+      seasons: checkedSessonList,
+      meals: checkedMealTypeList,
+      // ingredientFood: IngredientFoodValue.ingredientFood,
+      IngredientMassses: ingredientMassses,
+      CategoryFood: CategoryFoodValue,
     };
     console.log(addNewFoodForm);
     //
@@ -217,27 +322,49 @@ const AddNewFood = () => {
   //
   //
   //
-  const [IngredientFoodValue, setIngredientFoodValue] = useState({
-    ingredientFood: "",
+
+  const [massFormTable, setMassFormTable] = useState({
+    mass: "",
   });
-  const [HamLuong, setHamluong] = useState({
-    hamluongchat: "",
-  });
-  const callValueHamLuong = (ValueHamLuong) => {
-    setHamluong({
-      hamluongchat: ValueHamLuong,
+  const callValueMass = (dataSource) => {
+    console.log(dataSource);
+    dataSource.forEach((element1) => {
+      IngredientFoodValueArr.forEach(function (element) {
+        element.mass = element1.mass;
+      });
     });
+
+    setMassFormTable({
+      mass: dataSource,
+    });
+    // console.log(HamLuong);
+    console.log(IngredientFoodValueArr);
   };
+  const [listIngredient, setListIngredient] = useState([]);
+  useEffect(() => {
+    IngredientAPI.getAll()
+      .then((res) => {
+        setListIngredient(res.data);
+      })
+      .catch((err) => {});
+  }, []);
+
+  const [IngredientFoodValue, setIngredientFoodValue] = useState("");
+  const [IngredientFoodValueArr, setIngredientFoodValueArr] = useState("");
   const onChangeSelectIngredientFood = (value) => {
-    setIngredientFoodValue({
-      ingredientFood: value,
-    });
+    const finded = listIngredient.find((data) => data.ingredientName == value);
+    setIngredientFoodValue(finded);
+    setIngredientFoodValueArr([...IngredientFoodValueArr, finded]);
+    // console.log(finded);
     if (value == "") {
       document.getElementById("btn_EditFood").disabled = true;
     } else {
       document.getElementById("btn_EditFood").disabled = false;
     }
   };
+
+  // console.log(IngredientFoodValue);
+  // console.log(IngredientFoodValueArr);
   //
   //
   //
@@ -245,13 +372,19 @@ const AddNewFood = () => {
   //
   //
   //
-  const [CategoryFoodValue, setCategoryFoodValue] = useState({
-    CategoryFood: "",
-  });
+  const [listCategory, setListCategory] = useState([]);
+  useEffect(() => {
+    CategoryAPI.getAll()
+      .then((res) => {
+        setListCategory(res.data);
+      })
+      .catch((err) => {});
+  }, []);
+  const [CategoryFoodValue, setCategoryFoodValue] = useState("");
   const onChangeSelectCategoryFood = (value) => {
-    setCategoryFoodValue({
-      CategoryFood: value,
-    });
+    const finded = listCategory.find((data) => data.categoryName == value);
+    setCategoryFoodValue(finded);
+    console.log(finded);
     if (value == "") {
       document.getElementById("btn_EditFood").disabled = true;
     } else {
@@ -408,7 +541,7 @@ const AddNewFood = () => {
               )}
             </Form.Item>
           </Col>
-          <Col span={24}>
+          {/* <Col span={24}>
             <Form.Item
               label="Hàm lượng Fiber:"
               rules={[
@@ -427,7 +560,7 @@ const AddNewFood = () => {
                 <p className="errorMSG">{formik.errors.Fiber}</p>
               )}
             </Form.Item>
-          </Col>
+          </Col> */}
           <Row span={24}>
             <Col span={12}>
               <Form.Item name="seassonFood" label="Mùa của món ăn này:">
@@ -494,33 +627,19 @@ const AddNewFood = () => {
                     .toLowerCase()
                     .includes(input.toLowerCase())
                 }
-                defaultValue={"Trứng"}
-                options={[
-                  {
-                    value: "Trứng",
-                    label: "Trứng",
-                  },
-                  {
-                    value: "Cơm",
-                    label: "Cơm",
-                  },
-                  {
-                    value: "Mì",
-                    label: "Mì",
-                  },
-                  {
-                    value: "Hoa Quả",
-                    label: "Hoa Quả",
-                  },
-                  {
-                    value: "Rau",
-                    label: "Rau",
-                  },
-                ]}
-              />
+              >
+                {listIngredient ? (
+                  listIngredient.map((listIngredient) => (
+                    <Option value={listIngredient.ingredientName}></Option>
+                  ))
+                ) : (
+                  <h2>Please add new food ingredient</h2>
+                )}
+              </Select>
+
               <TableAddIngredientFood
-                ValueIngredient={IngredientFoodValue.ingredientFood}
-                getDataFromTable={callValueHamLuong}
+                ValueIngredient={IngredientFoodValue.ingredientName}
+                getDataFromTable={callValueMass}
               ></TableAddIngredientFood>
             </Form.Item>
             <Form.Item
@@ -533,33 +652,16 @@ const AddNewFood = () => {
                 },
               ]}
             >
-              <Select
-                mode="multiple"
-                style={{
-                  width: "100%",
-                }}
-                name="CategoryFood"
-                placeholder="Chọn loại món ăn"
-                defaultValue={["Trứng"]}
-                onChange={onChangeSelectCategoryFood}
-                optionLabelProp="label"
-              >
-                <Option value="Trứng" label="Trứng">
-                  <div className="demo-option-label-item">Trứng</div>
-                </Option>
-                <Option value="Sữa" label="Sữa">
-                  <div className="demo-option-label-item">Sữa</div>
-                </Option>
-                <Option value="Bánh" label="Bánh">
-                  <div className="demo-option-label-item">Bánh</div>
-                </Option>
-                <Option value="Rau" label="Rau">
-                  <div className="demo-option-label-item">Rau</div>
-                </Option>
-                <Option value="Hoa Quả" label="Hoa Quả">
-                  <div className="demo-option-label-item">Hoa Quả</div>
-                </Option>
+              <Select onChange={onChangeSelectCategoryFood}>
+                {listCategory ? (
+                  listCategory.map((listCategory, i) => (
+                    <Option value={listCategory.categoryName}></Option>
+                  ))
+                ) : (
+                  <h2>Please add new food category</h2>
+                )}
               </Select>
+              <AlertDiv info={alert2} />
             </Form.Item>
           </Col>
         </Form>
