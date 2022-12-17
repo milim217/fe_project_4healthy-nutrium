@@ -164,7 +164,7 @@ const Quiz6 = () => {
             <AlertMessage info={alert} />
             <Card title="Sáng: " size="small">
               <Input
-                placeholder="Nhập số món bạn ăn trong buổi sáng ( 1 - 2 )"
+                placeholder="Nhập số món bạn ăn trong buổi sáng ( 1 - 4 )"
                 className="InputText_Quiz"
                 name="morning"
                 type="number"

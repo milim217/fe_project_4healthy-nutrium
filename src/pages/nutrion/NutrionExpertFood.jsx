@@ -20,28 +20,46 @@ import AddNewFood from "../../components/drawn/AddNewFood";
 import Ingredient_SelectionRenderInListFood from "../../components/selectionRender/Ingredient_SelectionRenderInListFood";
 import EditFood from "../../components/drawn/EditFood";
 import FoodAPI from "../../service/Actions/FoodAPI";
+import AlertMessage from "../../../src/components/alert/AlertMessage";
 
-const text = "Bạn có chắc chắn muốn món ăn này khỏi danh sách?";
-const NutrionExpertFood = () => {
+const text = "Bạn có chắc chắn muốn món ăn này?";
+const NutrionExpertFood = ({user}) => {
   const [food, setFood] = useState([]);
-  useEffect(() => {
+  const [alert, setAlert] = useState(null);
+
+  const loadFoodList = () => {
     FoodAPI.getAll()
-      .then((res) => {
-        console.log("data = " + JSON.stringify(res.data));
-        setFood(res.data);
-      })
-      .catch((err) => {});
+    .then((res) => {
+      console.log("data = " + JSON.stringify(res.data));
+      setFood(res.data);
+    })
+    .catch((err) => {});
+  }
+
+  useEffect(() => {
+    loadFoodList();
   }, []);
 
-  const confirm = () => {
-    message.info("Đã xoá món ăn thành công");
+
+  const deleteFood = (id) => {
+    FoodAPI.delete(id)
+    .then(res => {
+      setAlert({ type: "success", message: "Xóa món ăn thành công" });
+      setTimeout(() => setAlert(null), 5000);
+      loadFoodList();
+    })
+    .catch(e => {
+      setAlert({ type: "danger", message: e.response.data.message });
+      setTimeout(() => setAlert(null), 5000);
+    })
+    
   };
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      justify: "center",
-    },
+    // {
+    //   title: "ID",
+    //   dataIndex: "id",
+    //   justify: "center",
+    // },
     {
       title: "Tên món ăn",
       dataIndex: "food_name",
@@ -97,19 +115,18 @@ const NutrionExpertFood = () => {
 
     {
       title: "Chỉnh sửa món ăn",
-      render: () => <EditFood></EditFood>,
+      render: (_, record) => <EditFood food={record.id} loadFoodList={loadFoodList}></EditFood>,
       fixed: "right",
     },
     {
       title: "Xoá món ăn",
       dataIndex: "",
-      key: "x",
-      render: () => (
+      render: (_, record) => (
         <>
           <Popconfirm
             placement="bottomRight"
             title={text}
-            onConfirm={confirm}
+            onConfirm={() => {deleteFood(record.id)}}
             okText="Xoá món ăn"
             cancelText="Huỷ hành động"
           >
@@ -159,7 +176,10 @@ const NutrionExpertFood = () => {
 
   // Tìm kiếm Food
   const { Search } = Input;
-  const onSearch = (value) => console.log(value);
+  const onSearch = (key) => {
+    
+  }
+
   return (
     <div>
       {/* đường dẫn */}
@@ -203,7 +223,7 @@ const NutrionExpertFood = () => {
           </div>
           {/* Thêm món ăn mới vào danh sách */}
           <div className="display_block">
-            <AddNewFood></AddNewFood>
+            <AddNewFood loadFoodList={loadFoodList}/>
           </div>
         </div>
         <div className="search_user___listUser">
@@ -214,6 +234,7 @@ const NutrionExpertFood = () => {
             size="large"
             onSearch={onSearch}
           />
+          <AlertMessage info={alert}/>
         </div>
       </div>
 

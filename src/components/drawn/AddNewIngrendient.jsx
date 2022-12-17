@@ -17,6 +17,7 @@ import UploadImageFileIngredient from "../upload-image-avt/UploadImageFileIngred
 import AlertMessage from "../alert/AlertMessage";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import IngredientAPI from "../../../src/service/Actions/IngredientAPI";
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
@@ -61,7 +62,7 @@ const SeassonValueDefault = [
 ];
 const { Option } = Select;
 
-const AddNewIngrendient = () => {
+const AddNewIngrendient = ({loadIngredientList}) => {
   //
   //
   //
@@ -70,7 +71,7 @@ const AddNewIngrendient = () => {
   //
   //
   const [open, setOpen] = useState(false);
-  const [checkedSessonList, setcheckedSessonList] =
+  const [checkedSeasonList, setcheckedSessonList] =
     useState(SeassonValueDefault);
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
@@ -116,10 +117,10 @@ const AddNewIngrendient = () => {
       ingredientName: "",
       fat: "",
       protein: "",
-      carbon: "",
-      calories: "",
+      carb: "",
+      calo: "",
       vitamin: "",
-      wate: "",
+      water: "",
       fiber: "",
       ash: "",
       canxi: "",
@@ -133,7 +134,7 @@ const AddNewIngrendient = () => {
       vitaminD: "",
       vitaminB12: "",
       vitaminA: "",
-      vitaminA_rae: "",
+      vitaminARae: "",
       minLimit: "",
       maxLimit: "",
     },
@@ -154,14 +155,14 @@ const AddNewIngrendient = () => {
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
-      carbon: Yup.string()
+      carb: Yup.string()
         .required("Bạn không được để trống hàm lượng chât carbs")
         .matches(
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
-      calories: Yup.string()
-        .required("Bạn không được để trống hàm lượng chât calories")
+      calo: Yup.string()
+        .required("Bạn không được để trống hàm lượng chât calo")
         .matches(
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
@@ -172,8 +173,8 @@ const AddNewIngrendient = () => {
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
-      wate: Yup.string()
-        .required("Bạn không được để trống hàm lượng chât wate")
+      water: Yup.string()
+        .required("Bạn không được để trống hàm lượng chât water")
         .matches(
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
@@ -251,8 +252,8 @@ const AddNewIngrendient = () => {
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
-      vitaminA_rae: Yup.string()
-        .required("Bạn không được để trống hàm lượng chât vitaminA_rae")
+      vitaminARae: Yup.string()
+        .required("Bạn không được để trống hàm lượng chât vitaminARae")
         .matches(
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
@@ -272,36 +273,53 @@ const AddNewIngrendient = () => {
     }),
   });
 
-  const onSubmit = () => {
-    const AddNewIngrendient = {
-      ingredientName: formik.values.ingredientName,
-      fat: formik.values.fat,
-      protein: formik.values.protein,
-      carbon: formik.values.carbon,
-      calories: formik.values.calories,
-      vitamin: formik.values.vitamin,
-      wate: formik.values.wate,
-      fiber: formik.values.fiber,
-      ash: formik.values.ash,
-      canxi: formik.values.canxi,
-      iron: formik.values.iron,
-      zinc: formik.values.zinc,
-      vitaminC: formik.values.vitaminC,
-      vitaminB1: formik.values.vitaminB1,
-      vitaminB2: formik.values.vitaminB2,
-      vitaminB3: formik.values.vitaminB3,
-      vitaminB6A: formik.values.vitaminB6A,
-      vitaminD: formik.values.vitaminD,
-      vitaminB12: formik.values.vitaminB12,
-      vitaminA: formik.values.vitaminB12,
-      vitaminA_rae: formik.values.vitaminA_rae,
-      minLimit: formik.values.minLimit,
-      maxLimit: formik.values.maxLimit,
-      seassonFood: checkedSessonList,
-    };
-    console.log(AddNewIngrendient);
-    //Xoá dữ liệu khi submit thành công vào api
-    // document.getElementById("formAddNewIngredientInput").reset();
+  const onSubmit = async () => {
+
+    if (checkedSeasonList) {
+      const AddNewIngrendient = {
+        ingredientName: formik.values.ingredientName,
+        fat: formik.values.fat,
+        protein: formik.values.protein,
+        carb: formik.values.carb,
+        calo: formik.values.calo,
+        // vitamin: formik.values.vitamin,
+        water: formik.values.water,
+        fiber: formik.values.fiber,
+        ash: formik.values.ash,
+        canxi: formik.values.canxi,
+        iron: formik.values.iron,
+        zinc: formik.values.zinc,
+        vitaminC: formik.values.vitaminC,
+        vitaminB1: formik.values.vitaminB1,
+        vitaminB2: formik.values.vitaminB2,
+        vitaminB3: formik.values.vitaminB3,
+        vitaminB6A: formik.values.vitaminB6A,
+        vitaminD: formik.values.vitaminD,
+        vitaminB12: formik.values.vitaminB12,
+        vitaminA: formik.values.vitaminB12,
+        vitaminARae: formik.values.vitaminARae,
+        minLimit: formik.values.minLimit,
+        maxLimit: formik.values.maxLimit,
+        seasons: checkedSeasonList,
+      };
+      console.log('add data = ', AddNewIngrendient);
+
+      await IngredientAPI.add(AddNewIngrendient)
+        .then(res => {
+          setAlert({ type: "success", message: "Thêm nguyên liệu mới thành công" });
+          setTimeout(() => setAlert(null), 5000);
+          loadIngredientList();
+        })
+        .catch(e => {
+          setAlert({ type: "danger", message: e.response.data ? e.response.data.message : 'Lỗi thêm nguyên liệu mới' });
+          setTimeout(() => setAlert(null), 5000);
+        });
+    }
+    else {
+      setAlert({ type: "danger", message: 'Vui lòng chọn mùa' });
+      setTimeout(() => setAlert(null), 2000);
+    }
+
   };
 
   return (
@@ -334,6 +352,7 @@ const AddNewIngrendient = () => {
           </Space>
         }
       >
+        <AlertMessage info={alert} />
         <Form layout="vertical" hideRequiredMark id="formAddNewIngredientInput">
           <Row gutter={16}>
             <Col span={12}>
@@ -387,7 +406,7 @@ const AddNewIngrendient = () => {
           <Divider></Divider>
           <Col span={24}>
             <Form.Item
-              name="seassonFood"
+              name="seasons"
               label="Mùa của nguyên liệu này:"
               rules={[
                 {
@@ -408,12 +427,11 @@ const AddNewIngrendient = () => {
               <Divider />
               <CheckboxGroup
                 options={seassonList}
-                value={checkedSessonList}
+                value={checkedSeasonList}
                 onChange={onChange_SeassonList}
                 required
               />
             </Form.Item>
-            <AlertDiv info={alert} />
           </Col>
           <Divider></Divider>
           <Row gutter={24}>
@@ -442,26 +460,26 @@ const AddNewIngrendient = () => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Hàm lượng bột đường(/100g):" name="carbon">
+              <Form.Item label="Hàm lượng bột đường(/100g):" name="carb">
                 <Input
                   placeholder="Hàm lượng chất bột đường món ăn chứa"
-                  name="carbon"
+                  name="carb"
                   onChange={formik.handleChange}
                 />
-                {formik.errors.carbon && (
-                  <p className="errorMSG">{formik.errors.carbon}</p>
+                {formik.errors.carb && (
+                  <p className="errorMSG">{formik.errors.carb}</p>
                 )}
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="calories" label="Hàm lượng Calo(/100g):">
+              <Form.Item name="calo" label="Hàm lượng Calo(/100g):">
                 <Input
                   placeholder="Hàm lượng Calo món ăn chứa"
-                  name="calories"
+                  name="calo"
                   onChange={formik.handleChange}
                 />
-                {formik.errors.calories && (
-                  <p className="errorMSG">{formik.errors.calories}</p>
+                {formik.errors.calo && (
+                  <p className="errorMSG">{formik.errors.calo}</p>
                 )}
               </Form.Item>
             </Col>
@@ -478,14 +496,14 @@ const AddNewIngrendient = () => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Hàm lượng nước(/100g):" name="wate">
+              <Form.Item label="Hàm lượng nước(/100g):" name="water">
                 <Input
                   placeholder="Hàm lượng nước món ăn chứa"
-                  name="wate"
+                  name="water"
                   onChange={formik.handleChange}
                 />
-                {formik.errors.wate && (
-                  <p className="errorMSG">{formik.errors.wate}</p>
+                {formik.errors.water && (
+                  <p className="errorMSG">{formik.errors.water}</p>
                 )}
               </Form.Item>
             </Col>
@@ -647,16 +665,16 @@ const AddNewIngrendient = () => {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="vitaminA_rae"
+                name="vitaminARae"
                 label="Hàm lượng VitaminA_rae(/100g):"
               >
                 <Input
                   placeholder="Hàm lượng chất VitaminA_rae món ăn chứa"
-                  name="vitaminA_rae"
+                  name="vitaminARae"
                   onChange={formik.handleChange}
                 />{" "}
-                {formik.errors.vitaminA_rae && (
-                  <p className="errorMSG">{formik.errors.vitaminA_rae}</p>
+                {formik.errors.vitaminARae && (
+                  <p className="errorMSG">{formik.errors.vitaminARae}</p>
                 )}
               </Form.Item>
             </Col>

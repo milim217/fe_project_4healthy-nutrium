@@ -114,22 +114,22 @@ function CardGroupFood() {
       {/* Hiển thị danh sách theo món ăn / thành phần khi nhấn vào tab */}
       <Row gutter={[24, 24]}>
         {food ? (
-          food.map((foodValue) => (
+          food.map((f) => (
             <Col span={6}>
               <Card className="group-card-libaryPage">
                 <Card.Img
                   variant="top"
                   width={50}
                   height={250}
-                  src={`http://localhost:8080/food/${foodValue.id}/image`}
+                  src={`http://localhost:8080/food/${f.id}/image`}
                 />
                 <Card.Body>
                   <Card.Title className="title-food_libary">
-                    {foodValue.foodName}
+                    {f.foodName}
                   </Card.Title>
                 </Card.Body>
-                <Button className="btn_libaryFood" href="/detailfood">
-                  Thông tin thêm
+                <Button className="btn_libaryFood" href={`food/${f.id}`}>
+                  Chi tiết
                 </Button>
                 {/* <ModalDetailFood></ModalDetailFood> */}
               </Card>
@@ -140,7 +140,7 @@ function CardGroupFood() {
         )}
       </Row>
       <div className="Pageination_libaryPage">
-        <Pagination defaultCurrent={1} total={50} />
+        <Pagination defaultCurrent={1} total={food.length} />
       </div>
     </>
   );

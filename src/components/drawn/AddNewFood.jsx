@@ -21,6 +21,8 @@ import TableAddIngredientFood from "../../pages/nutrion/TableAddIngredientFood";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { propTypes } from "react-bootstrap/esm/Image";
+import FoodAPI from "../../service/Actions/FoodAPI";
+import AlertMessage from "../alert/AlertMessage";
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
@@ -29,28 +31,28 @@ const seassonList = [
     label: "Xuân",
     value: {
       id: 1,
-      seasonName: "Spring",
+      seasonName: "Xuân",
     },
   },
   {
     label: "Hạ",
     value: {
       id: 2,
-      seasonName: "Summer",
+      seasonName: "Hạ",
     },
   },
   {
     label: "Thu",
     value: {
       id: 3,
-      seasonName: "Autumn",
+      seasonName: "Thu",
     },
   },
   {
     label: "Đông",
     value: {
       id: 4,
-      seasonName: "Winter",
+      seasonName: "Đông",
     },
   },
 ];
@@ -59,7 +61,7 @@ const SeassonValueDefault = [
     label: "Xuân",
     value: {
       id: 1,
-      seasonName: "Spring",
+      seasonName: "Xuân",
     },
   },
 ];
@@ -98,7 +100,7 @@ const MealTypeValueDefault = [
 ];
 
 const { Option } = Select;
-const AddNewFood = () => {
+const AddNewFood = ({loadFoodList}) => {
   const [alert2, setAlert2] = useState(null);
   //
   //
@@ -114,6 +116,8 @@ const AddNewFood = () => {
   const [checkAll, setCheckAll] = useState(false);
   const [alert, setAlert] = useState(null);
   const [alert1, setAlert1] = useState(null);
+  const [topAlert, setTopAlert] = useState(null);
+
 
   const onChange_SeassonList = (list) => {
     setcheckedSessonList(list);
@@ -258,7 +262,6 @@ const AddNewFood = () => {
     const userData = massFormTable.mass;
     //Kiểm tra loại món ăn
     if (!CategoryFoodValue.categoryName && !CategoryFoodValue.categoryStatus) {
-      console.log("TEST/////");
       setAlert2({
         message: "Không được để trống loại món ăn",
       });
@@ -270,7 +273,6 @@ const AddNewFood = () => {
       return;
     }
     //Tạo ra một mảng mới chưa object + mass
-    console.log("INGREDIENT FOOD VALUE", IngredientFoodValue);
     let ingredientMassses = IngredientFoodValueArr.map((data) => {
       const findData = userData.find(
         (userData) => userData.ingredientName == data.ingredientName
@@ -295,18 +297,25 @@ const AddNewFood = () => {
       protein: formik.values.protein.trim(),
       carb: formik.values.carbon.trim(),
       calo: formik.values.Calories.trim(),
-      // Fiber: formik.values.Fiber.trim(),
       seasons: checkedSessonList,
       meals: checkedMealTypeList,
-      // ingredientFood: IngredientFoodValue.ingredientFood,
-      IngredientMassses: ingredientMassses,
-      CategoryFood: CategoryFoodValue,
+      ingredientMasses: ingredientMassses,
+      category: CategoryFoodValue,
     };
-    console.log(addNewFoodForm);
-    //
-    //Xoá dữ liệu khi submit thành công vào api
-    //
-    // document.getElementById("formAddNewFoodInput").reset();
+
+    console.log('added food = ', addNewFoodForm);
+
+    FoodAPI.add(addNewFoodForm)
+      .then(res => {
+        setTopAlert({ type: "success", message: "Thêm thành công" });
+        setTimeout(() => setTopAlert(null), 5000);
+        loadFoodList();
+      })
+      .catch(e => {
+        setTopAlert({ type: "danger", message: e.response.data.message });
+        setTimeout(() => setTopAlert(null), 5000);
+      });
+
   };
   const showDrawer = () => {
     setOpen(true);
@@ -347,7 +356,7 @@ const AddNewFood = () => {
       .then((res) => {
         setListIngredient(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, []);
 
   const [IngredientFoodValue, setIngredientFoodValue] = useState("");
@@ -379,7 +388,7 @@ const AddNewFood = () => {
       .then((res) => {
         setListCategory(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, []);
   const [CategoryFoodValue, setCategoryFoodValue] = useState("");
   const onChangeSelectCategoryFood = (value) => {
@@ -428,6 +437,7 @@ const AddNewFood = () => {
           </Space>
         }
       >
+        <AlertMessage info={topAlert} />
         <Form layout="vertical" hideRequiredMark id="formAddNewFoodInput">
           <Col span={24}>
             <Form.Item name="imageFood" label="Hình ảnh món ăn">
@@ -644,7 +654,7 @@ const AddNewFood = () => {
               ></TableAddIngredientFood>
             </Form.Item>
             <Form.Item
-              name="CategoryFood"
+              name="category"
               label="Món ăn này thuộc loại"
               rules={[
                 {

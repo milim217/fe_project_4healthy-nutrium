@@ -94,7 +94,7 @@ const TableAddIngredientFood = (props) => {
       editable: false,
     },
     {
-      title: "Hàm Lượng",
+      title: "Hàm Lượng (gram)",
       dataIndex: "mass",
       editable: true,
     },

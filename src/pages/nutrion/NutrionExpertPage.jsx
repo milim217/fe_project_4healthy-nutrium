@@ -5,7 +5,7 @@ import NutriongExpertInformation from "./NutrionExpertInformation";
 import NutrionExpertIngredients from "./NutrionExpertIngredients";
 import NutrionExpertFood from "./NutrionExpertFood";
 
-function NutrionExpertPage({ changePage }) {
+function NutrionExpertPage({ user,changePage }) {
   let body = (
     <>
       {/* {changePage === "information" && <NutriongExpertInformation />} */}
@@ -17,7 +17,7 @@ function NutrionExpertPage({ changePage }) {
   return (
     <div>
       <HeaderNutritionExpertManager
-        title={"Trang Chuyên gia dinh dưỡng"}
+        title={"Trang Chuyên gia dinh dưỡng"} user ={user}
       ></HeaderNutritionExpertManager>
       <SlidebarNutrionExp>{body}</SlidebarNutrionExp>
     </div>

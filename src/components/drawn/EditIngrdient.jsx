@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   Button,
@@ -21,7 +21,7 @@ import * as Yup from "yup";
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
-const seassonList = [
+const seasonList = [
   {
     label: "Xuân",
     value: {
@@ -61,7 +61,7 @@ const SeassonValueDefault = [
   },
 ];
 
-const EditIngrdient = () => {
+const EditIngrdient = ({ingredient}) => {
   //
   //
   //
@@ -70,16 +70,22 @@ const EditIngrdient = () => {
   //
   //
   const [open, setOpen] = useState(false);
-  const [checkedSessonList, setcheckedSessonList] =
+  const [checkedSeasonList, setcheckedSeasonList] =
     useState(SeassonValueDefault);
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
   const [alert, setAlert] = useState(null);
 
+  useEffect(() => {
+    if(ingredient){
+      formik.setValues(ingredient);
+    }
+  }, []);
+
   const onChange_SeassonList = (list) => {
-    setcheckedSessonList(list);
-    setIndeterminate(!!list.length && list.length < seassonList.length);
-    setCheckAll(list.length === seassonList.length);
+    setcheckedSeasonList(list);
+    setIndeterminate(!!list.length && list.length < seasonList.length);
+    setCheckAll(list.length === seasonList.length);
     if (list.length === 0) {
       // console.log("List rỗng");
       setAlert({
@@ -89,8 +95,8 @@ const EditIngrdient = () => {
     }
   };
   const onCheckAllChange = (e) => {
-    const seassonListOnlyName = seassonList.map((data) => data.value);
-    setcheckedSessonList(e.target.checked ? seassonListOnlyName : []);
+    const seassonListOnlyName = seasonList.map((data) => data.value);
+    setcheckedSeasonList(e.target.checked ? seassonListOnlyName : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);
     if (e.target.checked == []) {
@@ -113,13 +119,13 @@ const EditIngrdient = () => {
 
   const formik = useFormik({
     initialValues: {
-      ingredientName: "",
-      fat: "",
+      ingredientName: ingredient.ingredientName,
+      fat: ingredient.fat,
       protein: "",
-      carbon: "",
-      calories: "",
+      carb: "",
+      calo: "",
       vitamin: "",
-      wate: "",
+      water: "",
       fiber: "",
       ash: "",
       canxi: "",
@@ -133,7 +139,7 @@ const EditIngrdient = () => {
       vitaminD: "",
       vitaminB12: "",
       vitaminA: "",
-      vitaminA_rae: "",
+      vitaminARae: "",
       minLimit: "",
       maxLimit: "",
     },
@@ -154,14 +160,14 @@ const EditIngrdient = () => {
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
-      carbon: Yup.string()
+      carb: Yup.string()
         .required("Bạn không được để trống hàm lượng chất Carbs")
         .matches(
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
-      calories: Yup.string()
-        .required("Bạn không được để trống hàm lượng chât calories")
+      calo: Yup.string()
+        .required("Bạn không được để trống hàm lượng chât calo")
         .matches(
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
@@ -172,8 +178,8 @@ const EditIngrdient = () => {
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
-      wate: Yup.string()
-        .required("Bạn không được để trống hàm lượng chât wate")
+      water: Yup.string()
+        .required("Bạn không được để trống hàm lượng chât water")
         .matches(
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
@@ -251,8 +257,8 @@ const EditIngrdient = () => {
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
-      vitaminA_rae: Yup.string()
-        .required("Bạn không được để trống hàm lượng chât vitaminA_rae")
+      vitaminARae: Yup.string()
+        .required("Bạn không được để trống hàm lượng chât vitaminARae")
         .matches(
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
@@ -277,10 +283,10 @@ const EditIngrdient = () => {
       ingredientName: formik.values.ingredientName,
       fat: formik.values.fat,
       protein: formik.values.protein,
-      carbon: formik.values.carbon,
-      calories: formik.values.calories,
+      carb: formik.values.carb,
+      calo: formik.values.calo,
       vitamin: formik.values.vitamin,
-      wate: formik.values.wate,
+      water: formik.values.water,
       fiber: formik.values.fiber,
       ash: formik.values.ash,
       canxi: formik.values.canxi,
@@ -294,10 +300,10 @@ const EditIngrdient = () => {
       vitaminD: formik.values.vitaminD,
       vitaminB12: formik.values.vitaminB12,
       vitaminA: formik.values.vitaminB12,
-      vitaminA_rae: formik.values.vitaminA_rae,
+      vitaminARae: formik.values.vitaminARae,
       minLimit: formik.values.minLimit,
       maxLimit: formik.values.maxLimit,
-      seassonFood: checkedSessonList,
+      seasons: checkedSeasonList,
     };
     console.log(AddNewIngrendient);
     //Xoá dữ liệu khi submit thành công vào api
@@ -336,7 +342,7 @@ const EditIngrdient = () => {
               <Image
                 width={300}
                 height={250}
-                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                src={`http://localhost:8080/ingredient/${ingredient.id}/image`}
               />
             </Col>
             <Col span={12}>
@@ -347,7 +353,7 @@ const EditIngrdient = () => {
                 <UploadImageFileIngredient></UploadImageFileIngredient>
               </Form.Item>
               <Form.Item
-                name="seassonFood"
+                name="seasons"
                 label="Mùa của nguyên liệu này:"
                 rules={[
                   {
@@ -367,8 +373,8 @@ const EditIngrdient = () => {
                 </Checkbox>
                 <Divider />
                 <CheckboxGroup
-                  options={seassonList}
-                  value={checkedSessonList}
+                  options={seasonList}
+                  value={checkedSeasonList}
                   onChange={onChange_SeassonList}
                   required
                 />
@@ -445,26 +451,26 @@ const EditIngrdient = () => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Hàm lượng bột đường(/100g):" name="carbon">
+              <Form.Item label="Hàm lượng bột đường(/100g):" name="carb">
                 <Input
                   placeholder="Hàm lượng chất bột đường món ăn chứa"
-                  name="carbon"
+                  name="carb"
                   onChange={formik.handleChange}
                 />
-                {formik.errors.carbon && (
-                  <p className="errorMSG">{formik.errors.carbon}</p>
+                {formik.errors.carb && (
+                  <p className="errorMSG">{formik.errors.carb}</p>
                 )}
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="calories" label="Hàm lượng Calo(/100g):">
+              <Form.Item name="calo" label="Hàm lượng Calo(/100g):">
                 <Input
                   placeholder="Hàm lượng Calo món ăn chứa"
-                  name="calories"
+                  name="calo"
                   onChange={formik.handleChange}
                 />
-                {formik.errors.calories && (
-                  <p className="errorMSG">{formik.errors.calories}</p>
+                {formik.errors.calo && (
+                  <p className="errorMSG">{formik.errors.calo}</p>
                 )}
               </Form.Item>
             </Col>
@@ -481,14 +487,14 @@ const EditIngrdient = () => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Hàm lượng nước(/100g):" name="wate">
+              <Form.Item label="Hàm lượng nước(/100g):" name="water">
                 <Input
                   placeholder="Hàm lượng nước món ăn chứa"
-                  name="wate"
+                  name="water"
                   onChange={formik.handleChange}
                 />
-                {formik.errors.wate && (
-                  <p className="errorMSG">{formik.errors.wate}</p>
+                {formik.errors.water && (
+                  <p className="errorMSG">{formik.errors.water}</p>
                 )}
               </Form.Item>
             </Col>
@@ -650,16 +656,16 @@ const EditIngrdient = () => {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="vitaminA_rae"
-                label="Hàm lượng VitaminA_rae(/100g):"
+                name="vitaminARae"
+                label="Hàm lượng vitaminARae(/100g):"
               >
                 <Input
-                  placeholder="Hàm lượng chất VitaminA_rae món ăn chứa"
-                  name="vitaminA_rae"
+                  placeholder="Hàm lượng chất vitaminARae món ăn chứa"
+                  name="vitaminARae"
                   onChange={formik.handleChange}
                 />{" "}
-                {formik.errors.vitaminA_rae && (
-                  <p className="errorMSG">{formik.errors.vitaminA_rae}</p>
+                {formik.errors.vitaminARae && (
+                  <p className="errorMSG">{formik.errors.vitaminARae}</p>
                 )}
               </Form.Item>
             </Col>

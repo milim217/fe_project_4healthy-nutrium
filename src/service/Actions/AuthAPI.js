@@ -37,15 +37,8 @@ const AuthAPI = ({ children }) => {
         if (response.data.access_token) {
           const token = response.data.access_token;
           const user = jwt(token);
-          localStorage.setItem("token", JSON.stringify(token));
-          localStorage.setItem("user", JSON.stringify(user));
-          // if (response.data.access_token) {
-          //   axios.defaults.headers.common.Authorization = JSON.stringify(response.data.access_token);
-          //   console.log('token1 = ' + JSON.stringify(response.data.access_token));
-          // } else {
-          //   delete axios.defaults.headers.common.Authorization;
-          // }
-          console.log("token = " + JSON.stringify(token));
+          localStorage.setItem("token", token);
+          console.log("token = ",token);
           if (user.role === "ADMIN") {
             dispatch({
               type: "SET_AUTH_ADMIN",

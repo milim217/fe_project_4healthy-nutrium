@@ -207,15 +207,14 @@ const UserProfile = () => {
     userData.phone = userData.phone.trim();
     userData.address = userData.address.trim();
 
-    UserAPI.update(userData)
+    UserAPI.updateUser(userData)
       .then(res => {
         setAlert({ type: "success", message: "Cập nhật thành công" });
         setTimeout(() => setAlert(null), 5000);
       })
       .catch(e => {
-        console.log(e);
-        // setAlert({ type: "danger", message: e.response.data.message });
-        // setTimeout(() => setAlert(null), 5000);
+        setAlert({ type: "danger", message: e.response.data.message });
+        setTimeout(() => setAlert(null), 5000);
       });
   };
 

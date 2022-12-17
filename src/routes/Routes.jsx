@@ -80,10 +80,10 @@ const Routes = () => {
       <Route exact path="/food/:foodID" component={DetailFood}></Route>
       <Route
         exact
-        path="/detailingredient"
+        path="/ingredient/:ingredientID"
         component={DetailIngredient}
       ></Route>
-      <Route exact path="/admin/add-nutrient" component={AddNewUser}></Route>
+      <Route exact path="/admin/add-nutrient" component={AddNewUser} roles = {[ADMIN]}></Route>
     </div>
   );
 };

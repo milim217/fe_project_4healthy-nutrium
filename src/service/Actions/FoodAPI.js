@@ -3,12 +3,27 @@ import AxiosList from "./AxiosList";
 const FoodAPI = {
   getAll(data) {
     const url = `/food`;
-    return AxiosList.authAxios.get(url);
+    return AxiosList.normalAxios.get(url);
   },
 
   getById(id) {
     const url = `/food/`+id;
     return AxiosList.normalAxios.get(url);
+  },
+
+  add(food) {
+    const url = `/food`;
+    return AxiosList.normalAxios.post(url,food);
+  },
+
+  update(food) {
+    const url = `/food/`+food.id;
+    return AxiosList.normalAxios.post(url,food);
+  },
+
+  delete(id) {
+    const url = `/food/`+id+`/delete`;
+    return AxiosList.normalAxios.post(url);
   },
 };
 export default FoodAPI;

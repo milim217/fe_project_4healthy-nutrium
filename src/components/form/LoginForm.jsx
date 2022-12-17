@@ -51,11 +51,12 @@ const LoginForm = () => {
       password: formik.values.password,
     })
       .then((res) => {
+        localStorage.removeItem('quiz-data');
         const token = res.data.access_token;
         const user = jwt(token);
-        localStorage.setItem("token", JSON.stringify(token));
+        localStorage.setItem("jwt", JSON.stringify(token));
         if (user.role === "ADMIN") {
-          history.push("/admin/listuser");
+          history.push("/user");
           console.log("Account ADMIN");
         } else if (user.role === "USER") {
           history.push("/homeuser");

@@ -33,31 +33,19 @@ const ListUser = ({ user, checkValidRole }) => {
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const deactive = async (deactiveID, status) => {
-    if (status===1) {
-      console.log('deac')
-      await UserAPI.deactive(deactiveID)
-        .then(res => {
-          setAlert({ type: "success", message: "Vô hiệu hóa tài khoản thành công" });
-          setTimeout(() => setAlert(null), 5000);
-          loadUsers();
-        })
-    }
-    else {
-      console.log('ac')
-      await UserAPI.active(deactiveID)
-        .then(res => {
-          setAlert({ type: "success", message: "Kích hoạt tài khoản thành công" });
-          setTimeout(() => setAlert(null), 5000);
-          loadUsers();
-        })
-    }
 
-    // .catch( e => {
-    //   setAlert({ type: "danger", message: e.response.data.message });
-    //   setTimeout(() => setAlert(null), 5000);
-    // });
-    // setIsModalOpen(false);
+  const deactive = async (deactiveID) => {
+
+    await UserAPI.deactive(deactiveID)
+      .then(res => {
+        setAlert({ type: "success", message: "Cập nhật trạng thái tài khoản thành công" });
+        setTimeout(() => setAlert(null), 5000);
+        loadUsers();
+      })
+      .catch(e => {
+        setAlert({ type: "danger", message: e.response.data.message });
+        setTimeout(() => setAlert(null), 5000);
+      });
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -155,32 +143,16 @@ const ListUser = ({ user, checkValidRole }) => {
       title: "Hành động",
       fixed: "right",
       dataIndex: "",
-      key: "x",
-      render: (_, record, status) => (
-        status?
-          (
-            <Button
-              // type="primary"
-              onClick={() => {
-                deactive(record.key, status);
-              }}
-              style={{ backgroundColor: "red", border: "none" }}
-            >
-              Vô hiệu hóa
-            </Button>
-          )
-          :
-          (
-            <Button
-              // type="primary"
-              onClick={() => {
-                deactive(record.key, status);
-              }}
-              style={{ backgroundColor: "green", border: "none" }}
-            >
-            Kích hoạt
-            </Button>
-          )
+      render: (_, record) => (
+        <Button
+          // type="primary"
+          onClick={() => {
+            deactive(record.key);
+          }}
+          style={{ backgroundColor: "green", border: "none", color:"white" }}
+        >
+          Vô hiệu hóa/Kích hoạt
+        </Button>
       ),
       justify: "center",
     },
@@ -189,7 +161,7 @@ const ListUser = ({ user, checkValidRole }) => {
   useEffect(() => {
     const arr = [];
     userList.map((userList) =>
-    arr.push({
+      arr.push({
         key: userList.id,
         email: userList.email,
         name: userList.name,
@@ -207,12 +179,12 @@ const ListUser = ({ user, checkValidRole }) => {
         status: userList.status,
       })
     );
-    console.log('arr=',arr);
+    console.log('arr=', arr);
     setData(arr)
 
   }, [userList]);
 
-  const [data,setData] = useState([]);
+  const [data, setData] = useState([]);
   userList
     ? userList.map((userList) =>
       data.push({

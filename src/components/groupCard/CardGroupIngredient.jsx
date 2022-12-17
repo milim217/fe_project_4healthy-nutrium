@@ -9,7 +9,7 @@ const { Search } = Input;
 function CardGroupIngredient() {
   const onSearch = (value) => console.log(value);
   const pageSize = 6;
-  const [Ingredient, setIngredient] = useState([]);
+  const [ingredients, setIngredient] = useState([]);
   useEffect(() => {
     IngredientAPI.getAll()
       .then((res) => {
@@ -62,8 +62,8 @@ function CardGroupIngredient() {
         </div>
       </div>
       <Row gutter={[24, 24]}>
-        {Ingredient ? (
-          Ingredient.map((ingredientValue) => (
+        {ingredients ? (
+          ingredients.map((ingredientValue) => (
             <Col span={6}>
               <Card className="group-card-libaryPage">
                 <Card.Img
@@ -77,7 +77,7 @@ function CardGroupIngredient() {
                     {ingredientValue.ingredientName}
                   </Card.Title>
                 </Card.Body>
-                <Button className="btn_libaryFood" href="/detailingredient">
+                <Button className="btn_libaryFood" href={`/ingredient/${ingredientValue.id}`}>
                   Thông tin thêm
                 </Button>
                 {/* <ModalDetailFood></ModalDetailFood> */}

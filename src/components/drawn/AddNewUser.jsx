@@ -14,41 +14,45 @@ import {
 } from "antd";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import UserAPI from "../../service/Actions/UserAPI";
+import AlertMessage from "../alert/AlertMessage";
 const { Option } = Select;
 
 const AddNewUser = () => {
   const [open, setOpen] = useState(false);
+  const [alert, setAlert] = useState(false);
+
   //form Add lấy dữ liệu api từ state này
-  const [addNewUserForm, setAddNewUserForm] = useState({
-    NameAccount: "",
+  const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
-    phoneNumber: "",
+    phone: "",
     address: "",
-    date: "",
+    dob: "",
     gender: "false", //mặc định là nữ
   });
 
   // Lấy dữ liệu từ formAdd bằng formik
   const formik = useFormik({
     initialValues: {
-      NameAccount: "",
+      name: "",
       email: "",
       password: "",
-      phoneNumber: "",
+      phone: "",
       address: "",
-      date: "",
+      dob: "",
       ComfirmPassword: "",
     },
 
     //Regex
     validationSchema: Yup.object({
-      NameAccount: Yup.string()
-        .required("Bạn không được để trống tên tài khoản")
-        .matches(
-          /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
-          "Tên tài khoản chứa 8 - 20 ký tự, không chứa '.' và '_'"
-        ),
+      name: Yup.string()
+        .required("Bạn không được để trống tên tài khoản"),
+        // .matches(
+        //   /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/,
+        //   "Tên tài khoản chứa 8 - 20 ký tự, không chứa '.' và '_'"
+        // ),
       email: Yup.string()
         .required("Bạn không được để trống Email")
         .matches(
@@ -67,13 +71,13 @@ const AddNewUser = () => {
           [Yup.ref("password"), null],
           "mật khẩu nhập lại phải trùng với mật khẩu bạn đã nhập"
         ),
-      phoneNumber: Yup.string()
+      phone: Yup.string()
         .required("Bạn không được để trống số điện thoại")
         .matches(
           /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/,
           "Số điện thoại gồm 10 số, và bắt đầu bằng số 0"
         ),
-      date: Yup.string()
+      dob: Yup.string()
         .required("Bạn không được để trống ngày sinh")
         .matches(
           /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/,
@@ -82,36 +86,39 @@ const AddNewUser = () => {
       address: Yup.string().required("Bạn không được để trống địa chỉ"),
     }),
     //Gửi dữ liệu vào form Add
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+
+      let arr = values.dob.trim().split('/');
+      let formattedDob = arr[2]+'-'+arr[1]+'-'+arr[0];
+
       //formik tự biết khi nhập sai sẽ không submit còn khi đúng hết mới cho submit
-      console.log("has Ok");
-      setAddNewUserForm({
-        ...addNewUserForm,
-        NameAccount: values.NameAccount.trim(),
+      setFormData({
+        ...formData,
+        name: values.name.trim(),
         email: values.email.trim(),
         password: values.password.trim(),
-        phoneNumber: values.phoneNumber.trim(),
+        phone: values.phone.trim(),
         address: values.address.trim(),
-        date: values.date.trim(),
+        dob: formattedDob,
       });
-      // console.log(addNewUserForm.gender);
+
+      await UserAPI.addNutrient(formData)
+      .then(res => {
+        setAlert({ type: "success", message: "Thêm tài khoản thành công" });
+        setTimeout(() => setAlert(null), 5000);
+      })
+      .catch(e => {
+        setAlert({ type: "danger", message: e.response.data? e.response.data.message : 'Lỗi thêm tài khoản' });
+        setTimeout(() => setAlert(null), 5000);
+      });
     },
   });
-
-  // // Lấy giá trị ngày
-  // function onSelectDate(objectDate, dateString) {
-  //   console.log(dateString);
-  //   setAddNewUserForm({
-  //     ...addNewUserForm,
-  //     date: dateString,
-  //   });
-  // }
 
   // Lấy giá trị giới tính
   const onChangeGender = (value) => {
     console.log(`selected ${value} - True: Nam/ False: Nữ`);
-    setAddNewUserForm({
-      ...addNewUserForm,
+    setFormData({
+      ...formData,
       gender: value,
     });
   };
@@ -125,9 +132,9 @@ const AddNewUser = () => {
     formik.handleReset();
   };
   //Lấy dữ liệu
-  // console.log(addNewUserForm);
-  // console.log(addNewUserForm.gender);
-  // console.log(formik.errors.phoneNumber);
+  // console.log(formData);
+  // console.log(formData.gender);
+  // console.log(formik.errors.phone);
 
   return (
     <>
@@ -154,23 +161,24 @@ const AddNewUser = () => {
               disabled={!formik.isValid}
               type="primary"
             >
-              Xác nhận
+              Tạo tài khoản
             </Button>
           </Space>
         }
       >
+        <AlertMessage info={alert}/>
         <Form layout="vertical" hideRequiredMark id="formAddUser">
           <Row gutter={24}>
             <Col span={24}>
-              <Form.Item name="name" label="Tên Tài Khoản">
+              <Form.Item name="name" label="Họ và tên">
                 <Input
-                  name="NameAccount"
+                  name="name"
                   placeholder="Nhập tên của chuyên gia dinh dưỡng ở đây"
-                  value={formik.values.NameAccount}
+                  value={formik.values.name}
                   onChange={formik.handleChange}
                 />
-                {formik.errors.NameAccount && (
-                  <p className="errorMSG">{formik.errors.NameAccount}</p>
+                {formik.errors.name && (
+                  <p className="errorMSG">{formik.errors.name}</p>
                 )}
               </Form.Item>
             </Col>
@@ -237,13 +245,13 @@ const AddNewUser = () => {
             <Col span={24}>
               <Form.Item name="phone_number" label="Số điện thoại">
                 <Input
-                  name="phoneNumber"
+                  name="phone"
                   placeholder="Nhập Số điện thoại"
-                  value={formik.values.phoneNumber}
+                  value={formik.values.phone}
                   onChange={formik.handleChange}
                 />
-                {formik.errors.phoneNumber && (
-                  <p className="errorMSG">{formik.errors.phoneNumber}</p>
+                {formik.errors.phone && (
+                  <p className="errorMSG">{formik.errors.phone}</p>
                 )}
               </Form.Item>
             </Col>
@@ -263,15 +271,15 @@ const AddNewUser = () => {
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item name="date" label="Ngày sinh">
+              <Form.Item name="dob" label="Ngày sinh">
                 <Input
                   placeholder="Nhập thông tin ngày sinh ở đây"
-                  name="date"
-                  value={formik.values.date}
+                  name="dob"
+                  value={formik.values.dob}
                   onChange={formik.handleChange}
                 />
-                {formik.errors.date && (
-                  <p className="errorMSG">{formik.errors.date}</p>
+                {formik.errors.dob && (
+                  <p className="errorMSG">{formik.errors.dob}</p>
                 )}
               </Form.Item>
             </Col>

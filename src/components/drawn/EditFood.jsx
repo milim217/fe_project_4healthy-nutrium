@@ -21,6 +21,7 @@ import TableEditIngredientFood from "../../pages/nutrion/TableEditIngredientFood
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { propTypes } from "react-bootstrap/esm/Image";
+import FoodAPI from "../../service/Actions/FoodAPI";
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
@@ -98,25 +99,19 @@ const MealTypeValueDefault = [
 ];
 
 const { Option } = Select;
-const EditFood = () => {
+const EditFood = ({ id }) => {
+
   const [alert2, setAlert2] = useState(null);
-  //
-  //
-  //
-  // Mùa của món ăn
-  //
-  //
-  //
   const [open, setOpen] = useState(false);
-  const [checkedSessonList, setcheckedSessonList] =
-    useState(SeassonValueDefault);
+  const [checkedSeasonList, setCheckedSeasonList] = useState(SeassonValueDefault);
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
   const [alert, setAlert] = useState(null);
   const [alert1, setAlert1] = useState(null);
+  const [food, setFood] = useState(null);
 
   const onChange_SeassonList = (list) => {
-    setcheckedSessonList(list);
+    setCheckedSeasonList(list);
     setIndeterminate(!!list.length && list.length < seassonList.length);
     setCheckAll(list.length === seassonList.length);
     if (list.length === 0) {
@@ -132,7 +127,7 @@ const EditFood = () => {
   };
   const onCheckAllChange = (e) => {
     const seassonListOnlyName = seassonList.map((data) => data.value);
-    setcheckedSessonList(e.target.checked ? seassonListOnlyName : []);
+    setCheckedSeasonList(e.target.checked ? seassonListOnlyName : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);
     if (e.target.checked == []) {
@@ -207,8 +202,8 @@ const EditFood = () => {
       recipe: "",
       fat: "",
       protein: "",
-      carbon: "",
-      Calories: "",
+      carb: "",
+      calo: "",
       // Fiber: "",
     },
     //
@@ -233,14 +228,14 @@ const EditFood = () => {
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
-      carbon: Yup.string()
-        .required("Bạn không được để trống hàm lượng chất carbon")
+      carb: Yup.string()
+        .required("Bạn không được để trống hàm lượng chất carb")
         .matches(
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
         ),
-      Calories: Yup.string()
-        .required("Bạn không được để trống hàm lượng chất Calories")
+      calo: Yup.string()
+        .required("Bạn không được để trống hàm lượng chất calo")
         .matches(
           /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/,
           "Bạn chỉ được nhập chữ số nguyên hoặc chữ số thập phân  "
@@ -293,20 +288,17 @@ const EditFood = () => {
       recipe: formik.values.recipe.trim(),
       fat: formik.values.fat.trim(),
       protein: formik.values.protein.trim(),
-      carb: formik.values.carbon.trim(),
-      calo: formik.values.Calories.trim(),
+      carb: formik.values.carb.trim(),
+      calo: formik.values.calo.trim(),
       // Fiber: formik.values.Fiber.trim(),
-      seasons: checkedSessonList,
+      seasons: checkedSeasonList,
       meals: checkedMealTypeList,
       // ingredientFood: IngredientFoodValue.ingredientFood,
-      IngredientMassses: ingredientMassses,
-      CategoryFood: CategoryFoodValue,
+      ingredientMassses: ingredientMassses,
+      category: CategoryFoodValue,
     };
-    console.log(editFoodForm);
-    //
-    //Xoá dữ liệu khi submit thành công vào api
-    //
-    // document.getElementById("formAddNewFoodInput").reset();
+    console.log('update food = ', editFoodForm);
+
   };
   const showDrawer = () => {
     setOpen(true);
@@ -341,14 +333,6 @@ const EditFood = () => {
     console.log(IngredientFoodValueArr);
   };
   const [listIngredient, setListIngredient] = useState([]);
-  useEffect(() => {
-    IngredientAPI.getAll()
-      .then((res) => {
-        setListIngredient(res.data);
-      })
-      .catch((err) => {});
-  }, []);
-
   const [IngredientFoodValue, setIngredientFoodValue] = useState("");
   const [IngredientFoodValueArr, setIngredientFoodValueArr] = useState("");
   const onChangeSelectIngredientFood = (value) => {
@@ -373,12 +357,32 @@ const EditFood = () => {
   //
   //
   const [listCategory, setListCategory] = useState([]);
-  useEffect(() => {
-    CategoryAPI.getAll()
+
+  useEffect(async () => {
+
+    if(id){
+    await CategoryAPI.getAll()
       .then((res) => {
         setListCategory(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
+
+    await IngredientAPI.getAll()
+      .then((res) => {
+        setListIngredient(res.data);
+      })
+      .catch((err) => { });
+
+    await FoodAPI.getById(id)
+      .then(res => {
+        console.log('food = ',res.data);
+        // const food = res.data;
+        // formik.setValues(food);
+        // setFood(food);
+        setCheckedSeasonList(food.seasons)
+        setcheckedMealTypeList(food.meals)
+      });
+    }
   }, []);
   const [CategoryFoodValue, setCategoryFoodValue] = useState("");
   const onChangeSelectCategoryFood = (value) => {
@@ -516,32 +520,32 @@ const EditFood = () => {
               ]}
             >
               <Input
-                name="carbon"
+                name="carb"
                 placeholder="Hàm lượng chất carb món ăn chứa"
                 onChange={formik.handleChange}
               />
-              {formik.errors.carbon && (
-                <p className="errorMSG">{formik.errors.carbon}</p>
+              {formik.errors.carb && (
+                <p className="errorMSG">{formik.errors.carb}</p>
               )}
             </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item
-              label="Hàm lượng Calories:"
+              label="Hàm lượng calo:"
               rules={[
                 {
                   required: true,
-                  message: "Calories chưa nhập",
+                  message: "calo chưa nhập",
                 },
               ]}
             >
               <Input
-                name="Calories"
-                placeholder="Hàm lượng chất Calories món ăn chứa"
+                name="calo"
+                placeholder="Hàm lượng calo món ăn chứa"
                 onChange={formik.handleChange}
               />
-              {formik.errors.Calories && (
-                <p className="errorMSG">{formik.errors.Calories}</p>
+              {formik.errors.calo && (
+                <p className="errorMSG">{formik.errors.calo}</p>
               )}
             </Form.Item>
           </Col>
@@ -580,7 +584,7 @@ const EditFood = () => {
                 <Divider />
                 <CheckboxGroup
                   options={seassonList}
-                  value={checkedSessonList}
+                  value={checkedSeasonList}
                   onChange={onChange_SeassonList}
                   required
                 />
@@ -647,7 +651,7 @@ const EditFood = () => {
               ></TableEditIngredientFood>
             </Form.Item>
             <Form.Item
-              name="CategoryFood"
+              name="category"
               label="Món ăn này thuộc loại"
               rules={[
                 {

@@ -34,10 +34,12 @@ const GetUserDiet = () => {
     const quizData = JSON.parse(localStorage.getItem("quiz-data"));
     DietAPI.getDietOptions(quizData)
       .then((res) => {
-        console.log("data = " + JSON.stringify(res.data));
         setDiet(res.data);
       })
-      .catch((err) => {});
+      .catch((e) => {
+        setAlert({ type: "danger", message: e.response.data?e.response.data.message:"Không thể tìm thực đơn phù hợp với bạn" });
+        setTimeout(() => setAlert(null), 5000);
+      });
   }, []);
 
   const changeBreakfast = (event) => {
@@ -162,7 +164,7 @@ const GetUserDiet = () => {
               size="small"
               extra={<Button onClick={changeBreakfast}>Đổi món</Button>}
             >
-              {diet?.breakfastCalo ? (
+              {diet?.breakfastCalo?.length ? (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
@@ -172,7 +174,13 @@ const GetUserDiet = () => {
                   </div>
                 </Row>
               ) : (
-                <></>
+                <>
+                <Row>
+                  <div className="CardTitle-Info_Calo">
+                    Không tìm được thực đơn cho bữa sáng
+                  </div>
+                </Row>
+                </>
               )}
               {diet.breakfastOptions ? (
                 diet.breakfastOptions[breakfastIndex]?.map((foodMass) => (
@@ -215,7 +223,7 @@ const GetUserDiet = () => {
               size="small"
               extra={<Button onClick={changeLunch}>Đổi món</Button>}
             >
-              {diet?.lunchCalo ? (
+              {diet?.lunchCalo?.length ? (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
@@ -223,7 +231,13 @@ const GetUserDiet = () => {
                   <div className="CardTitle-Info_Number">{diet.lunchCalo}</div>
                 </Row>
               ) : (
-                <></>
+                <>
+                <Row>
+                  <div className="CardTitle-Info_Calo">
+                    Không tìm được thực đơn phù hợp cho bữa trưa
+                  </div>
+                </Row>
+                </>
               )}
               {diet.lunchOptions ? (
                 diet.lunchOptions[lunchIndex]?.map((foodMass) => (
@@ -266,7 +280,7 @@ const GetUserDiet = () => {
               size="small"
               extra={<Button onClick={changeDinner}>Đổi món</Button>}
             >
-              {diet?.dinnerCalo ? (
+              {diet?.dinnerCalo?.length ? (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
@@ -274,7 +288,13 @@ const GetUserDiet = () => {
                   <div className="CardTitle-Info_Number">{diet.dinnerCalo}</div>
                 </Row>
               ) : (
-                <></>
+                <>
+                <Row>
+                  <div className="CardTitle-Info_Calo">
+                    Không tìm được thực đơn phù hợp cho bữa tối
+                  </div>
+                </Row>
+                </>
               )}
               {diet.dinnerOptions ? (
                 diet.dinnerOptions[dinnerIndex]?.map((foodMass) => (

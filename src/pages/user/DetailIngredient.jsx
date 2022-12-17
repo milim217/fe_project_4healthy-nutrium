@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import HeaderUser from "../../components/header/HeaderUser";
 import Footers from "../../components/footer/footers";
 import "../../assets/style/user/detailPage.css";
 import { Col, Row, Image, Card, Divider } from "antd";
 import Table from "react-bootstrap/Table";
+import IngredientAPI from "../../service/Actions/IngredientAPI";
+import { useParams } from "react-router-dom";
+
 const gridStyle = {
   width: "25%",
   height: "235px",
   textAlign: "center",
 };
 const DetailIngredient = () => {
+
+  const { ingredientID } = useParams();
+  const [ingredient,setIngredient] = useState(null);
+
+  useEffect(() => {
+    IngredientAPI.getById(ingredientID)
+    .then(res => {
+      setIngredient(res.data);
+    })
+  }, []);
+
   return (
     <div>
       <HeaderUser></HeaderUser>
@@ -20,19 +34,19 @@ const DetailIngredient = () => {
               <Card title="Tóm tắt các chất dinh dưỡng chính">
                 <Card.Grid style={gridStyle}>
                   <div className="name_SumaryNutrition"> Calo</div>
-                  <div className="data_SmaryNutrition"> 120</div>
+                  <div className="data_SmaryNutrition"> {ingredient?.calo}</div>
                 </Card.Grid>
                 <Card.Grid style={gridStyle}>
                   <div className="name_SumaryNutrition"> Chất béo</div>
-                  <div className="data_SmaryNutrition"> 120</div>
+                  <div className="data_SmaryNutrition"> {ingredient?.fat}</div>
                 </Card.Grid>
                 <Card.Grid style={gridStyle}>
                   <div className="name_SumaryNutrition"> Chất bột đường</div>
-                  <div className="data_SmaryNutrition"> 120</div>
+                  <div className="data_SmaryNutrition"> {ingredient?.carb}</div>
                 </Card.Grid>
                 <Card.Grid style={gridStyle}>
                   <div className="name_SumaryNutrition"> Chất đạm</div>
-                  <div className="data_SmaryNutrition"> 120</div>
+                  <div className="data_SmaryNutrition"> {ingredient?.protein}</div>
                 </Card.Grid>
                 {/* <Card.Grid style={gridStyle}>
                   <div className="name_SumaryNutrition">
@@ -46,7 +60,7 @@ const DetailIngredient = () => {
               <Image
                 width={300}
                 height={295}
-                src="https://images5.alphacoders.com/826/826208.jpg"
+                src={`http://localhost:8080/ingredient/${ingredient?.id}/image`}
               />
             </Col>
           </Row>
@@ -66,59 +80,67 @@ const DetailIngredient = () => {
                   <tbody>
                     <tr>
                       <td>Fiber</td>
-                      <td>375</td>
+                      <td>{ingredient?.fiber}</td>
                     </tr>
                     <tr>
                       <td>Ash</td>
-                      <td>375</td>
+                      <td>{ingredient?.ash}</td>
                     </tr>
                     <tr>
                       <td>Canxi</td>
-                      <td>375</td>
+                      <td>{ingredient?.canxi}</td>
                     </tr>
                     <tr>
                       <td>Water</td>
-                      <td>375</td>
+                      <td>{ingredient?.water}</td>
                     </tr>
                     <tr>
                       <td>Iron</td>
-                      <td>375</td>
+                      <td>{ingredient?.iron}</td>
                     </tr>
                     <tr>
                       <td>Zinc</td>
-                      <td>375</td>
+                      <td>{ingredient?.zinc}</td>
                     </tr>
                     <tr>
-                      <td>Vitamin C</td>
-                      <td>375</td>
+                      <td>Vitamin A</td>
+                      <td>{ingredient?.vitaminA}</td>
                     </tr>
                     <tr>
                       <td>Vitamin B1</td>
-                      <td>375</td>
+                      <td>{ingredient?.vitaminB1}</td>
                     </tr>
                     <tr>
                       <td>vitamin B2</td>
-                      <td>375</td>
+                      <td>{ingredient?.vitaminB2}</td>
                     </tr>
                     <tr>
                       <td>vitamin B3</td>
-                      <td>375</td>
+                      <td>{ingredient?.vitaminB3}</td>
                     </tr>
                     <tr>
                       <td>vitamin B6A</td>
-                      <td>375</td>
+                      <td>{ingredient?.vitaminB6A}</td>
                     </tr>
                     <tr>
-                      <td>vitamin D</td> <td>375</td>
+                      <td>vitamin B12</td> <td>{ingredient?.vitaminB12}</td>
                     </tr>
                     <tr>
-                      <td>vitamin B12</td> <td>375</td>
+                      <td>Vitamin C</td>
+                      <td>{ingredient?.vitaminC}</td>
+                    </tr>
+                    <tr>
+                      <td>vitamin D</td> <td>{ingredient?.vitaminD}</td>
+                    </tr>
+                  
+                    <tr>
+                      <td>vitamin ARae</td> <td>{ingredient?.vitaminARae}</td>
                     </tr>
                   </tbody>
                 </Table>
               </div>
             </Col>
-            <Col span={12}>
+            {/* <Col span={12}>
               <div className="wrapper_RelateFood">
                 <div className="name_RelateFood">
                   Những món ăn cùng chứa thành phần này
@@ -148,7 +170,7 @@ const DetailIngredient = () => {
                   <div className="nameFood_box_RelateFood">Tên món ăn</div>
                 </div>
               </div>
-            </Col>
+            </Col> */}
           </Row>
         </div>
       </div>

@@ -11,7 +11,8 @@ const HeaderHasLog = () => {
   const history = useHistory();
 
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("jwt");
+    localStorage.removeItem('quiz-data');
     history.push("/login");
   };
 
