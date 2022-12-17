@@ -37,7 +37,7 @@ const GetUserDiet = () => {
         setDiet(res.data);
       })
       .catch((e) => {
-        setAlert({ type: "danger", message: e.response.data?e.response.data.message:"Không thể tìm thực đơn phù hợp với bạn" });
+        setAlert({ type: "danger", message: e.response.data ? e.response.data.message : "Không thể tìm thực đơn phù hợp với bạn" });
         setTimeout(() => setAlert(null), 5000);
       });
   }, []);
@@ -68,44 +68,55 @@ const GetUserDiet = () => {
 
   async function saveDiet(event) {
     event.preventDefault();
+    if (diet) {
+      let today = new Date();
+      // let toDayStr = new Date(today.toLocaleString("en-US", {t5imeZone: "Asia/Jakarta"}));
+      let toDayStr = Moment(today).format("yyyy-MM-DD HH:mm:ss");
 
-    let today = new Date();
-    // let toDayStr = new Date(today.toLocaleString("en-US", {t5imeZone: "Asia/Jakarta"}));
-    let toDayStr = Moment(today).format("yyyy-MM-DD HH:mm:ss");
+      const breakfast = diet.breakfastOptions ? diet.breakfastOptions[breakfastIndex] : [];
+      const lunch = diet.lunchOptions ? diet.lunchOptions[lunchIndex] : [];
+      const dinner = diet.dinnerOptions ? diet.dinnerOptions[breakfastIndex] : [];
 
-    let data = {
-      user: diet.user,
-      job: diet.job,
-      weight: diet.weight,
-      height: diet.height,
-      date: toDayStr,
-      breakfastCalo: diet?.breakfastCalo,
-      lunchCalo: diet?.lunchCalo,
-      dinnerCalo: diet?.dinnerCalo,
-      breakfastCarb: diet?.breakfastCarb,
-      lunchCarb: diet?.lunchCarb,
-      dinnerCarb: diet?.dinnerCarb,
-      breakfastProtein: diet?.breakfastProtein,
-      lunchProtein: diet?.lunchProtein,
-      dinnerProtein: diet?.dinnerProtein,
-      breakfastFat: diet?.breakfastFat,
-      lunchFat: diet?.lunchFat,
-      dinnerFat: diet?.dinnerFat,
-      breakfast: diet?.breakfastOptions[breakfastIndex],
-      lunch: diet?.lunchOptions[lunchIndex],
-      dinner: diet?.dinnerOptions[dinnerIndex],
-    };
+      let data = {
+        user: diet.user,
+        job: diet.job,
+        weight: diet.weight,
+        height: diet.height,
+        date: toDayStr,
+        breakfastCalo: diet?.breakfastCalo,
+        lunchCalo: diet?.lunchCalo,
+        dinnerCalo: diet?.dinnerCalo,
+        breakfastCarb: diet?.breakfastCarb,
+        lunchCarb: diet?.lunchCarb,
+        dinnerCarb: diet?.dinnerCarb,
+        breakfastProtein: diet?.breakfastProtein,
+        lunchProtein: diet?.lunchProtein,
+        dinnerProtein: diet?.dinnerProtein,
+        breakfastFat: diet?.breakfastFat,
+        lunchFat: diet?.lunchFat,
+        dinnerFat: diet?.dinnerFat,
+        breakfast: breakfast,
+        lunch: lunch,
+        dinner: dinner,
+      };
 
-    await DietAPI.save(data)
+      await DietAPI.save(data)
 
-      .then((res) => {
-        setAlert({ type: "success", message: "Lưu thực đơn thành công" });
-        setTimeout(() => setAlert(null), 5000);
-      })
-      .catch((e) => {
-        setAlert({ type: "success", message: "Lưu thực đơn không thành công" });
-        setTimeout(() => setAlert(null), 5000);
-      });
+        .then((res) => {
+          setAlert({ type: "success", message: "Lưu thực đơn thành công" });
+          setTimeout(() => setAlert(null), 5000);
+        })
+        .catch((e) => {
+          setAlert({ type: "success", message: "Lưu thực đơn không thành công" });
+          setTimeout(() => setAlert(null), 5000);
+        });
+    }
+    else {
+      setAlert({ type: "success", message: "Không tìm được thực đơn để lưu" });
+      setTimeout(() => setAlert(null), 5000);
+    }
+
+
   }
 
   return (
@@ -175,11 +186,11 @@ const GetUserDiet = () => {
                 </Row>
               ) : (
                 <>
-                <Row>
-                  <div className="CardTitle-Info_Calo">
-                    Không tìm được thực đơn cho bữa sáng
-                  </div>
-                </Row>
+                  <Row>
+                    <div className="CardTitle-Info_Calo">
+                      Không tìm được thực đơn cho bữa sáng
+                    </div>
+                  </Row>
                 </>
               )}
               {diet.breakfastOptions ? (
@@ -232,11 +243,11 @@ const GetUserDiet = () => {
                 </Row>
               ) : (
                 <>
-                <Row>
-                  <div className="CardTitle-Info_Calo">
-                    Không tìm được thực đơn phù hợp cho bữa trưa
-                  </div>
-                </Row>
+                  <Row>
+                    <div className="CardTitle-Info_Calo">
+                      Không tìm được thực đơn phù hợp cho bữa trưa
+                    </div>
+                  </Row>
                 </>
               )}
               {diet.lunchOptions ? (
@@ -289,11 +300,11 @@ const GetUserDiet = () => {
                 </Row>
               ) : (
                 <>
-                <Row>
-                  <div className="CardTitle-Info_Calo">
-                    Không tìm được thực đơn phù hợp cho bữa tối
-                  </div>
-                </Row>
+                  <Row>
+                    <div className="CardTitle-Info_Calo">
+                      Không tìm được thực đơn phù hợp cho bữa tối
+                    </div>
+                  </Row>
                 </>
               )}
               {diet.dinnerOptions ? (

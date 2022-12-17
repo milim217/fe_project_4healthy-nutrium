@@ -46,7 +46,7 @@ const UserPersonalSchedule = () => {
   }
 
   const totalCalo = (diet) => {
-    const total = 0;
+    let total = 0;
     if(diet){
       if(diet.breakfastCalo){
         total += diet.breakfastCalo
