@@ -164,7 +164,7 @@ const GetUserDiet = () => {
               size="small"
               extra={<Button onClick={changeBreakfast}>Đổi món</Button>}
             >
-              {diet?.breakfastCalo?.length ? (
+              {diet?.breakfastCalo?.length>0 ? (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
@@ -223,7 +223,7 @@ const GetUserDiet = () => {
               size="small"
               extra={<Button onClick={changeLunch}>Đổi món</Button>}
             >
-              {diet?.lunchCalo?.length ? (
+              {diet?.lunchCalo?.length>0 ? (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
@@ -280,7 +280,7 @@ const GetUserDiet = () => {
               size="small"
               extra={<Button onClick={changeDinner}>Đổi món</Button>}
             >
-              {diet?.dinnerCalo?.length ? (
+              {diet?.dinnerCalo?.length>0 ? (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
