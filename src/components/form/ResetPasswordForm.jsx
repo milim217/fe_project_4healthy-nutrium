@@ -83,7 +83,7 @@ const ResetPasswordForm = () => {
             setTimeout(() => setAlert(null), 5000);
           })
           .catch((e) => {
-            setAlert({ type: "danger", message: e.response.data? e.response.data.message : 'Lỗi gửi mã xác nhận email' });
+            setAlert({ type: "danger", message: e.response ? e.response.data.message : 'Lỗi gửi mã xác nhận email' });
             setTimeout(() => setAlert(null), 5000);
           });
       }
