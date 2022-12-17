@@ -185,27 +185,27 @@ const ListUser = ({ user, checkValidRole }) => {
   }, [userList]);
 
   const [data, setData] = useState([]);
-  userList
-    ? userList.map((userList) =>
-      data.push({
-        key: userList.id,
-        email: userList.email,
-        name: userList.name,
-        address_user: userList.address,
-        Birth_Of_Date: Moment(userList.dob).format("DD/MM/yyyy"),
-        phoneNumber_user: userList.phone,
-        roleUser:
-          userList.role.name === "NUTRIENT_EXPERT"
-            ? "Chuyên gia dinh dưỡng"
-            : userList.role.name === "ADMIN"
-              ? "Quản Trị Viên"
-              : userList.role.name === "USER"
-                ? "Người Dùng"
-                : null,
-        status: userList.status,
-      })
-    )
-    : console.log("error");
+  // userList
+  //   ? userList.map((userList) =>
+  //     data.push({
+  //       key: userList.id,
+  //       email: userList.email,
+  //       name: userList.name,
+  //       address_user: userList.address,
+  //       Birth_Of_Date: Moment(userList.dob).format("DD/MM/yyyy"),
+  //       phoneNumber_user: userList.phone,
+  //       roleUser:
+  //         userList.role.name === "NUTRIENT_EXPERT"
+  //           ? "Chuyên gia dinh dưỡng"
+  //           : userList.role.name === "ADMIN"
+  //             ? "Quản Trị Viên"
+  //             : userList.role.name === "USER"
+  //               ? "Người Dùng"
+  //               : null,
+  //       status: userList.status,
+  //     })
+  //   )
+  //   : console.log("error");
 
   // In xem đang xoá ở hàng có ID nào
   console.log(deactiveID);

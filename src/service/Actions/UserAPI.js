@@ -11,7 +11,7 @@ const UserAPI = {
       },
     });
   },
-  getAll(data) {
+  getAll() {
     const url = `/user`;
     return AxiosList.normalAxios.get(url);
   },
