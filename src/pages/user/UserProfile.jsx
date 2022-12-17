@@ -18,8 +18,12 @@ import * as Yup from "yup";
 import Footers from "../../components/footer/footers";
 import SlidebarUser from "./SlidbarUser";
 import AuthUtil from "../../service/utils/AuthUtil";
+import UserAPI from "../../service/Actions/UserAPI";
+import DietAPI from "../../service/Actions/DietAPI";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
+import moment from "moment";
+import AlertMessage from "../../../src/components/alert/AlertMessage";
 
 const UserProfile = () => {
   const layout = {
@@ -31,26 +35,51 @@ const UserProfile = () => {
     },
   };
   const { Option } = Select;
+  const [user, setUser] = useState(null);
   const history = useHistory();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDisable, setisDisable] = useState(true);
   const [isDisable2, setisDisable2] = useState(true);
+  const [alert, setAlert] = useState(null);
+  const [resetFormAlert, setResetFormAlert] = useState(null);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const resetPassword = () => {
-    const resetPasswordForm = {
-      oldPassword: formikResetPassword.values.oldPassword,
-      passwordNew: formikResetPassword.values.passwordNew,
-      cofirmPasswordNew: formikResetPassword.values.cofirmPasswordNew,
-    };
-    console.log(resetPasswordForm);
-    // setIsModalOpen(false);
+  const resetPassword = async () => {
+
+    // const resetPasswordForm = {
+    const oldPassword = formikResetPassword.values.oldPassword;
+    const newPassword = formikResetPassword.values.passwordNew;
+    //   cofirmPasswordNew: formikResetPassword.values.cofirmPasswordNew,
+    // };
+    await UserAPI.checkOldPassword(user.id, [oldPassword])
+      .then(res => {
+        const u = user;
+        u.password = newPassword;
+        UserAPI.updateUser(u)
+          .then(res => {
+            setResetFormAlert({ type: "success", message: "Đổi mật khẩu thành công" });
+            setTimeout(() => setAlert(null), 5000);
+          })
+          .catch(e => {
+            setResetFormAlert({ type: "danger", message: "Đổi mật khẩu không thành công" });
+            setTimeout(() => setAlert(null), 5000);
+          });
+      })
+      .catch(e => {
+        setResetFormAlert({ type: "danger", message: "Mật khẩu cũ không đúng" });
+        setTimeout(() => setAlert(null), 5000);
+        return;
+      });
+
+
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const [user, setUser] = useState(null);
+
   const displayButton = () => {
     var x = document.querySelector("#LuuButton");
     var y = document.querySelector("#HuyButton");
@@ -109,30 +138,26 @@ const UserProfile = () => {
   };
 
   const formik = useFormik({
-    initialValues: {
-      NameAccount: "",
-      address: "",
-      phoneNumber: "",
-    },
+    initialValues: {},
     //
     //
     //regex
     //
     //
     validationSchema: Yup.object({
-      NameAccount: Yup.string()
+      name: Yup.string()
         .required("Bạn không được để trống tên tài khoản")
-        .matches(
-          /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
-          "Tên tài khoản chứa 8 - 20 ký tự, không chứa '.' và '_'"
-        ),
-      phoneNumber: Yup.string()
+      //   .matches(
+      //     /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
+      //     "Tên chứa 8 - 20 ký tự, không chứa '.' và '_'"
+      //   ),
+      , phone: Yup.string()
         .required("Bạn không được để trống số điện thoại")
-        .matches(
-          /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/,
-          "Số điện thoại gồm 10 số, và bắt đầu bằng số 0"
-        ),
-      address: Yup.string().required("Bạn không được để trống địa chỉ"),
+      //   .matches(
+      //     /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/,
+      //     "Số điện thoại gồm 10 số, và bắt đầu bằng số 0"
+      //   ),
+      , address: Yup.string().required("Bạn không được để trống địa chỉ"),
     }),
   });
   const formikResetPassword = useFormik({
@@ -141,55 +166,57 @@ const UserProfile = () => {
       passwordNew: "",
       cofirmPasswordNew: "",
     },
-    //
-    //
+
     //regex resetpassword
-    //
-    //
     validationSchema: Yup.object({
-      oldPassword: Yup.string()
-        .required("Bạn không được để trống email")
-        .matches(
-          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,10}$/,
-          "Mật khẩu tối thiểu 8 - 10 ký tự, ít nhất chứa một chữ cái và một số:"
-        ),
-      passwordNew: Yup.string()
-        .required("Bạn không được để trống mật khẩu mới")
-        .matches(
-          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,10}$/,
-          "Mật khẩu tối thiểu 8 - 10 ký tự, ít nhất chứa một chữ cái và một số:"
-        ),
-      cofirmPasswordNew: Yup.string()
-        .required("Bạn không được để trống nhập lại mật khẩu mới")
-        .oneOf(
-          [Yup.ref("passwordNew"), null],
-          "mật khẩu nhập lại phải trùng với mật khẩu bạn đã nhập"
-        ),
+      // oldPassword: Yup.string()
+      //   .required("Bạn không được để trống email")
+      //   .matches(
+      //     /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,10}$/,
+      //     "Mật khẩu tối thiểu 8 - 10 ký tự, ít nhất chứa một chữ cái và một số:"
+      //   ),
+      // passwordNew: Yup.string()
+      //   .required("Bạn không được để trống mật khẩu mới")
+      //   .matches(
+      //     /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,10}$/,
+      //     "Mật khẩu tối thiểu 8 - 10 ký tự, ít nhất chứa một chữ cái và một số:"
+      //   ),
+      // cofirmPasswordNew: Yup.string()
+      //   .required("Bạn không được để trống nhập lại mật khẩu mới")
+      //   .oneOf(
+      //     [Yup.ref("passwordNew"), null],
+      //     "mật khẩu nhập lại phải trùng với mật khẩu bạn đã nhập"
+      //   ),
     }),
   });
-  useEffect(() => {
-    let u = AuthUtil.getUserFromToken();
-    if (u) {
-      u.then((res) => {
-        return res.data;
-      });
-    } else {
+
+  useEffect(async () => {
+    const u = AuthUtil.getUserFromToken();
+    if (u === null) {
       history.push("/login");
     }
+    await u.then(res => {
+      formik.setValues(res.data);
+      setUser(res.data);
+    })
   }, []);
-  //
-  //
-  // Chỉnh sửa profile
-  //
-  //
+
   const editProfile = () => {
-    const profileForm = {
-      name: formik.values.NameAccount,
-      address: formik.values.address,
-      phoneNumber: formik.values.phoneNumber,
-      gender: genderForm.gender,
-    };
-    console.log(profileForm);
+    const userData = formik.values;
+    userData.name = userData.name.trim();
+    userData.phone = userData.phone.trim();
+    userData.address = userData.address.trim();
+
+    UserAPI.update(userData)
+      .then(res => {
+        setAlert({ type: "success", message: "Cập nhật thành công" });
+        setTimeout(() => setAlert(null), 5000);
+      })
+      .catch(e => {
+        console.log(e);
+        // setAlert({ type: "danger", message: e.response.data.message });
+        // setTimeout(() => setAlert(null), 5000);
+      });
   };
 
   return (
@@ -214,24 +241,25 @@ const UserProfile = () => {
             <Col span={4}></Col>
             <Col span={16}>
               <Form>
+                <AlertMessage style="height:100px" info={alert} />
                 <Form.Item label="Tên của bạn">
                   <Input
                     placeholder="input placeholder"
                     disabled={isDisable}
-                    name="NameAccount"
-                    value={formik.values.NameAccount}
+                    name="name"
+                    value={formik.values.name}
                     onChange={formik.handleChange}
                   />
-                  {formik.errors.NameAccount && (
-                    <p className="errorMSG">{formik.errors.NameAccount}</p>
+                  {formik.errors.name && (
+                    <p className="errorMSG">{formik.errors.name}</p>
                   )}
                 </Form.Item>
                 {/* Ngày sinh và Email không được sửa */}
                 <Form.Item label="Ngày sinh của bạn">
-                  <Input placeholder="input placeholder" disabled={true} />
+                  <Input placeholder="input placeholder" value={moment(formik.values.dob).format("DD/MM/YYYY")} disabled={true} />
                 </Form.Item>
                 <Form.Item label="Email của bạn">
-                  <Input placeholder="input placeholder" disabled={true} />
+                  <Input placeholder="input placeholder" value={formik.values.email} disabled={true} />
                 </Form.Item>
                 <Form.Item
                   name="Giới tính"
@@ -261,14 +289,14 @@ const UserProfile = () => {
                 </Form.Item>
                 <Form.Item label="Số điện thoại của bạn:">
                   <Input
-                    name="phoneNumber"
+                    name="phone"
                     placeholder="input placeholder"
                     disabled={isDisable}
-                    value={formik.values.phoneNumber}
+                    value={formik.values.phone}
                     onChange={formik.handleChange}
                   />
-                  {formik.errors.phoneNumber && (
-                    <p className="errorMSG">{formik.errors.phoneNumber}</p>
+                  {formik.errors.phone && (
+                    <p className="errorMSG">{formik.errors.phone}</p>
                   )}
                 </Form.Item>
                 <Form.Item label="Địa chỉ của bạn:">
@@ -320,12 +348,11 @@ const UserProfile = () => {
             </Col>
           </Row>
         </Form>
-        <Divider plain>Công việc và chỉ số cá nhân</Divider>
-        <Form layout="vertical">
+        {/*<Divider plain>Công việc và chỉ số cá nhân</Divider>
+         <Form layout="vertical">
           <Row gutter={24}>
             <Col span={4}></Col>
             <Col span={16}>
-              {/* Form này chỉ hiển thị chỉ số qua API cho người dùng */}
               <Form.Item label="Công việc của bạn:">
                 <Input placeholder="input placeholder" disabled={isDisable2} />
               </Form.Item>
@@ -335,7 +362,7 @@ const UserProfile = () => {
               <Form.Item label="Cân Nặng:">
                 <Input placeholder="input placeholder" disabled={isDisable2} />
               </Form.Item>
-              {/* <Space size={3}>
+              <Space size={3}>
                 <Button
                   type="primary"
                   id="EditButton2"
@@ -355,13 +382,13 @@ const UserProfile = () => {
                   id="HuyButton2"
                   style={{ display: "none" }}
                   onClick={showEditButton2}
-                >
+                >l
                   Huỷ
                 </Button>
-              </Space> */}
+              </Space>
             </Col>
           </Row>
-        </Form>
+        </Form> */}
 
         <Modal
           title="Thay đổi mật khẩu"
@@ -372,6 +399,7 @@ const UserProfile = () => {
           cancelText={"Huỷ"}
         >
           <Form {...layout}>
+            <AlertMessage style="height:100px" info={resetFormAlert} />
             <Form.Item label="Nhập mật khẩu cũ" name="OldPassword">
               <Input.Password
                 name="oldPassword"

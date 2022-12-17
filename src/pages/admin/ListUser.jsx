@@ -21,30 +21,62 @@ import ModalDeleteListUser from "../../components/modal/ModalDeleteListUser";
 import ModalViewInfomationUser from "../../components/modal/ModalViewInfomationUser";
 import imageUserOfListUser from "../../assets/image/Img_User.png";
 import UserAPI from "../../service/Actions/UserAPI";
-const text = "Bạn có chắc chắn muốn xoá tài khoản này?";
+import AlertMessage from "../../../src/components/alert/AlertMessage";
+import Moment from "moment";
 
-const ListUser = () => {
-  const [listuser, setListUser] = useState([]);
-  const [deleteUserRow, setDeleteUserRow] = useState(null);
+const ListUser = ({ user, checkValidRole }) => {
+  const [userList, setUserList] = useState([]);
+  const [deactiveID, setDeactiveID] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [alert, setAlert] = useState(null);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleOk = () => {
-    setIsModalOpen(false);
+  const deactive = async (deactiveID, status) => {
+    if (status===1) {
+      console.log('deac')
+      await UserAPI.deactive(deactiveID)
+        .then(res => {
+          setAlert({ type: "success", message: "Vô hiệu hóa tài khoản thành công" });
+          setTimeout(() => setAlert(null), 5000);
+          loadUsers();
+        })
+    }
+    else {
+      console.log('ac')
+      await UserAPI.active(deactiveID)
+        .then(res => {
+          setAlert({ type: "success", message: "Kích hoạt tài khoản thành công" });
+          setTimeout(() => setAlert(null), 5000);
+          loadUsers();
+        })
+    }
+
+    // .catch( e => {
+    //   setAlert({ type: "danger", message: e.response.data.message });
+    //   setTimeout(() => setAlert(null), 5000);
+    // });
+    // setIsModalOpen(false);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  useEffect(() => {
-    UserAPI.getAll()
+  const loadUsers = async () => {
+    await UserAPI.getAll()
       .then((res) => {
-        setListUser(res.data);
+        setUserList(res.data);
       })
-      .catch((err) => {});
+  }
+
+  useEffect(() => {
+
+    checkValidRole();
+    loadUsers();
+
   }, []);
 
-  const valueNutriExpert = listuser.map(
+  const valueNutriExpert = userList.map(
     (listUserNutritionExpert) => listUserNutritionExpert.role.name
   );
   var sizeRoleNutritionExpertUser = 0;
@@ -69,15 +101,15 @@ const ListUser = () => {
       dataIndex: "name",
       justify: "center",
     },
-    {
-      title: "Ảnh Người Dùng",
-      dataIndex: "image_user",
-      render: () => (
-        <>
-          <Image width={50} src={imageUserOfListUser} />
-        </>
-      ),
-    },
+    // {
+    //   title: "Ảnh Người Dùng",
+    //   dataIndex: "image_user",
+    //   render: () => (
+    //     <>
+    //       <Image width={50} src={imageUserOfListUser} />
+    //     </>
+    //   ),
+    // },
     {
       title: "Email",
       dataIndex: "email",
@@ -109,72 +141,113 @@ const ListUser = () => {
       justify: "center",
       render: (status) => (
         <>
-          {!status && <Tag color="red">Vô hiệu hoá</Tag>}
-          {status && <Tag color="green">Đã kích hoạt </Tag>}
+          {!status ? <Tag color="red">Vô hiệu hoá</Tag> : <Tag color="green">Đã kích hoạt </Tag>}
+          {/* {status && <Tag color="green">Đã kích hoạt </Tag>} */}
         </>
       ),
     },
-    {
-      title: "Thông tin khác",
-      dataIndex: "role",
-      justify: "center",
-    },
+    // {
+    //   title: "Thông tin khác",
+    //   dataIndex: "role",
+    //   justify: "center",
+    // },
     {
       title: "Hành động",
       fixed: "right",
       dataIndex: "",
       key: "x",
-      render: (_, record) => (
-        <>
-          {/* <ModalDeleteListUser> */}
-          <Button
-            type="primary"
-            onClick={() => {
-              showModal();
-              setDeleteUserRow(record.key);
-            }}
-            style={{ backgroundColor: "red", border: "none" }}
-          >
-            Vô hiệu hoá
-          </Button>
-          {/* </ModalDeleteListUser> */}
-        </>
+      render: (_, record, status) => (
+        status?
+          (
+            <Button
+              // type="primary"
+              onClick={() => {
+                deactive(record.key, status);
+              }}
+              style={{ backgroundColor: "red", border: "none" }}
+            >
+              Vô hiệu hóa
+            </Button>
+          )
+          :
+          (
+            <Button
+              // type="primary"
+              onClick={() => {
+                deactive(record.key, status);
+              }}
+              style={{ backgroundColor: "green", border: "none" }}
+            >
+            Kích hoạt
+            </Button>
+          )
       ),
       justify: "center",
     },
   ];
 
-  const data = [];
-  listuser
-    ? listuser.map((listUser) =>
-        data.push({
-          key: listUser.id,
-          email: listUser.email,
-          name: listUser.name,
-          address_user: listUser.address,
-          Birth_Of_Date: listUser.dob,
-          phoneNumber_user: listUser.phone,
-          roleUser:
-            listUser.role.name === "NUTRIENT_EXPERT"
-              ? "Chuyên gia dinh dưỡng"
-              : listUser.role.name === "ADMIN"
+  useEffect(() => {
+    const arr = [];
+    userList.map((userList) =>
+    arr.push({
+        key: userList.id,
+        email: userList.email,
+        name: userList.name,
+        address_user: userList.address,
+        Birth_Of_Date: Moment(userList.dob).format("DD/MM/yyyy"),
+        phoneNumber_user: userList.phone,
+        roleUser:
+          userList.role.name === "NUTRIENT_EXPERT"
+            ? "Chuyên gia dinh dưỡng"
+            : userList.role.name === "ADMIN"
               ? "Quản Trị Viên"
-              : listUser.role.name === "USER"
-              ? "Người Dùng"
-              : null,
-          status: listUser.status,
-        })
-      )
+              : userList.role.name === "USER"
+                ? "Người Dùng"
+                : null,
+        status: userList.status,
+      })
+    );
+    console.log('arr=',arr);
+    setData(arr)
+
+  }, [userList]);
+
+  const [data,setData] = useState([]);
+  userList
+    ? userList.map((userList) =>
+      data.push({
+        key: userList.id,
+        email: userList.email,
+        name: userList.name,
+        address_user: userList.address,
+        Birth_Of_Date: Moment(userList.dob).format("DD/MM/yyyy"),
+        phoneNumber_user: userList.phone,
+        roleUser:
+          userList.role.name === "NUTRIENT_EXPERT"
+            ? "Chuyên gia dinh dưỡng"
+            : userList.role.name === "ADMIN"
+              ? "Quản Trị Viên"
+              : userList.role.name === "USER"
+                ? "Người Dùng"
+                : null,
+        status: userList.status,
+      })
+    )
     : console.log("error");
 
   // In xem đang xoá ở hàng có ID nào
-  console.log(deleteUserRow);
+  console.log(deactiveID);
   // Tìm kiếm người dùng
   const { Search } = Input;
-  const onSearch = (value) => console.log(value);
+  const onSearch = (key) => {
+    UserAPI.getSearched(key)
+      .then(res => {
+        setUserList(res.data);
+      });
+  }
   return (
     <div>
-      <HeaderLayout title={"Danh sách người dùng"}></HeaderLayout>
+      <HeaderLayout title={"Danh sách người dùng"} user={user}></HeaderLayout>
 
       <Slidebar>
         {/* đường dẫn */}
@@ -191,12 +264,13 @@ const ListUser = () => {
           </Breadcrumb.Item>
           <Breadcrumb.Item>Danh sách người dùng</Breadcrumb.Item>
         </Breadcrumb>
+        <AlertMessage info={alert}></AlertMessage>
         <Card bordered={false} className="border-1">
           <Row gutter={24}>
             <Col span={6}>
               <Statistic
                 title="Số lượng tài khoản"
-                value={listuser.length}
+                value={userList.length}
                 precision={0}
               />
             </Col>
@@ -229,7 +303,7 @@ const ListUser = () => {
           </div>
           <div className="search_user___listUser">
             <Search
-              placeholder="Nhập Email người dùng cần tìm"
+              placeholder="Nhập tên/email người dùng cần tìm"
               allowClear
               enterButton="Tìm Kiếm"
               size="large"
@@ -240,10 +314,10 @@ const ListUser = () => {
         </div>
         {/* vô hiệu hoá tài khoản */}
         <>
-          <Modal
+          {/* <Modal
             title="Lý do tài khoản này bị vô hiệu hoá"
             open={isModalOpen}
-            onOk={handleOk}
+            onOk={deactive}
             onCancel={handleCancel}
             okText={"Xác nhận"}
             cancelText={"Huỷ"}
@@ -252,7 +326,7 @@ const ListUser = () => {
             }}
           >
             <Input placeholder="Lý do xoá tài khoản này?" />
-          </Modal>
+          </Modal> */}
         </>
         {/* thông tin tài khoản người dùng */}
         <Table

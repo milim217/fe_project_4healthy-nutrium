@@ -3,26 +3,36 @@ import { useContext } from "react";
 import { AuthContext } from "../service/Actions/AuthAPI";
 import Spinner from "react-bootstrap/Spinner";
 import ReactDOM from "react-dom";
+import AuthUtil from "../service/utils/AuthUtil";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const {
-    authState: { authLoading, isAuthenticated },
-  } = useContext(AuthContext);
+const ProtectedRoute = ({ component: Component, roles, ...rest }) => {
+  const user = AuthUtil.getUserFromToken();
+  const history = useHistory();
 
-  if (authLoading)
-    return (
-      <div className="spinner-container">
-        <Spinner animation="border" variant="info" />
-      </div>
-    );
+  const checkValidRole = async () => {
+    let check = false;
+    await user.then(res=> {
+      roles.map(role => {
+        console.log(res.data.role.roleName);
+           if(res.data.role.name === role){
+            check = true;
+           }
+      })
+      if(check===false){
+          history.push('/login');
+      }
+    })
+  }
 
   return (
     <Route
       {...rest}
-      render={(props) =>
-        isAuthenticated ? (
+      render={() =>
+        user? (
           <>
-            <Component {...rest} {...props} />
+            <Component {...rest} user={user} checkValidRole={checkValidRole} />
           </>
         ) : (
           <Redirect to="/login" />
@@ -31,5 +41,6 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     />
   );
 };
+
 
 export default ProtectedRoute;

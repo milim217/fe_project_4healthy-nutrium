@@ -19,6 +19,12 @@ const Slidebar = ({ children }) => {
   function refreshPage() {
     window.parent.location = window.parent.location.href;
   }
+
+  const logout = () => {
+    localStorage.clear();
+    history.push('/login');
+  }
+
   return (
     <Layout>
       <Sider
@@ -38,14 +44,18 @@ const Slidebar = ({ children }) => {
           defaultSelectedKeys={["/"]}
           items={[
             {
-              key: "/admin/listuser",
+              key: "/user",
               icon: <UserSwitchOutlined />,
               label: "Danh sách người dùng",
             },
             {
               key: "/home",
               icon: <UploadOutlined />,
-              label: "Đăng xuất",
+              label: (
+                <a target="_blank" rel="noopener noreferrer" onClick={logout}>
+                  Đăng xuất
+                </a>
+              ),
             },
           ]}
         />

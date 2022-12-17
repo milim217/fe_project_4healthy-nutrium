@@ -3,7 +3,7 @@ import axios from 'axios';
 export const AxiosList =
 {
   loginAxios: axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://localhost:8080',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
@@ -20,7 +20,7 @@ export const AxiosList =
     baseURL: 'http://localhost:8080',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': JSON.parse(localStorage.getItem('token'))
+      'Authorization': JSON.parse(localStorage.getItem('jwt'))
     }
   })
 

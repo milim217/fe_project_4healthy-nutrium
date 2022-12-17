@@ -1,9 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PageHeader, Avatar, Dropdown, Modal, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import AdminInfomation from "../../pages/admin/AdminInfomation";
-const HeaderLayout = (props) => {
+import { useHistory } from "react-router-dom";
+import AuthUtil from "../../service/utils/AuthUtil";
+
+const HeaderLayout = ({title,user}) => {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const history = useHistory();
+
+  useEffect( () => {
+    if (user === null) {
+      history.push("/login");
+    }
+     user.then(res => {
+      setCurrentUser(res.data);
+    })
+  }, []);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -13,11 +30,18 @@ const HeaderLayout = (props) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const logout = () => {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem('quiz-data');
+    history.push("/login");
+  };
+
   const items = [
     {
       key: "1",
       label: (
-        <a type="primary" onClick={showModal}>
+        <a type="primary" href="/profile">
           Xem thông tin của bạn
         </a>
       ),
@@ -25,7 +49,7 @@ const HeaderLayout = (props) => {
     {
       key: "2",
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="">
+        <a target="_blank" rel="noopener noreferrer" onClick={logout}>
           Đăng xuất
         </a>
       ),
@@ -35,7 +59,7 @@ const HeaderLayout = (props) => {
     <PageHeader
       className="site-page-header"
       onBack={() => null}
-      title={props.title}
+      title={title}
       style={{ backgroundColor: "white" }}
     >
       <div
@@ -45,7 +69,7 @@ const HeaderLayout = (props) => {
           top: "20px",
         }}
       >
-        <div className="name_account_admin"> Tên của tài khoản </div>
+        <div className="name_account_admin"> {currentUser?.name}</div>
         <div className="type_account_admin"> Quản trị viên </div>
         <Dropdown
           menu={{

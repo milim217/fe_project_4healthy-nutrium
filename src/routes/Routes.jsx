@@ -18,7 +18,7 @@ import AddNewUser from "../components/drawn/AddNewUser";
 import summaryInfo from "../components/onboarding/summaryInfo";
 import pageLoadingQuiz from "../components/onboarding/pageLoadingQuiz";
 import GetUserDiet from "../components/onboarding/GetUserDiet";
-import LibaryPage from "../pages/user/libaryPage";
+import LibraryPage from "../pages/user/LibraryPage";
 import DetailFood from "../pages/user/DetailFood";
 import DetailIngredient from "../pages/user/DetailIngredient";
 import LoginForm from "../components/form/LoginForm";
@@ -26,33 +26,39 @@ import ResetPasswordForm from "../components/form/ResetPasswordForm";
 import RegisterForm from "../components/form/RegisterForm";
 
 const Routes = () => {
+
+  const USER = 'USER';
+  const ADMIN = 'ADMIN';
+  const NUTRIENT = 'NUTRIENT_EXPERT';
+
   return (
     <div>
       <Route exact path="/" component={Landing} />
       <Route exact path="/login" component={LoginForm} />
       <Route exact path="/register" component={RegisterForm} />
       <Route exact path="/resetpassword" component={ResetPasswordForm} />
-      <Route path="/admin/listuser" component={ListUser} />
-      <Route exact path="/home" component={HomePage} />
-      <Route exact path="/homeuser/profile" component={UserProfile} />
-      <Route exact path="/nutrionexpert" component={NutrionExpertPage} />
-      <Route
+      <ProtectedRoute exact path="/user" component={ListUser} roles = {[ADMIN]} />
+      <ProtectedRoute exact path="/home" component={HomePage} />
+      <ProtectedRoute exact path="/profile" component={UserProfile} />
+      <ProtectedRoute exact path="/nutrionexpert" component={NutrionExpertPage} roles = {[NUTRIENT]} />
+      <ProtectedRoute
         exact
         path="/nutrionexpert/food"
+        roles = {[NUTRIENT]}
         render={(props) => <NutrionExpertPage {...props} changePage="food" />}
       />
-      <Route
+      <ProtectedRoute
         exact
         path="/nutrionexpert/ingredients"
         render={(props) => (
           <NutrionExpertPage {...props} changePage="ingredients" />
         )}
       />
-      <Route exact path="/onboarding/quiz1" component={Quiz1}></Route>
-      <Route exact path="/onboarding/quiz2" component={Quiz2}></Route>
-      <Route exact path="/onboarding/quiz3" component={Quiz3}></Route>
-      <Route exact path="/onboarding/quiz4" component={Quiz4}></Route>
-      <Route exact path="/onboarding/quiz5" component={Quiz5}></Route>
+      <ProtectedRoute exact path="/onboarding/quiz1" component={Quiz1} roles = {[USER]}/>
+      <ProtectedRoute exact path="/onboarding/quiz2" component={Quiz2} roles = {[USER]}/>
+      <ProtectedRoute exact path="/onboarding/quiz3" component={Quiz3} roles = {[USER]}/>
+      <ProtectedRoute exact path="/onboarding/quiz4" component={Quiz4} roles = {[USER]}/>
+      <ProtectedRoute exact path="/onboarding/quiz5" component={Quiz5} roles = {[USER]}/>
       {/* <Route exact path="/onboarding/quiz6" component={Quiz6}></Route> */}
       <Route
         exact
@@ -64,15 +70,11 @@ const Routes = () => {
         path="/onboarding/pageLoadingQuiz"
         component={pageLoadingQuiz}
       ></Route>
-      <Route
-        exact
-        path="/onboarding/GetUserDiet"
-        component={GetUserDiet}
-      ></Route>
-      <Route exact path="/schedule" component={UserPersonalSchedule}></Route>
+      <ProtectedRoute exact path="/onboarding/GetUserDiet" component={GetUserDiet} roles = {[USER]}/>
+      <ProtectedRoute exact path="/schedule" component={UserPersonalSchedule} roles = {[USER]}/>
       <Route exact path="/homeuser" component={HomeUser}></Route>
-      <Route exact path="/libary" component={LibaryPage}></Route>
-      <Route exact path="/detailfood" component={DetailFood}></Route>
+      <Route exact path="/libary" component={LibraryPage}></Route>
+      <Route exact path="/food/:foodID" component={DetailFood}></Route>
       <Route
         exact
         path="/detailingredient"
