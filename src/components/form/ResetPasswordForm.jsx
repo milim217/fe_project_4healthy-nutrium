@@ -122,7 +122,7 @@ const ResetPasswordForm = () => {
         return res.data;
       })
       .catch((e) => {
-        setAlert({ type: "danger", message: e.response.data.message });
+        setAlert({ type: "danger", message: "Mã không hợp lệ" });
         setTimeout(() => setAlert(null), 5000);
         return null;
       });
@@ -142,13 +142,13 @@ const ResetPasswordForm = () => {
       user.password = formik.values.password;
       console.log(JSON.stringify(user));
       // đổi mật khẩu
-      UserAPI.update(user)
+      UserAPI.updateUser(user)
         .then((res) => {
           setAlert({ type: "success", message: "Đổi mật khẩu thành công" });
           setTimeout(() => setAlert(null), 5000);
         })
         .catch((e) => {
-          setAlert({ type: "danger", message: e.response.data? e.response.data.message : 'Lỗi đổi mật khẩu' });
+          setAlert({ type: "danger", message: e.response? e.response.data.message : 'Lỗi đổi mật khẩu' });
           setTimeout(() => setAlert(null), 5000);
         });
     }
