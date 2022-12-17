@@ -41,19 +41,22 @@ const Routes = () => {
       <ProtectedRoute exact path="/home" component={HomePage} />
       <ProtectedRoute exact path="/profile" component={UserProfile} />
       <ProtectedRoute exact path="/nutrionexpert" component={NutrionExpertPage} roles = {[NUTRIENT]} />
-      <ProtectedRoute
+      <ProtectedRoute exact path="/nutrionexpert/food" component={NutrionExpertPage}  changePage="food" roles = {[NUTRIENT]} />
+      <ProtectedRoute exact path="/nutrionexpert/ingredients" component={NutrionExpertPage}  changePage="ingredients" roles = {[NUTRIENT]} />
+
+      {/* <ProtectedRoute
         exact
         path="/nutrionexpert/food"
         roles = {[NUTRIENT]}
         render={(props) => <NutrionExpertPage {...props} changePage="food" />}
-      />
-      <ProtectedRoute
+      /> */}
+      {/* <ProtectedRoute
         exact
         path="/nutrionexpert/ingredients"
         render={(props) => (
           <NutrionExpertPage {...props} changePage="ingredients" />
         )}
-      />
+      /> */}
       <ProtectedRoute exact path="/onboarding/quiz1" component={Quiz1} roles = {[USER]}/>
       <ProtectedRoute exact path="/onboarding/quiz2" component={Quiz2} roles = {[USER]}/>
       <ProtectedRoute exact path="/onboarding/quiz3" component={Quiz3} roles = {[USER]}/>
