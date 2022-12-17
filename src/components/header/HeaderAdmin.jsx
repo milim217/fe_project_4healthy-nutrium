@@ -5,20 +5,23 @@ import AdminInfomation from "../../pages/admin/AdminInfomation";
 import { useHistory } from "react-router-dom";
 import AuthUtil from "../../service/utils/AuthUtil";
 
-const HeaderLayout = ({title,user}) => {
+const HeaderLayout = ({ title}) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
   const history = useHistory();
 
-  useEffect( () => {
-    if (user === null) {
+  useEffect(async () => {
+    const user = AuthUtil.getUserFromToken();
+    if (user) {
+      await user.then(res => {
+        setCurrentUser(res.data);
+      })
+    }
+    else {
       history.push("/login");
     }
-     user.then(res => {
-      setCurrentUser(res.data);
-    })
   }, []);
 
   const showModal = () => {
@@ -41,7 +44,7 @@ const HeaderLayout = ({title,user}) => {
     {
       key: "1",
       label: (
-        <a type="primary" href="/profile">
+        <a type="primary" onClick={showModal}>
           Xem thông tin của bạn
         </a>
       ),
@@ -90,7 +93,7 @@ const HeaderLayout = ({title,user}) => {
                 }}
               />
             }
-            // size="large"
+          // size="large"
           ></Avatar>
         </Dropdown>
       </div>
@@ -101,7 +104,7 @@ const HeaderLayout = ({title,user}) => {
         okText={"Huỷ"}
         cancelButtonProps={{ style: { display: "none" } }}
       >
-        <AdminInfomation></AdminInfomation>
+        <AdminInfomation user={currentUser}></AdminInfomation>
       </Modal>
     </PageHeader>
   );

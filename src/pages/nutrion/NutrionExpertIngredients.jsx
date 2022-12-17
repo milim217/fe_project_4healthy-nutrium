@@ -22,22 +22,36 @@ import SelectionSeasonIngredient from "../../components/selection/SelectionSeaso
 import EditIngrdient from "../../components/drawn/EditIngrdient";
 import IngredientAPI from "../../service/Actions/IngredientAPI";
 import FoodAPI from "../../service/Actions/FoodAPI";
+import AlertMessage from "../../../src/components/alert/AlertMessage";
+
 const text = "Nguyên Liệu này sẽ được xoá khỏi danh sách?";
 
 function NutrionExpertIngredients() {
   const [Ingredient, setIngredient] = useState([]);
+  const [alert, setAlert] = useState(null);
 
+  const loadIngredientList = async () => {
+    await IngredientAPI.getAll()
+    .then((res) => {
+      setIngredient(res.data);
+    })
+    .catch((err) => {});
+  }
   useEffect(() => {
-    IngredientAPI.getAll()
-      .then((res) => {
-        console.log("data = " + JSON.stringify(res.data));
-        setIngredient(res.data);
-      })
-      .catch((err) => {});
+    loadIngredientList();
   }, []);
 
-  const confirm = () => {
-    message.info("Đã xoá Nguyên Liệu thành công");
+  const deleteIngredient = async (id) => {
+    await IngredientAPI.delete(id)
+    .then(res => {
+      setAlert({ type: "success", message: "Xóa nguyên liệu thành công" });
+      setTimeout(() => setAlert(null), 5000);
+      loadIngredientList();
+    })
+    .catch(e => {
+      setAlert({ type: "danger", message: e.response.data ? e.response.data.message : "Lỗi xóa nguyên liệu" });
+      setTimeout(() => setAlert(null), 5000);
+    });
   };
   const columns = [
     {
@@ -47,12 +61,12 @@ function NutrionExpertIngredients() {
     },
     {
       title: "Tên Nguyên Liệu",
-      dataIndex: "ingredient_name",
+      dataIndex: "ingredientName",
       justify: "center",
     },
     {
       title: "Ảnh Nguyên liệu",
-      dataIndex: "image_ingredient",
+      dataIndex: "img",
       render: (imageIngredient) => {
         return <Image width={80} height={60} src={imageIngredient} />;
       },
@@ -60,12 +74,12 @@ function NutrionExpertIngredients() {
     },
     {
       title: "Giới hạn tối thiểu",
-      dataIndex: "min_limit",
+      dataIndex: "minLimit",
       justify: "center",
     },
     {
       title: "Giới hạn tối đa",
-      dataIndex: "max_limit",
+      dataIndex: "maxLimit",
       justify: "center",
     },
     {
@@ -85,12 +99,12 @@ function NutrionExpertIngredients() {
     },
     {
       title: "Chất bột đường(g)",
-      dataIndex: "carbon",
+      dataIndex: "carb",
       justify: "center",
     },
     {
       title: "Calo(Kcal)",
-      dataIndex: "calories",
+      dataIndex: "calo",
       justify: "center",
     },
     {
@@ -165,25 +179,25 @@ function NutrionExpertIngredients() {
     },
     {
       title: "VitaminA_rae(mcg)",
-      dataIndex: "vitaminArea",
+      dataIndex: "vitaminARae",
       justify: "center",
     },
 
     {
       title: "Chỉnh sửa Nguyên Liệu",
-      render: () => <EditIngrdient></EditIngrdient>,
+      render: (_, record) => <EditIngrdient ingredient={record}></EditIngrdient>,
       fixed: "right",
     },
     {
       title: "Xoá Nguyên Liệu",
       dataIndex: "",
       key: "x",
-      render: () => (
+      render: (_, record) => (
         <>
           <Popconfirm
             placement="bottomRight"
             title={text}
-            onConfirm={confirm}
+            onConfirm={()=>{deleteIngredient(record.id)}}
             okText="Xoá Nguyên Liệu"
             cancelText="Huỷ hành động"
           >
@@ -201,14 +215,15 @@ function NutrionExpertIngredients() {
     ? Ingredient.map((ingredientValue) =>
         data.push({
           id: ingredientValue.id,
-          ingredient_name: ingredientValue.ingredientName,
-          min_limit: ingredientValue.minLimit,
-          max_limit: ingredientValue.maxLimit,
+          ingredientName: ingredientValue.ingredientName,
+          minLimit: ingredientValue.minLimit,
+          maxLimit: ingredientValue.maxLimit,
+          seasons: ingredientValue.seasons,
           seasson_id: ingredientValue.seasons.map((s) => s.seasonName + " "),
           fat: ingredientValue.fat,
           protein: ingredientValue.protein,
-          carbon: ingredientValue.carb,
-          calories: ingredientValue.calo,
+          carb: ingredientValue.carb,
+          calo: ingredientValue.calo,
           water: ingredientValue.water,
           fiber: ingredientValue.fiber,
           ash: ingredientValue.ash,
@@ -223,8 +238,8 @@ function NutrionExpertIngredients() {
           vitaminD: ingredientValue.vitaminD,
           vitaminB12: ingredientValue.vitaminB12,
           vitaminA: ingredientValue.vitaminA,
-          vitaminArea: ingredientValue.vitaminARae,
-          image_ingredient: `http://localhost:8080/ingredient/${ingredientValue.id}/image`,
+          vitaminARae: ingredientValue.vitaminARae,
+          img: `http://localhost:8080/ingredient/${ingredientValue.id}/image`,
         })
       )
     : console.log("error");
@@ -262,7 +277,7 @@ function NutrionExpertIngredients() {
       </Breadcrumb>
       <div className="wrapper__listUser">
         <div className="add_new_user__listUser">
-          <AddNewIngrendient></AddNewIngrendient>
+          <AddNewIngrendient loadIngredientList={loadIngredientList}></AddNewIngrendient>
         </div>
         <div className="search_user___listUser">
           <Search
@@ -277,6 +292,9 @@ function NutrionExpertIngredients() {
         <div style={{ paddingTop: 0 }}>
           <SelectionSeasonIngredient></SelectionSeasonIngredient>
         </div>
+      </div>
+      <div className="wrapper__listUser">
+      <AlertMessage info={alert}/>
       </div>
 
       {/* thông tin tài khoản người dùng */}

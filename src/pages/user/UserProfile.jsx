@@ -13,6 +13,8 @@ import {
 } from "antd";
 import { Breadcrumb, Divider } from "antd";
 import HeaderUserHasLog from "../../components/header/HeaderHasLog";
+import HeaderAdmin from "../../components/header/HeaderAdmin";
+import HeaderNutritionExpertManager from "../../components/header/HeaderNutritionExpertManager";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Footers from "../../components/footer/footers";
@@ -195,10 +197,12 @@ const UserProfile = () => {
     if (u === null) {
       history.push("/login");
     }
-    await u.then(res => {
-      formik.setValues(res.data);
-      setUser(res.data);
-    })
+    else {
+      await u.then(res => {
+        formik.setValues(res.data);
+        setUser(res.data);
+      })
+    }
   }, []);
 
   const editProfile = () => {
@@ -220,7 +224,7 @@ const UserProfile = () => {
 
   return (
     <div>
-      <HeaderUserHasLog></HeaderUserHasLog>
+      <HeaderUserHasLog user={user}></HeaderUserHasLog>
       <div className="site-card-wrapper">
         <Breadcrumb
           style={{

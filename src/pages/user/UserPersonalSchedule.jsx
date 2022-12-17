@@ -35,13 +35,30 @@ const UserPersonalSchedule = () => {
         let d = res.data;
         let dietDate = new Date(d.date);
         console.log(dietDate);
-        let str = 'Ngày ' + dietDate.getDate() + ', tháng ' + dietDate.getMonth() + ', năm ' + dietDate.getFullYear();
+        const month = dietDate.getMonth() === 12 ? 1 : (dietDate.getMonth()+1);
+        let str = 'Ngày ' + dietDate.getDate() + ', tháng ' + month + ', năm ' + dietDate.getFullYear();
         setDateStr(str);
         setDiet(d);
       })
       .catch(e => {
         console.log(e);
       });
+  }
+
+  const totalCalo = (diet) => {
+    const total = 0;
+    if(diet){
+      if(diet.breakfastCalo){
+        total += diet.breakfastCalo
+      }
+      if(diet.lunchCalo){
+        total += diet.lunchCalo
+      }
+      if(diet.dinnerCalo){
+        total += diet.dinnerCalo
+      }
+    }
+    return total;
   }
 
   return (
@@ -55,7 +72,7 @@ const UserPersonalSchedule = () => {
             </div>
             {
               diet?
-              <div className="title-card-amount-calo">{diet?.breakfastCalo + diet?.lunchCalo + diet?.dinnerCalo} calo</div>
+              <div className="title-card-amount-calo">{totalCalo(diet)} calo</div>
               :
               <></>
             }

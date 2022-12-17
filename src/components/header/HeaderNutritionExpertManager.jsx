@@ -3,6 +3,7 @@ import { PageHeader, Avatar, Dropdown, Modal, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import NutrionExpertInformation from "../../pages/nutrion/NutrionExpertInformation";
 import { useHistory } from "react-router-dom";
+import AuthUtil from "../../../src/service/utils/AuthUtil";
 
 const HeaderNutritionExpertManager = ({title,user}) => {
 
@@ -11,9 +12,15 @@ const HeaderNutritionExpertManager = ({title,user}) => {
   const history = useHistory();
 
   useEffect( () => {
-     user.then(res => {
-      setCurrentUser(res.data);
-    })
+    const user = AuthUtil.getUserFromToken();
+    if(user){
+      user.then(res => {
+        setCurrentUser(res.data);
+      })
+    }
+    else{
+      history.push('/login');
+    }
   }, []);
 
   const logout = () => {
@@ -35,7 +42,7 @@ const HeaderNutritionExpertManager = ({title,user}) => {
     {
       key: "1",
       label: (
-        <a type="primary" href='/profile'>
+        <a type="primary" onClick={showModal}>
           Xem thông tin của bạn
         </a>
       ),
@@ -95,7 +102,7 @@ const HeaderNutritionExpertManager = ({title,user}) => {
         okText={"Huỷ"}
         cancelButtonProps={{ style: { display: "none" } }}
       >
-        <NutrionExpertInformation></NutrionExpertInformation>
+        <NutrionExpertInformation user={currentUser}></NutrionExpertInformation>
       </Modal>
     </PageHeader>
   );
