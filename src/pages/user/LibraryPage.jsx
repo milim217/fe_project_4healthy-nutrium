@@ -1,5 +1,6 @@
 import React from "react";
 import HeaderUser from "../../components/header/HeaderUser";
+import HeaderHasLog from "../../components/header/HeaderHasLog";
 import Footers from "../../components/footer/footers";
 import "../../assets/style/user/libary.css";
 import CardGroupFood from "../../components/groupCard/CardGroupFood";
@@ -11,7 +12,7 @@ import Tabs from "react-bootstrap/Tabs";
 const LibaryPage = () => {
   return (
     <div>
-      <HeaderUser></HeaderUser>
+      <HeaderHasLog></HeaderHasLog>
       <div className="wrapper-libary">
         <Tabs
           defaultActiveKey="Food"

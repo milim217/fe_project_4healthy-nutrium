@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   Button,
@@ -61,7 +61,7 @@ const SeassonValueDefault = [
   },
 ];
 
-const EditIngrdient = ({ingredient}) => {
+const EditIngrdient = ({ ingredient }) => {
   //
   //
   //
@@ -77,7 +77,7 @@ const EditIngrdient = ({ingredient}) => {
   const [alert, setAlert] = useState(null);
 
   useEffect(() => {
-    if(ingredient){
+    if (ingredient) {
       formik.setValues(ingredient);
     }
   }, []);
@@ -109,6 +109,7 @@ const EditIngrdient = ({ingredient}) => {
   };
 
   const showDrawer = () => {
+    console.log(ingredient.id);
     setOpen(true);
   };
   const onClose = () => {
@@ -121,27 +122,27 @@ const EditIngrdient = ({ingredient}) => {
     initialValues: {
       ingredientName: ingredient.ingredientName,
       fat: ingredient.fat,
-      protein: "",
-      carb: "",
-      calo: "",
-      vitamin: "",
-      water: "",
-      fiber: "",
-      ash: "",
-      canxi: "",
-      iron: "",
-      zinc: "",
-      vitaminC: "",
-      vitaminB1: "",
-      vitaminB2: "",
-      vitaminB3: "",
-      vitaminB6A: "",
-      vitaminD: "",
-      vitaminB12: "",
-      vitaminA: "",
-      vitaminARae: "",
-      minLimit: "",
-      maxLimit: "",
+      protein: ingredient.protein,
+      carb: ingredient.carb,
+      calo: ingredient.calo,
+      vitamin: ingredient.vitamin,
+      water: ingredient.water,
+      fiber: ingredient.fiber,
+      ash: ingredient.ash,
+      canxi: ingredient.canxi,
+      iron: ingredient.iron,
+      zinc: ingredient.zinc,
+      vitaminC: ingredient.vitaminC,
+      vitaminB1: ingredient.vitaminB1,
+      vitaminB2: ingredient.vitaminB2,
+      vitaminB3: ingredient.vitaminB3,
+      vitaminB6A: ingredient.vitaminB6A,
+      vitaminD: ingredient.vitaminD,
+      vitaminB12: ingredient.vitaminB12,
+      vitaminA: ingredient.vitaminA,
+      vitaminARae: ingredient.vitaminARae,
+      minLimit: ingredient.minLimit,
+      maxLimit: ingredient.maxLimit,
     },
     //regex
     validationSchema: Yup.object({
@@ -375,6 +376,12 @@ const EditIngrdient = ({ingredient}) => {
                 <CheckboxGroup
                   options={seasonList}
                   value={checkedSeasonList}
+                  defaultValue={[
+                    {
+                      id: 3,
+                      seasonName: "Autumn",
+                    },
+                  ]}
                   onChange={onChange_SeassonList}
                   required
                 />
@@ -388,6 +395,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Tên nguyên liệu"
                   name="ingredientName"
                   onChange={formik.handleChange}
+                  value={formik.values.ingredientName}
                 />
                 {formik.errors.ingredientName && (
                   <p className="errorMSG">{formik.errors.ingredientName}</p>
@@ -404,6 +412,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất giới hạn tối thiểu món ăn chứa"
                   name="minLimit"
                   onChange={formik.handleChange}
+                  value={formik.values.minLimit}
                 />{" "}
                 {formik.errors.minLimit && (
                   <p className="errorMSG">{formik.errors.minLimit}</p>
@@ -419,6 +428,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất giới hạn tối đa món ăn chứa"
                   name="maxLimit"
                   onChange={formik.handleChange}
+                  value={formik.values.maxLimit}
                 />{" "}
                 {formik.errors.maxLimit && (
                   <p className="errorMSG">{formik.errors.maxLimit}</p>
@@ -432,6 +442,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất béo món ăn chứa"
                   name="fat"
                   onChange={formik.handleChange}
+                  value={formik.values.fat}
                 />
                 {formik.errors.fat && (
                   <p className="errorMSG">{formik.errors.fat}</p>
@@ -444,6 +455,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất đạm món ăn chứa"
                   name="protein"
                   onChange={formik.handleChange}
+                  value={formik.values.protein}
                 />
                 {formik.errors.protein && (
                   <p className="errorMSG">{formik.errors.protein}</p>
@@ -456,6 +468,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất bột đường món ăn chứa"
                   name="carb"
                   onChange={formik.handleChange}
+                  value={formik.values.carb}
                 />
                 {formik.errors.carb && (
                   <p className="errorMSG">{formik.errors.carb}</p>
@@ -468,30 +481,33 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng Calo món ăn chứa"
                   name="calo"
                   onChange={formik.handleChange}
+                  value={formik.values.calo}
                 />
                 {formik.errors.calo && (
                   <p className="errorMSG">{formik.errors.calo}</p>
                 )}
               </Form.Item>
             </Col>
-            <Col span={12}>
+            {/* <Col span={12}>
               <Form.Item name="vitamin" label="Hàm lượng vitamin(/100g):">
                 <Input
                   placeholder="Hàm lượng chất Vitamin món ăn chứa"
                   name="vitamin"
                   onChange={formik.handleChange}
+                  value={formik.values.vitamin}
                 />
                 {formik.errors.vitamin && (
                   <p className="errorMSG">{formik.errors.vitamin}</p>
                 )}
               </Form.Item>
-            </Col>
+            </Col> */}
             <Col span={12}>
               <Form.Item label="Hàm lượng nước(/100g):" name="water">
                 <Input
                   placeholder="Hàm lượng nước món ăn chứa"
                   name="water"
                   onChange={formik.handleChange}
+                  value={formik.values.water}
                 />
                 {formik.errors.water && (
                   <p className="errorMSG">{formik.errors.water}</p>
@@ -504,6 +520,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất xơ món ăn chứa"
                   name="fiber"
                   onChange={formik.handleChange}
+                  value={formik.values.fiber}
                 />{" "}
                 {formik.errors.fiber && (
                   <p className="errorMSG">{formik.errors.fiber}</p>
@@ -516,6 +533,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng tro món ăn chứa"
                   name="ash"
                   onChange={formik.handleChange}
+                  value={formik.values.ash}
                 />
                 {formik.errors.ash && (
                   <p className="errorMSG">{formik.errors.ash}</p>
@@ -528,6 +546,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất Canxi món ăn chứa"
                   name="canxi"
                   onChange={formik.handleChange}
+                  value={formik.values.canxi}
                 />
                 {formik.errors.canxi && (
                   <p className="errorMSG">{formik.errors.canxi}</p>
@@ -540,6 +559,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất sắt món ăn chứa"
                   name="iron"
                   onChange={formik.handleChange}
+                  value={formik.values.iron}
                 />{" "}
                 {formik.errors.iron && (
                   <p className="errorMSG">{formik.errors.iron}</p>
@@ -552,6 +572,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất kẽm món ăn chứa"
                   name="zinc"
                   onChange={formik.handleChange}
+                  value={formik.values.zinc}
                 />{" "}
                 {formik.errors.zinc && (
                   <p className="errorMSG">{formik.errors.zinc}</p>
@@ -564,6 +585,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất VitaminC món ăn chứa"
                   name="vitaminC"
                   onChange={formik.handleChange}
+                  value={formik.values.vitaminC}
                 />
                 {formik.errors.vitaminC && (
                   <p className="errorMSG">{formik.errors.vitaminC}</p>
@@ -576,6 +598,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất VitaminB1 món ăn chứa"
                   name="vitaminB1"
                   onChange={formik.handleChange}
+                  value={formik.values.vitaminB1}
                 />{" "}
                 {formik.errors.vitaminB1 && (
                   <p className="errorMSG">{formik.errors.vitaminB1}</p>
@@ -588,6 +611,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất VitaminB2 món ăn chứa"
                   name="vitaminB2"
                   onChange={formik.handleChange}
+                  value={formik.values.vitaminB2}
                 />{" "}
                 {formik.errors.vitaminB2 && (
                   <p className="errorMSG">{formik.errors.vitaminB2}</p>
@@ -600,6 +624,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất VitaminB3 món ăn chứa"
                   name="vitaminB3"
                   onChange={formik.handleChange}
+                  value={formik.values.vitaminB3}
                 />{" "}
                 {formik.errors.vitaminB3 && (
                   <p className="errorMSG">{formik.errors.vitaminB3}</p>
@@ -612,6 +637,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất VitaminB6A món ăn chứa"
                   name="vitaminB6A"
                   onChange={formik.handleChange}
+                  value={formik.values.vitaminB6A}
                 />{" "}
                 {formik.errors.vitaminB6A && (
                   <p className="errorMSG">{formik.errors.vitaminB6A}</p>
@@ -624,6 +650,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất VitaminD món ăn chứa"
                   name="vitaminD"
                   onChange={formik.handleChange}
+                  value={formik.values.vitaminD}
                 />{" "}
                 {formik.errors.vitaminD && (
                   <p className="errorMSG">{formik.errors.vitaminD}</p>
@@ -636,6 +663,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất VitaminB12 món ăn chứa"
                   name="vitaminB12"
                   onChange={formik.handleChange}
+                  value={formik.values.vitaminB12}
                 />{" "}
                 {formik.errors.vitaminB12 && (
                   <p className="errorMSG">{formik.errors.vitaminB12}</p>
@@ -648,6 +676,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất VitaminA món ăn chứa"
                   name="vitaminA"
                   onChange={formik.handleChange}
+                  value={formik.values.vitaminA}
                 />{" "}
                 {formik.errors.vitaminA && (
                   <p className="errorMSG">{formik.errors.vitaminA}</p>
@@ -663,6 +692,7 @@ const EditIngrdient = ({ingredient}) => {
                   placeholder="Hàm lượng chất vitaminARae món ăn chứa"
                   name="vitaminARae"
                   onChange={formik.handleChange}
+                  value={formik.values.vitaminARae}
                 />{" "}
                 {formik.errors.vitaminARae && (
                   <p className="errorMSG">{formik.errors.vitaminARae}</p>

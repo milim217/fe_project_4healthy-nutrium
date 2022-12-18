@@ -32,26 +32,31 @@ function NutrionExpertIngredients() {
 
   const loadIngredientList = async () => {
     await IngredientAPI.getAll()
-    .then((res) => {
-      setIngredient(res.data);
-    })
-    .catch((err) => {});
-  }
+      .then((res) => {
+        setIngredient(res.data);
+      })
+      .catch((err) => {});
+  };
   useEffect(() => {
     loadIngredientList();
   }, []);
 
   const deleteIngredient = async (id) => {
     await IngredientAPI.delete(id)
-    .then(res => {
-      setAlert({ type: "success", message: "Xóa nguyên liệu thành công" });
-      setTimeout(() => setAlert(null), 5000);
-      loadIngredientList();
-    })
-    .catch(e => {
-      setAlert({ type: "danger", message: e.response.data ? e.response.data.message : "Lỗi xóa nguyên liệu" });
-      setTimeout(() => setAlert(null), 5000);
-    });
+      .then((res) => {
+        setAlert({ type: "success", message: "Xóa nguyên liệu thành công" });
+        setTimeout(() => setAlert(null), 5000);
+        loadIngredientList();
+      })
+      .catch((e) => {
+        setAlert({
+          type: "danger",
+          message: e.response.data
+            ? e.response.data.message
+            : "Lỗi xóa nguyên liệu",
+        });
+        setTimeout(() => setAlert(null), 5000);
+      });
   };
   const columns = [
     {
@@ -185,7 +190,9 @@ function NutrionExpertIngredients() {
 
     {
       title: "Chỉnh sửa Nguyên Liệu",
-      render: (_, record) => <EditIngrdient ingredient={record}></EditIngrdient>,
+      render: (_, record) => (
+        <EditIngrdient ingredient={record}></EditIngrdient>
+      ),
       fixed: "right",
     },
     {
@@ -197,7 +204,9 @@ function NutrionExpertIngredients() {
           <Popconfirm
             placement="bottomRight"
             title={text}
-            onConfirm={()=>{deleteIngredient(record.id)}}
+            onConfirm={() => {
+              deleteIngredient(record.id);
+            }}
             okText="Xoá Nguyên Liệu"
             cancelText="Huỷ hành động"
           >
@@ -218,7 +227,7 @@ function NutrionExpertIngredients() {
           ingredientName: ingredientValue.ingredientName,
           minLimit: ingredientValue.minLimit,
           maxLimit: ingredientValue.maxLimit,
-          seasons: ingredientValue.seasons,
+          // seasons: ingredientValue.seasons,
           seasson_id: ingredientValue.seasons.map((s) => s.seasonName + " "),
           fat: ingredientValue.fat,
           protein: ingredientValue.protein,
@@ -277,7 +286,9 @@ function NutrionExpertIngredients() {
       </Breadcrumb>
       <div className="wrapper__listUser">
         <div className="add_new_user__listUser">
-          <AddNewIngrendient loadIngredientList={loadIngredientList}></AddNewIngrendient>
+          <AddNewIngrendient
+            loadIngredientList={loadIngredientList}
+          ></AddNewIngrendient>
         </div>
         <div className="search_user___listUser">
           <Search
@@ -294,7 +305,7 @@ function NutrionExpertIngredients() {
         </div>
       </div>
       <div className="wrapper__listUser">
-      <AlertMessage info={alert}/>
+        <AlertMessage info={alert} />
       </div>
 
       {/* thông tin tài khoản người dùng */}

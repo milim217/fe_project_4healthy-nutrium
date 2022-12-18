@@ -99,11 +99,10 @@ const MealTypeValueDefault = [
 ];
 
 const { Option } = Select;
-const EditFood = ({ id }) => {
-
+const EditFood = ({ foodData }) => {
   const [alert2, setAlert2] = useState(null);
   const [open, setOpen] = useState(false);
-  const [checkedSeasonList, setCheckedSeasonList] = useState(SeassonValueDefault);
+  const [checkedSeasonList, setCheckedSeasonList] = useState();
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
   const [alert, setAlert] = useState(null);
@@ -297,10 +296,12 @@ const EditFood = ({ id }) => {
       ingredientMassses: ingredientMassses,
       category: CategoryFoodValue,
     };
-    console.log('update food = ', editFoodForm);
-
+    console.log("update food = ", editFoodForm);
   };
+
   const showDrawer = () => {
+    //Lấy ID từ list sau khi ấn nút Sửa
+    console.log(foodData);
     setOpen(true);
   };
   const onClose = () => {
@@ -359,28 +360,26 @@ const EditFood = ({ id }) => {
   const [listCategory, setListCategory] = useState([]);
 
   useEffect(async () => {
+    if (foodData.id) {
+      await CategoryAPI.getAll()
+        .then((res) => {
+          setListCategory(res.data);
+        })
+        .catch((err) => {});
 
-    if(id){
-    await CategoryAPI.getAll()
-      .then((res) => {
-        setListCategory(res.data);
-      })
-      .catch((err) => { });
+      await IngredientAPI.getAll()
+        .then((res) => {
+          setListIngredient(res.data);
+        })
+        .catch((err) => {});
 
-    await IngredientAPI.getAll()
-      .then((res) => {
-        setListIngredient(res.data);
-      })
-      .catch((err) => { });
-
-    await FoodAPI.getById(id)
-      .then(res => {
-        console.log('food = ',res.data);
-        // const food = res.data;
-        // formik.setValues(food);
-        // setFood(food);
-        setCheckedSeasonList(food.seasons)
-        setcheckedMealTypeList(food.meals)
+      await FoodAPI.getById(foodData.id).then((res) => {
+        console.log("food = ", res.data);
+        const food = res.data;
+        formik.setValues(food);
+        setFood(food);
+        setCheckedSeasonList(food.seasons);
+        setcheckedMealTypeList(food.meals);
       });
     }
   }, []);
@@ -461,6 +460,7 @@ const EditFood = ({ id }) => {
                 <Input
                   name="recipe"
                   placeholder="Bạn hãy nhập công thức để có thể nấu ra món ăn này"
+                  value={formik.values.recipe}
                   onChange={formik.handleChange}
                 />
                 {formik.errors.recipe && (

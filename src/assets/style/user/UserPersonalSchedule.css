@@ -41,6 +41,9 @@ body {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-left: 35px;
+  margin-top: -5px;
+  font-size: 15px;
 }
 
 .about-detail {

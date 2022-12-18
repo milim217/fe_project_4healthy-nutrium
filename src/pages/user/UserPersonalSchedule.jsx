@@ -10,56 +10,59 @@ import AuthUtil from "../../service/utils/AuthUtil";
 
 const { Header, Footer, Content } = Layout;
 const UserPersonalSchedule = () => {
-
   const history = useHistory();
   const [diet, setDiet] = useState([]);
-  const [dateStr, setDateStr] = useState('');
-
+  const [dateStr, setDateStr] = useState("");
 
   useEffect(() => {
     // check user
     let user = AuthUtil.getUserFromToken();
     if (user) {
-      user.then(res => {
+      user.then((res) => {
         getDiet(res.data);
       });
-    }
-    else {
-      history.push('/login');
+    } else {
+      history.push("/login");
     }
   }, []);
 
   function getDiet(user) {
     DietAPI.getByUserID(user.id)
-      .then(res => {
+      .then((res) => {
         let d = res.data;
         let dietDate = new Date(d.date);
         console.log(dietDate);
-        const month = dietDate.getMonth() === 12 ? 1 : (dietDate.getMonth()+1);
-        let str = 'Ngày ' + dietDate.getDate() + ', tháng ' + month + ', năm ' + dietDate.getFullYear();
+        const month = dietDate.getMonth() === 12 ? 1 : dietDate.getMonth() + 1;
+        let str =
+          "Ngày " +
+          dietDate.getDate() +
+          ", tháng " +
+          month +
+          ", năm " +
+          dietDate.getFullYear();
         setDateStr(str);
         setDiet(d);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
   }
 
   const totalCalo = (diet) => {
     let total = 0;
-    if(diet){
-      if(diet.breakfastCalo){
-        total += diet.breakfastCalo
+    if (diet) {
+      if (diet.breakfastCalo) {
+        total += diet.breakfastCalo;
       }
-      if(diet.lunchCalo){
-        total += diet.lunchCalo
+      if (diet.lunchCalo) {
+        total += diet.lunchCalo;
       }
-      if(diet.dinnerCalo){
-        total += diet.dinnerCalo
+      if (diet.dinnerCalo) {
+        total += diet.dinnerCalo;
       }
     }
     return total;
-  }
+  };
 
   return (
     <div>
@@ -67,15 +70,14 @@ const UserPersonalSchedule = () => {
       <div className="wrapper-schedule_page">
         <div className="site-card-wrapper">
           <div className="title-card-wrapper">
-            <div className="title-card-time-schedule">
-              {dateStr}
-            </div>
-            {
-              diet?
-              <div className="title-card-amount-calo">{totalCalo(diet)} calo</div>
-              :
+            <div className="title-card-time-schedule">{dateStr}</div>
+            {diet ? (
+              <div className="title-card-amount-calo">
+                {totalCalo(diet)} calo
+              </div>
+            ) : (
               <></>
-            }
+            )}
           </div>
 
           <Row gutter={16}>
@@ -83,29 +85,32 @@ const UserPersonalSchedule = () => {
               <Card
                 title="Sáng"
                 bordered={false}
-                extra={<ModalDetailFood foods={diet.breakfast}></ModalDetailFood>}
-              >
-                {
-                  diet ? (
-                    diet.breakfast?.map((foodMass) => (
-                      <Row className="padding_20">
-                        <Col span={18} push={6}>
-                          <div className="wrapper-about">
-                            <h5 className="about-title">{foodMass.mass.toFixed(1)} suất {foodMass.food.foodName}</h5>
-                          </div>
-                        </Col>
-                        <Col span={6} pull={18}>
-                          <Image
-                            width={100}
-                            src={`http://localhost:8080/food/${foodMass.food.id}/image`}
-                          />
-                        </Col>
-                      </Row>
-                    ))
-                  )
-                    :
-                    (<></>)
+                extra={
+                  <ModalDetailFood foods={diet.breakfast}></ModalDetailFood>
                 }
+              >
+                {diet ? (
+                  diet.breakfast?.map((foodMass) => (
+                    <Row className="padding_20">
+                      <Col span={18} push={6}>
+                        <div className="wrapper-about">
+                          <div className="about-title">
+                            {foodMass.mass.toFixed(1)} suất{" "}
+                            {foodMass.food.foodName}
+                          </div>
+                        </div>
+                      </Col>
+                      <Col span={6} pull={18}>
+                        <Image
+                          width={100}
+                          src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                        />
+                      </Col>
+                    </Row>
+                  ))
+                ) : (
+                  <></>
+                )}
               </Card>
             </Col>
             <Col span={8}>
@@ -114,28 +119,28 @@ const UserPersonalSchedule = () => {
                 bordered={false}
                 extra={<ModalDetailFood foods={diet.lunch}></ModalDetailFood>}
               >
-                {
-                  diet ?
-                    (
-                      diet.lunch?.map((foodMass) => (
-                        <Row className="padding_20">
-                          <Col span={18} push={6}>
-                            <div className="wrapper-about">
-                              <h5 className="about-title">{foodMass.mass.toFixed(1)} suất {foodMass.food.foodName}</h5>
-                            </div>
-                          </Col>
-                          <Col span={6} pull={18}>
-                            <Image
-                              width={100}
-                              src={`http://localhost:8080/food/${foodMass.food.id}/image`}
-                            />
-                          </Col>
-                        </Row>
-                      ))
-                    )
-                    :
-                    (<></>)
-                }
+                {diet ? (
+                  diet.lunch?.map((foodMass) => (
+                    <Row className="padding_20">
+                      <Col span={18} push={6}>
+                        <div className="wrapper-about">
+                          <h5 className="about-title">
+                            {foodMass.mass.toFixed(1)} suất{" "}
+                            {foodMass.food.foodName}
+                          </h5>
+                        </div>
+                      </Col>
+                      <Col span={6} pull={18}>
+                        <Image
+                          width={100}
+                          src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                        />
+                      </Col>
+                    </Row>
+                  ))
+                ) : (
+                  <></>
+                )}
               </Card>
             </Col>
             <Col span={8}>
@@ -144,28 +149,28 @@ const UserPersonalSchedule = () => {
                 bordered={false}
                 extra={<ModalDetailFood foods={diet.dinner}></ModalDetailFood>}
               >
-                {
-                diet ?
-                    (
-                      diet.dinner?.map((foodMass) => (
-                        <Row className="padding_20">
-                          <Col span={18} push={6}>
-                            <div className="wrapper-about">
-                              <h5 className="about-title">{foodMass.mass.toFixed(1)} suất {foodMass.food.foodName}</h5>
-                            </div>
-                          </Col>
-                          <Col span={6} pull={18}>
-                            <Image
-                              width={100}
-                              src={`http://localhost:8080/food/${foodMass.food.id}/image`}
-                            />
-                          </Col>
-                        </Row>
-                      ))
-                    )
-                    :
-                    (<></>)
-                }
+                {diet ? (
+                  diet.dinner?.map((foodMass) => (
+                    <Row className="padding_20">
+                      <Col span={18} push={6}>
+                        <div className="wrapper-about">
+                          <h5 className="about-title">
+                            {foodMass.mass.toFixed(1)} suất{" "}
+                            {foodMass.food.foodName}
+                          </h5>
+                        </div>
+                      </Col>
+                      <Col span={6} pull={18}>
+                        <Image
+                          width={100}
+                          src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                        />
+                      </Col>
+                    </Row>
+                  ))
+                ) : (
+                  <></>
+                )}
               </Card>
             </Col>
           </Row>
