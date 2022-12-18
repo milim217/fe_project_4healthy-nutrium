@@ -26,17 +26,17 @@ import AlertMessage from "../../../src/components/alert/AlertMessage";
 
 const text = "Nguyên Liệu này sẽ được xoá khỏi danh sách?";
 
-function NutrionExpertIngredients({checkValidRole}) {
+function NutrionExpertIngredients({ checkValidRole }) {
   checkValidRole();
   const [Ingredient, setIngredient] = useState([]);
   const [alert, setAlert] = useState(null);
 
   const loadIngredientList = async () => {
     await IngredientAPI.getAll()
-    .then((res) => {
-      setIngredient(res.data);
-    })
-    .catch((err) => {});
+      .then((res) => {
+        setIngredient(res.data);
+      })
+      .catch((err) => { });
   }
   useEffect(() => {
     loadIngredientList();
@@ -44,15 +44,15 @@ function NutrionExpertIngredients({checkValidRole}) {
 
   const deleteIngredient = async (id) => {
     await IngredientAPI.delete(id)
-    .then(res => {
-      setAlert({ type: "success", message: "Xóa nguyên liệu thành công" });
-      setTimeout(() => setAlert(null), 5000);
-      loadIngredientList();
-    })
-    .catch(e => {
-      setAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi xóa nguyên liệu" });
-      setTimeout(() => setAlert(null), 5000);
-    });
+      .then(res => {
+        setAlert({ type: "success", message: "Xóa nguyên liệu thành công" });
+        setTimeout(() => setAlert(null), 5000);
+        loadIngredientList();
+      })
+      .catch(e => {
+        setAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi xóa nguyên liệu" });
+        setTimeout(() => setAlert(null), 5000);
+      });
   };
   const columns = [
     {
@@ -198,7 +198,7 @@ function NutrionExpertIngredients({checkValidRole}) {
           <Popconfirm
             placement="bottomRight"
             title={text}
-            onConfirm={()=>{deleteIngredient(record.id)}}
+            onConfirm={() => { deleteIngredient(record.id) }}
             okText="Xoá Nguyên Liệu"
             cancelText="Huỷ hành động"
           >
@@ -214,35 +214,35 @@ function NutrionExpertIngredients({checkValidRole}) {
   const data = [];
   Ingredient
     ? Ingredient.map((ingredientValue) =>
-        data.push({
-          id: ingredientValue.id,
-          ingredientName: ingredientValue.ingredientName,
-          minLimit: ingredientValue.minLimit,
-          maxLimit: ingredientValue.maxLimit,
-          seasons: ingredientValue.seasons,
-          seasson_id: ingredientValue.seasons.map((s) => s.seasonName + " "),
-          fat: ingredientValue.fat,
-          protein: ingredientValue.protein,
-          carb: ingredientValue.carb,
-          calo: ingredientValue.calo,
-          water: ingredientValue.water,
-          fiber: ingredientValue.fiber,
-          ash: ingredientValue.ash,
-          canxi: ingredientValue.canxi,
-          iron: ingredientValue.iron,
-          zinc: ingredientValue.zinc,
-          vitaminC: ingredientValue.vitaminC,
-          vitaminB1: ingredientValue.vitaminB1,
-          vitaminB2: ingredientValue.vitaminB2,
-          vitaminB3: ingredientValue.vitaminB3,
-          vitaminB6A: ingredientValue.vitaminB6A,
-          vitaminD: ingredientValue.vitaminD,
-          vitaminB12: ingredientValue.vitaminB12,
-          vitaminA: ingredientValue.vitaminA,
-          vitaminARae: ingredientValue.vitaminARae,
-          img: `http://localhost:8080/ingredient/${ingredientValue.id}/image`,
-        })
-      )
+      data.push({
+        id: ingredientValue.id,
+        ingredientName: ingredientValue.ingredientName,
+        minLimit: ingredientValue.minLimit,
+        maxLimit: ingredientValue.maxLimit,
+        seasons: ingredientValue.seasons,
+        seasson_id: ingredientValue.seasons.map((s) => s.seasonName + " "),
+        fat: ingredientValue.fat,
+        protein: ingredientValue.protein,
+        carb: ingredientValue.carb,
+        calo: ingredientValue.calo,
+        water: ingredientValue.water,
+        fiber: ingredientValue.fiber,
+        ash: ingredientValue.ash,
+        canxi: ingredientValue.canxi,
+        iron: ingredientValue.iron,
+        zinc: ingredientValue.zinc,
+        vitaminC: ingredientValue.vitaminC,
+        vitaminB1: ingredientValue.vitaminB1,
+        vitaminB2: ingredientValue.vitaminB2,
+        vitaminB3: ingredientValue.vitaminB3,
+        vitaminB6A: ingredientValue.vitaminB6A,
+        vitaminD: ingredientValue.vitaminD,
+        vitaminB12: ingredientValue.vitaminB12,
+        vitaminA: ingredientValue.vitaminA,
+        vitaminARae: ingredientValue.vitaminARae,
+        img: `http://localhost:8080/ingredient/${ingredientValue.id}/image`,
+      })
+    )
     : console.log("error");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -260,7 +260,17 @@ function NutrionExpertIngredients({checkValidRole}) {
 
   // Tìm kiếm người dùng
   const { Search } = Input;
-  const onSearch = (value) => console.log(value);
+  const onSearch = (key) => {
+    if (key) {
+      IngredientAPI.search(key)
+        .then(res => {
+          setIngredient(res.data);
+        })
+    }
+    else {
+      loadIngredientList();
+    }
+  }
   return (
     <div>
       {/* đường dẫn */}
@@ -295,7 +305,7 @@ function NutrionExpertIngredients({checkValidRole}) {
         </div>
       </div>
       <div className="wrapper__listUser">
-      <AlertMessage info={alert}/>
+        <AlertMessage info={alert} />
       </div>
 
       {/* thông tin tài khoản người dùng */}

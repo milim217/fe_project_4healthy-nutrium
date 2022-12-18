@@ -147,7 +147,7 @@ const ListUser = ({ user, checkValidRole }) => {
           onClick={() => {
             deactive(record.key);
           }}
-          style={{ backgroundColor: "green", border: "none", color:"white" }}
+          style={{ backgroundColor: "green", border: "none", color: "white" }}
         >
           Vô hiệu hóa/Kích hoạt
         </Button>
@@ -209,11 +209,17 @@ const ListUser = ({ user, checkValidRole }) => {
   console.log(deactiveID);
   // Tìm kiếm người dùng
   const { Search } = Input;
-  const onSearch = (key) => {
-    UserAPI.getSearched(key)
-      .then(res => {
-        setUserList(res.data);
-      });
+  const onSearch = async (key) => {
+    if (key) {
+      await UserAPI.getSearched(key)
+        .then(res => {
+          setUserList(res.data);
+        });
+    }
+    else {
+      loadUsers();
+    }
+
   }
   return (
     <div>
