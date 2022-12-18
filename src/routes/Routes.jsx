@@ -37,37 +37,20 @@ const Routes = () => {
       <Route exact path="/login" component={LoginForm} />
       <Route exact path="/register" component={RegisterForm} />
       <Route exact path="/resetpassword" component={ResetPasswordForm} />
+      
       <ProtectedRoute exact path="/user" component={ListUser} roles = {[ADMIN]} />
       <ProtectedRoute exact path="/home" component={HomePage} />
-      <ProtectedRoute exact path="/profile" component={UserProfile} />
+      <ProtectedRoute exact path="/profile" component={UserProfile} roles = {[USER]}/>
       <ProtectedRoute exact path="/nutrionexpert" component={NutrionExpertPage} roles = {[NUTRIENT]} />
       <ProtectedRoute exact path="/nutrionexpert/food" component={NutrionExpertPage}  changePage="food" roles = {[NUTRIENT]} />
       <ProtectedRoute exact path="/nutrionexpert/ingredients" component={NutrionExpertPage}  changePage="ingredients" roles = {[NUTRIENT]} />
 
-      {/* <ProtectedRoute
-        exact
-        path="/nutrionexpert/food"
-        roles = {[NUTRIENT]}
-        render={(props) => <NutrionExpertPage {...props} changePage="food" />}
-      /> */}
-      {/* <ProtectedRoute
-        exact
-        path="/nutrionexpert/ingredients"
-        render={(props) => (
-          <NutrionExpertPage {...props} changePage="ingredients" />
-        )}
-      /> */}
       <ProtectedRoute exact path="/onboarding/quiz1" component={Quiz1} roles = {[USER]}/>
       <ProtectedRoute exact path="/onboarding/quiz2" component={Quiz2} roles = {[USER]}/>
       <ProtectedRoute exact path="/onboarding/quiz3" component={Quiz3} roles = {[USER]}/>
       <ProtectedRoute exact path="/onboarding/quiz4" component={Quiz4} roles = {[USER]}/>
       <ProtectedRoute exact path="/onboarding/quiz5" component={Quiz5} roles = {[USER]}/>
-      {/* <Route exact path="/onboarding/quiz6" component={Quiz6}></Route> */}
-      <Route
-        exact
-        path="/onboarding/summaryInfo"
-        component={summaryInfo}
-      ></Route>
+      <ProtectedRoute exact path="/onboarding/summaryInfo" component={summaryInfo} roles = {[USER]}/>
       <Route
         exact
         path="/onboarding/pageLoadingQuiz"
@@ -75,15 +58,11 @@ const Routes = () => {
       ></Route>
       <ProtectedRoute exact path="/onboarding/GetUserDiet" component={GetUserDiet} roles = {[USER]}/>
       <ProtectedRoute exact path="/schedule" component={UserPersonalSchedule} roles = {[USER]}/>
-      <Route exact path="/homeuser" component={HomeUser}></Route>
-      <Route exact path="/libary" component={LibraryPage}></Route>
-      <Route exact path="/food/:foodID" component={DetailFood}></Route>
-      <Route
-        exact
-        path="/ingredient/:ingredientID"
-        component={DetailIngredient}
-      ></Route>
-      <Route exact path="/admin/add-nutrient" component={AddNewUser} roles = {[ADMIN]}></Route>
+      <ProtectedRoute exact path="/homeuser" component={HomeUser} roles = {[USER]}/>
+      <Route exact path="/libary" component={LibraryPage}/>
+      <Route exact path="/food/:foodID" component={DetailFood}/>
+      <Route exact path="/ingredient/:ingredientID" component={DetailIngredient}/>
+      <ProtectedRoute exact path="/admin/add-nutrient" component={AddNewUser} roles = {[ADMIN]}/>
     </div>
   );
 };

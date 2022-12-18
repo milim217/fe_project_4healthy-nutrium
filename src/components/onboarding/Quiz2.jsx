@@ -10,7 +10,8 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import AlertMessage from "../alert/AlertMessage";
 
-const Quiz3 = () => {
+const Quiz3 = ({checkValidRole, user}) => {
+  checkValidRole();
   const history = useHistory();
   const [alert, setAlert] = useState(null);
   const [alert1, setAlert1] = useState(null);
@@ -69,7 +70,7 @@ const Quiz3 = () => {
     return check;
   };
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault();
 
     if (!checkInput()) {
@@ -77,14 +78,15 @@ const Quiz3 = () => {
     }
 
     let data;
+    const u = await user.then(res => {return res.data});
+    
     try {
-      localStorage.removeItem("quiz-data");
       data = JSON.parse(localStorage.getItem("quiz-data"));
       data.height = height;
       data.weight = weight;
     } catch (error) {
       data = {
-        user: null,
+        user: u,
         height: height,
         weight: weight,
         job: null,

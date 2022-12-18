@@ -25,6 +25,7 @@ import AlertMessage from "../../../src/components/alert/AlertMessage";
 import Moment from "moment";
 
 const ListUser = ({ user, checkValidRole }) => {
+  checkValidRole();
   const [userList, setUserList] = useState([]);
   const [deactiveID, setDeactiveID] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,7 +44,7 @@ const ListUser = ({ user, checkValidRole }) => {
         loadUsers();
       })
       .catch(e => {
-        setAlert({ type: "danger", message: e.response.data.message });
+        setAlert({ type: "danger", message: e.response ? e.response.data.message : 'Lỗi cập nhật trạng thái tài khoản' });
         setTimeout(() => setAlert(null), 5000);
       });
   };
@@ -58,10 +59,7 @@ const ListUser = ({ user, checkValidRole }) => {
   }
 
   useEffect(() => {
-
-    checkValidRole();
     loadUsers();
-
   }, []);
 
   const valueNutriExpert = userList.map(
@@ -149,7 +147,7 @@ const ListUser = ({ user, checkValidRole }) => {
           onClick={() => {
             deactive(record.key);
           }}
-          style={{ backgroundColor: "green", border: "none", color:"white" }}
+          style={{ backgroundColor: "green", border: "none", color: "white" }}
         >
           Vô hiệu hóa/Kích hoạt
         </Button>
@@ -211,11 +209,17 @@ const ListUser = ({ user, checkValidRole }) => {
   console.log(deactiveID);
   // Tìm kiếm người dùng
   const { Search } = Input;
-  const onSearch = (key) => {
-    UserAPI.getSearched(key)
-      .then(res => {
-        setUserList(res.data);
-      });
+  const onSearch = async (key) => {
+    if (key) {
+      await UserAPI.getSearched(key)
+        .then(res => {
+          setUserList(res.data);
+        });
+    }
+    else {
+      loadUsers();
+    }
+
   }
   return (
     <div>

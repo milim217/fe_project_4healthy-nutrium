@@ -7,17 +7,35 @@ import IngredientAPI from "../../service/Actions/IngredientAPI";
 import React, { useEffect, useState } from "react";
 const { Search } = Input;
 function CardGroupIngredient() {
-  const onSearch = (value) => console.log(value);
+  
   const pageSize = 6;
   const [ingredients, setIngredient] = useState([]);
-  useEffect(() => {
+
+  const loadIngredient = () => {
     IngredientAPI.getAll()
       .then((res) => {
         console.log("data = " + JSON.stringify(res.data));
         setIngredient(res.data);
       })
       .catch((err) => {});
+  }
+
+  useEffect(() => {
+    loadIngredient();
   }, []);
+
+  const onSearch = async (key) => { 
+    if (key) {
+      await IngredientAPI.search(key)
+        .then(res => {
+          setIngredient(res.data);
+        });
+    }
+    else {
+      loadIngredient();
+    }
+  }
+
   return (
     <>
       <div className="wrapper-search_select">

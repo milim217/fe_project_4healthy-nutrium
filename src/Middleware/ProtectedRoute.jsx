@@ -15,7 +15,6 @@ const ProtectedRoute = ({ component: Component, roles, ...rest }) => {
     let check = false;
     await user.then(res=> {
       roles.map(role => {
-        console.log(res.data.role.roleName);
            if(res.data.role.name === role){
             check = true;
            }
@@ -32,7 +31,7 @@ const ProtectedRoute = ({ component: Component, roles, ...rest }) => {
       render={() =>
         user? (
           <>
-            <Component {...rest} user={user} checkValidRole={checkValidRole} />
+            <Component user={user} checkValidRole={checkValidRole} {...rest}/>
           </>
         ) : (
           <Redirect to="/login" />

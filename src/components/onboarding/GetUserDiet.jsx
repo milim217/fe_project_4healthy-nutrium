@@ -10,13 +10,15 @@ import DietAPI from "../../service/Actions/DietAPI";
 import Moment from "moment";
 import AlertMessage from "../alert/AlertMessage";
 
-const GetUserDiet = () => {
+const GetUserDiet = ({checkValidRole}) => {
+  checkValidRole();
   const [diet, setDiet] = useState([]);
   const [breakfastIndex, setBreakfastIndex] = useState(0);
   const [lunchIndex, setLunchIndex] = useState(0);
   const [dinnerIndex, setDinnerIndex] = useState(0);
   const [alert, setAlert] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -101,18 +103,17 @@ const GetUserDiet = () => {
       };
 
       await DietAPI.save(data)
-
         .then((res) => {
           setAlert({ type: "success", message: "Lưu thực đơn thành công" });
           setTimeout(() => setAlert(null), 5000);
         })
         .catch((e) => {
-          setAlert({ type: "success", message: "Lưu thực đơn không thành công" });
+          setAlert({ type: "danger", message: "Lưu thực đơn không thành công" });
           setTimeout(() => setAlert(null), 5000);
         });
     }
     else {
-      setAlert({ type: "success", message: "Không tìm được thực đơn để lưu" });
+      setAlert({ type: "danger", message: "Không có thực đơn để lưu" });
       setTimeout(() => setAlert(null), 5000);
     }
 
@@ -175,7 +176,7 @@ const GetUserDiet = () => {
               size="small"
               extra={<Button onClick={changeBreakfast}>Đổi món</Button>}
             >
-              {diet?.breakfastCalo > 0 ? (
+              {diet?.breakfastOptions?.length>0 ? (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
@@ -186,11 +187,11 @@ const GetUserDiet = () => {
                 </Row>
               ) : (
                 <>
-                  <Row>
+                  {/* <Row>
                     <div className="CardTitle-Info_Calo">
                       Không tìm được thực đơn cho bữa sáng
                     </div>
-                  </Row>
+                  </Row> */}
                 </>
               )}
               {diet.breakfastOptions ? (
@@ -234,7 +235,7 @@ const GetUserDiet = () => {
               size="small"
               extra={<Button onClick={changeLunch}>Đổi món</Button>}
             >
-              {diet?.lunchCalo > 0 ? (
+              {diet?.lunchOptions?.length>0 ? (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
@@ -243,11 +244,11 @@ const GetUserDiet = () => {
                 </Row>
               ) : (
                 <>
-                  <Row>
+                  {/* <Row>
                     <div className="CardTitle-Info_Calo">
                       Không tìm được thực đơn phù hợp cho bữa trưa
                     </div>
-                  </Row>
+                  </Row> */}
                 </>
               )}
               {diet.lunchOptions ? (
@@ -291,7 +292,7 @@ const GetUserDiet = () => {
               size="small"
               extra={<Button onClick={changeDinner}>Đổi món</Button>}
             >
-              {diet?.dinnerCalo > 0 ? (
+              {diet?.dinnerOptions?.length>0 ? (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
@@ -300,11 +301,11 @@ const GetUserDiet = () => {
                 </Row>
               ) : (
                 <>
-                  <Row>
+                  {/* <Row>
                     <div className="CardTitle-Info_Calo">
                       Không tìm được thực đơn phù hợp cho bữa tối
                     </div>
-                  </Row>
+                  </Row> */}
                 </>
               )}
               {diet.dinnerOptions ? (
