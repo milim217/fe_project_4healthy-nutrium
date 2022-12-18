@@ -5,13 +5,13 @@ import NutriongExpertInformation from "./NutrionExpertInformation";
 import NutrionExpertIngredients from "./NutrionExpertIngredients";
 import NutrionExpertFood from "./NutrionExpertFood";
 
-function NutrionExpertPage({ user,changePage }) {
+function NutrionExpertPage({ user,changePage,checkValidRole }) {
   let body = (
     <>
       {/* {changePage === "information" && <NutriongExpertInformation />} */}
       {/* {changePage === "" && <NutriongExpertInformation />} */}
-      {changePage === "food" && <NutrionExpertFood />}
-      {changePage === "ingredients" && <NutrionExpertIngredients />}
+      {changePage === "food" && <NutrionExpertFood checkValidRole={checkValidRole}/>}
+      {changePage === "ingredients" && <NutrionExpertIngredients checkValidRole={checkValidRole} />}
     </>
   );
   return (

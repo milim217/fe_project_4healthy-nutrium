@@ -7,7 +7,6 @@ const ModalDetailFood = (props) => {
   const [foods, setFoods] = useState(props.foods);
 
   useEffect(() => {
-    console.log(props.foods);
     setFoods(props.foods);
   });
 

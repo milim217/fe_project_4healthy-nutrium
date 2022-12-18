@@ -23,7 +23,9 @@ import FoodAPI from "../../service/Actions/FoodAPI";
 import AlertMessage from "../../../src/components/alert/AlertMessage";
 
 const text = "Bạn có chắc chắn muốn món ăn này?";
-const NutrionExpertFood = ({user}) => {
+const NutrionExpertFood = ({checkValidRole}) => {
+  checkValidRole();
+
   const [food, setFood] = useState([]);
   const [alert, setAlert] = useState(null);
 
@@ -176,8 +178,16 @@ const NutrionExpertFood = ({user}) => {
 
   // Tìm kiếm Food
   const { Search } = Input;
-  const onSearch = (key) => {
-    
+  const onSearch = async (key) => {
+    if(key){
+      await FoodAPI.search(key)
+      .then(res => {
+        setFood(res.data);
+      });
+    }
+    else{
+      loadFoodList();
+    }
   }
 
   return (

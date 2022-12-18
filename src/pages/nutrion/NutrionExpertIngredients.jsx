@@ -26,7 +26,8 @@ import AlertMessage from "../../../src/components/alert/AlertMessage";
 
 const text = "Nguyên Liệu này sẽ được xoá khỏi danh sách?";
 
-function NutrionExpertIngredients() {
+function NutrionExpertIngredients({checkValidRole}) {
+  checkValidRole();
   const [Ingredient, setIngredient] = useState([]);
   const [alert, setAlert] = useState(null);
 
@@ -49,7 +50,7 @@ function NutrionExpertIngredients() {
       loadIngredientList();
     })
     .catch(e => {
-      setAlert({ type: "danger", message: e.response.data ? e.response.data.message : "Lỗi xóa nguyên liệu" });
+      setAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi xóa nguyên liệu" });
       setTimeout(() => setAlert(null), 5000);
     });
   };

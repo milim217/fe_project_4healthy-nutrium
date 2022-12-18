@@ -9,12 +9,11 @@ import { useHistory } from "react-router-dom";
 import AuthUtil from "../../service/utils/AuthUtil";
 
 const { Header, Footer, Content } = Layout;
-const UserPersonalSchedule = () => {
-
+const UserPersonalSchedule = ({checkValidRole}) => {
+  checkValidRole();
   const history = useHistory();
   const [diet, setDiet] = useState([]);
   const [dateStr, setDateStr] = useState('');
-
 
   useEffect(() => {
     // check user
@@ -36,7 +35,7 @@ const UserPersonalSchedule = () => {
         let dietDate = new Date(d.date);
         console.log(dietDate);
         const month = dietDate.getMonth() === 12 ? 1 : (dietDate.getMonth()+1);
-        let str = 'Ngày ' + dietDate.getDate() + ', tháng ' + month + ', năm ' + dietDate.getFullYear();
+        let str = 'Thực đơn được lưu ngày ' + dietDate.getDate() + ', tháng ' + month + ', năm ' + dietDate.getFullYear();
         setDateStr(str);
         setDiet(d);
       })

@@ -19,6 +19,7 @@ import AlertMessage from "../alert/AlertMessage";
 const { Option } = Select;
 
 const AddNewUser = () => {
+
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState(false);
 
@@ -108,7 +109,7 @@ const AddNewUser = () => {
         setTimeout(() => setAlert(null), 5000);
       })
       .catch(e => {
-        setAlert({ type: "danger", message: e.response.data? e.response.data.message : 'Lỗi thêm tài khoản' });
+        setAlert({ type: "danger", message: e.response ? e.response.data.message : 'Lỗi thêm tài khoản' });
         setTimeout(() => setAlert(null), 5000);
       });
     },

@@ -13,7 +13,8 @@ import AlertMessage from "../alert/AlertMessage";
 import { Row, Col } from "antd";
 import ModalAddNewFoodQuiz5 from "../modal/ModalAddNewFoodQuiz5";
 
-const Quiz4 = () => {
+const Quiz4 = ({checkValidRole, user}) => {
+  checkValidRole();
   const history = useHistory();
 
   const [jobs, setJobs] = useState([]);
@@ -33,7 +34,7 @@ const Quiz4 = () => {
     setSelectedJob(e.target.value);
   };
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault();
 
     if (selectedJob === null) {
@@ -45,12 +46,14 @@ const Quiz4 = () => {
     }
 
     let data;
+    const u = await user.then(res => {return res.data});
+
     try {
       data = JSON.parse(localStorage.getItem("quiz-data"));
       data.job = selectedJob;
     } catch (error) {
       data = {
-        user: null,
+        user: u,
         height: null,
         weight: null,
         job: selectedJob,

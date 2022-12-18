@@ -12,17 +12,22 @@ import Form from "react-bootstrap/Form";
 import ModalAddNewFoodQuiz5 from "../modal/ModalAddNewFoodQuiz5";
 import AlertMessage from "../alert/AlertMessage";
 
-const Quiz5 = () => {
+const Quiz5 = ({ checkValidRole, user }) => {
+  checkValidRole();
   const history = useHistory();
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState(new Set());
 
-  useEffect(() => {
-    CategoryAPI.getAll()
+  const loadCategories = async () => {
+    await CategoryAPI.getAll()
       .then((res) => {
         setCategories(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
+  }
+
+  useEffect(() => {
+    loadCategories();
   }, []);
 
   const onCheckBoxChange = (e) => {
@@ -33,20 +38,23 @@ const Quiz5 = () => {
       selectedCategories.add(category);
     }
     setSelectedCategories(selectedCategories);
-  };
+  }
 
-  const selectsAll = (event) => {};
+  const selectsAll = async (event) => {
+  }
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault();
 
     let data;
+    const u = await user.then(res => { return res.data });
+
     try {
       data = JSON.parse(localStorage.getItem("quiz-data"));
       data.categories = Array.from(selectedCategories);
     } catch (error) {
       data = {
-        user: null,
+        user: u,
         height: null,
         weight: null,
         job: null,
@@ -58,7 +66,7 @@ const Quiz5 = () => {
     console.log(JSON.stringify(data));
     localStorage.setItem("quiz-data", JSON.stringify(data));
     history.push("/onboarding/quiz5");
-  };
+  }
 
   return (
     <>

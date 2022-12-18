@@ -10,7 +10,8 @@ import UserAPI from "../../service/Actions/UserAPI";
 import AlertMessage from "../alert/AlertMessage";
 import AuthUtil from "../../service/utils/AuthUtil";
 
-const Quiz6 = () => {
+const Quiz6 = ({checkValidRole}) => {
+  checkValidRole();
   const history = useHistory();
   const [alert, setAlert] = useState(null);
   const [morning, setMorning] = useState(0);

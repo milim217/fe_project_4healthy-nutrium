@@ -27,7 +27,8 @@ import { useState } from "react";
 import moment from "moment";
 import AlertMessage from "../../../src/components/alert/AlertMessage";
 
-const UserProfile = () => {
+const UserProfile = ({checkValidRole}) => {
+  checkValidRole();
   const layout = {
     labelCol: {
       span: 8,
@@ -217,7 +218,7 @@ const UserProfile = () => {
         setTimeout(() => setAlert(null), 5000);
       })
       .catch(e => {
-        setAlert({ type: "danger", message: e.response.data.message });
+        setAlert({ type: "danger", message: e.response? e.response.data.message : 'Lỗi cập nhật tài khoản' });
         setTimeout(() => setAlert(null), 5000);
       });
   };

@@ -7,7 +7,9 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Progress from "../progress/Progress";
 
-const Quiz1 = () => {
+const Quiz1 = ({checkValidRole}) => {
+  checkValidRole();
+
   return (
     <>
       <HeaderUser></HeaderUser>

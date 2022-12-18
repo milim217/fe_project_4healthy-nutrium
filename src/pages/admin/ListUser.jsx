@@ -25,6 +25,7 @@ import AlertMessage from "../../../src/components/alert/AlertMessage";
 import Moment from "moment";
 
 const ListUser = ({ user, checkValidRole }) => {
+  checkValidRole();
   const [userList, setUserList] = useState([]);
   const [deactiveID, setDeactiveID] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,7 +44,7 @@ const ListUser = ({ user, checkValidRole }) => {
         loadUsers();
       })
       .catch(e => {
-        setAlert({ type: "danger", message: e.response.data.message });
+        setAlert({ type: "danger", message: e.response ? e.response.data.message : 'Lỗi cập nhật trạng thái tài khoản' });
         setTimeout(() => setAlert(null), 5000);
       });
   };
@@ -58,10 +59,7 @@ const ListUser = ({ user, checkValidRole }) => {
   }
 
   useEffect(() => {
-
-    checkValidRole();
     loadUsers();
-
   }, []);
 
   const valueNutriExpert = userList.map(

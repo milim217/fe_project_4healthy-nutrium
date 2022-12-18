@@ -5,22 +5,40 @@ import Button from "react-bootstrap/Button";
 import { Col, Row, Pagination, Input, Select } from "antd";
 import FoodAPI from "../../service/Actions/FoodAPI";
 import React, { useEffect, useState } from "react";
+
 const { Search } = Input;
 
 function CardGroupFood() {
-  //Lấy giá trị search
-  const onSearch = (value) => console.log(value);
+
   const pageSize = 6;
 
-  const [food, setFood] = useState([]);
-  useEffect(() => {
+  const loadFoodList = () => {
     FoodAPI.getAll()
       .then((res) => {
         console.log("data = " + JSON.stringify(res.data));
         setFood(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
+  }
+
+  const [food, setFood] = useState([]);
+  useEffect(() => {
+     loadFoodList();
   }, []);
+
+  //Lấy giá trị search
+  const onSearch = async (key) => {
+    if (key) {
+      await FoodAPI.search(key)
+        .then(res => {
+          setFood(res.data);
+        });
+    }
+    else {
+      loadFoodList();
+    }
+  }
+
   return (
     <>
       <div className="wrapper-search_select">
@@ -140,7 +158,7 @@ function CardGroupFood() {
         )}
       </Row>
       <div className="Pageination_libaryPage">
-        <Pagination defaultCurrent={1} total={food.length} />
+        <Pagination defaultCurrent={1} />
       </div>
     </>
   );
