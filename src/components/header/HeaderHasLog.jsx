@@ -12,7 +12,7 @@ const HeaderHasLog = () => {
 
   const logout = () => {
     localStorage.removeItem("jwt");
-    localStorage.removeItem('quiz-data');
+    localStorage.removeItem("quiz-data");
     history.push("/login");
   };
 
@@ -32,7 +32,7 @@ const HeaderHasLog = () => {
                   <div className="navbar-header">
                     <button className="navbar-toggle"></button>
                     <div href="/home" className="navbar-brand">
-                      4Healthy <span>.</span> Nutrion
+                      4Healthy <span>.</span> Nutrium
                     </div>
                   </div>
                 </div>

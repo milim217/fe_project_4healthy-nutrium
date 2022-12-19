@@ -7,8 +7,7 @@ import TestAPI from "../../service/Actions/TestAPI";
 import AlertMessage from "../alert/AlertMessage";
 
 const SendMailForm = () => {
-
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [alert, setAlert] = useState(null);
 
   const updateInputtedEmail = (event) => setEmail(event.target.value);
@@ -16,13 +15,16 @@ const SendMailForm = () => {
   const sendEmail = (event) => {
     event.preventDefault();
     TestAPI.sendEmail(email)
-      .then(res => {
-        setAlert({ type: "success", message: "Vui lòng kiểm tra email của bạn" });
+      .then((res) => {
+        setAlert({
+          type: "success",
+          message: "Vui lòng kiểm tra email của bạn",
+        });
       })
-      .catch(err => {
+      .catch((err) => {
         setAlert({ type: "danger", message: err.message });
       });
-  }
+  };
 
   return (
     <div className="landing">

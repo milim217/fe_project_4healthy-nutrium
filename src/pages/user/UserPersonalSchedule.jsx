@@ -103,6 +103,7 @@ const UserPersonalSchedule = () => {
                       <Col span={6} pull={18}>
                         <Image
                           width={100}
+                          height={70}
                           src={`http://localhost:8080/food/${foodMass.food.id}/image`}
                         />
                       </Col>
@@ -133,6 +134,7 @@ const UserPersonalSchedule = () => {
                       <Col span={6} pull={18}>
                         <Image
                           width={100}
+                          height={70}
                           src={`http://localhost:8080/food/${foodMass.food.id}/image`}
                         />
                       </Col>
@@ -163,6 +165,7 @@ const UserPersonalSchedule = () => {
                       <Col span={6} pull={18}>
                         <Image
                           width={100}
+                          height={70}
                           src={`http://localhost:8080/food/${foodMass.food.id}/image`}
                         />
                       </Col>

@@ -10,7 +10,7 @@ const Footers = () => {
               <div className="navbar-header">
                 <button className="navbar-toggle"></button>
                 <div href="index.html" className="navbar-brand">
-                  4Healthy <span>.</span> Nutrion
+                  4Healthy <span>.</span> Nutrium
                 </div>
               </div>
             </div>

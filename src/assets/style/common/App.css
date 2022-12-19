@@ -273,3 +273,10 @@
   transition: all 0.3s;
   display: inline-flex;
 }
+
+.formLabel_loginForm_RegisterForm {
+  float: left;
+  font-size: 15px;
+  font-weight: 900;
+  color: #0a3847;
+}

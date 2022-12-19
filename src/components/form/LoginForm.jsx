@@ -51,7 +51,6 @@ const LoginForm = () => {
       password: formik.values.password,
     })
       .then((res) => {
-        localStorage.removeItem('quiz-data');
         const token = res.data.access_token;
         const user = jwt(token);
         localStorage.setItem("jwt", JSON.stringify(token));
@@ -82,6 +81,9 @@ const LoginForm = () => {
                 <AlertMessage info={alert} />
                 <Form.Group>
                   <Form.Group>
+                    <label className="formLabel_loginForm_RegisterForm">
+                      Email:
+                    </label>
                     <Input
                       type="text"
                       placeholder="Email"
@@ -96,6 +98,9 @@ const LoginForm = () => {
                     )}
                   </Form.Group>
                   <Form.Group>
+                    <label className="formLabel_loginForm_RegisterForm">
+                      Mật khẩu:
+                    </label>
                     <Input.Password
                       placeholder="Mật khẩu"
                       name="password"

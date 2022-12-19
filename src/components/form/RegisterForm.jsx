@@ -238,6 +238,9 @@ const RegisterForm = () => {
                 <AlertMessage info={alert} />
                 <Form.Group>
                   <Form.Group>
+                    <label className="formLabel_loginForm_RegisterForm">
+                      Email:
+                    </label>
                     <Input
                       type="email"
                       placeholder="Email"
@@ -252,6 +255,9 @@ const RegisterForm = () => {
                     )}
                   </Form.Group>
                   <Form.Group>
+                    <label className="formLabel_loginForm_RegisterForm">
+                      Mật khẩu:
+                    </label>
                     <Input.Password
                       type="password"
                       placeholder="Mật khẩu"
@@ -266,6 +272,9 @@ const RegisterForm = () => {
                     )}
                   </Form.Group>
                   <Form.Group>
+                    <label className="formLabel_loginForm_RegisterForm">
+                      Nhập lại mật khẩu:
+                    </label>
                     <Input.Password
                       type="password"
                       placeholder="Nhập lại mật khẩu"
@@ -282,6 +291,9 @@ const RegisterForm = () => {
                     )}
                   </Form.Group>
                   <Form.Group>
+                    <label className="formLabel_loginForm_RegisterForm">
+                      Họ và Tên
+                    </label>
                     <Input
                       type="text"
                       placeholder="Tên của bạn"
@@ -296,6 +308,9 @@ const RegisterForm = () => {
                     )}
                   </Form.Group>
                   <Form.Group>
+                    <label className="formLabel_loginForm_RegisterForm">
+                      Địa chỉ:
+                    </label>
                     <Input
                       type="text"
                       placeholder="Địa chỉ"
@@ -310,6 +325,9 @@ const RegisterForm = () => {
                     )}
                   </Form.Group>
                   <Form.Group>
+                    <label className="formLabel_loginForm_RegisterForm">
+                      Số điện thoại:
+                    </label>
                     <Input
                       type="text"
                       placeholder="Số điện thoại"
@@ -323,6 +341,9 @@ const RegisterForm = () => {
                       <p className="errorMSG">{formik.errors.phoneNumber}</p>
                     )}
                   </Form.Group>
+                  <label className="formLabel_loginForm_RegisterForm">
+                    Ngày sinh:
+                  </label>
                   <Input
                     // defaultValue={moment("01/01/2000", "DD/MM/YYYY")}
                     type="text"
@@ -340,6 +361,9 @@ const RegisterForm = () => {
                   )}
                 </Form.Group>
                 <Form.Group>
+                  <label className="formLabel_loginForm_RegisterForm">
+                    Mã xác thực Email
+                  </label>
                   <Input
                     type="text"
                     placeholder="Mã xác thực email"
@@ -353,6 +377,9 @@ const RegisterForm = () => {
                   )}
                 </Form.Group>
                 <Form.Group>
+                  <label className="formLabel_loginForm_RegisterForm">
+                    Giới tính:
+                  </label>
                   <Radio.Group
                     onChange={onChangeGender}
                     defaultValue="false"

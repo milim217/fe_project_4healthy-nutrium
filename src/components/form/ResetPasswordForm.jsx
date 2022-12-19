@@ -83,7 +83,12 @@ const ResetPasswordForm = () => {
             setTimeout(() => setAlert(null), 5000);
           })
           .catch((e) => {
-            setAlert({ type: "danger", message: e.response ? e.response.data.message : 'Lỗi gửi mã xác nhận email' });
+            setAlert({
+              type: "danger",
+              message: e.response
+                ? e.response.data.message
+                : "Lỗi gửi mã xác nhận email",
+            });
             setTimeout(() => setAlert(null), 5000);
           });
       }
@@ -148,7 +153,10 @@ const ResetPasswordForm = () => {
           setTimeout(() => setAlert(null), 5000);
         })
         .catch((e) => {
-          setAlert({ type: "danger", message: e.response? e.response.data.message : 'Lỗi đổi mật khẩu' });
+          setAlert({
+            type: "danger",
+            message: e.response ? e.response.data.message : "Lỗi đổi mật khẩu",
+          });
           setTimeout(() => setAlert(null), 5000);
         });
     }
@@ -167,6 +175,9 @@ const ResetPasswordForm = () => {
               <AlertMessage info={alert} />
               <Form.Group>
                 <Form.Group>
+                  <label className="formLabel_loginForm_RegisterForm">
+                    Email:
+                  </label>
                   <Input
                     placeholder="Email của bạn"
                     className="form_send_mail"
@@ -182,6 +193,9 @@ const ResetPasswordForm = () => {
                 </Form.Group>
 
                 <Form.Group>
+                  <label className="formLabel_loginForm_RegisterForm">
+                    Mật khẩu mới:
+                  </label>
                   <Input.Password
                     placeholder="Nhập mật khẩu mới của bạn"
                     className="form_send_mail"
@@ -196,6 +210,9 @@ const ResetPasswordForm = () => {
                   )}
                 </Form.Group>
                 <Form.Group>
+                  <label className="formLabel_loginForm_RegisterForm">
+                    Nhập lại mật khẩu mới:
+                  </label>
                   <Input.Password
                     placeholder="Nhập mật khẩu mới của bạn lần nữa"
                     className="form_send_mail"
@@ -210,6 +227,9 @@ const ResetPasswordForm = () => {
                   )}
                 </Form.Group>
                 <Form.Group>
+                  <label className="formLabel_loginForm_RegisterForm">
+                    Mã xác thực Email của bạn:
+                  </label>
                   <Input
                     placeholder="Nhập mã xác thực email"
                     className="form_send_mail"
@@ -241,6 +261,14 @@ const ResetPasswordForm = () => {
                 </Button>
               </Form.Group>
             </Form>
+            <p>
+              Bạn đã có tài khoản?
+              <a href="/login">
+                <button type="button" class="ml-2 btn btn-info btn-sm">
+                  Login
+                </button>
+              </a>
+            </p>
           </div>
           <div className="landing-inner"></div>
         </div>
