@@ -51,6 +51,7 @@ const LoginForm = () => {
       password: formik.values.password,
     })
       .then((res) => {
+        localStorage.removeItem("quiz-data");
         const token = res.data.access_token;
         const user = jwt(token);
         localStorage.setItem("jwt", JSON.stringify(token));
