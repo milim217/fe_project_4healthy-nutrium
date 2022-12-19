@@ -94,7 +94,7 @@ const TableEditIngredientFood = (props) => {
       editable: false,
     },
     {
-      title: "Hàm Lượng",
+      title: "Khối lượng (gram)",
       dataIndex: "mass",
       editable: true,
     },
