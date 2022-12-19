@@ -21,8 +21,8 @@ const FoodAPI = {
     return AxiosList.normalAxios.post(url,data);
   },
 
-  delete(id) {
-    const url = `/ingredient/`+id+`/delete`;
+  changeStatus(id) {
+    const url = `/ingredient/`+id+`/changeStatus`;
     return AxiosList.normalAxios.post(url);
   },
 

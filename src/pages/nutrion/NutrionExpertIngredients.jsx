@@ -42,15 +42,15 @@ function NutrionExpertIngredients({ checkValidRole }) {
     loadIngredientList();
   }, []);
 
-  const deleteIngredient = async (id) => {
-    await IngredientAPI.delete(id)
+  const changeStatus = async (id) => {
+    await IngredientAPI.changeStatus(id)
       .then(res => {
-        setAlert({ type: "success", message: "Xóa nguyên liệu thành công" });
+        setAlert({ type: "success", message: "Đổi trạng thái thành công" });
         setTimeout(() => setAlert(null), 5000);
         loadIngredientList();
       })
       .catch(e => {
-        setAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi xóa nguyên liệu" });
+        setAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi đổi trạng thái" });
         setTimeout(() => setAlert(null), 5000);
       });
   };
@@ -183,28 +183,32 @@ function NutrionExpertIngredients({ checkValidRole }) {
       dataIndex: "vitaminARae",
       justify: "center",
     },
-
+    {
+      title: "Trạng thái",
+      dataIndex: "status",
+      justify: "center",
+      render: (status) => (
+        <>
+          {!status ? <Tag color="red">Vô hiệu hoá</Tag> : <Tag color="green">Đã kích hoạt </Tag>}
+        </>
+      ),
+    },
     {
       title: "Chỉnh sửa Nguyên Liệu",
       render: (_, record) => <EditIngrdient ingredient={record}></EditIngrdient>,
       fixed: "right",
     },
     {
-      title: "Xoá Nguyên Liệu",
+      title: "Đổi trạng thái",
       dataIndex: "",
       key: "x",
       render: (_, record) => (
-        <>
-          <Popconfirm
-            placement="bottomRight"
-            title={text}
-            onConfirm={() => { deleteIngredient(record.id) }}
-            okText="Xoá Nguyên Liệu"
-            cancelText="Huỷ hành động"
-          >
-            <Button>Xoá</Button>
-          </Popconfirm>
-        </>
+        <Button
+          onClick={() => { changeStatus(record.id) }}
+          style={{ backgroundColor: "green", border: "none", color: "white" }}
+        >
+          Kích hoạt/Vô hiệu hóa
+        </Button>
       ),
       justify: "center",
       fixed: "right",
