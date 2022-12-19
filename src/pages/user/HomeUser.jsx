@@ -1,4 +1,4 @@
-import React, {useEffect}from "react";
+import React, { useEffect } from "react";
 import { Layout, Card, Col, Row, Carousel } from "antd";
 import Footers from "../../components/footer/footers";
 import "../../assets/style/user/homepage.css";
@@ -15,108 +15,143 @@ const gridStyle = {
   width: "20%",
   textAlign: "center",
 };
-const HomeUser = ({checkValidRole,user}) => {
+const HomeUser = ({ checkValidRole, user }) => {
   checkValidRole();
 
-  const[diet,setDiet] = useState(null);
-  const[currentUser,setCurrentUser] = useState(null);
+  const [diet, setDiet] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(async () => {
-    await user
-    .then(userRes => {
+    await user.then((userRes) => {
       const u = userRes.data;
-      DietAPI.getByUserID(u.id)
-      .then(dietRes => {
+      DietAPI.getByUserID(u.id).then((dietRes) => {
         console.log(dietRes.data);
-         setDiet(dietRes.data);
-      })
-    })
-
+        setDiet(dietRes.data);
+      });
+    });
   }, []);
 
-  return(<>
-    <HeaderHasLog></HeaderHasLog>
-    <Layout>
-      <Content className="wrapper-cover">
-        <div className="wrapper-homeuser">
-          <Card
-            type="inner"
-            title="Tóm tắt hàng ngày của bạn"
-            // extra={
-            //   // <ButtonGroup aria-label="Basic example">
-            //   //   <Button variant="primary">Thay đổi thông tin</Button>
-            //   <Link to={"/onboarding/summaryInfo"}>
-            //     <Button variant="secondary"> Nhận chế độ ăn của bạn </Button>
-            //   </Link>
-            //   // </ButtonGroup>
-            // }
-          >
-            <Card>
-              {/* <Card.Grid style={gridStyle}>
+  return (
+    <>
+      <HeaderHasLog></HeaderHasLog>
+      <Layout>
+        <Content className="wrapper-cover">
+          <div className="wrapper-homeuser">
+            <Card
+              type="inner"
+              title="Tóm tắt hàng ngày của bạn"
+              extra={
+                // <ButtonGroup aria-label="Basic example">
+                //   <Button variant="primary">Thay đổi thông tin</Button>
+                <Link to={"/onboarding/summaryInfo"}>
+                  <Button variant="secondary"> Nhận chế độ ăn của bạn </Button>
+                </Link>
+                // </ButtonGroup>
+              }
+            >
+              <Card>
+                {/* <Card.Grid style={gridStyle}>
                 Tuổi của bạn
                 <p>
                   <b style={{ color: "#ff8000", fontSize: "30px" }}>20</b> tuổi
                 </p>
               </Card.Grid> */}
-              <Card.Grid style={gridStyle}>
-                Cân nặng của bạn
-                <p>
-                  <b style={{ color: "#ff8000", fontSize: "30px" }}>{diet?.weight}</b>
-                  (kg)
-                </p>
-              </Card.Grid>
-              <Card.Grid style={gridStyle}>
-                Chiều cao của bạn
-                <p>
-                  <b style={{ color: "#ff8000", fontSize: "30px" }}>{diet?.height}</b> (cm)
-                </p>
-              </Card.Grid>
-              <Card.Grid style={gridStyle}>
-                BMI của bạn
-                <p>
-                  <b style={{ color: "#ff8000", fontSize: "25px" }}>{diet?.bmi.toFixed(3)}</b>
-                </p>
-              </Card.Grid>
-              <Card.Grid style={gridStyle}>
-                Công việc của bạn là
-                <p>
-                  <b style={{ color: "#ff8000", fontSize: "30px" }}>{diet?.job.jobName}</b>{" "}
-                </p>
-              </Card.Grid>
-              <Card.Grid style={gridStyle}>
-                Lượng calo cần tiêu thụ trên ngày
-                <p>
-                  <b style={{ color: "#ff8000", fontSize: "30px" }}>{diet? ((diet.breakfastCalo + diet.lunchCalo + diet.dinnerCalo) + ' calo'):('')}</b>
-                </p>
-              </Card.Grid>
-              <Card.Grid style={gridStyle}>
-                Lượng chất bột đường hàng ngày
-                <p>
-                  <b style={{ color: "#ff8000", fontSize: "30px" }}>{diet? ((diet.breakfastCarb + diet.lunchCarb + diet.dinnerCarb) + ' g'):('')}</b>
-                </p>
-              </Card.Grid>
-              <Card.Grid style={gridStyle}>
-                Lượng đạm hàng ngày
-                <p>
-                  <b style={{ color: "#ff8000", fontSize: "30px" }}>{diet? ((diet.breakfastProtein + diet.lunchProtein + diet.dinnerProtein) + ' g'):('')}</b>
-                </p>
-              </Card.Grid>
-              <Card.Grid style={gridStyle}>
-                Lượng chất béo hàng ngày
-                <p>
-                  <b style={{ color: "#ff8000", fontSize: "30px" }}>{diet? ((diet.breakfastFat + diet.lunchFat + diet.dinnerFat) + ' g'):('')}</b>
-                </p>
-              </Card.Grid>
-              <Card.Grid style={gridStyle}>
-                Lượng nước nên uống hàng ngày
-                <p>
-                  <b style={{ color: "#ff8000", fontSize: "30px" }}>2</b> lít
-                  Nước
-                </p>
-              </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  Cân nặng của bạn
+                  <p>
+                    <b style={{ color: "#ff8000", fontSize: "30px" }}>
+                      {diet?.weight}
+                    </b>
+                    (kg)
+                  </p>
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  Chiều cao của bạn
+                  <p>
+                    <b style={{ color: "#ff8000", fontSize: "30px" }}>
+                      {diet?.height}
+                    </b>{" "}
+                    (cm)
+                  </p>
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  BMI của bạn
+                  <p>
+                    <b style={{ color: "#ff8000", fontSize: "25px" }}>
+                      {diet?.bmi.toFixed(3)}
+                    </b>
+                  </p>
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  Công việc của bạn là
+                  <p>
+                    <b style={{ color: "#ff8000", fontSize: "30px" }}>
+                      {diet?.job.jobName}
+                    </b>{" "}
+                  </p>
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  Lượng calo cần tiêu thụ trên ngày
+                  <p>
+                    <b style={{ color: "#ff8000", fontSize: "30px" }}>
+                      {diet
+                        ? diet.breakfastCalo +
+                          diet.lunchCalo +
+                          diet.dinnerCalo +
+                          " calo"
+                        : ""}
+                    </b>
+                  </p>
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  Lượng chất bột đường hàng ngày
+                  <p>
+                    <b style={{ color: "#ff8000", fontSize: "30px" }}>
+                      {diet
+                        ? diet.breakfastCarb +
+                          diet.lunchCarb +
+                          diet.dinnerCarb +
+                          " g"
+                        : ""}
+                    </b>
+                  </p>
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  Lượng đạm hàng ngày
+                  <p>
+                    <b style={{ color: "#ff8000", fontSize: "30px" }}>
+                      {diet
+                        ? diet.breakfastProtein +
+                          diet.lunchProtein +
+                          diet.dinnerProtein +
+                          " g"
+                        : ""}
+                    </b>
+                  </p>
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  Lượng chất béo hàng ngày
+                  <p>
+                    <b style={{ color: "#ff8000", fontSize: "30px" }}>
+                      {diet
+                        ? diet.breakfastFat +
+                          diet.lunchFat +
+                          diet.dinnerFat +
+                          " g"
+                        : ""}
+                    </b>
+                  </p>
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  Lượng nước nên uống hàng ngày
+                  <p>
+                    <b style={{ color: "#ff8000", fontSize: "30px" }}>2</b> lít
+                    Nước
+                  </p>
+                </Card.Grid>
+              </Card>
             </Card>
-          </Card>
-          {/* <Card
+            {/* <Card
             style={{ marginTop: 16 }}
             type="inner"
             title="Khuyến cáo về lượng vitamin và khoáng chất mỗi ngày"
@@ -175,11 +210,11 @@ const HomeUser = ({checkValidRole,user}) => {
               </tbody>
             </Table>
           </Card> */}
-        </div>
-      </Content>
-      <Footers></Footers>
-    </Layout>
-  </>
-);
-}
+          </div>
+        </Content>
+        <Footers></Footers>
+      </Layout>
+    </>
+  );
+};
 export default HomeUser;

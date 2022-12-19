@@ -420,7 +420,7 @@ const EditFood = ({ foodData }) => {
               disabled={!formik.isValid}
               id="btn_EditFood"
             >
-              Thêm
+              Sửa
             </Button>
           </Space>
         }
@@ -431,7 +431,7 @@ const EditFood = ({ foodData }) => {
               <Image
                 width={300}
                 height={250}
-                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                src="http://localhost:8080/food/1/image"
               />
             </Col>
             <Col span={12}>
