@@ -21,46 +21,25 @@ import * as Yup from "yup";
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
+
 const seasonList = [
   {
     label: "Xuân",
-    value: {
-      id: 1,
-      seasonName: "Spring",
-    },
+    value: "Xuân",
   },
   {
     label: "Hạ",
-    value: {
-      id: 2,
-      seasonName: "Summer",
-    },
+    value: "Hạ",
   },
   {
     label: "Thu",
-    value: {
-      id: 3,
-      seasonName: "Autumn",
-    },
+    value: "Thu",
   },
   {
     label: "Đông",
-    value: {
-      id: 4,
-      seasonName: "Winter",
-    },
+    value: "Đông",
   },
 ];
-const SeassonValueDefault = [
-  {
-    label: "Xuân",
-    value: {
-      id: 1,
-      seasonName: "Spring",
-    },
-  },
-];
-
 const EditIngrdient = ({ ingredient }) => {
   //
   //
@@ -70,8 +49,11 @@ const EditIngrdient = ({ ingredient }) => {
   //
   //
   const [open, setOpen] = useState(false);
-  const [checkedSeasonList, setcheckedSeasonList] =
-    useState(SeassonValueDefault);
+  const [checkedSeasonList, setcheckedSeasonList] = useState(
+    ingredient.seasson_id.map((element) => {
+      return element.trim();
+    })
+  );
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
   const [alert, setAlert] = useState(null);
@@ -81,6 +63,37 @@ const EditIngrdient = ({ ingredient }) => {
       formik.setValues(ingredient);
     }
   }, []);
+  let dataSeasonSubmit = checkedSeasonList.map((data) => {
+    if (data == "Xuân") {
+      return {
+        value: {
+          id: 1,
+          seasonName: "Xuân",
+        },
+      };
+    } else if (data == "Hạ") {
+      return {
+        value: {
+          id: 2,
+          seasonName: "Hạ",
+        },
+      };
+    } else if (data == "Thu") {
+      return {
+        value: {
+          id: 3,
+          seasonName: "Thu",
+        },
+      };
+    } else {
+      return {
+        value: {
+          id: 4,
+          seasonName: "Đông",
+        },
+      };
+    }
+  });
 
   const onChange_SeassonList = (list) => {
     setcheckedSeasonList(list);
@@ -94,9 +107,9 @@ const EditIngrdient = ({ ingredient }) => {
       setTimeout(() => setAlert(null), 2000);
     }
   };
+
   const onCheckAllChange = (e) => {
-    const seassonListOnlyName = seasonList.map((data) => data.value);
-    setcheckedSeasonList(e.target.checked ? seassonListOnlyName : []);
+    setcheckedSeasonList(e.target.checked ? seasonList : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);
     if (e.target.checked == []) {
@@ -109,8 +122,9 @@ const EditIngrdient = ({ ingredient }) => {
   };
 
   const showDrawer = () => {
-    console.log(ingredient.id);
+    console.log(ingredient.seasson_id);
     setOpen(true);
+    console.log(checkedSeasonList);
   };
   const onClose = () => {
     setOpen(false);
@@ -304,7 +318,7 @@ const EditIngrdient = ({ ingredient }) => {
       vitaminARae: formik.values.vitaminARae,
       minLimit: formik.values.minLimit,
       maxLimit: formik.values.maxLimit,
-      seasons: checkedSeasonList,
+      seasons: dataSeasonSubmit,
     };
     console.log(AddNewIngrendient);
     //Xoá dữ liệu khi submit thành công vào api
@@ -330,7 +344,7 @@ const EditIngrdient = ({ ingredient }) => {
             <Button
               onClick={onSubmit}
               type="primary"
-              disabled={!formik.isValid}
+              // disabled={!formik.isValid}
             >
               Sửa
             </Button>
@@ -366,7 +380,7 @@ const EditIngrdient = ({ ingredient }) => {
                 <Checkbox
                   indeterminate={indeterminate}
                   onChange={onCheckAllChange}
-                  defaultChecked={true}
+                  // defaultChecked={true}
                   checked={checkAll}
                   required
                 >
@@ -375,13 +389,7 @@ const EditIngrdient = ({ ingredient }) => {
                 <Divider />
                 <CheckboxGroup
                   options={seasonList}
-                  value={checkedSeasonList}
-                  defaultValue={[
-                    {
-                      id: 3,
-                      seasonName: "Autumn",
-                    },
-                  ]}
+                  defaultValue={checkedSeasonList}
                   onChange={onChange_SeassonList}
                   required
                 />

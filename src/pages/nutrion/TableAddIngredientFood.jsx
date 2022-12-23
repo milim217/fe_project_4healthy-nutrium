@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Button, Form, Input, Popconfirm, Table } from "antd";
+import AlertDiv from "../../components/alert/AlertDiv";
 import { object } from "yup";
 const EditableContext = React.createContext(null);
 const EditableRow = ({ index, ...props }) => {
@@ -39,6 +40,9 @@ const EditableCell = ({
   const save = async () => {
     try {
       const values = await form.validateFields();
+      if (values == 0) {
+        return;
+      }
       toggleEdit();
       handleSave({
         ...record,
@@ -121,6 +125,9 @@ const TableAddIngredientFood = (props) => {
       ingredientName: `${arrIngredient}`,
       mass: "0",
     };
+    if (arrIngredient == undefined) {
+      return;
+    }
 
     if (!dataSource.find((data) => data.ingredientName == arrIngredient)) {
       setDataSource([...dataSource, newData]);

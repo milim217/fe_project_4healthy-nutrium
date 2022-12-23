@@ -89,6 +89,7 @@ const NutrionExpertFood = ({ user }) => {
       title: "Công thức",
       dataIndex: "recipe",
       justify: "center",
+      ellipsis: true,
     },
     {
       title: "Chất béo",
@@ -150,8 +151,8 @@ const NutrionExpertFood = ({ user }) => {
           id: foodValue.id,
           food_name: foodValue.foodName,
           category_id: foodValue.category.categoryName,
-          mealType: foodValue.meals.map((m) => m.mealName + ", "),
-          seasson_id: foodValue.seasons.map((s) => s.seasonName + ", "),
+          mealType: foodValue.meals.map((m) => m.mealName + " "),
+          seasson_id: foodValue.seasons.map((s) => s.seasonName + " "),
           recipe: foodValue.recipe,
           fat: foodValue.fat,
           protein: foodValue.protein,

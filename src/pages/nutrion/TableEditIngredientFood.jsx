@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Button, Form, Input, Popconfirm, Table } from "antd";
 import { object } from "yup";
+import FoodAPI from "../../service/Actions/FoodAPI";
 const EditableContext = React.createContext(null);
 const EditableRow = ({ index, ...props }) => {
   const [form] = Form.useForm();
@@ -80,12 +81,49 @@ const EditableCell = ({
   return <td {...restProps}>{childNode}</td>;
 };
 const TableEditIngredientFood = (props) => {
-  const [dataSource, setDataSource] = useState([]);
-  const [count, setCount] = useState(2);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(async () => {
+    if (props.valueFoodIdFormTable) {
+      await FoodAPI.getById(IdFoodFormTable).then((res) => {
+        // console.log("food = ", res.data);
+        let FoodArr = [];
+        const food = res.data;
+        const nameIngredientFood = food.ingredientMasses.map(
+          (data) => data.ingredient.ingredientName
+        );
+        const massIngredientFood = food.ingredientMasses.map((data) =>
+          data.mass.toString()
+        );
+        nameIngredientFood.forEach((e, i) => {
+          FoodArr.push({
+            key: i,
+            ingredientName: e,
+            mass: massIngredientFood[i],
+          });
+        });
+        setDataSource(FoodArr);
+        setCount(FoodArr.length);
+      });
+    }
+  }, []);
+
+  const arrIngredient = props.ValueIngredient;
+  const IdFoodFormTable = props.valueFoodIdFormTable;
+  const [dataSource, setDataSource] = useState("");
+  const [count, setCount] = useState(0);
+  let TextDisplayWhenNoData = {
+    emptyText: "Dữ liệu trống",
+  };
+
   const handleDelete = (key) => {
     const newData = dataSource.filter((item) => item.key !== key);
     setDataSource(newData);
   };
+
+  // console.log(foods);
+  // console.log(massFood);
+  // console.log(FoodArr);
+  // console.log(originData);
   const defaultColumns = [
     {
       title: "Tên thành phần",
@@ -114,18 +152,21 @@ const TableEditIngredientFood = (props) => {
         ) : null,
     },
   ];
-  const arrIngredient = props.ValueIngredient;
+
   const handleAdd = () => {
     const newData = {
       key: count,
       ingredientName: `${arrIngredient}`,
       mass: "0",
     };
-
+    if (arrIngredient == undefined) {
+      return;
+    }
     if (!dataSource.find((data) => data.ingredientName == arrIngredient)) {
       setDataSource([...dataSource, newData]);
       setCount(count + 1);
     }
+
     // console.log(arrIngredient);
     // console.log(arrIngredienthasave);
   };
@@ -135,6 +176,8 @@ const TableEditIngredientFood = (props) => {
     // dataSource.forEach(function (v) {
     //   delete v.key;
     // });
+    //Kiểm tra bảng chứa undefined thì x
+    console.log(dataSource);
     props.getDataFromTable(dataSource);
   };
   const handleSave = (row) => {
@@ -193,6 +236,7 @@ const TableEditIngredientFood = (props) => {
       </Button>
       <Table
         components={components}
+        locale={TextDisplayWhenNoData}
         rowClassName={() => "editable-row"}
         bordered
         dataSource={dataSource}

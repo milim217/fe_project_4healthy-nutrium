@@ -13,7 +13,7 @@ import {
   Space,
   Row,
 } from "antd";
-import UploadImageFile from "../../components/upload-image-avt/uploadImageFile";
+import UploadImageFile from "../../components/upload-image-avt/UploadImageFile";
 import CategoryAPI from "../../service/Actions/CategoryAPI";
 import IngredientAPI from "../../service/Actions/IngredientAPI";
 import AlertDiv from "../alert/AlertDiv";
@@ -100,7 +100,7 @@ const MealTypeValueDefault = [
 ];
 
 const { Option } = Select;
-const AddNewFood = ({loadFoodList}) => {
+const AddNewFood = ({ loadFoodList }) => {
   const [alert2, setAlert2] = useState(null);
   //
   //
@@ -117,7 +117,6 @@ const AddNewFood = ({loadFoodList}) => {
   const [alert, setAlert] = useState(null);
   const [alert1, setAlert1] = useState(null);
   const [topAlert, setTopAlert] = useState(null);
-
 
   const onChange_SeassonList = (list) => {
     setcheckedSessonList(list);
@@ -303,19 +302,18 @@ const AddNewFood = ({loadFoodList}) => {
       category: CategoryFoodValue,
     };
 
-    console.log('added food = ', addNewFoodForm);
+    console.log("added food = ", addNewFoodForm);
 
     FoodAPI.add(addNewFoodForm)
-      .then(res => {
+      .then((res) => {
         setTopAlert({ type: "success", message: "Thêm thành công" });
         setTimeout(() => setTopAlert(null), 5000);
         loadFoodList();
       })
-      .catch(e => {
+      .catch((e) => {
         setTopAlert({ type: "danger", message: e.response.data.message });
         setTimeout(() => setTopAlert(null), 5000);
       });
-
   };
   const showDrawer = () => {
     setOpen(true);
@@ -356,7 +354,7 @@ const AddNewFood = ({loadFoodList}) => {
       .then((res) => {
         setListIngredient(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }, []);
 
   const [IngredientFoodValue, setIngredientFoodValue] = useState("");
@@ -388,7 +386,7 @@ const AddNewFood = ({loadFoodList}) => {
       .then((res) => {
         setListCategory(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }, []);
   const [CategoryFoodValue, setCategoryFoodValue] = useState("");
   const onChangeSelectCategoryFood = (value) => {
