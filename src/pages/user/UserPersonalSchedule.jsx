@@ -11,7 +11,7 @@ import AuthUtil from "../../service/utils/AuthUtil";
 const { Header, Footer, Content } = Layout;
 const UserPersonalSchedule = () => {
   const history = useHistory();
-  const [diet, setDiet] = useState([]);
+  const [diet, setDiet] = useState(null);
   const [dateStr, setDateStr] = useState("");
 
   useEffect(() => {
@@ -33,13 +33,7 @@ const UserPersonalSchedule = () => {
         let dietDate = new Date(d.date);
         console.log(dietDate);
         const month = dietDate.getMonth() === 12 ? 1 : dietDate.getMonth() + 1;
-        let str =
-          "Ngày " +
-          dietDate.getDate() +
-          ", tháng " +
-          month +
-          ", năm " +
-          dietDate.getFullYear();
+        let str = "Thực đơn lưu ngày " + dietDate.getDate() + ", tháng " + month + ", năm " + dietDate.getFullYear();
         setDateStr(str);
         setDiet(d);
       })
@@ -48,21 +42,20 @@ const UserPersonalSchedule = () => {
       });
   }
 
-  const totalCalo = (diet) => {
-    let total = 0;
+  const getUserInfo = (diet) => {
     if (diet) {
-      if (diet.breakfastCalo) {
-        total += diet.breakfastCalo;
+      let jobTypeStr = '';
+      switch (diet.job.jobType) {
+        case 2: jobTypeStr = '(Lao động chân tay)'; break;
+        case 3: jobTypeStr = '(Lao động tri thức)'; break;
       }
-      if (diet.lunchCalo) {
-        total += diet.lunchCalo;
-      }
-      if (diet.dinnerCalo) {
-        total += diet.dinnerCalo;
-      }
+      let genderStr = diet.user.gender ? 'nam giới' : 'nữ giới';
+      return "Thực đơn dành cho " + genderStr + " " + diet.age + " tuổi, nghề " + diet.job.jobName + ' ' + jobTypeStr;
     }
-    return total;
-  };
+    else {
+      return '';
+    }
+  }
 
   return (
     <div>
@@ -71,9 +64,40 @@ const UserPersonalSchedule = () => {
         <div className="site-card-wrapper">
           <div className="title-card-wrapper">
             <div className="title-card-time-schedule">{dateStr}</div>
+            {/* {diet ? (
+              <div className="title-card-amount-calo">
+                Mỗi ngày bạn cần khoảng {diet.totalExpectedCalo} calo
+              </div>
+            ) : (
+              <></>
+            )} */}
+
+          </div>
+          <br></br>
+          <div className="title-card-wrapper">
             {diet ? (
               <div className="title-card-amount-calo">
-                {totalCalo(diet)} calo
+                {getUserInfo(diet)}
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+          <br></br>
+          <div className="title-card-wrapper">
+            {diet ? (
+              <div className="title-card-amount-calo">
+                Mỗi ngày bạn cần khoảng {diet.totalExpectedCalo} calo
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+          <br></br>
+          <div className="title-card-wrapper">
+            {diet ? (
+              <div className="title-card-amount-calo">
+                Thực đơn chứa tổng {diet.totalCalo} calo
               </div>
             ) : (
               <></>
@@ -86,7 +110,7 @@ const UserPersonalSchedule = () => {
                 title="Sáng"
                 bordered={false}
                 extra={
-                  <ModalDetailFood foods={diet.breakfast}></ModalDetailFood>
+                  <ModalDetailFood foods={diet?.breakfast}></ModalDetailFood>
                 }
               >
                 {diet ? (
@@ -118,7 +142,7 @@ const UserPersonalSchedule = () => {
               <Card
                 title="Trưa"
                 bordered={false}
-                extra={<ModalDetailFood foods={diet.lunch}></ModalDetailFood>}
+                extra={<ModalDetailFood foods={diet?.lunch}></ModalDetailFood>}
               >
                 {diet ? (
                   diet.lunch?.map((foodMass) => (
@@ -149,7 +173,7 @@ const UserPersonalSchedule = () => {
               <Card
                 title="Tối  "
                 bordered={false}
-                extra={<ModalDetailFood foods={diet.dinner}></ModalDetailFood>}
+                extra={<ModalDetailFood foods={diet?.dinner}></ModalDetailFood>}
               >
                 {diet ? (
                   diet.dinner?.map((foodMass) => (

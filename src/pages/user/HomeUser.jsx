@@ -40,22 +40,22 @@ const HomeUser = ({ checkValidRole, user }) => {
             <Card
               type="inner"
               title="Tóm tắt hàng ngày của bạn"
-              extra={
-                // <ButtonGroup aria-label="Basic example">
-                //   <Button variant="primary">Thay đổi thông tin</Button>
-                <Link to={"/onboarding/summaryInfo"}>
-                  <Button variant="secondary"> Nhận chế độ ăn của bạn </Button>
-                </Link>
-                // </ButtonGroup>
-              }
+              // extra={
+              //   // <ButtonGroup aria-label="Basic example">
+              //   //   <Button variant="primary">Thay đổi thông tin</Button>
+              //   <Link to={"/onboarding/summaryInfo"}>
+              //     <Button variant="secondary"> Nhận chế độ ăn của bạn </Button>
+              //   </Link>
+              //   // </ButtonGroup>
+              // }
             >
               <Card>
-                {/* <Card.Grid style={gridStyle}>
+                <Card.Grid style={gridStyle}>
                 Tuổi của bạn
                 <p>
-                  <b style={{ color: "#ff8000", fontSize: "30px" }}>20</b> tuổi
+                  <b style={{ color: "#ff8000", fontSize: "30px" }}>{diet?.age}</b> tuổi
                 </p>
-              </Card.Grid> */}
+              </Card.Grid>
                 <Card.Grid style={gridStyle}>
                   Cân nặng của bạn
                   <p>
@@ -151,65 +151,68 @@ const HomeUser = ({ checkValidRole, user }) => {
                 </Card.Grid>
               </Card>
             </Card>
-            {/* <Card
-            style={{ marginTop: 16 }}
-            type="inner"
-            title="Khuyến cáo về lượng vitamin và khoáng chất mỗi ngày"
-          >
-            <Table
-              striped
-              bordered
-              hover
-              className="table_recomendation_wrapper"
-            >
-              <tbody>
-                <tr>
-                  <th>#</th>
-                  <th>Nhóm tuổi</th>
-                  <th>Giới tính</th>
-                  <th>A(mvg)</th>
-                  <th>D(mcg)</th>
-                  <th>E(mg)</th>
-                  <th>K(mcg)</th>
-                  <th>C(mg)</th>
-                  <th>B1(mg)</th>
-                  <th>B2(mg)</th>
-                  <th>B3(mg NE)</th>
-                  <th>B6(mg)</th>
-                  <th>B9(mcg)</th>
-                  <th>B12(mcg)</th>
-                  <th>Canxi(mg)</th>
-                  <th>Iot(mcg)</th>
-                  <th>Sắt(mg)</th>
-                  <th>Kẽm(mg)</th>
-                  <th>Magie(mg)</th>
-                  <th>Photpho(mg)</th>
-                </tr>
-                <tr>
-                  <th>#</th>
-                  <td>Dưới 10 tháng</td>
-                  <td>Nam giới</td>
-                  <td>375</td>
-                  <td>5</td>
-                  <td>3</td>
-                  <td>6</td>
-                  <td>25</td>
-                  <td>0.2</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-              </tbody>
-            </Table>
-          </Card> */}
+            {diet?.recommendation?
+             <Card
+             style={{ marginTop: 16 }}
+             type="inner"
+             title="Khuyến cáo về lượng vitamin và khoáng chất mỗi ngày"
+           >
+             <Table
+               striped
+               bordered
+               hover
+               className="table_recomendation_wrapper"
+             >
+               <tbody>
+                 <tr>
+                   <th>Tuổi</th>
+                   <th>Giới tính</th>
+                   <th>Vitamin A(mvg)</th>
+                   <th>Vitamin D(mcg)</th>
+                   <th>Vitamin E(mg)</th>
+                   <th>Vitamin K(mcg)</th>
+                   <th>Vitamin C(mg)</th>
+                   <th>Vitamin B1(mg)</th>
+                   <th>Vitamin B2(mg)</th>
+                   <th>Vitamin B3(mg NE)</th>
+                   <th>Vitamin B6(mg)</th>
+                   <th>Vitamin B9(mcg)</th>
+                   <th>Vitamin B12(mcg)</th>
+                   <th>Kẽm(mg)</th>
+                   <th>Magie(mg)</th>
+                   <th>Photpho(mg)</th>
+                   <th>Sắt(mg)</th>
+                   <th>Canxi(mg)</th>
+                   <th>Iot(mcg)</th>
+                 </tr>
+                 <tr>
+                   <td>{diet.age}</td>
+                   <td>{diet.user.gender === true ? 'Nam' : 'Nữ'}</td>
+                   <td>{diet.recommendation.vitaminA}</td>
+                   <td>{diet.recommendation.vitaminD}</td>
+                   <td>{diet.recommendation.vitaminE}</td>
+                   <td>{diet.recommendation.vitaminK}</td>
+                   <td>{diet.recommendation.vitaminC}</td>
+                   <td>{diet.recommendation.vitaminB1}</td>
+                   <td>{diet.recommendation.vitaminB2}</td>
+                   <td>{diet.recommendation.vitaminB3}</td>
+                   <td>{diet.recommendation.vitaminB6}</td>
+                   <td>{diet.recommendation.vitaminB9}</td>
+                   <td>{diet.recommendation.vitaminB12}</td>
+                   <td>{diet.recommendation.zinc}</td>
+                   <td>{diet.recommendation.magie}</td>
+                   <td>{diet.recommendation.photpho}</td>
+                   <td>{diet.recommendation.iron}</td>
+                   <td>{diet.recommendation.canxi}</td>
+                   <td>{diet.recommendation.iot}</td>
+                 </tr>
+               </tbody>
+             </Table>
+           </Card>
+            :
+            <></>
+            }
+          
           </div>
         </Content>
         <Footers></Footers>

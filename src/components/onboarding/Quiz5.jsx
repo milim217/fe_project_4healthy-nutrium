@@ -146,7 +146,7 @@ const Quiz6 = ({checkValidRole}) => {
     console.log("quiz-data = " + JSON.stringify(data));
     localStorage.setItem("quiz-data", JSON.stringify(data));
 
-    history.push("/onboarding/GetUserDiet");
+    history.push("/onboarding/diet");
   };
 
   return (

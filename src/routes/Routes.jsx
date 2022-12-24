@@ -26,9 +26,10 @@ import ResetPasswordForm from "../components/form/ResetPasswordForm";
 import RegisterForm from "../components/form/RegisterForm";
 
 const Routes = () => {
-  const USER = "USER";
-  const ADMIN = "ADMIN";
-  const NUTRIENT = "NUTRIENT_EXPERT";
+
+  const USER = 'USER';
+  const ADMIN = 'ADMIN';
+  const NUTRIENT = 'NUTRIENT_EXPERT';
 
   return (
     <div>
@@ -36,108 +37,29 @@ const Routes = () => {
       <Route exact path="/login" component={LoginForm} />
       <Route exact path="/register" component={RegisterForm} />
       <Route exact path="/resetpassword" component={ResetPasswordForm} />
+      
+      <ProtectedRoute exact path="/user" component={ListUser} roles = {[ADMIN]} />
+      <ProtectedRoute exact path="/home" component={HomePage} roles = {[USER]}/>
+      <ProtectedRoute exact path="/profile" component={UserProfile} roles = {[USER]}/>
+      <ProtectedRoute exact path="/nutrionexpert" component={NutrionExpertPage} roles = {[NUTRIENT]} />
+      <ProtectedRoute exact path="/nutrionexpert/food" component={NutrionExpertPage}  changePage="food" roles = {[NUTRIENT]} />
+      <ProtectedRoute exact path="/nutrionexpert/ingredients" component={NutrionExpertPage}  changePage="ingredients" roles = {[NUTRIENT]} />
 
-      <ProtectedRoute exact path="/user" component={ListUser} roles={[ADMIN]} />
-      <Route exact path="/home" component={HomePage} />
-      <ProtectedRoute
-        exact
-        path="/profile"
-        component={UserProfile}
-        roles={[USER]}
-      />
-      <ProtectedRoute
-        exact
-        path="/nutrionexpert"
-        component={NutrionExpertPage}
-        roles={[NUTRIENT]}
-      />
-      <ProtectedRoute
-        exact
-        path="/nutrionexpert/food"
-        component={NutrionExpertPage}
-        changePage="food"
-        roles={[NUTRIENT]}
-      />
-      <ProtectedRoute
-        exact
-        path="/nutrionexpert/ingredients"
-        component={NutrionExpertPage}
-        changePage="ingredients"
-        roles={[NUTRIENT]}
-      />
-
-      <ProtectedRoute
-        exact
-        path="/onboarding/quiz1"
-        component={Quiz1}
-        roles={[USER]}
-      />
-      <ProtectedRoute
-        exact
-        path="/onboarding/quiz2"
-        component={Quiz2}
-        roles={[USER]}
-      />
-      <ProtectedRoute
-        exact
-        path="/onboarding/quiz3"
-        component={Quiz3}
-        roles={[USER]}
-      />
-      <ProtectedRoute
-        exact
-        path="/onboarding/quiz4"
-        component={Quiz4}
-        roles={[USER]}
-      />
-      <ProtectedRoute
-        exact
-        path="/onboarding/quiz5"
-        component={Quiz5}
-        roles={[USER]}
-      />
-      <ProtectedRoute
-        exact
-        path="/onboarding/summaryInfo"
-        component={summaryInfo}
-        roles={[USER]}
-      />
-      <Route
-        exact
-        path="/onboarding/pageLoadingQuiz"
-        component={pageLoadingQuiz}
-      ></Route>
-      <ProtectedRoute
-        exact
-        path="/onboarding/GetUserDiet"
-        component={GetUserDiet}
-        roles={[USER]}
-      />
-      <ProtectedRoute
-        exact
-        path="/schedule"
-        component={UserPersonalSchedule}
-        roles={[USER]}
-      />
-      <ProtectedRoute
-        exact
-        path="/homeuser"
-        component={HomeUser}
-        roles={[USER]}
-      />
-      <Route exact path="/libary" component={LibraryPage} />
-      <Route exact path="/food/:foodID" component={DetailFood} />
-      <Route
-        exact
-        path="/ingredient/:ingredientID"
-        component={DetailIngredient}
-      />
-      <ProtectedRoute
-        exact
-        path="/admin/add-nutrient"
-        component={AddNewUser}
-        roles={[ADMIN]}
-      />
+      <ProtectedRoute exact path="/onboarding/quiz1" component={Quiz1} roles = {[USER]}/>
+      <ProtectedRoute exact path="/onboarding/quiz2" component={Quiz2} roles = {[USER]}/>
+      <ProtectedRoute exact path="/onboarding/quiz3" component={Quiz3} roles = {[USER]}/>
+      <ProtectedRoute exact path="/onboarding/quiz4" component={Quiz4} roles = {[USER]}/>
+      <ProtectedRoute exact path="/onboarding/quiz5" component={Quiz5} roles = {[USER]}/>
+      <ProtectedRoute exact path="/onboarding/summaryInfo" component={summaryInfo} roles = {[USER]}/>
+      
+      <ProtectedRoute exact path="/onboarding/diet" component={GetUserDiet} roles = {[USER]}/>
+      <ProtectedRoute exact path="/schedule" component={UserPersonalSchedule} roles = {[USER]}/>
+      <ProtectedRoute exact path="/recommendation" component={HomeUser} roles = {[USER]}/>
+      <Route exact path="/library" component={LibraryPage}/>
+      <Route exact path="/food/:foodID" component={DetailFood}/>
+      <Route exact path="/ingredient/:ingredientID" component={DetailIngredient}/>
+      <Route exact path="/onboarding/pageLoadingQuiz" component={pageLoadingQuiz}/>
+      <ProtectedRoute exact path="/admin/add-nutrient" component={AddNewUser} roles = {[ADMIN]}/>
     </div>
   );
 };

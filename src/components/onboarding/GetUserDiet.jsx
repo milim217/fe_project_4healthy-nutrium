@@ -12,7 +12,7 @@ import AlertMessage from "../alert/AlertMessage";
 
 const GetUserDiet = ({checkValidRole}) => {
   checkValidRole();
-  const [diet, setDiet] = useState([]);
+  const [diet, setDiet] = useState(null);
   const [breakfastIndex, setBreakfastIndex] = useState(0);
   const [lunchIndex, setLunchIndex] = useState(0);
   const [dinnerIndex, setDinnerIndex] = useState(0);
@@ -32,9 +32,14 @@ const GetUserDiet = ({checkValidRole}) => {
     width: "20%",
     textAlign: "center",
   };
-  useEffect(() => {
+  useEffect(async () => {
     const quizData = JSON.parse(localStorage.getItem("quiz-data"));
-    DietAPI.getDietOptions(quizData)
+    if(quizData === null){
+      setAlert({ type: "danger", message: "Vui lòng hoàn thành tất cả quiz để tìm thực đơn của bạn" });
+      setTimeout(() => setAlert(null), 5000);
+      return; 
+    }
+    await DietAPI.getDietOptions(quizData)
       .then((res) => {
         setDiet(res.data);
       })
@@ -176,7 +181,8 @@ const GetUserDiet = ({checkValidRole}) => {
               size="small"
               extra={<Button onClick={changeBreakfast}>Đổi món</Button>}
             >
-              {diet?.breakfastOptions?.length>0 ? (
+              {diet? 
+              (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
@@ -185,7 +191,9 @@ const GetUserDiet = ({checkValidRole}) => {
                     {diet.breakfastCalo}
                   </div>
                 </Row>
-              ) : (
+              ) 
+              : 
+              (
                 <>
                   {/* <Row>
                     <div className="CardTitle-Info_Calo">
@@ -194,7 +202,8 @@ const GetUserDiet = ({checkValidRole}) => {
                   </Row> */}
                 </>
               )}
-              {diet.breakfastOptions ? (
+              {diet?.breakfastOptions ? 
+              (
                 diet.breakfastOptions[breakfastIndex]?.map((foodMass) => (
                   <div onClick={showModal}>
                     <Row className="padding_20">
@@ -220,7 +229,9 @@ const GetUserDiet = ({checkValidRole}) => {
                     </Row>
                   </div>
                 ))
-              ) : (
+              ) 
+              : 
+              (
                 <div>
                   <div className="Messageloading-getUserDiet">
                     <div className="title-name">Đang tải món ăn....</div>
@@ -235,14 +246,17 @@ const GetUserDiet = ({checkValidRole}) => {
               size="small"
               extra={<Button onClick={changeLunch}>Đổi món</Button>}
             >
-              {diet?.lunchOptions?.length>0 ? (
+              {diet? 
+              (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
                   </div>
                   <div className="CardTitle-Info_Number">{diet.lunchCalo}</div>
                 </Row>
-              ) : (
+              ) 
+              :
+              (
                 <>
                   {/* <Row>
                     <div className="CardTitle-Info_Calo">
@@ -251,7 +265,8 @@ const GetUserDiet = ({checkValidRole}) => {
                   </Row> */}
                 </>
               )}
-              {diet.lunchOptions ? (
+              {diet?.lunchOptions? 
+              (
                 diet.lunchOptions[lunchIndex]?.map((foodMass) => (
                   <div onClick={showModal}>
                     <Row className="padding_20">
@@ -277,7 +292,9 @@ const GetUserDiet = ({checkValidRole}) => {
                     </Row>
                   </div>
                 ))
-              ) : (
+              ) 
+              : 
+              (
                 <div>
                   <div className="Messageloading-getUserDiet">
                     <div className="title-name">Đang tải món ăn....</div>
@@ -292,14 +309,17 @@ const GetUserDiet = ({checkValidRole}) => {
               size="small"
               extra={<Button onClick={changeDinner}>Đổi món</Button>}
             >
-              {diet?.dinnerOptions?.length>0 ? (
+              {diet? 
+              (
                 <Row>
                   <div className="CardTitle-Info_Calo">
                     Tổng calo cần xấp xỉ
                   </div>
                   <div className="CardTitle-Info_Number">{diet.dinnerCalo}</div>
                 </Row>
-              ) : (
+              ) 
+              : 
+              (
                 <>
                   {/* <Row>
                     <div className="CardTitle-Info_Calo">
@@ -308,7 +328,8 @@ const GetUserDiet = ({checkValidRole}) => {
                   </Row> */}
                 </>
               )}
-              {diet.dinnerOptions ? (
+              {diet?.dinnerOptions?
+              (
                 diet.dinnerOptions[dinnerIndex]?.map((foodMass) => (
                   <div onClick={showModal}>
                     <Row className="padding_20">
@@ -334,7 +355,9 @@ const GetUserDiet = ({checkValidRole}) => {
                     </Row>
                   </div>
                 ))
-              ) : (
+              )
+              : 
+              (
                 <div>
                   <div className="Messageloading-getUserDiet">
                     <div className="title-name">Đang tải món ăn...</div>

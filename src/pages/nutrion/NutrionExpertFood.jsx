@@ -52,6 +52,20 @@ const NutrionExpertFood = ({ user }) => {
         setTimeout(() => setAlert(null), 5000);
       });
   };
+
+  const changeStatus = async (id) => {
+
+    await FoodAPI.changeStatus(id)
+      .then(res => {
+        setAlert({ type: "success", message: "Cập nhật trạng thái món ăn thành công" });
+        setTimeout(() => setAlert(null), 5000);
+        loadFoodList();
+      })
+      .catch(e => {
+        setAlert({ type: "danger", message: e.response ? e.response.data.message : 'Lỗi cập nhật trạng thái món ăn' });
+        setTimeout(() => setAlert(null), 5000);
+      });
+  };
   const columns = [
     // {
     //   title: "ID",
@@ -74,71 +88,86 @@ const NutrionExpertFood = ({ user }) => {
       title: "Loại món ăn",
       dataIndex: "category_id",
       justify: "center",
+      width: 80
     },
     {
       title: "Bữa Ăn",
       dataIndex: "mealType",
-      width: 150,
+      width: 100,
     },
     {
       title: "Mùa",
       dataIndex: "seasson_id",
-      width: 150,
+      width: 80,
     },
-    {
-      title: "Công thức",
-      dataIndex: "recipe",
-      justify: "center",
-      ellipsis: true,
-    },
+    // {
+    //   title: "Công thức",
+    //   dataIndex: "recipe",
+    //   justify: "center",
+    //   ellipsis: true,
+    // },
     {
       title: "Chất béo",
       dataIndex: "fat",
       justify: "center",
+      width: 80
     },
     {
       title: "Chất đạm",
       dataIndex: "protein",
       justify: "center",
+      width: 80
     },
     {
       title: "Chất bột đường",
       dataIndex: "carbon",
       justify: "center",
+      width: 80
     },
     {
       title: "Calo",
       dataIndex: "calories",
       justify: "center",
+      width: 80
     },
-
     {
-      title: "Chỉnh sửa món ăn",
+      title: "Trạng thái",
+      dataIndex: "status",
+      justify: "center",
+      render: (status) => (
+        <>
+          {status ? <Tag color="green">Đã kích hoạt </Tag> : <Tag color="red">Vô hiệu hoá</Tag>}
+        </>
+      ),
+      width: 150
+    },
+    {
+      title: "Chỉnh sửa",
       render: (_, record) => (
         <EditFood foodData={record} loadFoodList={loadFoodList}></EditFood>
       ),
       fixed: "right",
+      width: 75
     },
     {
-      title: "Xoá món ăn",
+      title: "Đổi trạng thái",
       dataIndex: "",
       render: (_, record) => (
         <>
-          <Popconfirm
-            placement="bottomRight"
-            title={text}
-            onConfirm={() => {
-              deleteFood(record.id);
-            }}
-            okText="Xoá món ăn"
-            cancelText="Huỷ hành động"
-          >
-            <Button>Xoá</Button>
-          </Popconfirm>
+          <Button
+          // type="primary"
+          onClick={() => {
+            changeStatus(record.id);
+          }}
+          style={{ backgroundColor: "green", border: "none", color: "white" }}
+        >
+          Kích hoạt/Vô hiệu hóa
+        </Button>
         </>
       ),
       justify: "center",
       fixed: "right",
+      width: 200
     },
   ];
 
@@ -146,7 +175,8 @@ const NutrionExpertFood = ({ user }) => {
   const data = [];
   const body = <br></br>;
   food
-    ? food.map((foodValue) =>
+    ? food.map((foodValue) => {
+        console.log('food = ',foodValue)
         data.push({
           id: foodValue.id,
           food_name: foodValue.foodName,
@@ -159,8 +189,9 @@ const NutrionExpertFood = ({ user }) => {
           carbon: foodValue.carb,
           calories: foodValue.calo,
           imageFood: `http://localhost:8080/food/${foodValue.id}/image`,
+          status: foodValue.status
         })
-      )
+      })
     : console.log("error");
 
   const [isModalVisible, setIsModalVisible] = useState(false);

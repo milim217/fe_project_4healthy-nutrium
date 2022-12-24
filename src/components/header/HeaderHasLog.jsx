@@ -42,17 +42,17 @@ const HeaderHasLog = () => {
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                  <Nav.Link href="/homeuser" className="text-nav-link">
+                  <Nav.Link href="/home" className="text-nav-link">
                     Trang chủ
                   </Nav.Link>
-                  <Nav.Link href="/libary" className="text-nav-link">
+                  <Nav.Link href="/library" className="text-nav-link">
                     Thư viện
                   </Nav.Link>
                   <Nav.Link href="/schedule" className="text-nav-link">
                     Kế hoạch ăn uống của bạn
                   </Nav.Link>
-                  <Nav.Link href="/home" className="text-nav-link">
-                    Bài tập thể thao dành cho bạn
+                  <Nav.Link href="/recommendation" className="text-nav-link">
+                    Thông tin dinh dưỡng
                   </Nav.Link>
                 </Nav>
                 <Nav>

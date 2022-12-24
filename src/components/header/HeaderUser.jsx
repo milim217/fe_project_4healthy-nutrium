@@ -6,8 +6,16 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const HeaderUser = () => {
+  const history = useHistory();
+
+  const logout = () => {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("quiz-data");
+    history.push("/login");
+  };
   return (
     <>
       <div className="header-wrapper">
@@ -37,20 +45,38 @@ const HeaderUser = () => {
                   <Nav.Link href="/home" className="text-nav-link">
                     Trang chủ
                   </Nav.Link>
-                  <Nav.Link href="/libary" className="text-nav-link">
+                  <Nav.Link href="/library" className="text-nav-link">
                     Thư viện
                   </Nav.Link>
                   <Nav.Link href="/schedule" className="text-nav-link">
                     Kế hoạch ăn uống của bạn
                   </Nav.Link>
-                  <Nav.Link href="/home" className="text-nav-link">
-                    Bài tập thể thao dành cho bạn
+                  <Nav.Link href="/recommendation" className="text-nav-link">
+                    Thông tin dinh dưỡng
                   </Nav.Link>
                 </Nav>
-                <Nav>
+                {/* <Nav>
                   <Link to="/login">
                     <Button className="btn-login">Đăng nhập</Button>
                   </Link>
+                </Nav> */}
+                <Nav>
+                  <NavDropdown
+                    id="basic-nav-dropdown"
+                    className="text-nav-link"
+                  >
+                    <Link to={"/profile"}>
+                      <NavDropdown.Item href="#action/3.1">
+                        Hồ sơ và bảo mật
+                      </NavDropdown.Item>
+                    </Link>
+                    <NavDropdown.Divider />
+                    <Link onClick={logout}>
+                      <NavDropdown.Item href="#action/3.2">
+                        Đăng xuất
+                      </NavDropdown.Item>
+                    </Link>
+                  </NavDropdown>
                 </Nav>
               </Navbar.Collapse>
             </div>

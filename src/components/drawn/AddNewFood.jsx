@@ -13,7 +13,7 @@ import {
   Space,
   Row,
 } from "antd";
-import UploadImageFile from "../../components/upload-image-avt/UploadImageFile";
+import UploadImageFile from "../upload-image-avt/UploadImageFile";
 import CategoryAPI from "../../service/Actions/CategoryAPI";
 import IngredientAPI from "../../service/Actions/IngredientAPI";
 import AlertDiv from "../alert/AlertDiv";

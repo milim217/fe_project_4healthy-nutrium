@@ -2,16 +2,16 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
-import { AuthContext } from "../../service/Actions/AuthAPI";
+import { useHistory } from "react-router-dom";
+import { useFormik } from "formik";
 import { Input } from "antd";
 import AlertMessage from "../alert/AlertMessage";
 import UserAPI from "../../service/Actions/UserAPI";
+import DietAPI from "../../service/Actions/DietAPI";
+import AuthUtil from "../../service/utils/AuthUtil";
 import jwt from "jwt-decode";
 import "../../assets/style/common/App.css";
-import { useHistory } from "react-router-dom";
-import { useFormik } from "formik";
 import * as Yup from "yup";
-import FormList from "antd/lib/form/FormList";
 
 const LoginForm = () => {
   const history = useHistory();
@@ -44,9 +44,10 @@ const LoginForm = () => {
       // ),
     }),
   });
-  const login = (event) => {
+  const login = async (event) => {
     event.preventDefault();
-    UserAPI.login({
+
+    await UserAPI.login({
       email: formik.values.email,
       password: formik.values.password,
     })
@@ -58,8 +59,22 @@ const LoginForm = () => {
         if (user.role === "ADMIN") {
           history.push("/user");
           console.log("Account ADMIN");
-        } else if (user.role === "USER") {
-          history.push("/homeuser");
+        }
+        // check user to direct
+        else if (user.role === "USER") {
+          // getting user from db
+          AuthUtil.getUserFromToken()
+            .then(res => {
+              const u = res.data;
+              // check user diet existed
+              DietAPI.getByUserID(u.id)
+                .then(res => {
+                  history.push("/recommendation");
+                })
+                .catch(e => {
+                  history.push("/home");
+                });
+            })
           console.log("Account USER");
         } else {
           history.push("/nutrionexpert/food");

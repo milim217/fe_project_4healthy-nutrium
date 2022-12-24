@@ -56,7 +56,9 @@ const contentStyle6 = {
   backgroundSize: "cover",
   backgroundImage: `url(${imageCardTeachUseWeb3})`,
 };
-const HomePage = () => (
+const HomePage = ({checkValidRole}) =>{ 
+  checkValidRole();
+  return (
   <>
     <HeaderUser></HeaderUser>
     <Layout>
@@ -135,4 +137,5 @@ const HomePage = () => (
     </Layout>
   </>
 );
+}
 export default HomePage;

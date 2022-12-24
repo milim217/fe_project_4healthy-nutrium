@@ -13,7 +13,7 @@ import {
   Space,
   Row,
 } from "antd";
-import UploadImageFile from "../../components/upload-image-avt/UploadImageFile";
+import UploadImageFile from "../upload-image-avt/UploadImageFile";
 import CategoryAPI from "../../service/Actions/CategoryAPI";
 import IngredientAPI from "../../service/Actions/IngredientAPI";
 import AlertDiv from "../alert/AlertDiv";
@@ -22,6 +22,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { propTypes } from "react-bootstrap/esm/Image";
 import FoodAPI from "../../service/Actions/FoodAPI";
+import AlertMessage from "../alert/AlertMessage";
+
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
@@ -61,7 +63,7 @@ const MealTypeList = [
 ];
 
 const { Option } = Select;
-const EditFood = ({ foodData }) => {
+const EditFood = ({ foodData,loadFoodList }) => {
   const [checkedMealTypeList, setcheckedMealTypeList] = useState(
     foodData.mealType.map((element) => {
       return element.trim();
@@ -77,6 +79,7 @@ const EditFood = ({ foodData }) => {
   const [alert1, setAlert1] = useState(null);
   const [food, setFood] = useState(null);
   const [open, setOpen] = useState(false);
+  const [topAlert,setTopAlert] = useState(null);
   const [checkedSeasonList, setcheckedSeasonList] = useState(
     foodData.seasson_id.map((element) => {
       return element.trim();
@@ -272,10 +275,8 @@ const EditFood = ({ foodData }) => {
   });
   const onSubmit = () => {
     const userData = massFormTable.mass;
-    console.log(userData);
     //Kiểm tra loại món ăn
     if (!CategoryFoodValue.categoryName && !CategoryFoodValue.categoryStatus) {
-      console.log("TEST/////");
       setAlert2({
         message: "Không được để trống loại món ăn",
       });
@@ -292,8 +293,7 @@ const EditFood = ({ foodData }) => {
     });
 
     //Tạo ra một mảng mới chưa object + mass
-    console.log("INGREDIENT FOOD VALUE", IngredientFoodValue);
-    let ingredientMassses = uniqueChars.map((data) => {
+    let ingredientMasses = uniqueChars.map((data) => {
       const findData = userData.find(
         (userData) => userData.ingredientName == data.ingredientName
       );
@@ -306,24 +306,44 @@ const EditFood = ({ foodData }) => {
       return;
     });
     //Xoá các thành phần underfined
-    ingredientMassses = ingredientMassses.filter(function (element) {
+    ingredientMasses = ingredientMasses.filter(function (element) {
       return element !== undefined;
     });
+
+    let seasonList = [];
+    let mealList = [];
+    dataSeasonSubmit.map(s => {
+      seasonList.push(s.value);
+    });
+    dataMealTypeSubmit.map(m => {
+      mealList.push(m.value);
+    })
+
     const editFoodForm = {
+      id: foodData.id,
       foodName: formik.values.foodName,
       recipe: formik.values.recipe,
       fat: formik.values.fat,
       protein: formik.values.protein,
       carb: formik.values.carb,
       calo: formik.values.calo,
-      // Fiber: formik.values.Fiber.trim(),
-      seasons: dataSeasonSubmit,
-      meals: dataMealTypeSubmit,
-      // ingredientFood: IngredientFoodValue.ingredientFood,
-      ingredientMassses: ingredientMassses,
+      seasons: seasonList,
+      meals: mealList,
+      ingredientMasses: ingredientMasses,
       category: CategoryFoodValue,
     };
+    console.log('season = ',dataSeasonSubmit)
     console.log("update food = ", editFoodForm);
+    FoodAPI.update(editFoodForm)
+      .then(res => {
+        setTopAlert({ type: "success", message: "Cập nhật món ăn thành công" });
+        setTimeout(() => setAlert(null), 5000);
+        loadFoodList();
+      })
+      .catch(e => {
+        setTopAlert({ type: "danger", message: e.response? e.response.data.message : "Lỗi cập nhật món ăn" });
+        setTimeout(() => setAlert(null), 5000);
+      });
   };
 
   const showDrawer = () => {
@@ -395,13 +415,13 @@ const EditFood = ({ foodData }) => {
         .then((res) => {
           setListCategory(res.data);
         })
-        .catch((err) => {});
+        .catch((err) => { });
 
       await IngredientAPI.getAll()
         .then((res) => {
           setListIngredient(res.data);
         })
-        .catch((err) => {});
+        .catch((err) => { });
 
       await FoodAPI.getById(foodData.id).then((res) => {
         // console.log("food = ", res.data);
@@ -455,6 +475,7 @@ const EditFood = ({ foodData }) => {
           </Space>
         }
       >
+        <AlertMessage info={topAlert} />
         <Form layout="vertical" hideRequiredMark id="formEditNewFoodInput">
           <Row gutter={16}>
             <Col span={12}>
