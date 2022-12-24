@@ -27,13 +27,13 @@ import AlertMessage from "../../../src/components/alert/AlertMessage";
 const text = "Nguyên Liệu này sẽ được xoá khỏi danh sách?";
 
 function NutrionExpertIngredients() {
-  const [Ingredient, setIngredient] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
   const [alert, setAlert] = useState(null);
 
   const loadIngredientList = async () => {
     await IngredientAPI.getAll()
       .then((res) => {
-        setIngredient(res.data);
+        setIngredients(res.data);
       })
       .catch((err) => {});
   };
@@ -41,121 +41,147 @@ function NutrionExpertIngredients() {
     loadIngredientList();
   }, []);
 
-  const deleteIngredient = async (id) => {
-    await IngredientAPI.delete(id)
-      .then((res) => {
-        setAlert({ type: "success", message: "Xóa nguyên liệu thành công" });
+  const changeStatus = async (id) => {
+
+    await IngredientAPI.changeStatus(id)
+      .then(res => {
+        setAlert({ type: "success", message: "Cập nhật trạng thái nguyên liệu thành công" });
         setTimeout(() => setAlert(null), 5000);
         loadIngredientList();
       })
-      .catch((e) => {
-        setAlert({
-          type: "danger",
-          message: e.response.data
-            ? e.response.data.message
-            : "Lỗi xóa nguyên liệu",
-        });
+      .catch(e => {
+        setAlert({ type: "danger", message: e.response ? e.response.data.message : 'Lỗi cập nhật trạng thái nguyên liệu' });
         setTimeout(() => setAlert(null), 5000);
       });
   };
+
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      justify: "center",
-    },
+    // {
+    //   title: "ID",
+    //   dataIndex: "id",
+    //   justify: "center",
+    // },
     {
       title: "Tên Nguyên Liệu",
       dataIndex: "ingredientName",
       justify: "center",
+      width: 100
     },
     {
-      title: "Ảnh Nguyên liệu",
-      dataIndex: "img",
+      title: "Ảnh",
+      dataIndex: "image",
       render: (imageIngredient) => {
         return <Image width={80} height={60} src={imageIngredient} />;
       },
       justify: "center",
+      width: 100
     },
-    {
-      title: "Giới hạn tối thiểu",
-      dataIndex: "minLimit",
-      justify: "center",
-    },
-    {
-      title: "Giới hạn tối đa",
-      dataIndex: "maxLimit",
-      justify: "center",
-    },
+    // {
+    //   title: "Giới hạn tối thiểu",
+    //   dataIndex: "minLimit",
+    //   justify: "center",
+    //   width: 75
+    // },
+    // {
+    //   title: "Giới hạn tối đa",
+    //   dataIndex: "maxLimit",
+    //   justify: "center",
+    //   width: 75
+    // },
     {
       title: "Mùa",
       dataIndex: "seasson_id",
       justify: "center",
+      width: 75
     },
     {
-      title: "Chất béo(g)",
+      title: "Trạng thái",
+      dataIndex: "status",
+      justify: "center",
+      render: (status) => (
+        <>
+          {status ? <Tag color="green">Đã kích hoạt </Tag> : <Tag color="red">Vô hiệu hoá</Tag>}
+        </>
+      ),
+      width: 120
+    },
+    {
+      title: "Chất béo (g)",
       dataIndex: "fat",
       justify: "center",
+      width: 66
     },
     {
-      title: "Chất đạm(g)",
+      title: "Chất đạm (g)",
       dataIndex: "protein",
       justify: "center",
+      width: 68
     },
     {
-      title: "Chất bột đường(g)",
+      title: "Chất bột đường (g)",
       dataIndex: "carb",
       justify: "center",
+      width: 80
     },
     {
-      title: "Calo(Kcal)",
+      title: "Calo (Kcal)",
       dataIndex: "calo",
       justify: "center",
+      width: 73
     },
     {
       title: "Nước(g)",
       dataIndex: "water",
       justify: "center",
+      width: 80
     },
     {
       title: "Chất xơ(g)",
       dataIndex: "fiber",
       justify: "center",
+      width: 80
     },
     {
       title: "Tro(g)",
       dataIndex: "ash",
       justify: "center",
+      width: 80
     },
     {
       title: "Canxi(mg)",
       dataIndex: "canxi",
       justify: "center",
+      width: 80
     },
     {
       title: "Iron(mg)",
       dataIndex: "iron",
       justify: "center",
+      width: 80
     },
     {
       title: "Zinc(mg)",
       dataIndex: "zinc",
       justify: "center",
+      width: 80
     },
     {
       title: "VitaminC(mg)",
       dataIndex: "vitaminC",
       justify: "center",
+      width: 80
     },
     {
       title: "VitaminB1(mg)",
       dataIndex: "vitaminB1",
       justify: "center",
+      width: 80
     },
     {
       title: "VitaminB2(mg)",
       dataIndex: "vitaminB2",
       justify: "center",
+      width: 80
     },
     {
       title: "VitaminB3(mg)",
@@ -187,41 +213,39 @@ function NutrionExpertIngredients() {
       dataIndex: "vitaminARae",
       justify: "center",
     },
-
     {
-      title: "Chỉnh sửa Nguyên Liệu",
+      title: "Chỉnh sửa",
       render: (_, record) => (
-        <EditIngrdient ingredient={record}></EditIngrdient>
+        <EditIngrdient ingredient={record} loadIngredientList={loadIngredientList}></EditIngrdient>
       ),
       fixed: "right",
+      width: 75
     },
     {
-      title: "Xoá Nguyên Liệu",
+      title: "Đổi trạng thái",
       dataIndex: "",
-      key: "x",
       render: (_, record) => (
         <>
-          <Popconfirm
-            placement="bottomRight"
-            title={text}
-            onConfirm={() => {
-              deleteIngredient(record.id);
-            }}
-            okText="Xoá Nguyên Liệu"
-            cancelText="Huỷ hành động"
-          >
-            <Button>Xoá</Button>
-          </Popconfirm>
+          <Button
+          // type="primary"
+          onClick={() => {
+            changeStatus(record.id);
+          }}
+          style={{ backgroundColor: "green", border: "none", color: "white" }}
+        >
+          Kích hoạt/Vô hiệu hóa
+        </Button>
         </>
       ),
       justify: "center",
       fixed: "right",
+      width: 200
     },
   ];
 
   const data = [];
-  Ingredient
-    ? Ingredient.map((ingredientValue) =>
+  ingredients
+    ? ingredients.map((ingredientValue) =>
         data.push({
           id: ingredientValue.id,
           ingredientName: ingredientValue.ingredientName,
@@ -248,7 +272,9 @@ function NutrionExpertIngredients() {
           vitaminB12: ingredientValue.vitaminB12,
           vitaminA: ingredientValue.vitaminA,
           vitaminARae: ingredientValue.vitaminARae,
-          img: `http://localhost:8080/ingredient/${ingredientValue.id}/image`,
+          image: `http://localhost:8080/ingredient/${ingredientValue.id}/image`,
+          status: ingredientValue.status,
+          img: ingredientValue.img
         })
       )
     : console.log("error");

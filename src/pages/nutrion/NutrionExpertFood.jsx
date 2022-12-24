@@ -189,7 +189,8 @@ const NutrionExpertFood = ({ user }) => {
           carbon: foodValue.carb,
           calories: foodValue.calo,
           imageFood: `http://localhost:8080/food/${foodValue.id}/image`,
-          status: foodValue.status
+          status: foodValue.status,
+          img: foodValue.img
         })
       })
     : console.log("error");

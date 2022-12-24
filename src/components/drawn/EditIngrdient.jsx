@@ -18,6 +18,7 @@ import UploadImageFileIngredient from "../upload-image-avt/UploadImageFileIngred
 import AlertMessage from "../alert/AlertMessage";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import IngredientAPI from "../../service/Actions/IngredientAPI";
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
@@ -57,6 +58,8 @@ const EditIngrdient = ({ ingredient }) => {
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
   const [alert, setAlert] = useState(null);
+  const [topAlert, setTopAlert] = useState(false);
+  const [updated, setUpdated] = useState(false);
 
   useEffect(() => {
     if (ingredient) {
@@ -130,6 +133,9 @@ const EditIngrdient = ({ ingredient }) => {
     setOpen(false);
     document.getElementById("formAddNewIngredientInput").reset();
     formik.handleReset();
+    if (updated) {
+      window.location.reload();
+    }
   };
 
   const formik = useFormik({
@@ -294,7 +300,12 @@ const EditIngrdient = ({ ingredient }) => {
   });
 
   const onSubmit = () => {
-    const AddNewIngrendient = {
+    let seasonList = [];
+    dataSeasonSubmit.map(s => {
+      seasonList.push(s.value);
+    })
+    const editData = {
+      id: ingredient.id,
       ingredientName: formik.values.ingredientName,
       fat: formik.values.fat,
       protein: formik.values.protein,
@@ -318,11 +329,23 @@ const EditIngrdient = ({ ingredient }) => {
       vitaminARae: formik.values.vitaminARae,
       minLimit: formik.values.minLimit,
       maxLimit: formik.values.maxLimit,
-      seasons: dataSeasonSubmit,
+      seasons: seasonList,
+      status: ingredient.status,
+      img: ingredient.img
     };
-    console.log(AddNewIngrendient);
-    //Xoá dữ liệu khi submit thành công vào api
-    // document.getElementById("formAddNewIngredientInput").reset();
+    console.log('editData = ', editData);
+
+    IngredientAPI.update(editData)
+      .then(res => {
+        setTopAlert({ type: "success", message: "Cập nhật nguyên liệu thành công" });
+        setTimeout(() => setAlert(null), 5000);
+        setUpdated(true);
+        // loadIngredientList();
+      })
+      .catch(e => {
+        setTopAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi cập nhật nguyên liệu" });
+        setTimeout(() => setAlert(null), 5000);
+      })
   };
 
   return (
@@ -344,13 +367,14 @@ const EditIngrdient = ({ ingredient }) => {
             <Button
               onClick={onSubmit}
               type="primary"
-              // disabled={!formik.isValid}
+            // disabled={!formik.isValid}
             >
               Sửa
             </Button>
           </Space>
         }
       >
+        <AlertMessage info={topAlert} />
         <Form layout="vertical" hideRequiredMark id="formAddNewIngredientInput">
           <Row gutter={16}>
             <Col span={12}>

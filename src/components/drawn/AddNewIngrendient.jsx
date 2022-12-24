@@ -76,6 +76,7 @@ const AddNewIngrendient = ({loadIngredientList}) => {
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
   const [alert, setAlert] = useState(null);
+  const [added, setAdded] = useState(false);
 
   const onChange_SeassonList = (list) => {
     setcheckedSessonList(list);
@@ -110,6 +111,9 @@ const AddNewIngrendient = ({loadIngredientList}) => {
     setOpen(false);
     document.getElementById("formAddNewIngredientInput").reset();
     formik.handleReset();
+    if(added){
+      window.location.reload();
+    }
   };
 
   const formik = useFormik({
@@ -301,6 +305,8 @@ const AddNewIngrendient = ({loadIngredientList}) => {
         minLimit: formik.values.minLimit,
         maxLimit: formik.values.maxLimit,
         seasons: checkedSeasonList,
+        img: "",
+        status:true
       };
       console.log('add data = ', AddNewIngrendient);
 
@@ -308,7 +314,7 @@ const AddNewIngrendient = ({loadIngredientList}) => {
         .then(res => {
           setAlert({ type: "success", message: "Thêm nguyên liệu mới thành công" });
           setTimeout(() => setAlert(null), 5000);
-          loadIngredientList();
+          setAdded(true)
         })
         .catch(e => {
           setAlert({ type: "danger", message: e.response.data ? e.response.data.message : 'Lỗi thêm nguyên liệu mới' });

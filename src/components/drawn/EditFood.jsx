@@ -80,6 +80,7 @@ const EditFood = ({ foodData,loadFoodList }) => {
   const [food, setFood] = useState(null);
   const [open, setOpen] = useState(false);
   const [topAlert,setTopAlert] = useState(null);
+  const [updated, setUpdated] = useState(false);
   const [checkedSeasonList, setcheckedSeasonList] = useState(
     foodData.seasson_id.map((element) => {
       return element.trim();
@@ -331,6 +332,8 @@ const EditFood = ({ foodData,loadFoodList }) => {
       meals: mealList,
       ingredientMasses: ingredientMasses,
       category: CategoryFoodValue,
+      status: foodData.status,
+      img: foodData.img
     };
     console.log('season = ',dataSeasonSubmit)
     console.log("update food = ", editFoodForm);
@@ -338,7 +341,7 @@ const EditFood = ({ foodData,loadFoodList }) => {
       .then(res => {
         setTopAlert({ type: "success", message: "Cập nhật món ăn thành công" });
         setTimeout(() => setAlert(null), 5000);
-        loadFoodList();
+        setUpdated(true);
       })
       .catch(e => {
         setTopAlert({ type: "danger", message: e.response? e.response.data.message : "Lỗi cập nhật món ăn" });
@@ -355,6 +358,9 @@ const EditFood = ({ foodData,loadFoodList }) => {
   };
   const onClose = () => {
     setOpen(false);
+    if(updated){
+      window.location.reload();
+    }
   };
   //
   //

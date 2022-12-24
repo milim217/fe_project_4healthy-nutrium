@@ -117,6 +117,7 @@ const AddNewFood = ({ loadFoodList }) => {
   const [alert, setAlert] = useState(null);
   const [alert1, setAlert1] = useState(null);
   const [topAlert, setTopAlert] = useState(null);
+  const [added, setAdded] = useState(null);
 
   const onChange_SeassonList = (list) => {
     setcheckedSessonList(list);
@@ -300,6 +301,7 @@ const AddNewFood = ({ loadFoodList }) => {
       meals: checkedMealTypeList,
       ingredientMasses: ingredientMassses,
       category: CategoryFoodValue,
+      status: true
     };
 
     console.log("added food = ", addNewFoodForm);
@@ -308,7 +310,7 @@ const AddNewFood = ({ loadFoodList }) => {
       .then((res) => {
         setTopAlert({ type: "success", message: "Thêm thành công" });
         setTimeout(() => setTopAlert(null), 5000);
-        loadFoodList();
+        setAdded(true)
       })
       .catch((e) => {
         setTopAlert({ type: "danger", message: e.response.data.message });
@@ -321,15 +323,12 @@ const AddNewFood = ({ loadFoodList }) => {
   const onClose = () => {
     setOpen(false);
     // document.getElementById("formAddNewFoodInput").reset();
+    if(added){
+      window.location.reload();
+    }
   };
-  //
-  //
-  //
+  
   //Lấy giá trị của nguyên liệu
-  //
-  //
-  //
-
   const [massFormTable, setMassFormTable] = useState({
     mass: "",
   });
@@ -345,7 +344,6 @@ const AddNewFood = ({ loadFoodList }) => {
     setMassFormTable({
       mass: dataSource,
     });
-    // console.log(HamLuong);
     console.log(IngredientFoodValueArr);
   };
   const [listIngredient, setListIngredient] = useState([]);
