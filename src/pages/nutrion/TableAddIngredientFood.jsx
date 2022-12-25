@@ -65,6 +65,10 @@ const EditableCell = ({
             required: true,
             message: `${title} không được bỏ trống.`,
           },
+          {
+            pattern: /^[1-9][0-9]*$/,
+            message: `${title} phải là chữ số và giá trị lớn hơn 0`,
+          },
         ]}
       >
         <Input ref={inputRef} onPressEnter={save} onBlur={save} />

@@ -27,7 +27,7 @@ import { useState } from "react";
 import moment from "moment";
 import AlertMessage from "../../../src/components/alert/AlertMessage";
 
-const UserProfile = ({checkValidRole}) => {
+const UserProfile = ({ checkValidRole }) => {
   checkValidRole();
   const layout = {
     labelCol: {
@@ -50,33 +50,39 @@ const UserProfile = ({checkValidRole}) => {
     setIsModalOpen(true);
   };
   const resetPassword = async () => {
-
     // const resetPasswordForm = {
     const oldPassword = formikResetPassword.values.oldPassword;
     const newPassword = formikResetPassword.values.passwordNew;
     //   cofirmPasswordNew: formikResetPassword.values.cofirmPasswordNew,
     // };
     await UserAPI.checkOldPassword(user.id, [oldPassword])
-      .then(res => {
+      .then((res) => {
         const u = user;
         u.password = newPassword;
         UserAPI.updateUser(u)
-          .then(res => {
-            setResetFormAlert({ type: "success", message: "Đổi mật khẩu thành công" });
+          .then((res) => {
+            setResetFormAlert({
+              type: "success",
+              message: "Đổi mật khẩu thành công",
+            });
             setTimeout(() => setAlert(null), 5000);
           })
-          .catch(e => {
-            setResetFormAlert({ type: "danger", message: "Đổi mật khẩu không thành công" });
+          .catch((e) => {
+            setResetFormAlert({
+              type: "danger",
+              message: "Đổi mật khẩu không thành công",
+            });
             setTimeout(() => setAlert(null), 5000);
           });
       })
-      .catch(e => {
-        setResetFormAlert({ type: "danger", message: "Mật khẩu cũ không đúng" });
+      .catch((e) => {
+        setResetFormAlert({
+          type: "danger",
+          message: "Mật khẩu cũ không đúng",
+        });
         setTimeout(() => setAlert(null), 5000);
         return;
       });
-
-
   };
 
   const handleCancel = () => {
@@ -148,19 +154,18 @@ const UserProfile = ({checkValidRole}) => {
     //
     //
     validationSchema: Yup.object({
-      name: Yup.string()
-        .required("Bạn không được để trống tên tài khoản")
+      name: Yup.string().required("Bạn không được để trống tên tài khoản"),
       //   .matches(
       //     /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
       //     "Tên chứa 8 - 20 ký tự, không chứa '.' và '_'"
       //   ),
-      , phone: Yup.string()
+      phone: Yup.string()
         .required("Bạn không được để trống số điện thoại")
-      //   .matches(
-      //     /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/,
-      //     "Số điện thoại gồm 10 số, và bắt đầu bằng số 0"
-      //   ),
-      , address: Yup.string().required("Bạn không được để trống địa chỉ"),
+        .matches(
+          /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/,
+          "Số điện thoại gồm 10 số, và bắt đầu bằng số 0"
+        ),
+      address: Yup.string().required("Bạn không được để trống địa chỉ"),
     }),
   });
   const formikResetPassword = useFormik({
@@ -172,24 +177,24 @@ const UserProfile = ({checkValidRole}) => {
 
     //regex resetpassword
     validationSchema: Yup.object({
-      // oldPassword: Yup.string()
-      //   .required("Bạn không được để trống email")
-      //   .matches(
-      //     /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,10}$/,
-      //     "Mật khẩu tối thiểu 8 - 10 ký tự, ít nhất chứa một chữ cái và một số:"
-      //   ),
-      // passwordNew: Yup.string()
-      //   .required("Bạn không được để trống mật khẩu mới")
-      //   .matches(
-      //     /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,10}$/,
-      //     "Mật khẩu tối thiểu 8 - 10 ký tự, ít nhất chứa một chữ cái và một số:"
-      //   ),
-      // cofirmPasswordNew: Yup.string()
-      //   .required("Bạn không được để trống nhập lại mật khẩu mới")
-      //   .oneOf(
-      //     [Yup.ref("passwordNew"), null],
-      //     "mật khẩu nhập lại phải trùng với mật khẩu bạn đã nhập"
-      //   ),
+      oldPassword: Yup.string()
+        .required("Bạn không được để trống email")
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,10}$/,
+          "Mật khẩu tối thiểu 8 - 10 ký tự, ít nhất chứa một chữ cái và một số:"
+        ),
+      passwordNew: Yup.string()
+        .required("Bạn không được để trống mật khẩu mới")
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,10}$/,
+          "Mật khẩu tối thiểu 8 - 10 ký tự, ít nhất chứa một chữ cái và một số:"
+        ),
+      cofirmPasswordNew: Yup.string()
+        .required("Bạn không được để trống nhập lại mật khẩu mới")
+        .oneOf(
+          [Yup.ref("passwordNew"), null],
+          "mật khẩu nhập lại phải trùng với mật khẩu bạn đã nhập"
+        ),
     }),
   });
 
@@ -197,12 +202,11 @@ const UserProfile = ({checkValidRole}) => {
     const u = AuthUtil.getUserFromToken();
     if (u === null) {
       history.push("/login");
-    }
-    else {
-      await u.then(res => {
+    } else {
+      await u.then((res) => {
         formik.setValues(res.data);
         setUser(res.data);
-      })
+      });
     }
   }, []);
 
@@ -213,12 +217,17 @@ const UserProfile = ({checkValidRole}) => {
     userData.address = userData.address.trim();
 
     UserAPI.updateUser(userData)
-      .then(res => {
+      .then((res) => {
         setAlert({ type: "success", message: "Cập nhật thành công" });
         setTimeout(() => setAlert(null), 5000);
       })
-      .catch(e => {
-        setAlert({ type: "danger", message: e.response? e.response.data.message : 'Lỗi cập nhật tài khoản' });
+      .catch((e) => {
+        setAlert({
+          type: "danger",
+          message: e.response
+            ? e.response.data.message
+            : "Lỗi cập nhật tài khoản",
+        });
         setTimeout(() => setAlert(null), 5000);
       });
   };
@@ -260,10 +269,18 @@ const UserProfile = ({checkValidRole}) => {
                 </Form.Item>
                 {/* Ngày sinh và Email không được sửa */}
                 <Form.Item label="Ngày sinh của bạn">
-                  <Input placeholder="input placeholder" value={moment(formik.values.dob).format("DD/MM/YYYY")} disabled={true} />
+                  <Input
+                    placeholder="input placeholder"
+                    value={moment(formik.values.dob).format("DD/MM/YYYY")}
+                    disabled={true}
+                  />
                 </Form.Item>
                 <Form.Item label="Email của bạn">
-                  <Input placeholder="input placeholder" value={formik.values.email} disabled={true} />
+                  <Input
+                    placeholder="input placeholder"
+                    value={formik.values.email}
+                    disabled={true}
+                  />
                 </Form.Item>
                 <Form.Item
                   name="Giới tính"

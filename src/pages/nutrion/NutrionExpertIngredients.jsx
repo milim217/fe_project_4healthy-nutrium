@@ -42,15 +42,22 @@ function NutrionExpertIngredients() {
   }, []);
 
   const changeStatus = async (id) => {
-
     await IngredientAPI.changeStatus(id)
-      .then(res => {
-        setAlert({ type: "success", message: "Cập nhật trạng thái nguyên liệu thành công" });
+      .then((res) => {
+        setAlert({
+          type: "success",
+          message: "Cập nhật trạng thái nguyên liệu thành công",
+        });
         setTimeout(() => setAlert(null), 5000);
         loadIngredientList();
       })
-      .catch(e => {
-        setAlert({ type: "danger", message: e.response ? e.response.data.message : 'Lỗi cập nhật trạng thái nguyên liệu' });
+      .catch((e) => {
+        setAlert({
+          type: "danger",
+          message: e.response
+            ? e.response.data.message
+            : "Lỗi cập nhật trạng thái nguyên liệu",
+        });
         setTimeout(() => setAlert(null), 5000);
       });
   };
@@ -65,7 +72,7 @@ function NutrionExpertIngredients() {
       title: "Tên Nguyên Liệu",
       dataIndex: "ingredientName",
       justify: "center",
-      width: 100
+      width: 100,
     },
     {
       title: "Ảnh",
@@ -74,7 +81,7 @@ function NutrionExpertIngredients() {
         return <Image width={80} height={60} src={imageIngredient} />;
       },
       justify: "center",
-      width: 100
+      width: 100,
     },
     // {
     //   title: "Giới hạn tối thiểu",
@@ -92,7 +99,7 @@ function NutrionExpertIngredients() {
       title: "Mùa",
       dataIndex: "seasson_id",
       justify: "center",
-      width: 75
+      width: 75,
     },
     {
       title: "Trạng thái",
@@ -100,126 +107,139 @@ function NutrionExpertIngredients() {
       justify: "center",
       render: (status) => (
         <>
-          {status ? <Tag color="green">Đã kích hoạt </Tag> : <Tag color="red">Vô hiệu hoá</Tag>}
+          {status ? (
+            <Tag color="green">Đã kích hoạt </Tag>
+          ) : (
+            <Tag color="red">Vô hiệu hoá</Tag>
+          )}
         </>
       ),
-      width: 120
+      width: 120,
     },
     {
       title: "Chất béo (g)",
       dataIndex: "fat",
       justify: "center",
-      width: 66
+      width: 66,
     },
     {
       title: "Chất đạm (g)",
       dataIndex: "protein",
       justify: "center",
-      width: 68
+      width: 68,
     },
     {
       title: "Chất bột đường (g)",
       dataIndex: "carb",
       justify: "center",
-      width: 80
+      width: 80,
     },
     {
       title: "Calo (Kcal)",
       dataIndex: "calo",
       justify: "center",
-      width: 73
+      width: 73,
     },
     {
       title: "Nước(g)",
       dataIndex: "water",
       justify: "center",
-      width: 80
+      width: 80,
     },
     {
       title: "Chất xơ(g)",
       dataIndex: "fiber",
       justify: "center",
-      width: 80
+      width: 80,
     },
     {
       title: "Tro(g)",
       dataIndex: "ash",
       justify: "center",
-      width: 80
+      width: 80,
     },
     {
       title: "Canxi(mg)",
       dataIndex: "canxi",
       justify: "center",
-      width: 80
+      width: 80,
     },
     {
       title: "Iron(mg)",
       dataIndex: "iron",
       justify: "center",
-      width: 80
+      width: 80,
     },
     {
       title: "Zinc(mg)",
       dataIndex: "zinc",
       justify: "center",
-      width: 80
+      width: 80,
     },
     {
       title: "VitaminC(mg)",
       dataIndex: "vitaminC",
       justify: "center",
-      width: 80
+      width: 80,
     },
     {
       title: "VitaminB1(mg)",
       dataIndex: "vitaminB1",
       justify: "center",
-      width: 80
+      width: 80,
     },
     {
       title: "VitaminB2(mg)",
       dataIndex: "vitaminB2",
       justify: "center",
-      width: 80
+      width: 80,
     },
     {
       title: "VitaminB3(mg)",
       dataIndex: "vitaminB3",
       justify: "center",
+      width: 80,
     },
     {
       title: "VitaminB6A(mg)",
       dataIndex: "vitaminB6A",
       justify: "center",
+      width: 80,
     },
     {
       title: "VitaminD(mg)",
       dataIndex: "vitaminD",
       justify: "center",
+      width: 80,
     },
     {
       title: "VitaminB12(mcg)",
       dataIndex: "vitaminB12",
       justify: "center",
+      width: 80,
     },
     {
       title: "VitaminA(mcg)",
       dataIndex: "vitaminA",
       justify: "center",
+      width: 80,
     },
     {
       title: "VitaminA_rae(mcg)",
       dataIndex: "vitaminARae",
       justify: "center",
+      width: 80,
     },
     {
       title: "Chỉnh sửa",
       render: (_, record) => (
-        <EditIngrdient ingredient={record} loadIngredientList={loadIngredientList}></EditIngrdient>
+        <EditIngrdient
+          ingredient={record}
+          loadIngredientList={loadIngredientList}
+        ></EditIngrdient>
       ),
       fixed: "right",
-      width: 75
+      width: 70,
     },
     {
       title: "Đổi trạng thái",
@@ -227,19 +247,19 @@ function NutrionExpertIngredients() {
       render: (_, record) => (
         <>
           <Button
-          // type="primary"
-          onClick={() => {
-            changeStatus(record.id);
-          }}
-          style={{ backgroundColor: "green", border: "none", color: "white" }}
-        >
-          Kích hoạt/Vô hiệu hóa
-        </Button>
+            // type="primary"
+            onClick={() => {
+              changeStatus(record.id);
+            }}
+            style={{ backgroundColor: "green", border: "none", color: "white" }}
+          >
+            Kích hoạt/Vô hiệu hóa
+          </Button>
         </>
       ),
       justify: "center",
       fixed: "right",
-      width: 200
+      width: 120,
     },
   ];
 
@@ -274,7 +294,7 @@ function NutrionExpertIngredients() {
           vitaminARae: ingredientValue.vitaminARae,
           image: `http://localhost:8080/ingredient/${ingredientValue.id}/image`,
           status: ingredientValue.status,
-          img: ingredientValue.img
+          img: ingredientValue.img,
         })
       )
     : console.log("error");
