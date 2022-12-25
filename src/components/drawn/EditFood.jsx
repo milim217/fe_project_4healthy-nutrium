@@ -63,9 +63,9 @@ const MealTypeList = [
 ];
 
 const { Option } = Select;
-const EditFood = ({ foodData, loadFoodList }) => {
+const EditFood = ({ foodData, openUpdate, setOpenUpdate }) => {
   const [checkedMealTypeList, setcheckedMealTypeList] = useState(
-    foodData.mealType.map((element) => {
+    foodData?.mealType.map((element) => {
       return element.trim();
     })
   );
@@ -78,53 +78,158 @@ const EditFood = ({ foodData, loadFoodList }) => {
   const [checkAllMealType, setCheckAllMealType] = useState(false);
   const [alert1, setAlert1] = useState(null);
   const [food, setFood] = useState(null);
-  const [open, setOpen] = useState(false);
+  // const [openUpdate, setOpenUpdate] = useState(false);
   const [topAlert, setTopAlert] = useState(null);
   const [updated, setUpdated] = useState(false);
   const [checkedSeasonList, setcheckedSeasonList] = useState(
-    foodData.seasson_id.map((element) => {
+    foodData?.seasson_id.map((element) => {
       return element.trim();
     })
   );
   const [image, setImage] = useState(null);
   const [result, setResult] = useState(null);
+  const [dataSeasonSubmit, setDataSeasonSubmit] = useState(null);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (foodData) {
+  //     formik.setValues(foodData);
+  //   }
+  // }, []);
+
+  useEffect(async () => {
     if (foodData) {
       formik.setValues(foodData);
+      let sList = foodData.seasson_id.map((element) => {
+        return element.trim();
+      });
+      setcheckedSeasonList(sList);
+      let mealList = foodData?.mealType.map((element) => {
+        return element.trim();
+      });
+      setcheckedMealTypeList(mealList);
+
+      await CategoryAPI.getAll()
+        .then((res) => {
+          setListCategory(res.data);
+        })
+        .catch((err) => { });
+
+      await IngredientAPI.getAll()
+        .then((res) => {
+          setListIngredient(res.data);
+        })
+        .catch((err) => { });
+
+      await FoodAPI.getById(foodData.id).then((res) => {
+        // console.log("food = ", res.data);
+        const food = res.data;
+        formik.setValues(food);
+        // setFood(food);
+        setCategoryFoodValue(food.category);
+      });
     }
-  }, []);
-  let dataSeasonSubmit = checkedSeasonList.map((data) => {
-    if (data == "Xuân") {
-      return {
-        value: {
-          id: 1,
-          seasonName: "Xuân",
-        },
-      };
-    } else if (data == "Hạ") {
-      return {
-        value: {
-          id: 2,
-          seasonName: "Hạ",
-        },
-      };
-    } else if (data == "Thu") {
-      return {
-        value: {
-          id: 3,
-          seasonName: "Thu",
-        },
-      };
-    } else {
-      return {
-        value: {
-          id: 4,
-          seasonName: "Đông",
-        },
-      };
+  }, [foodData]);
+
+  useEffect(() => {
+    if (checkedSeasonList) {
+      let s = checkedSeasonList?.map((data) => {
+        if (data == "Xuân") {
+          return {
+            value: {
+              id: 1,
+              seasonName: "Xuân",
+            },
+          };
+        } else if (data == "Hạ") {
+          return {
+            value: {
+              id: 2,
+              seasonName: "Hạ",
+            },
+          };
+        } else if (data == "Thu") {
+          return {
+            value: {
+              id: 3,
+              seasonName: "Thu",
+            },
+          };
+        } else {
+          return {
+            value: {
+              id: 4,
+              seasonName: "Đông",
+            },
+          };
+        }
+      });
+      setDataSeasonSubmit(s);
     }
-  });
+  }, [checkedSeasonList]);
+
+  const [dataMealTypeSubmit,setDataMealTypeSubmit] = useState(null);
+
+  useEffect(() => {
+    if(checkedMealTypeList){
+    let mList = checkedMealTypeList.map((data) => {
+      if (data == "Bữa sáng") {
+        return {
+          value: {
+            id: 1,
+            mealName: "Bữa sáng",
+          },
+        };
+      } else if (data == "Bữa trưa") {
+        return {
+          value: {
+            id: 2,
+            mealName: "Bữa trưa",
+          },
+        };
+      } else {
+        return {
+          value: {
+            id: 3,
+            mealName: "Bữa tối",
+          },
+        };
+      }
+    })
+    setDataMealTypeSubmit(mList);
+  }
+  }, [checkedMealTypeList]);
+
+  // let dataSeasonSubmit = checkedSeasonList?.map((data) => {
+  //   if (data == "Xuân") {
+  //     return {
+  //       value: {
+  //         id: 1,
+  //         seasonName: "Xuân",
+  //       },
+  //     };
+  //   } else if (data == "Hạ") {
+  //     return {
+  //       value: {
+  //         id: 2,
+  //         seasonName: "Hạ",
+  //       },
+  //     };
+  //   } else if (data == "Thu") {
+  //     return {
+  //       value: {
+  //         id: 3,
+  //         seasonName: "Thu",
+  //       },
+  //     };
+  //   } else {
+  //     return {
+  //       value: {
+  //         id: 4,
+  //         seasonName: "Đông",
+  //       },
+  //     };
+  //   }
+  // });
 
   const onChange_SeassonList = (list) => {
     setcheckedSeasonList(list);
@@ -160,30 +265,6 @@ const EditFood = ({ foodData, loadFoodList }) => {
   //
   //
 
-  let dataMealTypeSubmit = checkedMealTypeList.map((data) => {
-    if (data == "Bữa sáng") {
-      return {
-        value: {
-          id: 1,
-          mealName: "Bữa sáng",
-        },
-      };
-    } else if (data == "Bữa trưa") {
-      return {
-        value: {
-          id: 2,
-          mealName: "Bữa trưa",
-        },
-      };
-    } else {
-      return {
-        value: {
-          id: 3,
-          mealName: "Bữa tối",
-        },
-      };
-    }
-  });
   // console.log(dataMealTypeSubmit);
   const onChange_MealTypeList = (list) => {
     setcheckedMealTypeList(list);
@@ -370,10 +451,10 @@ const EditFood = ({ foodData, loadFoodList }) => {
     // console.log(foodData);
     // console.log(food.category.categoryName);
     // console.log(food.ingredientMasses);
-    setOpen(true);
+    setOpenUpdate(true);
   };
   const onClose = () => {
-    setOpen(false);
+    setOpenUpdate(false);
     if (updated) {
       window.location.reload();
     }
@@ -431,29 +512,29 @@ const EditFood = ({ foodData, loadFoodList }) => {
   //
   const [listCategory, setListCategory] = useState([]);
 
-  useEffect(async () => {
-    if (foodData.id) {
-      await CategoryAPI.getAll()
-        .then((res) => {
-          setListCategory(res.data);
-        })
-        .catch((err) => { });
+  // useEffect(async () => {
+  //   if (foodData) {
+  //     await CategoryAPI.getAll()
+  //       .then((res) => {
+  //         setListCategory(res.data);
+  //       })
+  //       .catch((err) => { });
 
-      await IngredientAPI.getAll()
-        .then((res) => {
-          setListIngredient(res.data);
-        })
-        .catch((err) => { });
+  //     await IngredientAPI.getAll()
+  //       .then((res) => {
+  //         setListIngredient(res.data);
+  //       })
+  //       .catch((err) => { });
 
-      await FoodAPI.getById(foodData.id).then((res) => {
-        // console.log("food = ", res.data);
-        const food = res.data;
-        formik.setValues(food);
-        setFood(food);
-        setCategoryFoodValue(food.category);
-      });
-    }
-  }, []);
+  //     await FoodAPI.getById(foodData.id).then((res) => {
+  //       // console.log("food = ", res.data);
+  //       const food = res.data;
+  //       formik.setValues(food);
+  //       setFood(food);
+  //       setCategoryFoodValue(food.category);
+  //     });
+  //   }
+  // }, []);
 
   const [CategoryFoodValue, setCategoryFoodValue] = useState("");
   const onChangeSelectCategoryFood = (value) => {
@@ -469,17 +550,17 @@ const EditFood = ({ foodData, loadFoodList }) => {
 
   return (
     <>
-      <div>
+      {/* <div>
         <Button type="primary" onClick={showDrawer}>
           Sửa
         </Button>
-      </div>
+      </div> */}
 
       <Drawer
         title="Chính sửa món ăn"
         width={720}
         onClose={onClose}
-        open={open}
+        open={openUpdate}
         bodyStyle={{
           paddingBottom: 80,
         }}
@@ -504,7 +585,7 @@ const EditFood = ({ foodData, loadFoodList }) => {
               <Image
                 width={300}
                 height={250}
-                src={result ? result : `http://localhost:8080/food/${foodData.id}/image`}
+                src={result ? result : `http://localhost:8080/food/${foodData?.id}/image`}
               />
             </Col>
             <Col span={12}>
@@ -704,7 +785,7 @@ const EditFood = ({ foodData, loadFoodList }) => {
             >
               <Select
                 showSearch
-                placeholder="Select a person"
+                placeholder="Chọn nguyên liệu"
                 optionFilterProp="children"
                 onChange={onChangeSelectIngredientFood}
                 filterOption={(input, option) =>
@@ -714,18 +795,18 @@ const EditFood = ({ foodData, loadFoodList }) => {
                 }
               >
                 {listIngredient ? (
-                  listIngredient.map((listIngredient) => (
-                    <Option value={listIngredient.ingredientName}></Option>
+                  listIngredient.map((ingredient) => (
+                    <Option value={ingredient.ingredientName}></Option>
                   ))
                 ) : (
-                  <h2>Please add new food ingredient</h2>
+                  <h2>Vui lòng tạo thêm nguyên liệu</h2>
                 )}
               </Select>
 
               <TableEditIngredientFood
                 ValueIngredient={IngredientFoodValue.ingredientName}
                 getDataFromTable={callValueMass}
-                valueFoodIdFormTable={foodData.id}
+                valueFoodIdFormTable={foodData?.id}
               ></TableEditIngredientFood>
             </Form.Item>
             <Form.Item
@@ -740,8 +821,9 @@ const EditFood = ({ foodData, loadFoodList }) => {
             >
               <Select
                 onChange={onChangeSelectCategoryFood}
-                defaultValue={{
-                  label: foodData.category_id,
+                value={{
+                  // label: foodData?.category_id,
+                  label: CategoryFoodValue.categoryName
                 }}
               >
                 {listCategory ? (
@@ -749,7 +831,7 @@ const EditFood = ({ foodData, loadFoodList }) => {
                     <Option value={listCategory.categoryName}></Option>
                   ))
                 ) : (
-                  <h2>Please add new food category</h2>
+                  <h2>Vui lòng thêm loại món ăn</h2>
                 )}
               </Select>
               <AlertDiv info={alert2} />

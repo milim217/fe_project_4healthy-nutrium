@@ -655,7 +655,7 @@ const AddNewFood = ({ loadFoodList }) => {
             >
               <Select
                 showSearch
-                placeholder="Select a person"
+                placeholder="Chọn nguyên liệu"
                 optionFilterProp="children"
                 onChange={onChangeSelectIngredientFood}
                 filterOption={(input, option) =>

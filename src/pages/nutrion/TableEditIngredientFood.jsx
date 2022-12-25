@@ -84,10 +84,10 @@ const EditableCell = ({
   }
   return <td {...restProps}>{childNode}</td>;
 };
-const TableEditIngredientFood = (props) => {
+const TableEditIngredientFood = ({ValueIngredient,getDataFromTable,valueFoodIdFormTable}) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
-    if (props.valueFoodIdFormTable) {
+    if (valueFoodIdFormTable) {
       await FoodAPI.getById(IdFoodFormTable).then((res) => {
         // console.log("food = ", res.data);
         let FoodArr = [];
@@ -109,10 +109,10 @@ const TableEditIngredientFood = (props) => {
         setCount(FoodArr.length);
       });
     }
-  }, []);
+  }, [valueFoodIdFormTable]);
 
-  const arrIngredient = props.ValueIngredient;
-  const IdFoodFormTable = props.valueFoodIdFormTable;
+  const arrIngredient = ValueIngredient;
+  const IdFoodFormTable = valueFoodIdFormTable;
   const [dataSource, setDataSource] = useState("");
   const [count, setCount] = useState(0);
   let TextDisplayWhenNoData = {
@@ -182,7 +182,7 @@ const TableEditIngredientFood = (props) => {
     // });
     //Kiểm tra bảng chứa undefined thì x
     console.log(dataSource);
-    props.getDataFromTable(dataSource);
+    getDataFromTable(dataSource);
   };
   const handleSave = (row) => {
     const newData = [...dataSource];

@@ -26,6 +26,8 @@ const text = "Bạn có chắc chắn muốn món ăn này?";
 const NutrionExpertFood = ({ user }) => {
   const [food, setFood] = useState([]);
   const [alert, setAlert] = useState(null);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [updatedFood, setUpdatedFood] = useState(null);
 
   const loadFoodList = () => {
     FoodAPI.getAll()
@@ -33,7 +35,7 @@ const NutrionExpertFood = ({ user }) => {
         console.log("data = " + JSON.stringify(res.data));
         setFood(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
@@ -105,7 +107,7 @@ const NutrionExpertFood = ({ user }) => {
     {
       title: "Mùa",
       dataIndex: "seasson_id",
-      width: 80,
+      width: 75,
     },
     // {
     //   title: "Công thức",
@@ -155,7 +157,13 @@ const NutrionExpertFood = ({ user }) => {
     {
       title: "Chỉnh sửa",
       render: (_, record) => (
-        <EditFood foodData={record} loadFoodList={loadFoodList}></EditFood>
+        // <EditFood foodData={record} loadFoodList={loadFoodList}></EditFood>
+        <Button type="primary" onClick={() => {
+          setOpenUpdate(true);
+          setUpdatedFood(record);
+        }}>
+          Sửa
+        </Button>
       ),
       fixed: "right",
       width: 75,
@@ -187,23 +195,22 @@ const NutrionExpertFood = ({ user }) => {
   const body = <br></br>;
   food
     ? food.map((foodValue) => {
-        console.log("food = ", foodValue);
-        data.push({
-          id: foodValue.id,
-          food_name: foodValue.foodName,
-          category_id: foodValue.category.categoryName,
-          mealType: foodValue.meals.map((m) => m.mealName + " "),
-          seasson_id: foodValue.seasons.map((s) => s.seasonName + " "),
-          recipe: foodValue.recipe,
-          fat: foodValue.fat,
-          protein: foodValue.protein,
-          carbon: foodValue.carb,
-          calories: foodValue.calo,
-          imageFood: `http://localhost:8080/food/${foodValue.id}/image`,
-          status: foodValue.status,
-          img: foodValue.img,
-        });
-      })
+      data.push({
+        id: foodValue.id,
+        food_name: foodValue.foodName,
+        category_id: foodValue.category.categoryName,
+        mealType: foodValue.meals.map((m) => m.mealName + " "),
+        seasson_id: foodValue.seasons.map((s) => s.seasonName + " "),
+        recipe: foodValue.recipe,
+        fat: foodValue.fat,
+        protein: foodValue.protein,
+        carbon: foodValue.carb,
+        calories: foodValue.calo,
+        imageFood: `http://localhost:8080/food/${foodValue.id}/image`,
+        status: foodValue.status,
+        img: foodValue.img,
+      });
+    })
     : console.log("error");
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -222,7 +229,7 @@ const NutrionExpertFood = ({ user }) => {
 
   // Tìm kiếm Food
   const { Search } = Input;
-  const onSearch = (key) => {};
+  const onSearch = (key) => { };
 
   return (
     <div>
@@ -290,6 +297,12 @@ const NutrionExpertFood = ({ user }) => {
           x: 1200,
           y: 480,
         }}
+      />
+      <EditFood
+        openUpdate={openUpdate}
+        setOpenUpdate={setOpenUpdate}
+        foodData={updatedFood}
+        loadFoodList={loadFoodList}
       />
     </div>
   );
