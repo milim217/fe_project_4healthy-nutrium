@@ -11,6 +11,7 @@ import {
   Row,
   Select,
   Space,
+  Image
 } from "antd";
 import AlertDiv from "../alert/AlertDiv";
 import UploadImageFileIngredient from "../upload-image-avt/UploadImageFileIngredient";
@@ -18,6 +19,7 @@ import AlertMessage from "../alert/AlertMessage";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import IngredientAPI from "../../../src/service/Actions/IngredientAPI";
+import axios from 'axios';
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
@@ -62,7 +64,7 @@ const SeassonValueDefault = [
 ];
 const { Option } = Select;
 
-const AddNewIngrendient = ({loadIngredientList}) => {
+const AddNewIngrendient = ({ loadIngredientList }) => {
   //
   //
   //
@@ -77,6 +79,8 @@ const AddNewIngrendient = ({loadIngredientList}) => {
   const [checkAll, setCheckAll] = useState(false);
   const [alert, setAlert] = useState(null);
   const [added, setAdded] = useState(false);
+  const [image, setImage] = useState(null);
+  const [result, setResult] = useState(null);
 
   const onChange_SeassonList = (list) => {
     setcheckedSessonList(list);
@@ -111,7 +115,7 @@ const AddNewIngrendient = ({loadIngredientList}) => {
     setOpen(false);
     document.getElementById("formAddNewIngredientInput").reset();
     formik.handleReset();
-    if(added){
+    if (added) {
       window.location.reload();
     }
   };
@@ -279,6 +283,12 @@ const AddNewIngrendient = ({loadIngredientList}) => {
 
   const onSubmit = async () => {
 
+    if (image === null) {
+      setAlert({ type: "danger", message: "Vui lòng chọn ảnh" });
+      setTimeout(() => setAlert(null), 5000);
+      return;
+    }
+
     if (checkedSeasonList) {
       const AddNewIngrendient = {
         ingredientName: formik.values.ingredientName,
@@ -306,14 +316,27 @@ const AddNewIngrendient = ({loadIngredientList}) => {
         maxLimit: formik.values.maxLimit,
         seasons: checkedSeasonList,
         img: "",
-        status:true
+        status: true
       };
       console.log('add data = ', AddNewIngrendient);
 
       await IngredientAPI.add(AddNewIngrendient)
         .then(res => {
+          const addedIngredient = res.data;
           setAlert({ type: "success", message: "Thêm nguyên liệu mới thành công" });
           setTimeout(() => setAlert(null), 5000);
+
+          const formData = new FormData();
+          formData.append("file", image);
+
+          let urlStr = 'http://localhost:8080/ingredient/' + addedIngredient.id + '/image'
+          axios({
+            method: "post",
+            url: urlStr,
+            data: formData,
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+
           setAdded(true)
         })
         .catch(e => {
@@ -378,7 +401,12 @@ const AddNewIngrendient = ({loadIngredientList}) => {
                 name="Chọn hình ảnh nguyên liệu"
                 label="Chọn hình ảnh nguyên liệu:"
               >
-                <UploadImageFileIngredient></UploadImageFileIngredient>
+              <Image
+                width={300}
+                height={250}
+                src={result}
+              />
+                <UploadImageFileIngredient setImage={setImage} setResult={setResult}></UploadImageFileIngredient>
               </Form.Item>
             </Col>
           </Row>

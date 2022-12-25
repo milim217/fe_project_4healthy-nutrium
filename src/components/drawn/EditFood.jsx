@@ -23,7 +23,7 @@ import * as Yup from "yup";
 import { propTypes } from "react-bootstrap/esm/Image";
 import FoodAPI from "../../service/Actions/FoodAPI";
 import AlertMessage from "../alert/AlertMessage";
-
+import axios from "axios";
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
@@ -63,7 +63,7 @@ const MealTypeList = [
 ];
 
 const { Option } = Select;
-const EditFood = ({ foodData,loadFoodList }) => {
+const EditFood = ({ foodData, loadFoodList }) => {
   const [checkedMealTypeList, setcheckedMealTypeList] = useState(
     foodData.mealType.map((element) => {
       return element.trim();
@@ -79,13 +79,15 @@ const EditFood = ({ foodData,loadFoodList }) => {
   const [alert1, setAlert1] = useState(null);
   const [food, setFood] = useState(null);
   const [open, setOpen] = useState(false);
-  const [topAlert,setTopAlert] = useState(null);
+  const [topAlert, setTopAlert] = useState(null);
   const [updated, setUpdated] = useState(false);
   const [checkedSeasonList, setcheckedSeasonList] = useState(
     foodData.seasson_id.map((element) => {
       return element.trim();
     })
   );
+  const [image, setImage] = useState(null);
+  const [result, setResult] = useState(null);
 
   useEffect(() => {
     if (foodData) {
@@ -335,16 +337,30 @@ const EditFood = ({ foodData,loadFoodList }) => {
       status: foodData.status,
       img: foodData.img
     };
-    console.log('season = ',dataSeasonSubmit)
+    console.log('season = ', dataSeasonSubmit)
     console.log("update food = ", editFoodForm);
     FoodAPI.update(editFoodForm)
       .then(res => {
         setTopAlert({ type: "success", message: "Cập nhật món ăn thành công" });
         setTimeout(() => setAlert(null), 5000);
+
+        if (image) {
+          const formData = new FormData();
+          formData.append("file", image);
+
+          let urlStr = 'http://localhost:8080/food/' + editFoodForm.id + '/image'
+          axios({
+            method: "post",
+            url: urlStr,
+            data: formData,
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+        }
+
         setUpdated(true);
       })
       .catch(e => {
-        setTopAlert({ type: "danger", message: e.response? e.response.data.message : "Lỗi cập nhật món ăn" });
+        setTopAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi cập nhật món ăn" });
         setTimeout(() => setAlert(null), 5000);
       });
   };
@@ -358,7 +374,7 @@ const EditFood = ({ foodData,loadFoodList }) => {
   };
   const onClose = () => {
     setOpen(false);
-    if(updated){
+    if (updated) {
       window.location.reload();
     }
   };
@@ -488,12 +504,12 @@ const EditFood = ({ foodData,loadFoodList }) => {
               <Image
                 width={300}
                 height={250}
-                src={`http://localhost:8080/food/${foodData.id}/image`}
+                src={result ? result : `http://localhost:8080/food/${foodData.id}/image`}
               />
             </Col>
             <Col span={12}>
               <Form.Item name="imageFood" label="Hình ảnh món ăn">
-                <UploadImageFile></UploadImageFile>
+                <UploadImageFile setImage={setImage} setResult={setResult}></UploadImageFile>
               </Form.Item>
               <Form.Item label="Tên món ăn:">
                 <Input

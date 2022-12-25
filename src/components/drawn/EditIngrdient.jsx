@@ -19,6 +19,7 @@ import AlertMessage from "../alert/AlertMessage";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import IngredientAPI from "../../service/Actions/IngredientAPI";
+import axios from 'axios';
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
@@ -60,6 +61,8 @@ const EditIngrdient = ({ ingredient }) => {
   const [alert, setAlert] = useState(null);
   const [topAlert, setTopAlert] = useState(false);
   const [updated, setUpdated] = useState(false);
+  const [image, setImage] = useState(null);
+  const [result, setResult] = useState(null);
 
   useEffect(() => {
     if (ingredient) {
@@ -339,8 +342,21 @@ const EditIngrdient = ({ ingredient }) => {
       .then(res => {
         setTopAlert({ type: "success", message: "Cập nhật nguyên liệu thành công" });
         setTimeout(() => setAlert(null), 5000);
+
+        if (image !== null) {
+          const formData = new FormData();
+          formData.append("file", image);
+
+          let urlStr = 'http://localhost:8080/ingredient/' + editData.id + '/image'
+          axios({
+            method: "post",
+            url: urlStr,
+            data: formData,
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+        }
+
         setUpdated(true);
-        // loadIngredientList();
       })
       .catch(e => {
         setTopAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi cập nhật nguyên liệu" });
@@ -381,7 +397,7 @@ const EditIngrdient = ({ ingredient }) => {
               <Image
                 width={300}
                 height={250}
-                src={`http://localhost:8080/ingredient/${ingredient.id}/image`}
+                src={result ? result : `http://localhost:8080/ingredient/${ingredient.id}/image`}
               />
             </Col>
             <Col span={12}>
@@ -389,7 +405,7 @@ const EditIngrdient = ({ ingredient }) => {
                 name="Chọn hình ảnh nguyên liệu"
                 label="Chọn hình ảnh nguyên liệu:"
               >
-                <UploadImageFileIngredient></UploadImageFileIngredient>
+                <UploadImageFileIngredient setImage={setImage} setResult={setResult}></UploadImageFileIngredient>
               </Form.Item>
               <Form.Item
                 name="seasons"

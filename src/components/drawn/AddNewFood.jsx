@@ -12,6 +12,7 @@ import {
   Divider,
   Space,
   Row,
+  Image
 } from "antd";
 import UploadImageFile from "../upload-image-avt/UploadImageFile";
 import CategoryAPI from "../../service/Actions/CategoryAPI";
@@ -23,6 +24,7 @@ import * as Yup from "yup";
 import { propTypes } from "react-bootstrap/esm/Image";
 import FoodAPI from "../../service/Actions/FoodAPI";
 import AlertMessage from "../alert/AlertMessage";
+import axios from "axios";
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
@@ -118,6 +120,8 @@ const AddNewFood = ({ loadFoodList }) => {
   const [alert1, setAlert1] = useState(null);
   const [topAlert, setTopAlert] = useState(null);
   const [added, setAdded] = useState(null);
+  const [image, setImage] = useState(null);
+  const [result, setResult] = useState(null);
 
   const onChange_SeassonList = (list) => {
     setcheckedSessonList(list);
@@ -258,7 +262,14 @@ const AddNewFood = ({ loadFoodList }) => {
     }),
   });
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+
+    if (image === null) {
+      setTopAlert({ type: "danger", message: "Vui lòng chọn ảnh" });
+      setTimeout(() => setTopAlert(null), 5000);
+      return;
+    }
+
     const userData = massFormTable.mass;
     //Kiểm tra loại món ăn
     if (!CategoryFoodValue.categoryName && !CategoryFoodValue.categoryStatus) {
@@ -306,10 +317,23 @@ const AddNewFood = ({ loadFoodList }) => {
 
     console.log("added food = ", addNewFoodForm);
 
-    FoodAPI.add(addNewFoodForm)
+    await FoodAPI.add(addNewFoodForm)
       .then((res) => {
+        const addedFood = res.data;
         setTopAlert({ type: "success", message: "Thêm thành công" });
         setTimeout(() => setTopAlert(null), 5000);
+
+        const formData = new FormData();
+        formData.append("file", image);
+
+        let urlStr = 'http://localhost:8080/food/' + addedFood.id + '/image'
+        axios({
+          method: "post",
+          url: urlStr,
+          data: formData,
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
         setAdded(true)
       })
       .catch((e) => {
@@ -323,11 +347,11 @@ const AddNewFood = ({ loadFoodList }) => {
   const onClose = () => {
     setOpen(false);
     // document.getElementById("formAddNewFoodInput").reset();
-    if(added){
+    if (added) {
       window.location.reload();
     }
   };
-  
+
   //Lấy giá trị của nguyên liệu
   const [massFormTable, setMassFormTable] = useState({
     mass: "",
@@ -352,7 +376,7 @@ const AddNewFood = ({ loadFoodList }) => {
       .then((res) => {
         setListIngredient(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, []);
 
   const [IngredientFoodValue, setIngredientFoodValue] = useState("");
@@ -384,7 +408,7 @@ const AddNewFood = ({ loadFoodList }) => {
       .then((res) => {
         setListCategory(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, []);
   const [CategoryFoodValue, setCategoryFoodValue] = useState("");
   const onChangeSelectCategoryFood = (value) => {
@@ -437,7 +461,12 @@ const AddNewFood = ({ loadFoodList }) => {
         <Form layout="vertical" hideRequiredMark id="formAddNewFoodInput">
           <Col span={24}>
             <Form.Item name="imageFood" label="Hình ảnh món ăn">
-              <UploadImageFile></UploadImageFile>
+              <Image
+                width={300}
+                height={250}
+                src={result}
+              />
+              <UploadImageFile setImage={setImage} setResult={setResult}></UploadImageFile>
             </Form.Item>
             <Form.Item label="Tên món ăn:">
               <Input
