@@ -23,23 +23,40 @@ import EditIngrdient from "../../components/drawn/EditIngrdient";
 import IngredientAPI from "../../service/Actions/IngredientAPI";
 import FoodAPI from "../../service/Actions/FoodAPI";
 import AlertMessage from "../../../src/components/alert/AlertMessage";
+import { setIn } from "formik";
 
 const text = "Nguyên Liệu này sẽ được xoá khỏi danh sách?";
 
 function NutrionExpertIngredients() {
   const [ingredients, setIngredients] = useState([]);
+  const [searchedIngredients, setSearchedIngredients] = useState([]);
   const [alert, setAlert] = useState(null);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [updatedIngredient, setUpdatedIngredient] = useState(null);
 
-  const loadIngredientList = async () => {
+  const loadAllIngredientList = async () => {
     await IngredientAPI.getAll()
       .then((res) => {
         setIngredients(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
+  };
+  const loadIngredientList = async () => {
+    await IngredientAPI.getAll()
+      .then((res) => {
+        setSearchedIngredients(res.data);
+      })
+      .catch((err) => { });
   };
   useEffect(() => {
-    loadIngredientList();
+    loadAllIngredientList();
   }, []);
+  useEffect(() => {
+    loadIngredientList();
+  }, [ingredients]);
+  useEffect(() => {
+    console.log('updated ',updatedIngredient)
+  }, [updatedIngredient]);
 
   const changeStatus = async (id) => {
     await IngredientAPI.changeStatus(id)
@@ -99,7 +116,7 @@ function NutrionExpertIngredients() {
       title: "Mùa",
       dataIndex: "seasson_id",
       justify: "center",
-      width: 75,
+      width: 45,
     },
     {
       title: "Trạng thái",
@@ -233,10 +250,16 @@ function NutrionExpertIngredients() {
     {
       title: "Chỉnh sửa",
       render: (_, record) => (
-        <EditIngrdient
-          ingredient={record}
-          loadIngredientList={loadIngredientList}
-        ></EditIngrdient>
+        // <EditIngrdient
+        //   ingredient={record}
+        //   loadIngredientList={loadIngredientList}
+        // ></EditIngrdient>
+        <Button type="primary" onClick={() => {
+          setOpenUpdate(true);
+          setUpdatedIngredient(record);
+        }}>
+          Sửa
+        </Button>
       ),
       fixed: "right",
       width: 70,
@@ -264,39 +287,39 @@ function NutrionExpertIngredients() {
   ];
 
   const data = [];
-  ingredients
-    ? ingredients.map((ingredientValue) =>
-        data.push({
-          id: ingredientValue.id,
-          ingredientName: ingredientValue.ingredientName,
-          minLimit: ingredientValue.minLimit,
-          maxLimit: ingredientValue.maxLimit,
-          // seasons: ingredientValue.seasons,
-          seasson_id: ingredientValue.seasons.map((s) => s.seasonName + " "),
-          fat: ingredientValue.fat,
-          protein: ingredientValue.protein,
-          carb: ingredientValue.carb,
-          calo: ingredientValue.calo,
-          water: ingredientValue.water,
-          fiber: ingredientValue.fiber,
-          ash: ingredientValue.ash,
-          canxi: ingredientValue.canxi,
-          iron: ingredientValue.iron,
-          zinc: ingredientValue.zinc,
-          vitaminC: ingredientValue.vitaminC,
-          vitaminB1: ingredientValue.vitaminB1,
-          vitaminB2: ingredientValue.vitaminB2,
-          vitaminB3: ingredientValue.vitaminB3,
-          vitaminB6A: ingredientValue.vitaminB6A,
-          vitaminD: ingredientValue.vitaminD,
-          vitaminB12: ingredientValue.vitaminB12,
-          vitaminA: ingredientValue.vitaminA,
-          vitaminARae: ingredientValue.vitaminARae,
-          image: `http://localhost:8080/ingredient/${ingredientValue.id}/image`,
-          status: ingredientValue.status,
-          img: ingredientValue.img,
-        })
-      )
+  searchedIngredients
+    ? searchedIngredients.map((ingredientValue) =>
+      data.push({
+        id: ingredientValue.id,
+        ingredientName: ingredientValue.ingredientName,
+        minLimit: ingredientValue.minLimit,
+        maxLimit: ingredientValue.maxLimit,
+        seasons: ingredientValue.seasons,
+        seasson_id: ingredientValue.seasons.map((s) => s.seasonName + " "),
+        fat: ingredientValue.fat,
+        protein: ingredientValue.protein,
+        carb: ingredientValue.carb,
+        calo: ingredientValue.calo,
+        water: ingredientValue.water,
+        fiber: ingredientValue.fiber,
+        ash: ingredientValue.ash,
+        canxi: ingredientValue.canxi,
+        iron: ingredientValue.iron,
+        zinc: ingredientValue.zinc,
+        vitaminC: ingredientValue.vitaminC,
+        vitaminB1: ingredientValue.vitaminB1,
+        vitaminB2: ingredientValue.vitaminB2,
+        vitaminB3: ingredientValue.vitaminB3,
+        vitaminB6A: ingredientValue.vitaminB6A,
+        vitaminD: ingredientValue.vitaminD,
+        vitaminB12: ingredientValue.vitaminB12,
+        vitaminA: ingredientValue.vitaminA,
+        vitaminARae: ingredientValue.vitaminARae,
+        image: `http://localhost:8080/ingredient/${ingredientValue.id}/image`,
+        status: ingredientValue.status,
+        img: ingredientValue.img,
+      })
+    )
     : console.log("error");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -314,7 +337,71 @@ function NutrionExpertIngredients() {
 
   // Tìm kiếm người dùng
   const { Search } = Input;
-  const onSearch = (value) => console.log(value);
+  const onSearch = (value) => {
+    // if (text === "") {
+    //   if(searchData.season === null){
+    //     loadIngredientList();
+    //   }
+    //   else{
+    //     let newList = [];
+    //     ingredients.map(i => {
+    //       i.seasons.map(s => {
+    //         if (s.seasonName.toUpperCase().includes(searchData.season.toUpperCase())) {
+    //           newList.push(i);
+    //         }
+    //       })
+    //     })
+    //     setSearchedIngredients(newList);
+    //   }
+    // }
+    // else {
+    let newList = [];
+    if (searchData.season) {
+      ingredients.map(i => {
+        i.seasons.map(s => {
+          if (i.ingredientName.toUpperCase().includes(value.toUpperCase()) && s.seasonName.toUpperCase().includes(searchData.season.toUpperCase())) {
+            newList.push(i);
+          }
+        })
+      })
+    }
+    else {
+      ingredients.map(i => {
+        if (i.ingredientName.toUpperCase().includes(value.toUpperCase())) {
+          newList.push(i);
+        }
+      })
+    }
+    setSearchedIngredients(newList);
+
+    // }
+  }
+
+  // const [searchData,setSearchData] = useState({
+  //   season: null
+  // })
+
+  const [searchData, setSearchData] = useState({
+    season: null
+  });
+
+  // useEffect(() => {
+  //   if (searchSeason === null) {
+  //     loadIngredientList();
+  //   }
+  //   else {
+  //     let newList = [];
+  //     searchedIngredients.map(i => {
+  //       i.seasons.map(s => {
+  //         if (s.seasonName.toUpperCase().includes(searchSeason.toUpperCase())) {
+  //           newList.push(i);
+  //         }
+  //       })
+  //     })
+  //     setSearchedIngredients(newList);
+  //   }
+  // }, [searchSeason]);
+
   return (
     <div>
       {/* đường dẫn */}
@@ -345,16 +432,15 @@ function NutrionExpertIngredients() {
             onSearch={onSearch}
           />
         </div>
-        Lọc theo mùa
         <div style={{ paddingTop: 0 }}>
-          <SelectionSeasonIngredient></SelectionSeasonIngredient>
+          Lọc theo mùa
+          <SelectionSeasonIngredient searchData={searchData} setSearchData={setSearchData}></SelectionSeasonIngredient>
         </div>
       </div>
       <div className="wrapper__listUser">
         <AlertMessage info={alert} />
       </div>
 
-      {/* thông tin tài khoản người dùng */}
       <Table
         columns={columns}
         dataSource={data}
@@ -367,6 +453,12 @@ function NutrionExpertIngredients() {
           columnTitle: "auto",
         }}
       />
+      <EditIngrdient
+        openUpdate={openUpdate}
+        setOpenUpdate={setOpenUpdate}
+        ingredient={updatedIngredient}
+        loadIngredientList={loadIngredientList}
+      ></EditIngrdient>
     </div>
   );
 }

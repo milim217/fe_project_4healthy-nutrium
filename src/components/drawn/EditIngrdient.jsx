@@ -42,7 +42,7 @@ const seasonList = [
     value: "Đông",
   },
 ];
-const EditIngrdient = ({ ingredient }) => {
+const EditIngrdient = ({ openUpdate, setOpenUpdate, ingredient }) => {
   //
   //
   //
@@ -50,9 +50,9 @@ const EditIngrdient = ({ ingredient }) => {
   //
   //
   //
-  const [open, setOpen] = useState(false);
+  // const [openUpdate, setOpenUpdate] = useState(true);
   const [checkedSeasonList, setcheckedSeasonList] = useState(
-    ingredient.seasson_id.map((element) => {
+    ingredient?.seasson_id.map((element) => {
       return element.trim();
     })
   );
@@ -63,43 +63,94 @@ const EditIngrdient = ({ ingredient }) => {
   const [updated, setUpdated] = useState(false);
   const [image, setImage] = useState(null);
   const [result, setResult] = useState(null);
+  const [dataSeasonSubmit, setDataSeasonSubmit] = useState(null);
+
+  // useEffect(() => {
+  //   if (ingredient) {
+  //     formik.setValues(ingredient);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (ingredient) {
       formik.setValues(ingredient);
+      let sList = ingredient.seasson_id.map((element) => {
+        return element.trim();
+      });
+      setcheckedSeasonList(sList);
     }
-  }, []);
-  let dataSeasonSubmit = checkedSeasonList.map((data) => {
-    if (data == "Xuân") {
-      return {
-        value: {
-          id: 1,
-          seasonName: "Xuân",
-        },
-      };
-    } else if (data == "Hạ") {
-      return {
-        value: {
-          id: 2,
-          seasonName: "Hạ",
-        },
-      };
-    } else if (data == "Thu") {
-      return {
-        value: {
-          id: 3,
-          seasonName: "Thu",
-        },
-      };
-    } else {
-      return {
-        value: {
-          id: 4,
-          seasonName: "Đông",
-        },
-      };
+  }, [ingredient]);
+
+  useEffect(() => {
+    if (checkedSeasonList) {
+      let s = checkedSeasonList?.map((data) => {
+        if (data == "Xuân") {
+          return {
+            value: {
+              id: 1,
+              seasonName: "Xuân",
+            },
+          };
+        } else if (data == "Hạ") {
+          return {
+            value: {
+              id: 2,
+              seasonName: "Hạ",
+            },
+          };
+        } else if (data == "Thu") {
+          return {
+            value: {
+              id: 3,
+              seasonName: "Thu",
+            },
+          };
+        } else {
+          return {
+            value: {
+              id: 4,
+              seasonName: "Đông",
+            },
+          };
+        }
+      });
+      setDataSeasonSubmit(s);
     }
-  });
+  }, [checkedSeasonList]);
+
+
+
+  // let dataSeasonSubmit = checkedSeasonList?.map((data) => {
+  //   if (data == "Xuân") {
+  //     return {
+  //       value: {
+  //         id: 1,
+  //         seasonName: "Xuân",
+  //       },
+  //     };
+  //   } else if (data == "Hạ") {
+  //     return {
+  //       value: {
+  //         id: 2,
+  //         seasonName: "Hạ",
+  //       },
+  //     };
+  //   } else if (data == "Thu") {
+  //     return {
+  //       value: {
+  //         id: 3,
+  //         seasonName: "Thu",
+  //       },
+  //     };
+  //   } else {
+  //     return {
+  //       value: {
+  //         id: 4,
+  //         seasonName: "Đông",
+  //       },
+  //     };
+  //   }
+  // });
 
   const onChange_SeassonList = (list) => {
     setcheckedSeasonList(list);
@@ -129,11 +180,11 @@ const EditIngrdient = ({ ingredient }) => {
 
   const showDrawer = () => {
     console.log(ingredient.seasson_id);
-    setOpen(true);
+    setOpenUpdate(true);
     console.log(checkedSeasonList);
   };
   const onClose = () => {
-    setOpen(false);
+    setOpenUpdate(false);
     document.getElementById("formAddNewIngredientInput").reset();
     formik.handleReset();
     if (updated) {
@@ -143,29 +194,29 @@ const EditIngrdient = ({ ingredient }) => {
 
   const formik = useFormik({
     initialValues: {
-      ingredientName: ingredient.ingredientName,
-      fat: ingredient.fat,
-      protein: ingredient.protein,
-      carb: ingredient.carb,
-      calo: ingredient.calo,
-      vitamin: ingredient.vitamin,
-      water: ingredient.water,
-      fiber: ingredient.fiber,
-      ash: ingredient.ash,
-      canxi: ingredient.canxi,
-      iron: ingredient.iron,
-      zinc: ingredient.zinc,
-      vitaminC: ingredient.vitaminC,
-      vitaminB1: ingredient.vitaminB1,
-      vitaminB2: ingredient.vitaminB2,
-      vitaminB3: ingredient.vitaminB3,
-      vitaminB6A: ingredient.vitaminB6A,
-      vitaminD: ingredient.vitaminD,
-      vitaminB12: ingredient.vitaminB12,
-      vitaminA: ingredient.vitaminA,
-      vitaminARae: ingredient.vitaminARae,
-      minLimit: ingredient.minLimit,
-      maxLimit: ingredient.maxLimit,
+      ingredientName: ingredient?.ingredientName,
+      fat: ingredient?.fat,
+      protein: ingredient?.protein,
+      carb: ingredient?.carb,
+      calo: ingredient?.calo,
+      vitamin: ingredient?.vitamin,
+      water: ingredient?.water,
+      fiber: ingredient?.fiber,
+      ash: ingredient?.ash,
+      canxi: ingredient?.canxi,
+      iron: ingredient?.iron,
+      zinc: ingredient?.zinc,
+      vitaminC: ingredient?.vitaminC,
+      vitaminB1: ingredient?.vitaminB1,
+      vitaminB2: ingredient?.vitaminB2,
+      vitaminB3: ingredient?.vitaminB3,
+      vitaminB6A: ingredient?.vitaminB6A,
+      vitaminD: ingredient?.vitaminD,
+      vitaminB12: ingredient?.vitaminB12,
+      vitaminA: ingredient?.vitaminA,
+      vitaminARae: ingredient?.vitaminARae,
+      minLimit: ingredient?.minLimit,
+      maxLimit: ingredient?.maxLimit,
     },
     //regex
     validationSchema: Yup.object({
@@ -366,14 +417,14 @@ const EditIngrdient = ({ ingredient }) => {
 
   return (
     <>
-      <Button type="primary" onClick={showDrawer}>
+      {/* <Button type="primary" onClick={showDrawer}>
         Sửa
-      </Button>
+      </Button> */}
       <Drawer
         title="Sửa dữ liệu thành phần"
         width={720}
         onClose={onClose}
-        open={open}
+        open={openUpdate}
         bodyStyle={{
           paddingBottom: 80,
         }}
@@ -397,7 +448,7 @@ const EditIngrdient = ({ ingredient }) => {
               <Image
                 width={300}
                 height={250}
-                src={result ? result : `http://localhost:8080/ingredient/${ingredient.id}/image`}
+                src={result ? result : `http://localhost:8080/ingredient/${ingredient?.id}/image`}
               />
             </Col>
             <Col span={12}>
@@ -429,7 +480,7 @@ const EditIngrdient = ({ ingredient }) => {
                 <Divider />
                 <CheckboxGroup
                   options={seasonList}
-                  defaultValue={checkedSeasonList}
+                  value={checkedSeasonList}
                   onChange={onChange_SeassonList}
                   required
                 />

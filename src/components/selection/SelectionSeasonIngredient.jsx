@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Select } from "antd";
 
-function SelectionSeasonIngredient() {
+function SelectionSeasonIngredient({searchData,setSearchData}) {
   const [placement, SetPlacement] = useState("bottomLeft");
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+    setSearchData({...searchData, season: value});
   };
   return (
     <>
@@ -16,19 +16,23 @@ function SelectionSeasonIngredient() {
         onChange={handleChange}
         options={[
           {
-            value: "Mùa Xuân",
+            value: null,
+            label: "Tất cả",
+          },
+          {
+            value: "Xuân",
             label: "Mùa Xuân",
           },
           {
-            value: "Mùa Hạ",
+            value: "Hạ",
             label: "Mùa Hạ",
           },
           {
-            value: "Mùa Thu",
+            value: "Thu",
             label: "Mùa Thu",
           },
           {
-            value: "Mùa Đông",
+            value: "Đông",
             label: "Mùa Đông",
           },
         ]}
