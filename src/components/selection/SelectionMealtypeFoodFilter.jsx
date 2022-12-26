@@ -1,31 +1,35 @@
 import React, { useState } from "react";
 import { Select } from "antd";
 
-function SelectionMealtypeFoodFilter() {
+function SelectionMealtypeFoodFilter({ searchData, setSearchData }) {
   const [placement, SetPlacement] = useState("bottomLeft");
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+    setSearchData({ ...searchData, mealId: value })
   };
   return (
     <>
       <div> Lọc theo bữa ăn</div>
       <Select
-        defaultValue="Bữa Sáng"
+        defaultValue={null}
         style={{
           width: 300,
         }}
         onChange={handleChange}
         options={[
           {
-            value: "Bữa Sáng",
+            value: null,
+            label: "Tất cả",
+          },
+          {
+            value: 1,
             label: "Bữa Sáng",
           },
           {
-            value: "Bữa Trưa",
+            value: 2,
             label: "Bữa Trưa",
           },
           {
-            value: "Bữa Tối",
+            value: 3,
             label: "Bữa Tối",
           },
         ]}

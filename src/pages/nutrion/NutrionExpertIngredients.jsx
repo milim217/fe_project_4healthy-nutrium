@@ -55,7 +55,7 @@ function NutrionExpertIngredients() {
     loadIngredientList();
   }, [ingredients]);
   useEffect(() => {
-    console.log('updated ',updatedIngredient)
+    console.log('updated ', updatedIngredient)
   }, [updatedIngredient]);
 
   const changeStatus = async (id) => {
@@ -418,6 +418,12 @@ function NutrionExpertIngredients() {
         <Breadcrumb.Item>Danh sách nguyên liệu</Breadcrumb.Item>
       </Breadcrumb>
       <div className="wrapper__listUser">
+        <div style={{ paddingLeft: 10 }}>
+          <label>  Lọc theo mùa  </label>
+          <SelectionSeasonIngredient searchData={searchData} setSearchData={setSearchData}></SelectionSeasonIngredient>
+        </div>
+      </div>
+      <div className="wrapper__listUser">
         <div className="add_new_user__listUser">
           <AddNewIngrendient
             loadIngredientList={loadIngredientList}
@@ -431,10 +437,6 @@ function NutrionExpertIngredients() {
             size="large"
             onSearch={onSearch}
           />
-        </div>
-        <div style={{ paddingTop: 0 }}>
-          Lọc theo mùa
-          <SelectionSeasonIngredient searchData={searchData} setSearchData={setSearchData}></SelectionSeasonIngredient>
         </div>
       </div>
       <div className="wrapper__listUser">
