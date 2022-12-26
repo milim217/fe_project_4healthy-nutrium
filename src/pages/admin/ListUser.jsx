@@ -275,7 +275,7 @@ const ListUser = ({ user, checkValidRole }) => {
         </Card>
         <div className="wrapper__listUser">
           <div className="add_new_user__listUser">
-            <AddNewUser></AddNewUser>
+            <AddNewUser loadUsers={loadUsers}></AddNewUser>
           </div>
           <div className="search_user___listUser">
             <Search

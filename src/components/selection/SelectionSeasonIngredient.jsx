@@ -9,7 +9,7 @@ function SelectionSeasonIngredient({searchData,setSearchData}) {
   return (
     <>
       <Select
-        defaultValue="Mùa Xuân"
+        defaultValue={null}
         style={{
           width: 300,
         }}

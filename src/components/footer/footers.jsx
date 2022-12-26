@@ -22,7 +22,7 @@ const Footers = () => {
           className="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
         ></div>
 
-        <ul className="nav col-md-4 justify-content-end">
+        {/* <ul className="nav col-md-4 justify-content-end">
           <li className="nav-item">
             <a href="#" className="nav-link px-2">
               Trang chủ
@@ -43,7 +43,7 @@ const Footers = () => {
               Bài tập thể thao dành cho bạn
             </a>
           </li>
-        </ul>
+        </ul> */}
       </footer>
     </div>
   );

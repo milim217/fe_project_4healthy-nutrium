@@ -15,13 +15,13 @@ const gridStyle = {
 const DetailIngredient = () => {
 
   const { ingredientID } = useParams();
-  const [ingredient,setIngredient] = useState(null);
+  const [ingredient, setIngredient] = useState(null);
 
   useEffect(() => {
     IngredientAPI.getById(ingredientID)
-    .then(res => {
-      setIngredient(res.data);
-    })
+      .then(res => {
+        setIngredient(res.data);
+      })
   }, []);
 
   return (
@@ -31,6 +31,7 @@ const DetailIngredient = () => {
         <div className="wrapper-Img_sumary">
           <Row>
             <Col span={18} push={6}>
+            <div className="name_food_DetailPage">{ingredient?.ingredientName}</div>
               <Card title="Tóm tắt các chất dinh dưỡng chính">
                 <Card.Grid style={gridStyle}>
                   <div className="name_SumaryNutrition"> Calo</div>
@@ -132,7 +133,7 @@ const DetailIngredient = () => {
                     <tr>
                       <td>vitamin D</td> <td>{ingredient?.vitaminD}</td>
                     </tr>
-                  
+
                     <tr>
                       <td>vitamin ARae</td> <td>{ingredient?.vitaminARae}</td>
                     </tr>

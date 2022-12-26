@@ -102,6 +102,7 @@ const MealTypeValueDefault = [
 ];
 
 const { Option } = Select;
+const { TextArea } = Input
 const AddNewFood = ({ loadFoodList }) => {
   const [alert2, setAlert2] = useState(null);
   //
@@ -487,7 +488,7 @@ const AddNewFood = ({ loadFoodList }) => {
                 },
               ]}
             >
-              <Input
+              <TextArea
                 name="recipe"
                 placeholder="Bạn hãy nhập công thức để có thể nấu ra món ăn này"
                 onChange={formik.handleChange}

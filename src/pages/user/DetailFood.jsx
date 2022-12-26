@@ -85,7 +85,7 @@ const DetailFood = () => {
                     <Image
                       width={350}
                       height={345}
-                      src={`http://localhost:8080/food/${food.id}/image`}
+                      src={`http://localhost:8080/food/${food?.id}/image`}
                     />
                   </Col>
                 </Row>
@@ -113,6 +113,12 @@ const DetailFood = () => {
                   :
                   <></>
                 }
+                <div className="name_RelateFood">Công thức nấu</div>
+                <div className="box_RelateFood">
+                  <div className="main-box_RelateFood">
+                    <div className="nameIngredient_boxDetailFood">{food?.recipe}</div>
+                  </div>
+                </div>
               </div>
             </>
             :

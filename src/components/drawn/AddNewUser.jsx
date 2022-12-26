@@ -18,7 +18,7 @@ import UserAPI from "../../service/Actions/UserAPI";
 import AlertMessage from "../alert/AlertMessage";
 const { Option } = Select;
 
-const AddNewUser = () => {
+const AddNewUser = ({loadUsers}) => {
 
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState(false);
@@ -93,7 +93,7 @@ const AddNewUser = () => {
       let formattedDob = arr[2]+'-'+arr[1]+'-'+arr[0];
 
       //formik tự biết khi nhập sai sẽ không submit còn khi đúng hết mới cho submit
-      setFormData({
+      let addData = {
         ...formData,
         name: values.name.trim(),
         email: values.email.trim(),
@@ -101,12 +101,14 @@ const AddNewUser = () => {
         phone: values.phone.trim(),
         address: values.address.trim(),
         dob: formattedDob,
-      });
+      };
+      setFormData(addData);
 
-      await UserAPI.addNutrient(formData)
+      await UserAPI.addNutrient(addData)
       .then(res => {
         setAlert({ type: "success", message: "Thêm tài khoản thành công" });
         setTimeout(() => setAlert(null), 5000);
+        loadUsers();
       })
       .catch(e => {
         setAlert({ type: "danger", message: e.response ? e.response.data.message : 'Lỗi thêm tài khoản' });

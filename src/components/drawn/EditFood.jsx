@@ -63,6 +63,7 @@ const MealTypeList = [
 ];
 
 const { Option } = Select;
+const { TextArea } = Input
 const EditFood = ({ foodData, openUpdate, setOpenUpdate }) => {
   const [checkedMealTypeList, setcheckedMealTypeList] = useState(
     foodData?.mealType.map((element) => {
@@ -612,7 +613,7 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate }) => {
                   },
                 ]}
               >
-                <Input
+                <TextArea
                   name="recipe"
                   placeholder="Bạn hãy nhập công thức để có thể nấu ra món ăn này"
                   value={formik.values.recipe}
