@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Space, Upload, Input } from "antd";
 
-const UploadImageFile = ({setImage,setResult}) => {
+const UploadImageFile = ({ setImage, setResult }) => {
   const [antPics, setAntPics] = useState([]);
   const [loading, setLoading] = useState(false);
   const [urls, setUrls] = useState([]);
@@ -24,13 +24,12 @@ const UploadImageFile = ({setImage,setResult}) => {
         setResult(e.target.result);
       };
       reader.readAsDataURL(event.target.files[0]);
-      setImage(event.target.files[0])
-    }
-    else{
+      setImage(event.target.files[0]);
+    } else {
       setImage(null);
       setResult(null);
     }
-  }
+  };
 
   return (
     <div>

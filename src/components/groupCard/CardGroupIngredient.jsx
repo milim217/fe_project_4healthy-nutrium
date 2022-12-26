@@ -2,39 +2,57 @@ import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 import ModalDetailFood from "../modal/ModalDetailFood";
 import Button from "react-bootstrap/Button";
-import { Col, Row, Pagination, Select, Input } from "antd";
+import { Col, Row, Select, Input } from "antd";
+import Pagination from "react-bootstrap/Pagination";
 import IngredientAPI from "../../service/Actions/IngredientAPI";
 import React, { useEffect, useState } from "react";
 const { Search } = Input;
 function CardGroupIngredient() {
-  
   const pageSize = 6;
   const [ingredients, setIngredient] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(20);
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentIngredientFood = ingredients.slice(
+    indexOfFirstPost,
+    indexOfLastPost
+  );
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const pageNumbers = [];
+
+  for (let i = 1; i <= Math.ceil(ingredients.length / postsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
   const loadIngredient = () => {
     IngredientAPI.getAll()
       .then((res) => {
         console.log("data = " + JSON.stringify(res.data));
         setIngredient(res.data);
+        setLoading(false);
       })
       .catch((err) => {});
-  }
+  };
 
   useEffect(() => {
     loadIngredient();
   }, []);
 
-  const onSearch = async (key) => { 
+  const onSearch = async (key) => {
     if (key) {
-      await IngredientAPI.search(key)
-        .then(res => {
-          setIngredient(res.data);
-        });
-    }
-    else {
+      await IngredientAPI.search(key).then((res) => {
+        setIngredient(res.data);
+      });
+    } else {
       loadIngredient();
     }
-  }
+  };
 
   return (
     <>
@@ -80,8 +98,8 @@ function CardGroupIngredient() {
         </div>
       </div>
       <Row gutter={[24, 24]}>
-        {ingredients ? (
-          ingredients.map((ingredientValue) => (
+        {currentIngredientFood ? (
+          currentIngredientFood.map((ingredientValue) => (
             <Col span={6}>
               <Card className="group-card-libaryPage">
                 <Card.Img
@@ -95,7 +113,10 @@ function CardGroupIngredient() {
                     {ingredientValue.ingredientName}
                   </Card.Title>
                 </Card.Body>
-                <Button className="btn_libaryFood" href={`/ingredient/${ingredientValue.id}`}>
+                <Button
+                  className="btn_libaryFood"
+                  href={`/ingredient/${ingredientValue.id}`}
+                >
                   Thông tin thêm
                 </Button>
                 {/* <ModalDetailFood></ModalDetailFood> */}
@@ -106,9 +127,17 @@ function CardGroupIngredient() {
           <div></div>
         )}
       </Row>
-      <div className="Pageination_libaryPage">
-        <Pagination defaultCurrent={1} total={50} />
-      </div>
+      <Pagination className="libary_pagidivide">
+        <ul className="pagination">
+          {pageNumbers.map((number) => (
+            <li key={number} className="page-item">
+              <a onClick={() => paginate(number)} className="page-link">
+                {number}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Pagination>
     </>
   );
 }

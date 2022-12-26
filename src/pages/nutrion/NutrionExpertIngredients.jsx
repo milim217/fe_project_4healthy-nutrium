@@ -39,14 +39,14 @@ function NutrionExpertIngredients() {
       .then((res) => {
         setIngredients(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
   const loadIngredientList = async () => {
     await IngredientAPI.getAll()
       .then((res) => {
         setSearchedIngredients(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
   useEffect(() => {
     loadAllIngredientList();
@@ -55,7 +55,7 @@ function NutrionExpertIngredients() {
     loadIngredientList();
   }, [ingredients]);
   useEffect(() => {
-    console.log('updated ',updatedIngredient)
+    console.log("updated ", updatedIngredient);
   }, [updatedIngredient]);
 
   const changeStatus = async (id) => {
@@ -254,10 +254,13 @@ function NutrionExpertIngredients() {
         //   ingredient={record}
         //   loadIngredientList={loadIngredientList}
         // ></EditIngrdient>
-        <Button type="primary" onClick={() => {
-          setOpenUpdate(true);
-          setUpdatedIngredient(record);
-        }}>
+        <Button
+          type="primary"
+          onClick={() => {
+            setOpenUpdate(true);
+            setUpdatedIngredient(record);
+          }}
+        >
           Sửa
         </Button>
       ),
@@ -289,37 +292,37 @@ function NutrionExpertIngredients() {
   const data = [];
   searchedIngredients
     ? searchedIngredients.map((ingredientValue) =>
-      data.push({
-        id: ingredientValue.id,
-        ingredientName: ingredientValue.ingredientName,
-        minLimit: ingredientValue.minLimit,
-        maxLimit: ingredientValue.maxLimit,
-        seasons: ingredientValue.seasons,
-        seasson_id: ingredientValue.seasons.map((s) => s.seasonName + " "),
-        fat: ingredientValue.fat,
-        protein: ingredientValue.protein,
-        carb: ingredientValue.carb,
-        calo: ingredientValue.calo,
-        water: ingredientValue.water,
-        fiber: ingredientValue.fiber,
-        ash: ingredientValue.ash,
-        canxi: ingredientValue.canxi,
-        iron: ingredientValue.iron,
-        zinc: ingredientValue.zinc,
-        vitaminC: ingredientValue.vitaminC,
-        vitaminB1: ingredientValue.vitaminB1,
-        vitaminB2: ingredientValue.vitaminB2,
-        vitaminB3: ingredientValue.vitaminB3,
-        vitaminB6A: ingredientValue.vitaminB6A,
-        vitaminD: ingredientValue.vitaminD,
-        vitaminB12: ingredientValue.vitaminB12,
-        vitaminA: ingredientValue.vitaminA,
-        vitaminARae: ingredientValue.vitaminARae,
-        image: `http://localhost:8080/ingredient/${ingredientValue.id}/image`,
-        status: ingredientValue.status,
-        img: ingredientValue.img,
-      })
-    )
+        data.push({
+          id: ingredientValue.id,
+          ingredientName: ingredientValue.ingredientName,
+          minLimit: ingredientValue.minLimit,
+          maxLimit: ingredientValue.maxLimit,
+          seasons: ingredientValue.seasons,
+          seasson_id: ingredientValue.seasons.map((s) => s.seasonName + " "),
+          fat: ingredientValue.fat,
+          protein: ingredientValue.protein,
+          carb: ingredientValue.carb,
+          calo: ingredientValue.calo,
+          water: ingredientValue.water,
+          fiber: ingredientValue.fiber,
+          ash: ingredientValue.ash,
+          canxi: ingredientValue.canxi,
+          iron: ingredientValue.iron,
+          zinc: ingredientValue.zinc,
+          vitaminC: ingredientValue.vitaminC,
+          vitaminB1: ingredientValue.vitaminB1,
+          vitaminB2: ingredientValue.vitaminB2,
+          vitaminB3: ingredientValue.vitaminB3,
+          vitaminB6A: ingredientValue.vitaminB6A,
+          vitaminD: ingredientValue.vitaminD,
+          vitaminB12: ingredientValue.vitaminB12,
+          vitaminA: ingredientValue.vitaminA,
+          vitaminARae: ingredientValue.vitaminARae,
+          image: `http://localhost:8080/ingredient/${ingredientValue.id}/image`,
+          status: ingredientValue.status,
+          img: ingredientValue.img,
+        })
+      )
     : console.log("error");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -357,32 +360,34 @@ function NutrionExpertIngredients() {
     // else {
     let newList = [];
     if (searchData.season) {
-      ingredients.map(i => {
-        i.seasons.map(s => {
-          if (i.ingredientName.toUpperCase().includes(value.toUpperCase()) && s.seasonName.toUpperCase().includes(searchData.season.toUpperCase())) {
+      ingredients.map((i) => {
+        i.seasons.map((s) => {
+          if (
+            i.ingredientName.toUpperCase().includes(value.toUpperCase()) &&
+            s.seasonName.toUpperCase().includes(searchData.season.toUpperCase())
+          ) {
             newList.push(i);
           }
-        })
-      })
-    }
-    else {
-      ingredients.map(i => {
+        });
+      });
+    } else {
+      ingredients.map((i) => {
         if (i.ingredientName.toUpperCase().includes(value.toUpperCase())) {
           newList.push(i);
         }
-      })
+      });
     }
     setSearchedIngredients(newList);
 
     // }
-  }
+  };
 
   // const [searchData,setSearchData] = useState({
   //   season: null
   // })
 
   const [searchData, setSearchData] = useState({
-    season: null
+    season: null,
   });
 
   // useEffect(() => {
@@ -431,14 +436,17 @@ function NutrionExpertIngredients() {
             size="large"
             onSearch={onSearch}
           />
+          <div className="wrapper__listUser">
+            <AlertMessage info={alert} />
+          </div>
         </div>
         <div style={{ paddingTop: 0 }}>
           Lọc theo mùa
-          <SelectionSeasonIngredient searchData={searchData} setSearchData={setSearchData}></SelectionSeasonIngredient>
+          <SelectionSeasonIngredient
+            searchData={searchData}
+            setSearchData={setSearchData}
+          ></SelectionSeasonIngredient>
         </div>
-      </div>
-      <div className="wrapper__listUser">
-        <AlertMessage info={alert} />
       </div>
 
       <Table

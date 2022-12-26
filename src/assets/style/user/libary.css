@@ -119,3 +119,39 @@ body {
 .btn_libaryFood:hover {
   background-color: #ff8000;
 }
+
+.libary_pagidivide {
+  display: table;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: white;
+  background-color: #0a3847;
+  border-radius: none;
+  border: none;
+}
+.page-link:hover {
+  background-color: #ff8000;
+}
+
+.page-item:first-child .page-link {
+  margin-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.page-item:last-child .page-link {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.wrapper-libary-card {
+  min-height: 120vh;
+}
