@@ -1,36 +1,40 @@
 import React, { useState } from "react";
 import { Select } from "antd";
 
-function SelectionSeasonFood() {
+function SelectionSeasonFood({ searchData, setSearchData }) {
   const [placement, SetPlacement] = useState("bottomLeft");
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+    setSearchData({ ...searchData, seasonId: value })
   };
   return (
     <>
       <div> Lọc theo mùa</div>
       <Select
-        defaultValue="Mùa Xuân"
+        defaultValue={null}
         style={{
           width: 300,
         }}
         onChange={handleChange}
         options={[
           {
-            value: "Mùa Xuân",
-            label: "Mùa Xuân",
+            label: "Tất cả",
+            value: null
           },
           {
-            value: "Mùa Hạ",
-            label: "Mùa Hạ",
+            label: "Xuân",
+            value: 1
           },
           {
-            value: "Mùa Thu",
-            label: "Mùa Thu",
+            label: "Hạ",
+            value: 2
           },
           {
-            value: "Mùa Đông",
-            label: "Mùa Đông",
+            label: "Thu",
+            value: 3
+          },
+          {
+            label: "Đông",
+            value: 4
           },
         ]}
       />

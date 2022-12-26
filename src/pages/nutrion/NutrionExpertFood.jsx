@@ -20,40 +20,66 @@ import AddNewFood from "../../components/drawn/AddNewFood";
 import Ingredient_SelectionRenderInListFood from "../../components/selectionRender/Ingredient_SelectionRenderInListFood";
 import EditFood from "../../components/drawn/EditFood";
 import FoodAPI from "../../service/Actions/FoodAPI";
+import CategoryAPI from "../../service/Actions/CategoryAPI";
 import AlertMessage from "../../../src/components/alert/AlertMessage";
 
 const text = "Bạn có chắc chắn muốn món ăn này?";
 const NutrionExpertFood = ({ user }) => {
-  const [food, setFood] = useState([]);
+  const [foods, setFoods] = useState([]);
+  const [searchedFoods, setSearchedFoods] = useState([]);
   const [alert, setAlert] = useState(null);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [updatedFood, setUpdatedFood] = useState(null);
+  const [categories,setCategories] = useState(null)
 
-  const loadFoodList = () => {
-    FoodAPI.getAll()
+  const loadFoodList = async () => {
+    await FoodAPI.getAll()
       .then((res) => {
-        console.log("data = " + JSON.stringify(res.data));
-        setFood(res.data);
+        setFoods(res.data);
+      })
+      .catch((err) => { });
+  };
+
+  const loadCategoryList = async () => {
+    await CategoryAPI.getAll()
+      .then((res) => {
+        let cList = [];
+        cList.push( {
+          value: null,
+          label: "Tất cả",
+        })
+        res.data.map(category => {
+           cList.push( {
+            value: category.id,
+            label: category.categoryName,
+          })
+        });
+        setCategories(cList);
       })
       .catch((err) => { });
   };
 
   useEffect(() => {
     loadFoodList();
+    loadCategoryList();
   }, []);
 
-  const deleteFood = (id) => {
-    FoodAPI.delete(id)
-      .then((res) => {
-        setAlert({ type: "success", message: "Xóa món ăn thành công" });
-        setTimeout(() => setAlert(null), 5000);
-        loadFoodList();
-      })
-      .catch((e) => {
-        setAlert({ type: "danger", message: e.response.data.message });
-        setTimeout(() => setAlert(null), 5000);
-      });
-  };
+  useEffect(() => {
+    setSearchedFoods(foods);
+  }, [foods]);
+
+  // const deleteFood = (id) => {
+  //   FoodAPI.delete(id)
+  //     .then((res) => {
+  //       setAlert({ type: "success", message: "Xóa món ăn thành công" });
+  //       setTimeout(() => setAlert(null), 5000);
+  //       loadFoodList();
+  //     })
+  //     .catch((e) => {
+  //       setAlert({ type: "danger", message: e.response.data.message });
+  //       setTimeout(() => setAlert(null), 5000);
+  //     });
+  // };
 
   const changeStatus = async (id) => {
     await FoodAPI.changeStatus(id)
@@ -193,8 +219,8 @@ const NutrionExpertFood = ({ user }) => {
   // Dữ liệu giả cho danh sách
   const data = [];
   const body = <br></br>;
-  food
-    ? food.map((foodValue) => {
+  searchedFoods
+    ? searchedFoods.map((foodValue) => {
       data.push({
         id: foodValue.id,
         food_name: foodValue.foodName,
@@ -229,7 +255,25 @@ const NutrionExpertFood = ({ user }) => {
 
   // Tìm kiếm Food
   const { Search } = Input;
-  const onSearch = (key) => { };
+  const [searchData,setSearchData] = useState({
+     text: "",
+     categoryId: null,
+     mealId: null,
+     seasonId: null
+  })
+  const onChange = (e) => { 
+     setSearchData({...searchData, text: e.target.value})
+  };
+  const onSearch = async (text) => { 
+    await FoodAPI.search(searchData)
+    .then(res => {
+       setSearchedFoods(res.data);
+    })
+    .catch(e => {
+
+    })
+    
+  };
 
   return (
     <div>
@@ -262,15 +306,15 @@ const NutrionExpertFood = ({ user }) => {
           </div> */}
           {/* Lọc theo loại */}
           <div className="display_block">
-            <SelectionCategories />
+            <SelectionCategories categories={categories} searchData={searchData} setSearchData={setSearchData}/>
           </div>
           {/* Lọc theo kiểu bữa */}
           <div className="display_block">
-            <SelectionMealtypeFoodFilter />
+            <SelectionMealtypeFoodFilter searchData={searchData} setSearchData={setSearchData}/>
           </div>
           {/* Lọc theo mùa món ăn */}
           <div className="display_block">
-            <SelectionSeasonFood></SelectionSeasonFood>
+            <SelectionSeasonFood searchData={searchData} setSearchData={setSearchData}/>
           </div>
           {/* Thêm món ăn mới vào danh sách */}
           <div className="display_block">
@@ -284,6 +328,7 @@ const NutrionExpertFood = ({ user }) => {
             enterButton="Tìm Kiếm"
             size="large"
             onSearch={onSearch}
+            onChange={onChange}
           />
           <AlertMessage info={alert} />
         </div>

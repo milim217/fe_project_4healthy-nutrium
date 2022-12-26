@@ -26,9 +26,9 @@ const FoodAPI = {
     return AxiosList.normalAxios.post(url);
   },
 
-  search(key) {
-    const url = `/food/search/`+key;
-    return AxiosList.normalAxios.get(url);
+  search(data) {
+    const url = `/food/search`;
+    return AxiosList.normalAxios.post(url,data);
   },
 };
 export default FoodAPI;
