@@ -30,5 +30,15 @@ const FoodAPI = {
     const url = `/food/search`;
     return AxiosList.normalAxios.post(url,data);
   },
+
+  search(data) {
+    const url = `/food/search-active`;
+    return AxiosList.normalAxios.post(url,data);
+  },
+
+  getActive() {
+    const url = `/food/active`;
+    return AxiosList.normalAxios.get(url);
+  },
 };
 export default FoodAPI;

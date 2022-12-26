@@ -80,11 +80,6 @@ function NutrionExpertIngredients() {
   };
 
   const columns = [
-    // {
-    //   title: "ID",
-    //   dataIndex: "id",
-    //   justify: "center",
-    // },
     {
       title: "Tên Nguyên Liệu",
       dataIndex: "ingredientName",
@@ -98,25 +93,7 @@ function NutrionExpertIngredients() {
         return <Image width={80} height={60} src={imageIngredient} />;
       },
       justify: "center",
-      width: 100,
-    },
-    // {
-    //   title: "Giới hạn tối thiểu",
-    //   dataIndex: "minLimit",
-    //   justify: "center",
-    //   width: 75
-    // },
-    // {
-    //   title: "Giới hạn tối đa",
-    //   dataIndex: "maxLimit",
-    //   justify: "center",
-    //   width: 75
-    // },
-    {
-      title: "Mùa",
-      dataIndex: "seasson_id",
-      justify: "center",
-      width: 45,
+      width: 70,
     },
     {
       title: "Trạng thái",
@@ -131,7 +108,13 @@ function NutrionExpertIngredients() {
           )}
         </>
       ),
-      width: 120,
+      width: 70,
+    },
+    {
+      title: "Mùa",
+      dataIndex: "seasson_id",
+      justify: "center",
+      width: 45,
     },
     {
       title: "Chất béo (g)",
@@ -158,91 +141,91 @@ function NutrionExpertIngredients() {
       width: 73,
     },
     {
-      title: "Nước(g)",
+      title: "Nước (g)",
       dataIndex: "water",
       justify: "center",
       width: 80,
     },
     {
-      title: "Chất xơ(g)",
+      title: "Chất xơ (g)",
       dataIndex: "fiber",
       justify: "center",
       width: 80,
     },
     {
-      title: "Tro(g)",
+      title: "Tro (g)",
       dataIndex: "ash",
       justify: "center",
       width: 80,
     },
     {
-      title: "Canxi(mg)",
+      title: "Canxi (mg)",
       dataIndex: "canxi",
       justify: "center",
       width: 80,
     },
     {
-      title: "Iron(mg)",
+      title: "Iron (mg)",
       dataIndex: "iron",
       justify: "center",
       width: 80,
     },
     {
-      title: "Zinc(mg)",
+      title: "Zinc (mg)",
       dataIndex: "zinc",
       justify: "center",
       width: 80,
     },
     {
-      title: "VitaminC(mg)",
+      title: "VitaminC (mg)",
       dataIndex: "vitaminC",
       justify: "center",
       width: 80,
     },
     {
-      title: "VitaminB1(mg)",
+      title: "VitaminB1 (mg)",
       dataIndex: "vitaminB1",
       justify: "center",
       width: 80,
     },
     {
-      title: "VitaminB2(mg)",
+      title: "VitaminB2 (mg)",
       dataIndex: "vitaminB2",
       justify: "center",
       width: 80,
     },
     {
-      title: "VitaminB3(mg)",
+      title: "VitaminB3 (mg)",
       dataIndex: "vitaminB3",
       justify: "center",
       width: 80,
     },
     {
-      title: "VitaminB6A(mg)",
+      title: "VitaminB6A (mg)",
       dataIndex: "vitaminB6A",
       justify: "center",
       width: 80,
     },
     {
-      title: "VitaminD(mg)",
+      title: "VitaminD (mg)",
       dataIndex: "vitaminD",
       justify: "center",
       width: 80,
     },
     {
-      title: "VitaminB12(mcg)",
+      title: "VitaminB12 (mcg)",
       dataIndex: "vitaminB12",
       justify: "center",
       width: 80,
     },
     {
-      title: "VitaminA(mcg)",
+      title: "VitaminA (mcg)",
       dataIndex: "vitaminA",
       justify: "center",
       width: 80,
     },
     {
-      title: "VitaminA_rae(mcg)",
+      title: "VitaminA_rae (mcg)",
       dataIndex: "vitaminARae",
       justify: "center",
       width: 80,

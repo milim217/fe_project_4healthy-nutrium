@@ -8,7 +8,6 @@ const UploadImageFile = ({ setImage, setResult }) => {
   const [urls, setUrls] = useState([]);
 
   const handleAnt = (e) => {
-    console.log(e.file.originFileObj);
     setAntPics(e.file.originFileObj);
   };
 

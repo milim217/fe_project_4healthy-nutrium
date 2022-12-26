@@ -372,11 +372,11 @@ const AddNewFood = ({ loadFoodList }) => {
   };
   const [listIngredient, setListIngredient] = useState([]);
   useEffect(() => {
-    IngredientAPI.getAll()
+    IngredientAPI.getActive()
       .then((res) => {
         setListIngredient(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => { })
   }, []);
 
   const [IngredientFoodValue, setIngredientFoodValue] = useState("");

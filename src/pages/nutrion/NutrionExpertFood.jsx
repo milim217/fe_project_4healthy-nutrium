@@ -120,6 +120,21 @@ const NutrionExpertFood = ({ user }) => {
       },
     },
     {
+      title: "Trạng thái",
+      dataIndex: "status",
+      justify: "center",
+      render: (status) => (
+        <>
+          {status ? (
+            <Tag color="green">Đã kích hoạt </Tag>
+          ) : (
+            <Tag color="red">Vô hiệu hoá</Tag>
+          )}
+        </>
+      ),
+      width: 120,
+    },
+    {
       title: "Loại món ăn",
       dataIndex: "category_id",
       justify: "center",
@@ -166,21 +181,6 @@ const NutrionExpertFood = ({ user }) => {
       width: 80,
     },
     {
-      title: "Trạng thái",
-      dataIndex: "status",
-      justify: "center",
-      render: (status) => (
-        <>
-          {status ? (
-            <Tag color="green">Đã kích hoạt </Tag>
-          ) : (
-            <Tag color="red">Vô hiệu hoá</Tag>
-          )}
-        </>
-      ),
-      width: 120,
-    },
-    {
       title: "Chỉnh sửa",
       render: (_, record) => (
         // <EditFood foodData={record} loadFoodList={loadFoodList}></EditFood>
@@ -192,7 +192,7 @@ const NutrionExpertFood = ({ user }) => {
         </Button>
       ),
       fixed: "right",
-      width: 75,
+      width: 80,
     },
     {
       title: "Đổi trạng thái",

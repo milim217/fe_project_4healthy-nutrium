@@ -114,7 +114,7 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate }) => {
         })
         .catch((err) => { });
 
-      await IngredientAPI.getAll()
+      await IngredientAPI.getActive()
         .then((res) => {
           setListIngredient(res.data);
         })

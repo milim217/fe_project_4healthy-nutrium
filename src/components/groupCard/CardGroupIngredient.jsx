@@ -7,6 +7,29 @@ import Pagination from "react-bootstrap/Pagination";
 import IngredientAPI from "../../service/Actions/IngredientAPI";
 import React, { useEffect, useState } from "react";
 const { Search } = Input;
+const seasonOptions = [
+  {
+    value: null,
+    label: "Tất cả",
+  },
+  {
+    value: 1,
+    label: "Mùa Xuân",
+  },
+  {
+    value: 2,
+    label: "Mùa Hạ",
+  },
+  {
+    value: 3,
+    label: "Mùa Thu",
+  },
+  {
+    value: 4,
+    label: "Mùa Đông",
+  },
+];
+
 function CardGroupIngredient() {
   const pageSize = 6;
   const [ingredients, setIngredient] = useState([]);
@@ -22,7 +45,15 @@ function CardGroupIngredient() {
   );
 
   // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNum) => {
+    if (pageNum <= 0) {
+      pageNum = 1;
+    }
+    else if (pageNum > pageNumbers.length) {
+      pageNum = pageNumbers.length;
+    }
+    setCurrentPage(pageNum)
+  };
 
   const pageNumbers = [];
 
@@ -31,27 +62,30 @@ function CardGroupIngredient() {
   }
 
   const loadIngredient = () => {
-    IngredientAPI.getAll()
+    IngredientAPI.getActive()
       .then((res) => {
         console.log("data = " + JSON.stringify(res.data));
         setIngredient(res.data);
         setLoading(false);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   useEffect(() => {
     loadIngredient();
   }, []);
 
-  const onSearch = async (key) => {
-    if (key) {
-      await IngredientAPI.search(key).then((res) => {
+  const [searchData, setSearchData] = useState({
+    text: "",
+    seasonId: null
+  });
+
+  const onSearch = async (text) => {
+    searchData.text = text;
+    await IngredientAPI.searchActive(searchData)
+      .then(res => {
         setIngredient(res.data);
-      });
-    } else {
-      loadIngredient();
-    }
+      })
   };
 
   return (
@@ -73,27 +107,13 @@ function CardGroupIngredient() {
         <div className="wrapper_select-libary">
           <div className="name-select_libary">Lọc theo mùa</div>
           <Select
-            defaultValue="Xuân"
+            defaultValue={null}
             className="select-list_Libary"
             bordered={false}
-            options={[
-              {
-                value: "jack",
-                label: "Mùa Xuân",
-              },
-              {
-                value: "lucy",
-                label: "Mùa Hạ",
-              },
-              {
-                value: "Yiminghe",
-                label: "Mùa Thu",
-              },
-              {
-                value: "Yiminghe",
-                label: "Mùa Đông",
-              },
-            ]}
+            options={seasonOptions}
+            onChange={(value) => {
+              setSearchData({ ...searchData, seasonId: value });
+            }}
           />
         </div>
       </div>
@@ -129,6 +149,11 @@ function CardGroupIngredient() {
       </Row>
       <Pagination className="libary_pagidivide">
         <ul className="pagination">
+          <li className="page-item">
+            <a onClick={() => paginate(currentPage - 1)} className="page-link">
+              Trang trước
+            </a>
+          </li>
           {pageNumbers.map((number) => (
             <li key={number} className="page-item">
               <a onClick={() => paginate(number)} className="page-link">
@@ -136,6 +161,11 @@ function CardGroupIngredient() {
               </a>
             </li>
           ))}
+          <li className="page-item">
+            <a onClick={() => paginate(currentPage + 1)} className="page-link">
+              Trang sau
+            </a>
+          </li>
         </ul>
       </Pagination>
     </>

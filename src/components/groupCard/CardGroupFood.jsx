@@ -5,51 +5,126 @@ import Button from "react-bootstrap/Button";
 import { Col, Row, Input, Select } from "antd";
 import Pagination from "react-bootstrap/Pagination";
 import FoodAPI from "../../service/Actions/FoodAPI";
+import CategoryAPI from "../../service/Actions/CategoryAPI";
 import React, { useEffect, useState } from "react";
 
 const { Search } = Input;
+const mealOptions = [
+  {
+    value: null,
+    label: "Tất cả",
+  },
+  {
+    value: 1,
+    label: "Bữa Sáng",
+  },
+  {
+    value: 2,
+    label: "Bữa Trưa",
+  },
+  {
+    value: 3,
+    label: "Bữa Tối",
+  },
+];
+
+const seasonOptions = [
+  {
+    value: null,
+    label: "Tất cả",
+  },
+  {
+    value: 1,
+    label: "Mùa Xuân",
+  },
+  {
+    value: 2,
+    label: "Mùa Hạ",
+  },
+  {
+    value: 3,
+    label: "Mùa Thu",
+  },
+  {
+    value: 4,
+    label: "Mùa Đông",
+  },
+];
 
 function CardGroupFood() {
-  const [food, setFood] = useState([]);
+  const [foods, setFoods] = useState([]);
+  const [categories, setCategories] = useState(null);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(12);
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentFood = food.slice(indexOfFirstPost, indexOfLastPost);
+  const currentFood = foods.slice(indexOfFirstPost, indexOfLastPost);
 
   // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNum) => {
+    if (pageNum <= 0) {
+      pageNum = 1;
+    }
+    else if (pageNum > pageNumbers.length) {
+      pageNum = pageNumbers.length;
+    }
+    setCurrentPage(pageNum)
+  };
 
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(food.length / postsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(foods.length / postsPerPage); i++) {
     pageNumbers.push(i);
   }
-  const loadFoodList = () => {
-    FoodAPI.getAll()
+  const loadFoodList = async () => {
+    await FoodAPI.getActive()
       .then((res) => {
-        console.log("data = " + JSON.stringify(res.data));
-        setFood(res.data);
+        setFoods(res.data);
         setLoading(false);
       })
-      .catch((err) => {});
+      .catch((err) => { });
+  };
+  const loadCategories = async () => {
+    await CategoryAPI.getAll()
+      .then((res) => {
+        let cList = [];
+        cList.push({
+          value: null,
+          label: "Tất cả"
+        })
+        res.data.map(category => {
+          cList.push({
+            value: category.id,
+            label: category.categoryName
+          });
+        })
+        setCategories(cList);
+      })
+      .catch((err) => { });
   };
 
   useEffect(() => {
     loadFoodList();
+    loadCategories();
   }, []);
 
+  const [searchData, setSearchData] = useState({
+    text: "",
+    categoryId: null,
+    mealId: null,
+    seasonId: null
+  });
+
   //Lấy giá trị search
-  const onSearch = async (key) => {
-    if (key) {
-      await FoodAPI.search(key).then((res) => {
-        setFood(res.data);
-      });
-    } else {
-      loadFoodList();
-    }
+  const onSearch = async (text) => {
+    searchData.text = text;
+    FoodAPI.search(searchData)
+      .then(res => {
+        setFoods(res.data);
+      })
+
   };
 
   return (
@@ -69,23 +144,13 @@ function CardGroupFood() {
         <div className="wrapper_select-libary">
           <div className="name-select_libary">Loại món ăn</div>
           <Select
-            defaultValue="Trứng"
+            defaultValue={null}
             className="select-list_Libary"
             bordered={false}
-            options={[
-              {
-                value: "Trứng",
-                label: "Trứng",
-              },
-              {
-                value: "Rau",
-                label: "Rau",
-              },
-              {
-                value: "Canh",
-                label: "Canh",
-              },
-            ]}
+            options={categories}
+            onChange={(value) => {
+              setSearchData({ ...searchData, categoryId: value });
+            }}
           />
         </div>
 
@@ -94,23 +159,13 @@ function CardGroupFood() {
         <div className="wrapper_select-libary">
           <div className="name-select_libary">Lọc theo bữa ăn</div>
           <Select
-            defaultValue="lucy"
+            defaultValue={null}
             className="select-list_Libary"
             bordered={false}
-            options={[
-              {
-                value: "jack",
-                label: "Bữa Sáng",
-              },
-              {
-                value: "lucy",
-                label: "Bữa Trưa",
-              },
-              {
-                value: "Yiminghe",
-                label: "Bữa Tối",
-              },
-            ]}
+            options={mealOptions}
+            onChange={(value) => {
+              setSearchData({ ...searchData, mealId: value });
+            }}
           />
         </div>
         {/* Lọc theo mùa*/}
@@ -118,27 +173,13 @@ function CardGroupFood() {
         <div className="wrapper_select-libary">
           <div className="name-select_libary">Lọc theo mùa</div>
           <Select
-            defaultValue="Xuân"
+            defaultValue={null}
             className="select-list_Libary"
             bordered={false}
-            options={[
-              {
-                value: "jack",
-                label: "Mùa Xuân",
-              },
-              {
-                value: "lucy",
-                label: "Mùa Hạ",
-              },
-              {
-                value: "Yiminghe",
-                label: "Mùa Thu",
-              },
-              {
-                value: "Yiminghe",
-                label: "Mùa Đông",
-              },
-            ]}
+            options={seasonOptions}
+            onChange={(value) => {
+              setSearchData({ ...searchData, seasonId: value });
+            }}
           />
         </div>
       </div>
@@ -174,6 +215,11 @@ function CardGroupFood() {
       </div>
       <Pagination className="libary_pagidivide">
         <ul className="pagination">
+          <li className="page-item">
+            <a onClick={() => paginate(currentPage - 1)} className="page-link">
+              Trang trước
+            </a>
+          </li>
           {pageNumbers.map((number) => (
             <li key={number} className="page-item">
               <a onClick={() => paginate(number)} className="page-link">
@@ -181,6 +227,11 @@ function CardGroupFood() {
               </a>
             </li>
           ))}
+          <li className="page-item">
+            <a onClick={() => paginate(currentPage + 1)} className="page-link">
+              Trang sau
+            </a>
+          </li>
         </ul>
       </Pagination>
     </>

@@ -26,8 +26,13 @@ const IngredientAPI = {
     return AxiosList.normalAxios.post(url);
   },
 
-  search(key) {
-    const url = `/ingredient/search/` + key;
+  searchActive(data) {
+    const url = `/ingredient/search-active`;
+    return AxiosList.normalAxios.post(url,data);
+  },
+
+  getActive() {
+    const url = `/ingredient/active`;
     return AxiosList.normalAxios.get(url);
   },
 };
