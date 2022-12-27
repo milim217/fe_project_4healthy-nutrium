@@ -1,21 +1,20 @@
-import AxiosList from "./AxiosList";
-
+import axiosInstance from "./CustomAxios";
 
 const DietInfoAPI = {
 
   getDietOptions(data) {
     const url = `/diet/options`;
-    return AxiosList.authAxios.post(url,data);
+    return axiosInstance.post(url,data);
   },
   
   save(data) {
     const url = `/diet`;
-    return AxiosList.authAxios.post(url,data);
+    return axiosInstance.post(url,data);
   },
 
   getByUserID(uid) {
     const url = `/diet/` +uid;
-    return AxiosList.authAxios.get(url);
+    return axiosInstance.get(url);
   }
 
 }

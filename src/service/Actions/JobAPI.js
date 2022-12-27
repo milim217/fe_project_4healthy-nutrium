@@ -1,11 +1,11 @@
-import AxiosList from "./AxiosList";
+import axiosInstance from "./CustomAxios";
 
 
 const JobAPI = {
   
   getAll(data) {
     const url = `/job`;
-    return AxiosList.authAxios.get(url);
+    return axiosInstance.get(url);
   }
 
 }

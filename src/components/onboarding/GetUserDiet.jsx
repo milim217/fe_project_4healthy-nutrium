@@ -130,7 +130,7 @@ const GetUserDiet = ({ checkValidRole }) => {
     if (loading) {
       setTimeout(() => {
         setLoading(false);
-      }, 3000);
+      }, 4000);
     }
   }, [loading]);
 
@@ -150,7 +150,7 @@ const GetUserDiet = ({ checkValidRole }) => {
           <Image
             width={190}
             height={140}
-            src={`http://localhost:8080/food/${detail?.food.id}/image`}
+            src={`http://localhost:8080/food/${detail?detail.food.id:''}/image`}
           />
           <Card.Grid style={gridStyle}>
             {detail ?

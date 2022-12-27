@@ -55,7 +55,7 @@ const LoginForm = () => {
         localStorage.clear();
         const token = res.data.access_token;
         const user = jwt(token);
-        localStorage.setItem("jwt", JSON.stringify(token));
+        localStorage.setItem("jwt", token);
         if (user.role === "ADMIN") {
           history.push("/user");
           console.log("Account ADMIN");

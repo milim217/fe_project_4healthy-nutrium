@@ -1,5 +1,6 @@
 import AxiosList from "./AxiosList";
 import axios from "axios";
+import axiosInstance from "./CustomAxios";
 import { apiUrl } from "./UrlAPI";
 
 const UserAPI = {
@@ -13,77 +14,77 @@ const UserAPI = {
   },
   getAll() {
     const url = `/user`;
-    return AxiosList.authAxios.get(url);
+    return axiosInstance.get(url);
   },
 
   getByEmail(email) {
     const url = `/user/` + email;
-    return AxiosList.normalAxios.get(url);
+    return axiosInstance.get(url);
   },
 
   getRegisterUser(code) {
     const url = `/user/email-register/` + code;
-    return AxiosList.normalAxios.get(url);
+    return axiosInstance.get(url);
   },
 
   getForgotUser(code) {
     const url = `/user/forgot/` + code;
-    return AxiosList.authAxios.get(url);
+    return axiosInstance.get(url);
   },
 
   getSearched(key) {
     const url = `/user/search/` + key;
-    return AxiosList.authAxios.get(url);
+    return axiosInstance.get(url);
   },
 
   sendRegisterCode(email) {
     const url = `/user/email-register`;
-    return AxiosList.normalAxios.post(url, email);
+    return axiosInstance.post(url, email);
   },
 
   sendForgotCode(email) {
     const url = `/user/forgot`;
-    return AxiosList.normalAxios.post(url, email);
+    return axiosInstance.post(url, email);
   },
 
   addUser(user) {
     const url = `/user`;
-    return AxiosList.normalAxios.post(url, user);
+    return axiosInstance.post(url, user);
   },
 
   addNutrientExpert(user) {
     const url = `/user//nutrient-expert`;
-    return AxiosList.authAxios.post(url, user);
+    return axiosInstance.post(url, user);
   },
 
   updateUser(user) {
     const url = `/user/`+ user.id;
-    return AxiosList.authAxios.post(url, user);
+    return axiosInstance.post(url, user);
   },
 
   checkOldPassword(id,oldPassword) {
     const url = `/user/check-old-password/` + id;
-    return AxiosList.authAxios.post(url, oldPassword);
+    return axiosInstance.post(url, oldPassword);
   },
 
   addNutrient(user) {
     const url = `/user/nutrient-expert`;
-    return AxiosList.authAxios.post(url, user);
+    return axiosInstance.post(url, user);
   },
 
   update(user) {
     const url = `/user/` + user.id;
-    return AxiosList.authAxios.put(url, user);
+    return axiosInstance.put(url, user);
   },
 
   deactive(uid) {
     const url = `/user/` + uid+ `/delete`;
-    return AxiosList.authAxios.post(url);
+    return axiosInstance.post(url);
   },
 
   active(uid) {
     const url = `/user/` + uid + `/active`;
-    return AxiosList.authAxios.post(url);
+    return axiosInstance.post(url);
   },
 
 };
