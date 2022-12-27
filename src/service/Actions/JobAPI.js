@@ -5,7 +5,7 @@ const JobAPI = {
   
   getAll(data) {
     const url = `/job`;
-    return AxiosList.normalAxios.get(url);
+    return AxiosList.authAxios.get(url);
   }
 
 }

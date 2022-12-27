@@ -64,7 +64,7 @@ const MealTypeList = [
 
 const { Option } = Select;
 const { TextArea } = Input
-const EditFood = ({ foodData, openUpdate, setOpenUpdate }) => {
+const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
   const [checkedMealTypeList, setcheckedMealTypeList] = useState(
     foodData?.mealType.map((element) => {
       return element.trim();
@@ -390,7 +390,7 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate }) => {
       }
       return;
     });
-    //Xoá các thành phần underfined
+    //Xoá các Nguyên liệu underfined
     ingredientMasses = ingredientMasses.filter(function (element) {
       return element !== undefined;
     });
@@ -423,8 +423,10 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate }) => {
     console.log("update food = ", editFoodForm);
     FoodAPI.update(editFoodForm)
       .then(res => {
+
+        loadFoodList();
         setTopAlert({ type: "success", message: "Cập nhật món ăn thành công" });
-        setTimeout(() => setAlert(null), 5000);
+        setTimeout(() => setTopAlert(null), 5000);
 
         if (image) {
           const formData = new FormData();
@@ -435,7 +437,7 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate }) => {
             method: "post",
             url: urlStr,
             data: formData,
-            headers: { "Content-Type": "multipart/form-data" },
+            headers: { "Content-Type": "multipart/form-data", 'Authorization': JSON.parse(localStorage.getItem("jwt"))},
           });
         }
 
@@ -443,7 +445,7 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate }) => {
       })
       .catch(e => {
         setTopAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi cập nhật món ăn" });
-        setTimeout(() => setAlert(null), 5000);
+        setTimeout(() => setTopAlert(null), 5000);
       });
   };
 
@@ -456,9 +458,11 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate }) => {
   };
   const onClose = () => {
     setOpenUpdate(false);
-    if (updated) {
-      window.location.reload();
-    }
+    setImage(null);
+    setResult(null);
+    // if (updated) {
+    //   window.location.reload();
+    // }
   };
   //
   //
@@ -776,11 +780,11 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate }) => {
           <Col span={24}>
             <Form.Item
               name="ingredientFood"
-              label="Thành phần trong món ăn này"
+              label="Nguyên liệu trong món ăn này"
               rules={[
                 {
                   required: true,
-                  message: "Thành phần trong món ăn chưa nhập",
+                  message: "Nguyên liệu trong món ăn chưa nhập",
                 },
               ]}
             >

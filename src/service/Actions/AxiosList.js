@@ -20,7 +20,7 @@ export const AxiosList =
     baseURL: 'http://localhost:8080',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': JSON.parse(localStorage.getItem('jwt'))
+      'Authorization': JSON.parse(localStorage.getItem("jwt"))
     }
   })
 

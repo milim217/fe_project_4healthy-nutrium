@@ -130,7 +130,7 @@ const TableEditIngredientFood = ({ValueIngredient,getDataFromTable,valueFoodIdFo
   // console.log(originData);
   const defaultColumns = [
     {
-      title: "Tên thành phần",
+      title: "Tên nguyên liệu",
       dataIndex: "ingredientName",
       width: "30%",
       editable: false,
@@ -225,7 +225,7 @@ const TableEditIngredientFood = ({ValueIngredient,getDataFromTable,valueFoodIdFo
           marginBottom: 16,
         }}
       >
-        Thêm thành phần
+        Thêm nguyên liệu
       </Button>
       <Button
         onClick={onsubmit}
@@ -236,7 +236,7 @@ const TableEditIngredientFood = ({ValueIngredient,getDataFromTable,valueFoodIdFo
           float: "right",
         }}
       >
-        Lưu danh sách thành phần
+        Lưu danh sách nguyên liệu
       </Button>
       <Table
         components={components}

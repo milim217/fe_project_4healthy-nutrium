@@ -120,6 +120,7 @@ const AddNewFood = ({ loadFoodList }) => {
   const [alert, setAlert] = useState(null);
   const [alert1, setAlert1] = useState(null);
   const [topAlert, setTopAlert] = useState(null);
+  const [alertIngredient, setAlertIngredient] = useState(null);
   const [added, setAdded] = useState(null);
   const [image, setImage] = useState(null);
   const [result, setResult] = useState(null);
@@ -265,23 +266,29 @@ const AddNewFood = ({ loadFoodList }) => {
 
   const onSubmit = async () => {
 
+    let check = true;
     if (image === null) {
       setTopAlert({ type: "danger", message: "Vui lòng chọn ảnh" });
       setTimeout(() => setTopAlert(null), 5000);
+      check = false;
       return;
     }
 
     const userData = massFormTable.mass;
     //Kiểm tra loại món ăn
-    if (!CategoryFoodValue.categoryName && !CategoryFoodValue.categoryStatus) {
+    if (!CategoryFoodValue || !CategoryFoodValue.categoryName && !CategoryFoodValue.categoryStatus) {
       setAlert2({
         message: "Không được để trống loại món ăn",
       });
       setTimeout(() => setAlert2(null), 2000);
+      check = false;
       return;
     }
     // Kiểm tra bảng có rỗng không
     if (!userData || userData.length == 0) {
+      setAlertIngredient({ type: "danger", message: "Vui lòng lưu nguyên liệu" });
+      setTimeout(() => setAlertIngredient(null), 5000);
+      check = false;
       return;
     }
     //Tạo ra một mảng mới chưa object + mass
@@ -297,7 +304,7 @@ const AddNewFood = ({ loadFoodList }) => {
       }
       return;
     });
-    //Xoá các thành phần underfined
+    //Xoá các Nguyên liệu underfined
     ingredientMassses = ingredientMassses.filter(function (element) {
       return element !== undefined;
     });
@@ -318,36 +325,44 @@ const AddNewFood = ({ loadFoodList }) => {
 
     console.log("added food = ", addNewFoodForm);
 
-    await FoodAPI.add(addNewFoodForm)
-      .then((res) => {
-        const addedFood = res.data;
-        setTopAlert({ type: "success", message: "Thêm thành công" });
-        setTimeout(() => setTopAlert(null), 5000);
+    if (check) {
+      await FoodAPI.add(addNewFoodForm)
+        .then((res) => {
+          const addedFood = res.data;
+          setTopAlert({ type: "success", message: "Thêm thành công" });
+          setTimeout(() => setTopAlert(null), 5000);
 
-        const formData = new FormData();
-        formData.append("file", image);
+          const formData = new FormData();
+          formData.append("file", image);
 
-        let urlStr = 'http://localhost:8080/food/' + addedFood.id + '/image'
-        axios({
-          method: "post",
-          url: urlStr,
-          data: formData,
-          headers: { "Content-Type": "multipart/form-data" },
+          let urlStr = 'http://localhost:8080/food/' + addedFood.id + '/image'
+          axios({
+            method: "post",
+            url: urlStr,
+            data: formData,
+            headers: { "Content-Type": "multipart/form-data", 'Authorization': JSON.parse(localStorage.getItem("jwt"))},
+          });
+
+          setAdded(true)
+        })
+        .catch((e) => {
+          setTopAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi thêm món ăn" });
+          setTimeout(() => setTopAlert(null), 5000);
         });
-
-        setAdded(true)
-      })
-      .catch((e) => {
-        setTopAlert({ type: "danger", message: e.response.data.message });
-        setTimeout(() => setTopAlert(null), 5000);
-      });
+    }
+    else{
+      setTopAlert({ type: "danger", message: "Lỗi thêm món ăn" });
+          setTimeout(() => setTopAlert(null), 5000);
+    }
   };
   const showDrawer = () => {
     setOpen(true);
   };
   const onClose = () => {
     setOpen(false);
-    // document.getElementById("formAddNewFoodInput").reset();
+    document.getElementById("formAddNewFoodInput").reset();
+    setImage(null);
+    setResult(null);
     if (added) {
       window.location.reload();
     }
@@ -646,11 +661,11 @@ const AddNewFood = ({ loadFoodList }) => {
           <Col span={24}>
             <Form.Item
               name="ingredientFood"
-              label="Thành phần trong món ăn này"
+              label="Nguyên liệu trong món ăn này"
               rules={[
                 {
                   required: true,
-                  message: "Thành phần trong món ăn chưa nhập",
+                  message: "Nguyên liệu trong món ăn chưa nhập",
                 },
               ]}
             >
@@ -673,7 +688,7 @@ const AddNewFood = ({ loadFoodList }) => {
                   <h2>Please add new food ingredient</h2>
                 )}
               </Select>
-
+              <AlertDiv info={alertIngredient} />
               <TableAddIngredientFood
                 ValueIngredient={IngredientFoodValue.ingredientName}
                 getDataFromTable={callValueMass}

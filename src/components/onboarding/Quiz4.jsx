@@ -17,6 +17,7 @@ const Quiz5 = ({ checkValidRole, user }) => {
   const history = useHistory();
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState(new Set());
+  const [checked, setChecked] = useState(new Set());
 
   const loadCategories = async () => {
     await CategoryAPI.getAll()
@@ -29,6 +30,14 @@ const Quiz5 = ({ checkValidRole, user }) => {
   useEffect(() => {
     loadCategories();
   }, []);
+
+  useEffect(() => {
+    let s = new Set();
+    categories.map(c=>{
+      s.add(c);
+    })
+    setSelectedCategories(s);
+  }, [categories]);
 
   const onCheckBoxChange = (e) => {
     let category = categories[parseInt(e.target.name)];
@@ -93,6 +102,7 @@ const Quiz5 = ({ checkValidRole, user }) => {
                       label={category.categoryName}
                       className={"checked"}
                       onChange={onCheckBoxChange}
+                      defaultChecked={true}
                     ></Form.Check>
                   </Form>
                 </Col>
@@ -101,13 +111,13 @@ const Quiz5 = ({ checkValidRole, user }) => {
               <h2>Please add new food category</h2>
             )}
           </Row>
-          <Button
+          {/* <Button
             className="btn-addmore_typeFood"
             type="primary"
             onClick={selectsAll}
           >
             Chọn tất cả
-          </Button>
+          </Button> */}
           {/* <ModalAddNewFoodQuiz5></ModalAddNewFoodQuiz5> */}
           <Button variant="success" className="button_Link" onClick={submit}>
             Tiếp tục

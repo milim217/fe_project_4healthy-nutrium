@@ -13,7 +13,7 @@ const UserAPI = {
   },
   getAll() {
     const url = `/user`;
-    return AxiosList.normalAxios.get(url);
+    return AxiosList.authAxios.get(url);
   },
 
   getByEmail(email) {
@@ -28,12 +28,12 @@ const UserAPI = {
 
   getForgotUser(code) {
     const url = `/user/forgot/` + code;
-    return AxiosList.normalAxios.get(url);
+    return AxiosList.authAxios.get(url);
   },
 
   getSearched(key) {
     const url = `/user/search/` + key;
-    return AxiosList.normalAxios.get(url);
+    return AxiosList.authAxios.get(url);
   },
 
   sendRegisterCode(email) {
@@ -53,37 +53,38 @@ const UserAPI = {
 
   addNutrientExpert(user) {
     const url = `/user//nutrient-expert`;
-    return AxiosList.normalAxios.post(url, user);
+    return AxiosList.authAxios.post(url, user);
   },
 
   updateUser(user) {
     const url = `/user/`+ user.id;
-    return AxiosList.normalAxios.post(url, user);
+    return AxiosList.authAxios.post(url, user);
   },
 
   checkOldPassword(id,oldPassword) {
     const url = `/user/check-old-password/` + id;
-    return AxiosList.normalAxios.post(url, oldPassword);
+    return AxiosList.authAxios.post(url, oldPassword);
   },
 
   addNutrient(user) {
     const url = `/user/nutrient-expert`;
-    return AxiosList.normalAxios.post(url, user);
+    return AxiosList.authAxios.post(url, user);
   },
 
   update(user) {
     const url = `/user/` + user.id;
-    return AxiosList.normalAxios.put(url, user);
+    return AxiosList.authAxios.put(url, user);
   },
 
   deactive(uid) {
     const url = `/user/` + uid+ `/delete`;
-    return AxiosList.normalAxios.post(url);
+    return AxiosList.authAxios.post(url);
   },
 
   active(uid) {
     const url = `/user/` + uid + `/active`;
-    return AxiosList.normalAxios.post(url);
+    return AxiosList.authAxios.post(url);
   },
+
 };
 export default UserAPI;

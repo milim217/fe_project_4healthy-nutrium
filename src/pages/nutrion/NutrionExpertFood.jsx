@@ -26,7 +26,6 @@ import AlertMessage from "../../../src/components/alert/AlertMessage";
 const text = "Bạn có chắc chắn muốn món ăn này?";
 const NutrionExpertFood = ({ user }) => {
   const [foods, setFoods] = useState([]);
-  const [searchedFoods, setSearchedFoods] = useState([]);
   const [alert, setAlert] = useState(null);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [updatedFood, setUpdatedFood] = useState(null);
@@ -64,9 +63,9 @@ const NutrionExpertFood = ({ user }) => {
     loadCategoryList();
   }, []);
 
-  useEffect(() => {
-    setSearchedFoods(foods);
-  }, [foods]);
+  // useEffect(() => {
+  //   setFoods(foods);
+  // }, [foods]);
 
   // const deleteFood = (id) => {
   //   FoodAPI.delete(id)
@@ -219,8 +218,8 @@ const NutrionExpertFood = ({ user }) => {
   // Dữ liệu giả cho danh sách
   const data = [];
   const body = <br></br>;
-  searchedFoods
-    ? searchedFoods.map((foodValue) => {
+  foods
+    ? foods.map((foodValue) => {
       data.push({
         id: foodValue.id,
         food_name: foodValue.foodName,
@@ -267,7 +266,7 @@ const NutrionExpertFood = ({ user }) => {
   const onSearch = async (text) => { 
     await FoodAPI.search(searchData)
     .then(res => {
-       setSearchedFoods(res.data);
+       setFoods(res.data);
     })
     .catch(e => {
 

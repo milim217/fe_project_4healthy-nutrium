@@ -3,37 +3,37 @@ import AxiosList from "./AxiosList";
 const IngredientAPI = {
   getAll(data) {
     const url = `/ingredient`;
-    return AxiosList.normalAxios.get(url);
+    return AxiosList.authAxios.get(url);
   },
 
   getById(id) {
     const url = `/ingredient/` + id;
-    return AxiosList.normalAxios.get(url);
+    return AxiosList.authAxios.get(url);
   },
 
   add(data) {
     const url = `/ingredient`;
-    return AxiosList.normalAxios.post(url, data);
+    return AxiosList.authAxios.post(url, data);
   },
 
   update(data) {
     const url = `/ingredient/` + data.id;
-    return AxiosList.normalAxios.post(url, data);
+    return AxiosList.authAxios.post(url, data);
   },
 
   changeStatus(id) {
     const url = `/ingredient/` + id + `/changeStatus`;
-    return AxiosList.normalAxios.post(url);
+    return AxiosList.authAxios.post(url);
   },
 
   searchActive(data) {
     const url = `/ingredient/search-active`;
-    return AxiosList.normalAxios.post(url,data);
+    return AxiosList.authAxios.post(url,data);
   },
 
   getActive() {
     const url = `/ingredient/active`;
-    return AxiosList.normalAxios.get(url);
+    return AxiosList.authAxios.get(url);
   },
 };
 export default IngredientAPI;
