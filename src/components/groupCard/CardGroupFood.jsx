@@ -120,11 +120,10 @@ function CardGroupFood() {
   //Lấy giá trị search
   const onSearch = async (text) => {
     searchData.text = text;
-    FoodAPI.search(searchData)
+    FoodAPI.searchActive(searchData)
       .then(res => {
         setFoods(res.data);
       })
-
   };
 
   return (

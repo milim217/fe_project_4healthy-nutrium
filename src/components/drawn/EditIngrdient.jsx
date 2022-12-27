@@ -42,7 +42,7 @@ const seasonList = [
     value: "Đông",
   },
 ];
-const EditIngrdient = ({ openUpdate, setOpenUpdate, ingredient }) => {
+const EditIngrdient = ({ openUpdate, setOpenUpdate, ingredient, loadAllIngredientList }) => {
   //
   //
   //
@@ -118,40 +118,6 @@ const EditIngrdient = ({ openUpdate, setOpenUpdate, ingredient }) => {
     }
   }, [checkedSeasonList]);
 
-
-
-  // let dataSeasonSubmit = checkedSeasonList?.map((data) => {
-  //   if (data == "Xuân") {
-  //     return {
-  //       value: {
-  //         id: 1,
-  //         seasonName: "Xuân",
-  //       },
-  //     };
-  //   } else if (data == "Hạ") {
-  //     return {
-  //       value: {
-  //         id: 2,
-  //         seasonName: "Hạ",
-  //       },
-  //     };
-  //   } else if (data == "Thu") {
-  //     return {
-  //       value: {
-  //         id: 3,
-  //         seasonName: "Thu",
-  //       },
-  //     };
-  //   } else {
-  //     return {
-  //       value: {
-  //         id: 4,
-  //         seasonName: "Đông",
-  //       },
-  //     };
-  //   }
-  // });
-
   const onChange_SeassonList = (list) => {
     setcheckedSeasonList(list);
     setIndeterminate(!!list.length && list.length < seasonList.length);
@@ -187,9 +153,11 @@ const EditIngrdient = ({ openUpdate, setOpenUpdate, ingredient }) => {
     setOpenUpdate(false);
     document.getElementById("formAddNewIngredientInput").reset();
     formik.handleReset();
-    if (updated) {
-      window.location.reload();
-    }
+    setImage(null);
+    setResult(null);
+    // if (updated) {
+    //   window.location.reload();
+    // }
   };
 
   const formik = useFormik({
@@ -391,8 +359,9 @@ const EditIngrdient = ({ openUpdate, setOpenUpdate, ingredient }) => {
 
     IngredientAPI.update(editData)
       .then(res => {
+        loadAllIngredientList();
         setTopAlert({ type: "success", message: "Cập nhật nguyên liệu thành công" });
-        setTimeout(() => setAlert(null), 5000);
+        setTimeout(() => setTopAlert(null), 5000);
 
         if (image !== null) {
           const formData = new FormData();
@@ -403,7 +372,7 @@ const EditIngrdient = ({ openUpdate, setOpenUpdate, ingredient }) => {
             method: "post",
             url: urlStr,
             data: formData,
-            headers: { "Content-Type": "multipart/form-data" },
+            headers: { "Content-Type": "multipart/form-data", 'Authorization': JSON.parse(localStorage.getItem("jwt"))},
           });
         }
 
@@ -411,7 +380,7 @@ const EditIngrdient = ({ openUpdate, setOpenUpdate, ingredient }) => {
       })
       .catch(e => {
         setTopAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi cập nhật nguyên liệu" });
-        setTimeout(() => setAlert(null), 5000);
+        setTimeout(() => setTopAlert(null), 5000);
       })
   };
 

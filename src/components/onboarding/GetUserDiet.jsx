@@ -211,7 +211,7 @@ const GetUserDiet = ({ checkValidRole }) => {
                     </Row> */}
                   </>
                 )}
-              {diet?.breakfastOptions ?
+              {diet?.breakfastOptions.length>0?
                 (
                   diet.breakfastOptions[breakfastIndex]?.map((foodMass) => (
                     <div onClick={showModal}>
@@ -281,7 +281,7 @@ const GetUserDiet = ({ checkValidRole }) => {
                   </Row> */}
                   </>
                 )}
-              {diet?.lunchOptions ?
+              {diet?.lunchOptions.length>0 ?
                 (
                   diet.lunchOptions[lunchIndex]?.map((foodMass) => (
                     <div onClick={showModal}>
@@ -351,7 +351,7 @@ const GetUserDiet = ({ checkValidRole }) => {
                   </Row> */}
                   </>
                 )}
-              {diet?.dinnerOptions ?
+              {diet?.dinnerOptions.length>0 ?
                 (
                   diet.dinnerOptions[dinnerIndex]?.map((foodMass) => (
                     <div onClick={showModal}>

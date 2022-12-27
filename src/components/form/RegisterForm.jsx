@@ -218,7 +218,7 @@ const RegisterForm = () => {
           setTimeout(() => setAlert(null), 5000);
         })
         .catch((e) => {
-          setAlert({ type: "danger", message: e.response.data.message });
+          setAlert({ type: "danger", message: e.response ? e.response.data.message : 'Lỗi đăng kí tài khoản' });
           setTimeout(() => setAlert(null), 5000);
         });
     }

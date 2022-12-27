@@ -96,7 +96,7 @@ const TableAddIngredientFood = (props) => {
   };
   const defaultColumns = [
     {
-      title: "Tên thành phần",
+      title: "Tên nguyên liệu",
       dataIndex: "ingredientName",
       width: "30%",
       editable: false,
@@ -189,7 +189,7 @@ const TableAddIngredientFood = (props) => {
           marginBottom: 16,
         }}
       >
-        Thêm thành phần
+        Thêm nguyên liệu 
       </Button>
       <Button
         onClick={onsubmit}
@@ -200,7 +200,7 @@ const TableAddIngredientFood = (props) => {
           float: "right",
         }}
       >
-        Lưu danh sách thành phần
+        Lưu danh sách nguyên liệu
       </Button>
       <Table
         components={components}

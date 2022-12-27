@@ -408,7 +408,7 @@ function NutrionExpertIngredients() {
       <div className="wrapper__listUser">
         <div className="add_new_user__listUser">
           <AddNewIngrendient
-            loadIngredientList={loadIngredientList}
+            loadAllIngredientList={loadAllIngredientList}
           ></AddNewIngrendient>
         </div>
         <div className="search_user___listUser">
@@ -448,7 +448,7 @@ function NutrionExpertIngredients() {
         openUpdate={openUpdate}
         setOpenUpdate={setOpenUpdate}
         ingredient={updatedIngredient}
-        loadIngredientList={loadIngredientList}
+        loadAllIngredientList={loadAllIngredientList}
       ></EditIngrdient>
     </div>
   );

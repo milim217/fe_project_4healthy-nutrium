@@ -60,149 +60,143 @@ const UserPersonalSchedule = () => {
   return (
     <div>
       <HeaderHasLog></HeaderHasLog>
-      <div className="wrapper-schedule_page">
-        <div className="site-card-wrapper">
-          <div className="title-card-wrapper">
-            <div className="title-card-time-schedule">{dateStr}</div>
-            {/* {diet ? (
-              <div className="title-card-amount-calo">
-                Mỗi ngày bạn cần khoảng {diet.totalExpectedCalo} calo
-              </div>
-            ) : (
-              <></>
-            )} */}
 
-          </div>
-          <br></br>
-          <div className="title-card-wrapper">
-            {diet ? (
+      {diet ?
+        // Diet existed
+        <div className="wrapper-schedule_page">
+          <div className="site-card-wrapper">
+            <div className="title-card-wrapper">
+              <div className="title-card-time-schedule">{dateStr}</div>
+            </div>
+            <br></br>
+            <div className="title-card-wrapper">
+
               <div className="title-card-amount-calo">
                 {getUserInfo(diet)}
               </div>
-            ) : (
-              <></>
-            )}
-          </div>
-          <br></br>
-          <div className="title-card-wrapper">
-            {diet ? (
+
+            </div>
+            <br></br>
+            <div className="title-card-wrapper">
+
               <div className="title-card-amount-calo">
                 Mỗi ngày bạn cần khoảng {diet.totalExpectedCalo} calo
               </div>
-            ) : (
-              <></>
-            )}
-          </div>
-          <br></br>
-          <div className="title-card-wrapper">
-            {diet ? (
+
+            </div>
+            <br></br>
+            <div className="title-card-wrapper">
+
               <div className="title-card-amount-calo">
                 Thực đơn chứa tổng {diet.totalCalo} calo
               </div>
-            ) : (
-              <></>
-            )}
-          </div>
 
-          <Row gutter={16}>
-            <Col span={8}>
-              <Card
-                title="Sáng"
-                bordered={false}
-                extra={
-                  <ModalDetailFood foods={diet?.breakfast}></ModalDetailFood>
-                }
-              >
-                {diet ? (
-                  diet.breakfast?.map((foodMass) => (
-                    <Row className="padding_20">
-                      <Col span={18} push={6}>
-                        <div className="wrapper-about">
-                          <div className="about-title">
-                            {foodMass.mass.toFixed(1)} suất{" "}
-                            {foodMass.food.foodName}
+            </div>
+
+            <Row gutter={16}>
+              <Col span={8}>
+                <Card
+                  title="Sáng"
+                  bordered={false}
+                  extra={
+                    <ModalDetailFood foods={diet.breakfast}></ModalDetailFood>
+                  }
+                >
+                  {
+                    diet.breakfast?.map((foodMass) => (
+                      <Row className="padding_20">
+                        <Col span={18} push={6}>
+                          <div className="wrapper-about">
+                            <div className="about-title">
+                              {foodMass.mass.toFixed(1)} suất{" "}
+                              {foodMass.food.foodName}
+                            </div>
                           </div>
-                        </div>
-                      </Col>
-                      <Col span={6} pull={18}>
-                        <Image
-                          width={100}
-                          height={70}
-                          src={`http://localhost:8080/food/${foodMass.food.id}/image`}
-                        />
-                      </Col>
-                    </Row>
-                  ))
-                ) : (
-                  <></>
-                )}
-              </Card>
-            </Col>
-            <Col span={8}>
-              <Card
-                title="Trưa"
-                bordered={false}
-                extra={<ModalDetailFood foods={diet?.lunch}></ModalDetailFood>}
-              >
-                {diet ? (
-                  diet.lunch?.map((foodMass) => (
-                    <Row className="padding_20">
-                      <Col span={18} push={6}>
-                        <div className="wrapper-about">
-                          <h5 className="about-title">
-                            {foodMass.mass.toFixed(1)} suất{" "}
-                            {foodMass.food.foodName}
-                          </h5>
-                        </div>
-                      </Col>
-                      <Col span={6} pull={18}>
-                        <Image
-                          width={100}
-                          height={70}
-                          src={`http://localhost:8080/food/${foodMass.food.id}/image`}
-                        />
-                      </Col>
-                    </Row>
-                  ))
-                ) : (
-                  <></>
-                )}
-              </Card>
-            </Col>
-            <Col span={8}>
-              <Card
-                title="Tối  "
-                bordered={false}
-                extra={<ModalDetailFood foods={diet?.dinner}></ModalDetailFood>}
-              >
-                {diet ? (
-                  diet.dinner?.map((foodMass) => (
-                    <Row className="padding_20">
-                      <Col span={18} push={6}>
-                        <div className="wrapper-about">
-                          <h5 className="about-title">
-                            {foodMass.mass.toFixed(1)} suất{" "}
-                            {foodMass.food.foodName}
-                          </h5>
-                        </div>
-                      </Col>
-                      <Col span={6} pull={18}>
-                        <Image
-                          width={100}
-                          height={70}
-                          src={`http://localhost:8080/food/${foodMass.food.id}/image`}
-                        />
-                      </Col>
-                    </Row>
-                  ))
-                ) : (
-                  <></>
-                )}
-              </Card>
-            </Col>
-          </Row>
+                        </Col>
+                        <Col span={6} pull={18}>
+                          <Image
+                            width={100}
+                            height={70}
+                            src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                          />
+                        </Col>
+                      </Row>
+                    ))
+                  }
+                </Card>
+              </Col>
+              <Col span={8}>
+                <Card
+                  title="Trưa"
+                  bordered={false}
+                  extra={<ModalDetailFood foods={diet?.lunch}></ModalDetailFood>}
+                >
+                  {
+                    diet.lunch?.map((foodMass) => (
+                      <Row className="padding_20">
+                        <Col span={18} push={6}>
+                          <div className="wrapper-about">
+                            <h5 className="about-title">
+                              {foodMass.mass.toFixed(1)} suất{" "}
+                              {foodMass.food.foodName}
+                            </h5>
+                          </div>
+                        </Col>
+                        <Col span={6} pull={18}>
+                          <Image
+                            width={100}
+                            height={70}
+                            src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                          />
+                        </Col>
+                      </Row>
+                    ))
+                  }
+                </Card>
+              </Col>
+              <Col span={8}>
+                <Card
+                  title="Tối  "
+                  bordered={false}
+                  extra={<ModalDetailFood foods={diet?.dinner}></ModalDetailFood>}
+                >
+                  {
+                    diet.dinner?.map((foodMass) => (
+                      <Row className="padding_20">
+                        <Col span={18} push={6}>
+                          <div className="wrapper-about">
+                            <h5 className="about-title">
+                              {foodMass.mass.toFixed(1)} suất{" "}
+                              {foodMass.food.foodName}
+                            </h5>
+                          </div>
+                        </Col>
+                        <Col span={6} pull={18}>
+                          <Image
+                            width={100}
+                            height={70}
+                            src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                          />
+                        </Col>
+                      </Row>
+                    ))
+                  }
+                </Card>
+              </Col>
+            </Row>
+          </div>
         </div>
-      </div>
+        :
+        // No diet
+        <div className="wrapper-schedule_page">
+          <div className="site-card-wrapper" style={{ width: "100%" }}>
+            <div className="title-card-wrapper">
+              <div className="title-card-time-schedule" style={{ width: "100%", textAlign: "center", fontSize: "30px" }}>Vui lòng hoàn thành các quiz và lưu thực đơn của bạn để xem kế hoạch ăn uống</div>
+            </div>
+          </div>
+        </div>
+      }
+
       <Footers></Footers>
     </div>
   );

@@ -369,45 +369,11 @@ const UserProfile = ({ checkValidRole }) => {
             </Col>
           </Row>
         </Form>
-        {/*<Divider plain>Công việc và chỉ số cá nhân</Divider>
+        {/* <Divider plain></Divider>
          <Form layout="vertical">
           <Row gutter={24}>
-            <Col span={4}></Col>
-            <Col span={16}>
-              <Form.Item label="Công việc của bạn:">
-                <Input placeholder="input placeholder" disabled={isDisable2} />
-              </Form.Item>
-              <Form.Item label="Chiều cao:">
-                <Input placeholder="input placeholder" disabled={isDisable2} />
-              </Form.Item>
-              <Form.Item label="Cân Nặng:">
-                <Input placeholder="input placeholder" disabled={isDisable2} />
-              </Form.Item>
-              <Space size={3}>
-                <Button
-                  type="primary"
-                  id="EditButton2"
-                  onClick={displayButton2}
-                >
-                  Chỉnh sửa
-                </Button>
-                <Button
-                  type="primary"
-                  id="LuuButton2"
-                  style={{ display: "none" }}
-                >
-                  Lưu
-                </Button>
-                <Button
-                  type="primary"
-                  id="HuyButton2"
-                  style={{ display: "none" }}
-                  onClick={showEditButton2}
-                >l
-                  Huỷ
-                </Button>
-              </Space>
-            </Col>
+            <Col span={4}><br></br> </Col>
+            <Col span={16}><br></br> </Col>
           </Row>
         </Form> */}
 
@@ -465,6 +431,7 @@ const UserProfile = ({ checkValidRole }) => {
           </Form>
         </Modal>
       </div>
+      <br/><br/><br/><br/><br/>
       <Footers></Footers>
     </div>
   );

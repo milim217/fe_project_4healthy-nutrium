@@ -64,7 +64,7 @@ const SeassonValueDefault = [
 ];
 const { Option } = Select;
 
-const AddNewIngrendient = ({ loadIngredientList }) => {
+const AddNewIngrendient = ({ loadAllIngredientList }) => {
   //
   //
   //
@@ -115,9 +115,11 @@ const AddNewIngrendient = ({ loadIngredientList }) => {
     setOpen(false);
     document.getElementById("formAddNewIngredientInput").reset();
     formik.handleReset();
-    if (added) {
-      window.location.reload();
-    }
+    setImage(null);
+    setResult(null);
+    // if (added) {
+    //   window.location.reload();
+    // }
   };
 
   const formik = useFormik({
@@ -322,6 +324,7 @@ const AddNewIngrendient = ({ loadIngredientList }) => {
 
       await IngredientAPI.add(AddNewIngrendient)
         .then(res => {
+          loadAllIngredientList();
           const addedIngredient = res.data;
           setAlert({ type: "success", message: "Thêm nguyên liệu mới thành công" });
           setTimeout(() => setAlert(null), 5000);
@@ -334,7 +337,7 @@ const AddNewIngrendient = ({ loadIngredientList }) => {
             method: "post",
             url: urlStr,
             data: formData,
-            headers: { "Content-Type": "multipart/form-data" },
+            headers: { "Content-Type": "multipart/form-data", 'Authorization': JSON.parse(localStorage.getItem("jwt"))},
           });
 
           setAdded(true)
