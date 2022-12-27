@@ -297,15 +297,15 @@ const UserProfile = ({ checkValidRole }) => {
                     onChange={onChangeGender}
                     options={[
                       {
-                        value: "true",
+                        value: true,
                         label: "Nam",
                       },
                       {
-                        value: "false",
+                        value: false,
                         label: "Nữ",
                       },
                     ]}
-                    disabled={true}
+                    disabled={isDisable}
                   />
                 </Form.Item>
                 <Form.Item label="Số điện thoại của bạn:">
@@ -431,7 +431,11 @@ const UserProfile = ({ checkValidRole }) => {
           </Form>
         </Modal>
       </div>
-      <br/><br/><br/><br/><br/>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <Footers></Footers>
     </div>
   );
