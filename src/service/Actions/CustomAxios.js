@@ -9,10 +9,12 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(async (req) => {
   const token = localStorage.getItem("jwt")
+  console.log('t ',token)
   req.headers.Authorization = token
   return req
 }
 )
+
 export default axiosInstance
 
 

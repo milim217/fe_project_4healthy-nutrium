@@ -1,6 +1,6 @@
-import AxiosList from "./AxiosList";
 import axios from "axios";
 import axiosInstance from "./CustomAxios";
+import normalAxios from "./NormalAxios";
 import { apiUrl } from "./UrlAPI";
 
 const UserAPI = {
@@ -19,17 +19,17 @@ const UserAPI = {
 
   getByEmail(email) {
     const url = `/user/` + email;
-    return axiosInstance.get(url);
+    return normalAxios.get(url);
   },
 
   getRegisterUser(code) {
     const url = `/user/email-register/` + code;
-    return axiosInstance.get(url);
+    return normalAxios.get(url);
   },
 
   getForgotUser(code) {
     const url = `/user/forgot/` + code;
-    return axiosInstance.get(url);
+    return normalAxios.get(url);
   },
 
   getSearched(key) {
@@ -39,17 +39,17 @@ const UserAPI = {
 
   sendRegisterCode(email) {
     const url = `/user/email-register`;
-    return axiosInstance.post(url, email);
+    return normalAxios.post(url, email);
   },
 
   sendForgotCode(email) {
     const url = `/user/forgot`;
-    return axiosInstance.post(url, email);
+    return normalAxios.post(url, email);
   },
 
   addUser(user) {
     const url = `/user`;
-    return axiosInstance.post(url, user);
+    return normalAxios.post(url, user);
   },
 
   addNutrientExpert(user) {

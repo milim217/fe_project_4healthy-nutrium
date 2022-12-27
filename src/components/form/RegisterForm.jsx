@@ -145,10 +145,12 @@ const RegisterForm = () => {
       } else {
         UserAPI.sendRegisterCode([email])
           .then((res) => {
-            console.log(res);
+            console.log('res ',res.data)
+            setAlert({ type: "success", message: res.data });
+            setTimeout(() => setAlert(null), 5000);
           })
           .catch((e) => {
-            setAlert({ type: "danger", message: "Lỗi gửi email" });
+            setAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi gửi email" });
             setTimeout(() => setAlert(null), 5000);
           });
       }
