@@ -8,7 +8,7 @@ import FoodAPI from "../../service/Actions/FoodAPI";
 
 const gridStyle = {
   width: "33.33333%",
-  height: "auto",
+  height: "120px",
   textAlign: "center",
 };
 const DetailFood = () => {
@@ -111,9 +111,9 @@ const DetailFood = () => {
                 </Col>
                 <Col span={6} pull={18}>
                   <Image
-                    style={{ padding: "7px 0px", marginTop: "40px" }}
                     width={350}
                     height={350}
+                    className="image_Food_Detail"
                     src={`http://localhost:8080/food/${food?.id}/image`}
                   />
                 </Col>

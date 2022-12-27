@@ -8,8 +8,8 @@ import IngredientAPI from "../../service/Actions/IngredientAPI";
 import { useParams } from "react-router-dom";
 
 const gridStyle = {
-  width: "25%",
-  height: "235px",
+  width: "33.33333%%",
+  height: "120px",
   textAlign: "center",
 };
 const DetailIngredient = () => {
@@ -73,7 +73,7 @@ const DetailIngredient = () => {
               <Image
                 width={350}
                 height={350}
-                style={{ padding: "10px 0px 8px 0px" }}
+                className="image_Ingredient_Detail"
                 src={`http://localhost:8080/ingredient/${ingredient?.id}/image`}
               />
             </Col>
