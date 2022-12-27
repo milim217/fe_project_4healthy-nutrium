@@ -18,6 +18,7 @@ const GetUserDiet = ({ checkValidRole }) => {
   const [dinnerIndex, setDinnerIndex] = useState(0);
   const [alert, setAlert] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [detail, setDetail] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -145,28 +146,31 @@ const GetUserDiet = ({ checkValidRole }) => {
         onCancel={handleCancel}
         width={1000}
       >
-        <Card title="0.5 suất Trứng khuấy ( mass trong dietaryinfo + tên món ăn)">
+        <Card title={detail ? `${detail.mass} suất ${detail.food.foodName}` : ""}>
           <Image
             width={190}
             height={140}
-            src={
-              "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=768,574"
-            }
+            src={`http://localhost:8080/food/${detail.food.id}/image`}
           />
           <Card.Grid style={gridStyle}>
-            Số lượng calo cần: 100( calories_need trong dietaryinfo)
+            {detail ?
+              <>Lượng calo: <br /> {(detail.food.calo * detail.mass).toFixed(1)}</> : <></>
+            }
           </Card.Grid>
           <Card.Grid style={gridStyle}>
-            {" "}
-            Số lượng chất béo cần: 100( fat_need trong dietaryinfo)
+            {detail ?
+              <>Lượng chất béo: <br /> {(detail.food.fat * detail.mass).toFixed(1)}</> : <></>
+            }
           </Card.Grid>
           <Card.Grid style={gridStyle}>
-            {" "}
-            Số lượng chất đạm cần: 100( protein_need trong dietaryinfo)
+            {detail ?
+              <>Lượng chất đạm: <br /> {(detail.food.protein * detail.mass).toFixed(1)}</> : <></>
+            }
           </Card.Grid>
           <Card.Grid style={gridStyle}>
-            {" "}
-            Số lượng chất carbon cần: 100( carb_need trong dietaryinfo)
+            {detail ?
+              <>Lượng carbon: <br /> {(detail.food.carb * detail.mass).toFixed(2)}</> : <></>
+            }
           </Card.Grid>
         </Card>
       </Modal>
@@ -211,10 +215,13 @@ const GetUserDiet = ({ checkValidRole }) => {
                     </Row> */}
                   </>
                 )}
-              {diet?.breakfastOptions.length>0?
+              {diet?.breakfastOptions.length > 0 ?
                 (
                   diet.breakfastOptions[breakfastIndex]?.map((foodMass) => (
-                    <div onClick={showModal}>
+                    <div onClick={() => {
+                      setDetail(foodMass)
+                      showModal()
+                    }}>
                       <Row className="padding_20">
                         <Col span={18} push={6}>
                           <div className="wrapper-food-quantitative">
@@ -262,7 +269,7 @@ const GetUserDiet = ({ checkValidRole }) => {
               size="small"
               extra={<Button onClick={changeLunch}>Đổi món</Button>}
             >
-              {diet?.lunchOptions.length>0 ?
+              {diet?.lunchOptions.length > 0 ?
                 (
                   <Row>
                     <div className="CardTitle-Info_Calo">
@@ -281,10 +288,13 @@ const GetUserDiet = ({ checkValidRole }) => {
                   </Row> */}
                   </>
                 )}
-              {diet?.lunchOptions.length>0 ?
+              {diet?.lunchOptions.length > 0 ?
                 (
                   diet.lunchOptions[lunchIndex]?.map((foodMass) => (
-                    <div onClick={showModal}>
+                    <div onClick={() => {
+                      setDetail(foodMass)
+                      showModal()
+                    }}>
                       <Row className="padding_20">
                         <Col span={18} push={6}>
                           <div className="wrapper-food-quantitative">
@@ -332,7 +342,7 @@ const GetUserDiet = ({ checkValidRole }) => {
               size="small"
               extra={<Button onClick={changeDinner}>Đổi món</Button>}
             >
-              {diet?.dinnerOptions.length>0 ?
+              {diet?.dinnerOptions.length > 0 ?
                 (
                   <Row>
                     <div className="CardTitle-Info_Calo">
@@ -351,10 +361,13 @@ const GetUserDiet = ({ checkValidRole }) => {
                   </Row> */}
                   </>
                 )}
-              {diet?.dinnerOptions.length>0 ?
+              {diet?.dinnerOptions.length > 0 ?
                 (
                   diet.dinnerOptions[dinnerIndex]?.map((foodMass) => (
-                    <div onClick={showModal}>
+                    <div onClick={() => {
+                      setDetail(foodMass)
+                      showModal()
+                    }}>
                       <Row className="padding_20">
                         <Col span={18} push={6}>
                           <div className="wrapper-food-quantitative">
@@ -382,18 +395,18 @@ const GetUserDiet = ({ checkValidRole }) => {
                 :
                 (
                   loading ?
-                  <div>
-                    <div className="Messageloading-getUserDiet">
-                      <div className="title-name">Đang tải món ăn....</div>
-                      <Spinner animation="border" variant="primary" />
+                    <div>
+                      <div className="Messageloading-getUserDiet">
+                        <div className="title-name">Đang tải món ăn....</div>
+                        <Spinner animation="border" variant="primary" />
+                      </div>
                     </div>
-                  </div>
-                  :
-                  <div>
-                    <div className="Messageloading-getUserDiet">
-                      <div className="title-name">Chưa tìm được thực đơn cho bữa tối</div>
+                    :
+                    <div>
+                      <div className="Messageloading-getUserDiet">
+                        <div className="title-name">Chưa tìm được thực đơn cho bữa tối</div>
+                      </div>
                     </div>
-                  </div>
                 )}
             </Card>
           </Space>
