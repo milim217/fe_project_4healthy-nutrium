@@ -18,8 +18,7 @@ import UserAPI from "../../service/Actions/UserAPI";
 import AlertMessage from "../alert/AlertMessage";
 const { Option } = Select;
 
-const AddNewUser = ({loadUsers}) => {
-
+const AddNewUser = ({ loadUsers }) => {
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState(false);
 
@@ -48,12 +47,11 @@ const AddNewUser = ({loadUsers}) => {
 
     //Regex
     validationSchema: Yup.object({
-      name: Yup.string()
-        .required("Bạn không được để trống tên tài khoản"),
-        // .matches(
-        //   /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/,
-        //   "Tên tài khoản chứa 8 - 20 ký tự, không chứa '.' và '_'"
-        // ),
+      name: Yup.string().required("Bạn không được để trống tên tài khoản"),
+      // .matches(
+      //   /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)*$/,
+      //   "Tên tài khoản chứa 8 - 20 ký tự, không chứa '.' và '_'"
+      // ),
       email: Yup.string()
         .required("Bạn không được để trống Email")
         .matches(
@@ -88,9 +86,8 @@ const AddNewUser = ({loadUsers}) => {
     }),
     //Gửi dữ liệu vào form Add
     onSubmit: async (values) => {
-
-      let arr = values.dob.trim().split('/');
-      let formattedDob = arr[2]+'-'+arr[1]+'-'+arr[0];
+      let arr = values.dob.trim().split("/");
+      let formattedDob = arr[2] + "-" + arr[1] + "-" + arr[0];
 
       //formik tự biết khi nhập sai sẽ không submit còn khi đúng hết mới cho submit
       let addData = {
@@ -105,15 +102,20 @@ const AddNewUser = ({loadUsers}) => {
       setFormData(addData);
 
       await UserAPI.addNutrient(addData)
-      .then(res => {
-        setAlert({ type: "success", message: "Thêm tài khoản thành công" });
-        setTimeout(() => setAlert(null), 5000);
-        loadUsers();
-      })
-      .catch(e => {
-        setAlert({ type: "danger", message: e.response ? e.response.data.message : 'Lỗi thêm tài khoản' });
-        setTimeout(() => setAlert(null), 5000);
-      });
+        .then((res) => {
+          setAlert({ type: "success", message: "Thêm tài khoản thành công" });
+          setTimeout(() => setAlert(null), 5000);
+          loadUsers();
+        })
+        .catch((e) => {
+          setAlert({
+            type: "danger",
+            message: e.response
+              ? e.response.data.message
+              : "Lỗi thêm tài khoản",
+          });
+          setTimeout(() => setAlert(null), 5000);
+        });
     },
   });
 
@@ -169,11 +171,19 @@ const AddNewUser = ({loadUsers}) => {
           </Space>
         }
       >
-        <AlertMessage info={alert}/>
+        <AlertMessage info={alert} />
         <Form layout="vertical" hideRequiredMark id="formAddUser">
           <Row gutter={24}>
             <Col span={24}>
-              <Form.Item name="name" label="Họ và tên">
+              <Form.Item
+                name="name"
+                label={
+                  <span>
+                    Họ và tên
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   name="name"
                   placeholder="Nhập tên của chuyên gia dinh dưỡng ở đây"
@@ -186,7 +196,15 @@ const AddNewUser = ({loadUsers}) => {
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item name="email" label="Email">
+              <Form.Item
+                name="email"
+                label={
+                  <span>
+                    Email
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   type="email"
                   name="email"
@@ -200,7 +218,15 @@ const AddNewUser = ({loadUsers}) => {
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item name="password" label="Mật khẩu">
+              <Form.Item
+                name="password"
+                label={
+                  <span>
+                    Mật khẩu
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input.Password
                   name="password"
                   placeholder="Nhập mật khẩu của bạn"
@@ -213,7 +239,15 @@ const AddNewUser = ({loadUsers}) => {
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item name="ComfirmPassword" label="Nhập lại mật khẩu:">
+              <Form.Item
+                name="ComfirmPassword"
+                label={
+                  <span>
+                    Nhập lại mật khẩu
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input.Password
                   name="ComfirmPassword"
                   placeholder="Nhập lại mật khẩu của bạn"
@@ -228,7 +262,15 @@ const AddNewUser = ({loadUsers}) => {
           </Row>
           <Row gutter={24}>
             <Col span={24}>
-              <Form.Item name="gender" label="Giới tính">
+              <Form.Item
+                name="gender"
+                label={
+                  <span>
+                    Giới tính
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Select
                   defaultValue={"false"}
                   onChange={onChangeGender}
@@ -246,7 +288,15 @@ const AddNewUser = ({loadUsers}) => {
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item name="phone_number" label="Số điện thoại">
+              <Form.Item
+                name="phone_number"
+                label={
+                  <span>
+                    Số điện thoại
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   name="phone"
                   placeholder="Nhập Số điện thoại"
@@ -261,7 +311,15 @@ const AddNewUser = ({loadUsers}) => {
           </Row>
           <Row gutter={24}>
             <Col span={24}>
-              <Form.Item name="address" label="Địa chỉ">
+              <Form.Item
+                name="address"
+                label={
+                  <span>
+                    Địa chỉ
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Nhập thông tin địa chỉ ở đây"
                   name="address"
@@ -274,7 +332,15 @@ const AddNewUser = ({loadUsers}) => {
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item name="dob" label="Ngày sinh">
+              <Form.Item
+                name="dob"
+                label={
+                  <span>
+                    Ngày sinh
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Nhập thông tin ngày sinh ở đây"
                   name="dob"

@@ -11,7 +11,7 @@ import {
   Row,
   Select,
   Space,
-  Image
+  Image,
 } from "antd";
 import AlertDiv from "../alert/AlertDiv";
 import UploadImageFileIngredient from "../upload-image-avt/UploadImageFileIngredient";
@@ -19,7 +19,7 @@ import AlertMessage from "../alert/AlertMessage";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import IngredientAPI from "../../../src/service/Actions/IngredientAPI";
-import axios from 'axios';
+import axios from "axios";
 
 //List mùa
 const CheckboxGroup = Checkbox.Group;
@@ -284,7 +284,6 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
   });
 
   const onSubmit = async () => {
-
     if (image === null) {
       setAlert({ type: "danger", message: "Vui lòng chọn ảnh" });
       setTimeout(() => setAlert(null), 5000);
@@ -318,40 +317,50 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
         maxLimit: formik.values.maxLimit,
         seasons: checkedSeasonList,
         img: "",
-        status: true
+        status: true,
       };
-      console.log('add data = ', AddNewIngrendient);
+      console.log("add data = ", AddNewIngrendient);
 
       await IngredientAPI.add(AddNewIngrendient)
-        .then(res => {
+        .then((res) => {
           loadAllIngredientList();
           const addedIngredient = res.data;
-          setAlert({ type: "success", message: "Thêm nguyên liệu mới thành công" });
+          setAlert({
+            type: "success",
+            message: "Thêm nguyên liệu mới thành công",
+          });
           setTimeout(() => setAlert(null), 5000);
 
           const formData = new FormData();
           formData.append("file", image);
 
-          let urlStr = 'http://localhost:8080/ingredient/' + addedIngredient.id + '/image'
+          let urlStr =
+            "http://localhost:8080/ingredient/" + addedIngredient.id + "/image";
           axios({
             method: "post",
             url: urlStr,
             data: formData,
-            headers: { "Content-Type": "multipart/form-data", 'Authorization': JSON.parse(localStorage.getItem("jwt"))},
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: JSON.parse(localStorage.getItem("jwt")),
+            },
           });
 
-          setAdded(true)
+          setAdded(true);
         })
-        .catch(e => {
-          setAlert({ type: "danger", message: e.response.data ? e.response.data.message : 'Lỗi thêm nguyên liệu mới' });
+        .catch((e) => {
+          setAlert({
+            type: "danger",
+            message: e.response.data
+              ? e.response.data.message
+              : "Lỗi thêm nguyên liệu mới",
+          });
           setTimeout(() => setAlert(null), 5000);
         });
-    }
-    else {
-      setAlert({ type: "danger", message: 'Vui lòng chọn mùa' });
+    } else {
+      setAlert({ type: "danger", message: "Vui lòng chọn mùa" });
       setTimeout(() => setAlert(null), 2000);
     }
-
   };
 
   return (
@@ -388,7 +397,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
         <Form layout="vertical" hideRequiredMark id="formAddNewIngredientInput">
           <Row gutter={16}>
             <Col span={12}>
-              <Form.Item label="Tên nguyên liệu:" name="ingredientName">
+              <Form.Item
+                label={
+                  <span>
+                    Tên nguyên liệu
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+                name="ingredientName"
+              >
                 <Input
                   placeholder="Tên nguyên liệu"
                   name="ingredientName"
@@ -402,21 +419,33 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
             <Col span={12}>
               <Form.Item
                 name="Chọn hình ảnh nguyên liệu"
-                label="Chọn hình ảnh nguyên liệu:"
+                label={
+                  <span>
+                    Chọn hình ảnh nguyên liệu
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
               >
-              <Image
-                width={300}
-                height={250}
-                src={result}
-              />
-                <UploadImageFileIngredient setImage={setImage} setResult={setResult}></UploadImageFileIngredient>
+                <Image width={300} height={250} src={result} />
+                <UploadImageFileIngredient
+                  setImage={setImage}
+                  setResult={setResult}
+                ></UploadImageFileIngredient>
               </Form.Item>
             </Col>
           </Row>
           <Divider></Divider>
           <Row gutter={24}>
             <Col span={12}>
-              <Form.Item name="minLimit" label="Giới hạn tối thiểu:">
+              <Form.Item
+                name="minLimit"
+                label={
+                  <span>
+                    Giới hạn tối thiểu
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất giới hạn tối thiểu món ăn chứa"
                   name="minLimit"
@@ -428,7 +457,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="maxLimit" label="Giới hạn tối đa:">
+              <Form.Item
+                name="maxLimit"
+                label={
+                  <span>
+                    Giới hạn tối đa
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất giới hạn tối đa món ăn chứa"
                   name="maxLimit"
@@ -444,7 +481,12 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
           <Col span={24}>
             <Form.Item
               name="seasons"
-              label="Mùa của nguyên liệu này:"
+              label={
+                <span>
+                  Mùa của nguyên liệu này
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,
@@ -473,7 +515,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
           <Divider></Divider>
           <Row gutter={24}>
             <Col span={12}>
-              <Form.Item label="Hàm lượng chất béo (/100g):" name="fat">
+              <Form.Item
+                name="fat"
+                label={
+                  <span>
+                    Hàm lượng chất béo (/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất béo món ăn chứa"
                   name="fat"
@@ -485,7 +535,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Hàm lượng đạm(/100g):" name="protein">
+              <Form.Item
+                name="protein"
+                label={
+                  <span>
+                    Hàm lượng đạm(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất đạm món ăn chứa"
                   name="protein"
@@ -497,7 +555,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Hàm lượng bột đường(/100g):" name="carb">
+              <Form.Item
+                name="carb"
+                label={
+                  <span>
+                    Hàm lượng bột đường(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất bột đường món ăn chứa"
                   name="carb"
@@ -509,7 +575,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="calo" label="Hàm lượng Calo(/100g):">
+              <Form.Item
+                name="calo"
+                label={
+                  <span>
+                    Hàm lượng Calo(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng Calo món ăn chứa"
                   name="calo"
@@ -521,7 +595,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="vitamin" label="Hàm lượng vitamin(/100g):">
+              <Form.Item
+                name="vitamin"
+                label={
+                  <span>
+                    Hàm lượng vitamin(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất Vitamin món ăn chứa"
                   name="vitamin"
@@ -533,7 +615,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Hàm lượng nước(/100g):" name="water">
+              <Form.Item
+                name="water"
+                label={
+                  <span>
+                    Hàm lượng nước(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng nước món ăn chứa"
                   name="water"
@@ -545,7 +635,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="fiber" label="Hàm lượng chất xơ(/100g):">
+              <Form.Item
+                name="fiber"
+                label={
+                  <span>
+                    Hàm lượng chất xơ(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất chất xơ món ăn chứa"
                   name="fiber"
@@ -557,7 +655,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="ash" label="Hàm lượng Tro(/100g):">
+              <Form.Item
+                name="ash"
+                label={
+                  <span>
+                    Hàm lượng Tro(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng Tro món ăn chứa"
                   name="ash"
@@ -569,7 +675,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="canxi" label="Hàm lượng Canxi(/100g):">
+              <Form.Item
+                name="canxi"
+                label={
+                  <span>
+                    Hàm lượng Canxi(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất Canxi món ăn chứa"
                   name="canxi"
@@ -581,7 +695,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="iron" label="Hàm lượng Sắt(/100g):">
+              <Form.Item
+                name="iron"
+                label={
+                  <span>
+                    Hàm lượng Sắt(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất sắt món ăn chứa"
                   name="iron"
@@ -593,7 +715,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="zinc" label="Hàm lượng kẽm(/100g):">
+              <Form.Item
+                name="zinc"
+                label={
+                  <span>
+                    Hàm lượng kẽm(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất kẽm món ăn chứa"
                   name="zinc"
@@ -605,7 +735,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="vitaminC" label="Hàm lượng VitaminC(/100g):">
+              <Form.Item
+                name="vitaminC"
+                label={
+                  <span>
+                    Hàm lượng VitaminC(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất VitaminC món ăn chứa"
                   name="vitaminC"
@@ -617,7 +755,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="vitaminB1" label="Hàm lượng VitaminB1(/100g):">
+              <Form.Item
+                name="vitaminB1"
+                label={
+                  <span>
+                    Hàm lượng VitaminB1(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất VitaminB1 món ăn chứa"
                   name="vitaminB1"
@@ -629,7 +775,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="vitaminB2" label="Hàm lượng VitaminB2(/100g):">
+              <Form.Item
+                name="vitaminB2"
+                label={
+                  <span>
+                    Hàm lượng VitaminB2(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất VitaminB2 món ăn chứa"
                   name="vitaminB2"
@@ -641,7 +795,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="vitaminB3" label="Hàm lượng VitaminB3(/100g):">
+              <Form.Item
+                name="vitaminB3"
+                label={
+                  <span>
+                    Hàm lượng VitaminB3(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất VitaminB3 món ăn chứa"
                   name="vitaminB3"
@@ -653,7 +815,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="vitaminB6A" label="Hàm lượng VitaminB6A(/100g):">
+              <Form.Item
+                name="vitaminB6A"
+                label={
+                  <span>
+                    Hàm lượng VitaminB6A(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất VitaminB6A món ăn chứa"
                   name="vitaminB6A"
@@ -665,7 +835,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="vitaminD" label="Hàm lượng VitaminD(/100g):">
+              <Form.Item
+                name="vitaminD"
+                label={
+                  <span>
+                    Hàm lượng VitaminD(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất VitaminD món ăn chứa"
                   name="vitaminD"
@@ -677,7 +855,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="vitaminB12" label="Hàm lượng VitaminB12(/100g):">
+              <Form.Item
+                name="vitaminB12"
+                label={
+                  <span>
+                    Hàm lượng VitaminB12(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất VitaminB12 món ăn chứa"
                   name="vitaminB12"
@@ -689,7 +875,15 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="vitaminA" label="Hàm lượng VitaminA(/100g):">
+              <Form.Item
+                name="vitaminA"
+                label={
+                  <span>
+                    Hàm lượng VitaminA(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   placeholder="Hàm lượng chất VitaminA món ăn chứa"
                   name="vitaminA"
@@ -703,7 +897,12 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
             <Col span={12}>
               <Form.Item
                 name="vitaminARae"
-                label="Hàm lượng VitaminA_rae(/100g):"
+                label={
+                  <span>
+                    Hàm lượng VitaminA_rae(/100g)
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
               >
                 <Input
                   placeholder="Hàm lượng chất VitaminA_rae món ăn chứa"

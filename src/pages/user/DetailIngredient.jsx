@@ -13,15 +13,13 @@ const gridStyle = {
   textAlign: "center",
 };
 const DetailIngredient = () => {
-
   const { ingredientID } = useParams();
   const [ingredient, setIngredient] = useState(null);
 
   useEffect(() => {
-    IngredientAPI.getById(ingredientID)
-      .then(res => {
-        setIngredient(res.data);
-      })
+    IngredientAPI.getById(ingredientID).then((res) => {
+      setIngredient(res.data);
+    });
   }, []);
 
   return (
@@ -31,23 +29,37 @@ const DetailIngredient = () => {
         <div className="wrapper-Img_sumary">
           <Row>
             <Col span={18} push={6}>
-            <div className="name_food_DetailPage">{ingredient?.ingredientName}</div>
-              <Card title="Tóm tắt các chất dinh dưỡng chính">
+              <div className="name_food_DetailPage">
+                {ingredient?.ingredientName}
+              </div>
+              <Card title="Tóm tắt các chất dinh dưỡng chính ( Dựa trên 100g )">
                 <Card.Grid style={gridStyle}>
-                  <div className="name_SumaryNutrition"> Calo</div>
+                  <div className="name_SumaryNutrition"> Hàm lượng calo</div>
                   <div className="data_SmaryNutrition"> {ingredient?.calo}</div>
                 </Card.Grid>
                 <Card.Grid style={gridStyle}>
-                  <div className="name_SumaryNutrition"> Chất béo</div>
+                  <div className="name_SumaryNutrition">
+                    {" "}
+                    Hàm lượng chất béo
+                  </div>
                   <div className="data_SmaryNutrition"> {ingredient?.fat}</div>
                 </Card.Grid>
                 <Card.Grid style={gridStyle}>
-                  <div className="name_SumaryNutrition"> Chất bột đường</div>
+                  <div className="name_SumaryNutrition">
+                    {" "}
+                    Hàm lượng chất bột đường
+                  </div>
                   <div className="data_SmaryNutrition"> {ingredient?.carb}</div>
                 </Card.Grid>
                 <Card.Grid style={gridStyle}>
-                  <div className="name_SumaryNutrition"> Chất đạm</div>
-                  <div className="data_SmaryNutrition"> {ingredient?.protein}</div>
+                  <div className="name_SumaryNutrition">
+                    {" "}
+                    Hàm lượng chất đạm
+                  </div>
+                  <div className="data_SmaryNutrition">
+                    {" "}
+                    {ingredient?.protein}
+                  </div>
                 </Card.Grid>
                 {/* <Card.Grid style={gridStyle}>
                   <div className="name_SumaryNutrition">
@@ -59,8 +71,9 @@ const DetailIngredient = () => {
             </Col>
             <Col span={6} pull={18}>
               <Image
-                width={300}
-                height={295}
+                width={350}
+                height={350}
+                style={{ padding: "10px 0px 8px 0px" }}
                 src={`http://localhost:8080/ingredient/${ingredient?.id}/image`}
               />
             </Col>
@@ -68,7 +81,7 @@ const DetailIngredient = () => {
         </div>
         <div className="wrapper-nutrionFacts_RelateFood">
           <Row>
-            <Col span={12}>
+            <Col span={24}>
               <div className="wrapper-nutrionFacts">
                 {/* Bảng chưa giá trị dinh dưỡng */}
                 <Table striped bordered hover>
@@ -80,11 +93,11 @@ const DetailIngredient = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td>Fiber</td>
+                      <td>Chất xơ</td>
                       <td>{ingredient?.fiber}</td>
                     </tr>
                     <tr>
-                      <td>Ash</td>
+                      <td>Tro</td>
                       <td>{ingredient?.ash}</td>
                     </tr>
                     <tr>
@@ -92,15 +105,15 @@ const DetailIngredient = () => {
                       <td>{ingredient?.canxi}</td>
                     </tr>
                     <tr>
-                      <td>Water</td>
+                      <td>Nước</td>
                       <td>{ingredient?.water}</td>
                     </tr>
                     <tr>
-                      <td>Iron</td>
+                      <td>Sắt</td>
                       <td>{ingredient?.iron}</td>
                     </tr>
                     <tr>
-                      <td>Zinc</td>
+                      <td>Kẽm</td>
                       <td>{ingredient?.zinc}</td>
                     </tr>
                     <tr>

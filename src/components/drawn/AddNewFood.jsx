@@ -12,7 +12,7 @@ import {
   Divider,
   Space,
   Row,
-  Image
+  Image,
 } from "antd";
 import UploadImageFile from "../upload-image-avt/UploadImageFile";
 import CategoryAPI from "../../service/Actions/CategoryAPI";
@@ -102,7 +102,7 @@ const MealTypeValueDefault = [
 ];
 
 const { Option } = Select;
-const { TextArea } = Input
+const { TextArea } = Input;
 const AddNewFood = ({ loadFoodList }) => {
   const [alert2, setAlert2] = useState(null);
   //
@@ -265,7 +265,6 @@ const AddNewFood = ({ loadFoodList }) => {
   });
 
   const onSubmit = async () => {
-
     let check = true;
     if (image === null) {
       setTopAlert({ type: "danger", message: "Vui lòng chọn ảnh" });
@@ -276,7 +275,10 @@ const AddNewFood = ({ loadFoodList }) => {
 
     const userData = massFormTable.mass;
     //Kiểm tra loại món ăn
-    if (!CategoryFoodValue || !CategoryFoodValue.categoryName && !CategoryFoodValue.categoryStatus) {
+    if (
+      !CategoryFoodValue ||
+      (!CategoryFoodValue.categoryName && !CategoryFoodValue.categoryStatus)
+    ) {
       setAlert2({
         message: "Không được để trống loại món ăn",
       });
@@ -286,7 +288,10 @@ const AddNewFood = ({ loadFoodList }) => {
     }
     // Kiểm tra bảng có rỗng không
     if (!userData || userData.length == 0) {
-      setAlertIngredient({ type: "danger", message: "Vui lòng lưu nguyên liệu" });
+      setAlertIngredient({
+        type: "danger",
+        message: "Vui lòng lưu nguyên liệu",
+      });
       setTimeout(() => setAlertIngredient(null), 5000);
       check = false;
       return;
@@ -320,7 +325,7 @@ const AddNewFood = ({ loadFoodList }) => {
       meals: checkedMealTypeList,
       ingredientMasses: ingredientMassses,
       category: CategoryFoodValue,
-      status: true
+      status: true,
     };
 
     console.log("added food = ", addNewFoodForm);
@@ -335,24 +340,29 @@ const AddNewFood = ({ loadFoodList }) => {
           const formData = new FormData();
           formData.append("file", image);
 
-          let urlStr = 'http://localhost:8080/food/' + addedFood.id + '/image'
+          let urlStr = "http://localhost:8080/food/" + addedFood.id + "/image";
           axios({
             method: "post",
             url: urlStr,
             data: formData,
-            headers: { "Content-Type": "multipart/form-data", 'Authorization': JSON.parse(localStorage.getItem("jwt"))},
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: JSON.parse(localStorage.getItem("jwt")),
+            },
           });
 
-          setAdded(true)
+          setAdded(true);
         })
         .catch((e) => {
-          setTopAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi thêm món ăn" });
+          setTopAlert({
+            type: "danger",
+            message: e.response ? e.response.data.message : "Lỗi thêm món ăn",
+          });
           setTimeout(() => setTopAlert(null), 5000);
         });
-    }
-    else{
+    } else {
       setTopAlert({ type: "danger", message: "Lỗi thêm món ăn" });
-          setTimeout(() => setTopAlert(null), 5000);
+      setTimeout(() => setTopAlert(null), 5000);
     }
   };
   const showDrawer = () => {
@@ -392,7 +402,7 @@ const AddNewFood = ({ loadFoodList }) => {
       .then((res) => {
         setListIngredient(res.data);
       })
-      .catch((err) => { })
+      .catch((err) => {});
   }, []);
 
   const [IngredientFoodValue, setIngredientFoodValue] = useState("");
@@ -424,7 +434,7 @@ const AddNewFood = ({ loadFoodList }) => {
       .then((res) => {
         setListCategory(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }, []);
   const [CategoryFoodValue, setCategoryFoodValue] = useState("");
   const onChangeSelectCategoryFood = (value) => {
@@ -476,15 +486,29 @@ const AddNewFood = ({ loadFoodList }) => {
         <AlertMessage info={topAlert} />
         <Form layout="vertical" hideRequiredMark id="formAddNewFoodInput">
           <Col span={24}>
-            <Form.Item name="imageFood" label="Hình ảnh món ăn">
-              <Image
-                width={300}
-                height={250}
-                src={result}
-              />
-              <UploadImageFile setImage={setImage} setResult={setResult}></UploadImageFile>
+            <Form.Item
+              name="imageFood"
+              label={
+                <span>
+                  Hình ảnh món ăn
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
+            >
+              <Image width={300} height={250} src={result} />
+              <UploadImageFile
+                setImage={setImage}
+                setResult={setResult}
+              ></UploadImageFile>
             </Form.Item>
-            <Form.Item label="Tên món ăn:">
+            <Form.Item
+              label={
+                <span>
+                  Tên món ăn
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
+            >
               <Input
                 name="foodName"
                 placeholder="Tên món ăn"
@@ -495,7 +519,12 @@ const AddNewFood = ({ loadFoodList }) => {
               )}
             </Form.Item>
             <Form.Item
-              label="Công thức nấu món này là:"
+              label={
+                <span>
+                  Công thức nấu món này là
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,
@@ -515,7 +544,12 @@ const AddNewFood = ({ loadFoodList }) => {
           </Col>
           <Col span={24}>
             <Form.Item
-              label="Hàm lượng chất béo:"
+              label={
+                <span>
+                  Hàm lượng chất béo
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,
@@ -535,7 +569,12 @@ const AddNewFood = ({ loadFoodList }) => {
           </Col>
           <Col span={24}>
             <Form.Item
-              label="Hàm lượng Protein:"
+              label={
+                <span>
+                  Hàm lượng chất đạm
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,
@@ -555,7 +594,12 @@ const AddNewFood = ({ loadFoodList }) => {
           </Col>
           <Col span={24}>
             <Form.Item
-              label="Hàm lượng Carb:"
+              label={
+                <span>
+                  Hàm lượng chất bột đường
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,
@@ -565,7 +609,7 @@ const AddNewFood = ({ loadFoodList }) => {
             >
               <Input
                 name="carbon"
-                placeholder="Hàm lượng chất carb món ăn chứa"
+                placeholder="Hàm lượng chất bột đường món ăn chứa"
                 onChange={formik.handleChange}
               />
               {formik.errors.carbon && (
@@ -575,17 +619,22 @@ const AddNewFood = ({ loadFoodList }) => {
           </Col>
           <Col span={24}>
             <Form.Item
-              label="Hàm lượng Calories:"
+              label={
+                <span>
+                  Hàm lượng calo
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,
-                  message: "Calories chưa nhập",
+                  message: "Calo chưa nhập",
                 },
               ]}
             >
               <Input
                 name="Calories"
-                placeholder="Hàm lượng chất Calories món ăn chứa"
+                placeholder="Hàm lượng chất Calo món ăn chứa"
                 onChange={formik.handleChange}
               />
               {formik.errors.Calories && (
@@ -615,7 +664,15 @@ const AddNewFood = ({ loadFoodList }) => {
           </Col> */}
           <Row span={24}>
             <Col span={12}>
-              <Form.Item name="seassonFood" label="Mùa của món ăn này:">
+              <Form.Item
+                name="seassonFood"
+                label={
+                  <span>
+                    Mùa của món ăn này
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Checkbox
                   indeterminate={indeterminate}
                   onChange={onCheckAllChange}
@@ -636,7 +693,15 @@ const AddNewFood = ({ loadFoodList }) => {
               <AlertDiv info={alert} />
             </Col>
             <Col span={12}>
-              <Form.Item name="mealTypeFood" label="Món ăn này ăn vào bữa:">
+              <Form.Item
+                name="mealTypeFood"
+                label={
+                  <span>
+                    Món ăn này ăn vào bữa
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Checkbox
                   indeterminate={indeterminateMealType}
                   onChange={onCheckAllChangeMealType}
@@ -661,7 +726,12 @@ const AddNewFood = ({ loadFoodList }) => {
           <Col span={24}>
             <Form.Item
               name="ingredientFood"
-              label="Nguyên liệu trong món ăn này"
+              label={
+                <span>
+                  Nguyên liệu trong món ăn này
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,
@@ -696,7 +766,12 @@ const AddNewFood = ({ loadFoodList }) => {
             </Form.Item>
             <Form.Item
               name="category"
-              label="Món ăn này thuộc loại"
+              label={
+                <span>
+                  Món ăn này thuộc loại
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,

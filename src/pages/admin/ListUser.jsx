@@ -36,15 +36,22 @@ const ListUser = ({ user, checkValidRole }) => {
   };
 
   const deactive = async (deactiveID) => {
-
     await UserAPI.deactive(deactiveID)
-      .then(res => {
-        setAlert({ type: "success", message: "Cập nhật trạng thái tài khoản thành công" });
+      .then((res) => {
+        setAlert({
+          type: "success",
+          message: "Cập nhật trạng thái tài khoản thành công",
+        });
         setTimeout(() => setAlert(null), 5000);
         loadUsers();
       })
-      .catch(e => {
-        setAlert({ type: "danger", message: e.response ? e.response.data.message : 'Lỗi cập nhật trạng thái tài khoản' });
+      .catch((e) => {
+        setAlert({
+          type: "danger",
+          message: e.response
+            ? e.response.data.message
+            : "Lỗi cập nhật trạng thái tài khoản",
+        });
         setTimeout(() => setAlert(null), 5000);
       });
   };
@@ -52,11 +59,10 @@ const ListUser = ({ user, checkValidRole }) => {
     setIsModalOpen(false);
   };
   const loadUsers = async () => {
-    await UserAPI.getAll()
-      .then((res) => {
-        setUserList(res.data);
-      })
-  }
+    await UserAPI.getAll().then((res) => {
+      setUserList(res.data);
+    });
+  };
 
   useEffect(() => {
     loadUsers();
@@ -127,7 +133,11 @@ const ListUser = ({ user, checkValidRole }) => {
       justify: "center",
       render: (status) => (
         <>
-          {!status ? <Tag color="red">Vô hiệu hoá</Tag> : <Tag color="green">Đã kích hoạt </Tag>}
+          {!status ? (
+            <Tag color="red">Vô hiệu hoá</Tag>
+          ) : (
+            <Tag color="green">Đã kích hoạt </Tag>
+          )}
           {/* {status && <Tag color="green">Đã kích hoạt </Tag>} */}
         </>
       ),
@@ -170,16 +180,15 @@ const ListUser = ({ user, checkValidRole }) => {
           userList.role.name === "NUTRIENT_EXPERT"
             ? "Chuyên gia dinh dưỡng"
             : userList.role.name === "ADMIN"
-              ? "Quản Trị Viên"
-              : userList.role.name === "USER"
-                ? "Người Dùng"
-                : null,
+            ? "Quản Trị Viên"
+            : userList.role.name === "USER"
+            ? "Người Dùng"
+            : null,
         status: userList.status,
       })
     );
-    console.log('arr=', arr);
-    setData(arr)
-
+    console.log("arr=", arr);
+    setData(arr);
   }, [userList]);
 
   const [data, setData] = useState([]);
@@ -211,19 +220,16 @@ const ListUser = ({ user, checkValidRole }) => {
   const { Search } = Input;
   const onSearch = async (key) => {
     if (key) {
-      await UserAPI.getSearched(key)
-        .then(res => {
-          setUserList(res.data);
-        });
-    }
-    else {
+      await UserAPI.getSearched(key).then((res) => {
+        setUserList(res.data);
+      });
+    } else {
       loadUsers();
     }
-
-  }
+  };
   return (
     <div>
-      <HeaderLayout title={"Danh sách người dùng"} user={user}></HeaderLayout>
+      <HeaderLayout title={"Trang quản trị viên"} user={user}></HeaderLayout>
 
       <Slidebar>
         {/* đường dẫn */}
@@ -236,7 +242,7 @@ const ListUser = ({ user, checkValidRole }) => {
           }}
         >
           <Breadcrumb.Item>
-            <a href="">Trang Quản trị viên</a>
+            <a href="">Trang quản trị viên</a>
           </Breadcrumb.Item>
           <Breadcrumb.Item>Danh sách người dùng</Breadcrumb.Item>
         </Breadcrumb>

@@ -63,7 +63,7 @@ const EditableCell = ({
             message: `${title} không được bỏ trống.`,
           },
           {
-            pattern: /^[1-9][0-9]*$/,
+            pattern: /^(?:[1-9]\d*|0)?(?:\.\d+)?$/,
             message: `${title} phải là chữ số và giá trị lớn hơn 0`,
           },
         ]}
@@ -84,7 +84,11 @@ const EditableCell = ({
   }
   return <td {...restProps}>{childNode}</td>;
 };
-const TableEditIngredientFood = ({ValueIngredient,getDataFromTable,valueFoodIdFormTable}) => {
+const TableEditIngredientFood = ({
+  ValueIngredient,
+  getDataFromTable,
+  valueFoodIdFormTable,
+}) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
     if (valueFoodIdFormTable) {

@@ -66,7 +66,7 @@ const EditableCell = ({
             message: `${title} không được bỏ trống.`,
           },
           {
-            pattern: /^[1-9][0-9]*$/,
+            pattern: /^(?:[1-9]\d*|0)?(?:\.\d+)?$/,
             message: `${title} phải là chữ số và giá trị lớn hơn 0`,
           },
         ]}
@@ -189,7 +189,7 @@ const TableAddIngredientFood = (props) => {
           marginBottom: 16,
         }}
       >
-        Thêm nguyên liệu 
+        Thêm nguyên liệu
       </Button>
       <Button
         onClick={onsubmit}

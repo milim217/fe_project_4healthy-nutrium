@@ -235,7 +235,7 @@ const UserProfile = ({ checkValidRole }) => {
   return (
     <div>
       <HeaderUserHasLog user={user}></HeaderUserHasLog>
-      <div className="site-card-wrapper">
+      <div className="wrapper-userProfile">
         <Breadcrumb
           style={{
             paddingLeft: "10px",
@@ -282,16 +282,7 @@ const UserProfile = ({ checkValidRole }) => {
                     disabled={true}
                   />
                 </Form.Item>
-                <Form.Item
-                  name="Giới tính"
-                  label="Giới tính"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Bạn chưa chọn giới tính!",
-                    },
-                  ]}
-                >
+                <Form.Item name="Giới tính" label="Giới tính">
                   <Select
                     defaultValue={true}
                     onChange={onChangeGender}
@@ -305,7 +296,7 @@ const UserProfile = ({ checkValidRole }) => {
                         label: "Nữ",
                       },
                     ]}
-                    disabled={isDisable}
+                    disabled={true}
                   />
                 </Form.Item>
                 <Form.Item label="Số điện thoại của bạn:">
@@ -431,11 +422,6 @@ const UserProfile = ({ checkValidRole }) => {
           </Form>
         </Modal>
       </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <Footers></Footers>
     </div>
   );

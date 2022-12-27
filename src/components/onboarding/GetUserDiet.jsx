@@ -36,7 +36,10 @@ const GetUserDiet = ({ checkValidRole }) => {
   useEffect(async () => {
     const quizData = JSON.parse(localStorage.getItem("quiz-data"));
     if (quizData === null) {
-      setAlert({ type: "danger", message: "Vui lòng hoàn thành tất cả quiz để tìm thực đơn của bạn" });
+      setAlert({
+        type: "danger",
+        message: "Vui lòng hoàn thành tất cả quiz để tìm thực đơn của bạn",
+      });
       setTimeout(() => setAlert(null), 5000);
       return;
     }
@@ -45,7 +48,12 @@ const GetUserDiet = ({ checkValidRole }) => {
         setDiet(res.data);
       })
       .catch((e) => {
-        setAlert({ type: "danger", message: e.response.data ? e.response.data.message : "Không thể tìm thực đơn phù hợp với bạn" });
+        setAlert({
+          type: "danger",
+          message: e.response.data
+            ? e.response.data.message
+            : "Không thể tìm thực đơn phù hợp với bạn",
+        });
         setTimeout(() => setAlert(null), 5000);
       });
   }, []);
@@ -81,9 +89,13 @@ const GetUserDiet = ({ checkValidRole }) => {
       // let toDayStr = new Date(today.toLocaleString("en-US", {t5imeZone: "Asia/Jakarta"}));
       let toDayStr = Moment(today).format("yyyy-MM-DD HH:mm:ss");
 
-      const breakfast = diet.breakfastOptions ? diet.breakfastOptions[breakfastIndex] : [];
+      const breakfast = diet.breakfastOptions
+        ? diet.breakfastOptions[breakfastIndex]
+        : [];
       const lunch = diet.lunchOptions ? diet.lunchOptions[lunchIndex] : [];
-      const dinner = diet.dinnerOptions ? diet.dinnerOptions[breakfastIndex] : [];
+      const dinner = diet.dinnerOptions
+        ? diet.dinnerOptions[breakfastIndex]
+        : [];
 
       let data = {
         user: diet.user,
@@ -114,17 +126,19 @@ const GetUserDiet = ({ checkValidRole }) => {
           setTimeout(() => setAlert(null), 5000);
         })
         .catch((e) => {
-          setAlert({ type: "danger", message: "Lưu thực đơn không thành công" });
+          setAlert({
+            type: "danger",
+            message: "Lưu thực đơn không thành công",
+          });
           setTimeout(() => setAlert(null), 5000);
         });
-    }
-    else {
+    } else {
       setAlert({ type: "danger", message: "Không có thực đơn để lưu" });
       setTimeout(() => setAlert(null), 5000);
     }
   }
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (loading) {
@@ -133,7 +147,6 @@ const GetUserDiet = ({ checkValidRole }) => {
       }, 4000);
     }
   }, [loading]);
-
 
   return (
     <>
@@ -146,31 +159,55 @@ const GetUserDiet = ({ checkValidRole }) => {
         onCancel={handleCancel}
         width={1000}
       >
-        <Card title={detail ? `${detail.mass} suất ${detail.food.foodName}` : ""}>
+        <Card
+          title={detail ? `${detail.mass} suất ${detail.food.foodName}` : ""}
+        >
           <Image
             width={190}
             height={140}
-            src={`http://localhost:8080/food/${detail?detail.food.id:''}/image`}
+            src={`http://localhost:8080/food/${
+              detail ? detail.food.id : ""
+            }/image`}
           />
           <Card.Grid style={gridStyle}>
-            {detail ?
-              <>Lượng calo: <br /> {(detail.food.calo * detail.mass).toFixed(1)}</> : <></>
-            }
+            {detail ? (
+              <>
+                Hàm lượng calo: <br />{" "}
+                {(detail.food.calo * detail.mass).toFixed(1)}
+              </>
+            ) : (
+              <></>
+            )}
           </Card.Grid>
           <Card.Grid style={gridStyle}>
-            {detail ?
-              <>Lượng chất béo: <br /> {(detail.food.fat * detail.mass).toFixed(1)}</> : <></>
-            }
+            {detail ? (
+              <>
+                Hàm lượng chất béo: <br />{" "}
+                {(detail.food.fat * detail.mass).toFixed(1)}
+              </>
+            ) : (
+              <></>
+            )}
           </Card.Grid>
           <Card.Grid style={gridStyle}>
-            {detail ?
-              <>Lượng chất đạm: <br /> {(detail.food.protein * detail.mass).toFixed(1)}</> : <></>
-            }
+            {detail ? (
+              <>
+                Hàm lượng chất đạm: <br />{" "}
+                {(detail.food.protein * detail.mass).toFixed(1)}
+              </>
+            ) : (
+              <></>
+            )}
           </Card.Grid>
           <Card.Grid style={gridStyle}>
-            {detail ?
-              <>Lượng carbon: <br /> {(detail.food.carb * detail.mass).toFixed(2)}</> : <></>
-            }
+            {detail ? (
+              <>
+                Hàm lượng chất bột đường: <br />{" "}
+                {(detail.food.carb * detail.mass).toFixed(2)}
+              </>
+            ) : (
+              <></>
+            )}
           </Card.Grid>
         </Card>
       </Modal>
@@ -194,74 +231,71 @@ const GetUserDiet = ({ checkValidRole }) => {
               size="small"
               extra={<Button onClick={changeBreakfast}>Đổi món</Button>}
             >
-              {diet?.breakfastOptions.length > 0 ?
-                (
-                  <Row>
-                    <div className="CardTitle-Info_Calo">
-                      Tổng calo cần xấp xỉ
-                    </div>
-                    <div className="CardTitle-Info_Number">
-                      {diet.breakfastCalo}
-                    </div>
-                  </Row>
-                )
-                :
-                (
-                  <>
-                    {/* <Row>
+              {diet?.breakfastOptions.length > 0 ? (
+                <Row>
+                  <div className="CardTitle-Info_Calo">
+                    Tổng calo cần xấp xỉ
+                  </div>
+                  <div className="CardTitle-Info_Number">
+                    {diet.breakfastCalo}
+                  </div>
+                </Row>
+              ) : (
+                <>
+                  {/* <Row>
                       <div className="CardTitle-Info_Calo">
                         Chưa tìm được thực đơn cho bữa sáng
                       </div>
                     </Row> */}
-                  </>
-                )}
-              {diet?.breakfastOptions.length > 0 ?
-                (
-                  diet.breakfastOptions[breakfastIndex]?.map((foodMass) => (
-                    <div onClick={() => {
-                      setDetail(foodMass)
-                      showModal()
-                    }}>
-                      <Row className="padding_20">
-                        <Col span={18} push={6}>
-                          <div className="wrapper-food-quantitative">
-                            <h5 className="CardName-food">
-                              {foodMass.mass.toFixed(1)} suất{" "}
-                              {foodMass.food.foodName}
-                            </h5>
+                </>
+              )}
+              {diet?.breakfastOptions.length > 0 ? (
+                diet.breakfastOptions[breakfastIndex]?.map((foodMass) => (
+                  <div
+                    onClick={() => {
+                      setDetail(foodMass);
+                      showModal();
+                    }}
+                  >
+                    <Row className="padding_20">
+                      <Col span={18} push={6}>
+                        <div className="wrapper-food-quantitative">
+                          <h5 className="CardName-food">
+                            {foodMass.mass.toFixed(1)} suất{" "}
+                            {foodMass.food.foodName}
+                          </h5>
 
-                            <h5 className="CardName-caloFood">
-                              Calo: <b> {foodMass.food.calo}</b>
-                            </h5>
-                          </div>
-                        </Col>
-                        <Col span={6} pull={18}>
-                          <Image
-                            width={120}
-                            height={80}
-                            src={`http://localhost:8080/food/${foodMass.food.id}/image`}
-                          />
-                        </Col>
-                      </Row>
+                          <h5 className="CardName-caloFood">
+                            Calo: <b> {foodMass.food.calo}</b>
+                          </h5>
+                        </div>
+                      </Col>
+                      <Col span={6} pull={18}>
+                        <Image
+                          width={120}
+                          height={80}
+                          src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                        />
+                      </Col>
+                    </Row>
+                  </div>
+                ))
+              ) : loading ? (
+                <div>
+                  <div className="Messageloading-getUserDiet">
+                    <div className="title-name">Đang tải món ăn....</div>
+                    <Spinner animation="border" variant="primary" />
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="Messageloading-getUserDiet">
+                    <div className="title-name">
+                      Chưa tìm được thực đơn cho bữa sáng
                     </div>
-                  ))
-                )
-                :
-                (
-                  loading ?
-                    <div>
-                      <div className="Messageloading-getUserDiet">
-                        <div className="title-name">Đang tải món ăn....</div>
-                        <Spinner animation="border" variant="primary" />
-                      </div>
-                    </div>
-                    :
-                    <div>
-                      <div className="Messageloading-getUserDiet">
-                        <div className="title-name">Chưa tìm được thực đơn cho bữa sáng</div>
-                      </div>
-                    </div>
-                )}
+                  </div>
+                </div>
+              )}
             </Card>
             {/* Trưa */}
             <Card
@@ -269,72 +303,69 @@ const GetUserDiet = ({ checkValidRole }) => {
               size="small"
               extra={<Button onClick={changeLunch}>Đổi món</Button>}
             >
-              {diet?.lunchOptions.length > 0 ?
-                (
-                  <Row>
-                    <div className="CardTitle-Info_Calo">
-                      Tổng calo cần xấp xỉ
-                    </div>
-                    <div className="CardTitle-Info_Number">{diet.lunchCalo}</div>
-                  </Row>
-                )
-                :
-                (
-                  <>
-                    {/* <Row>
+              {diet?.lunchOptions.length > 0 ? (
+                <Row>
+                  <div className="CardTitle-Info_Calo">
+                    Tổng calo cần xấp xỉ
+                  </div>
+                  <div className="CardTitle-Info_Number">{diet.lunchCalo}</div>
+                </Row>
+              ) : (
+                <>
+                  {/* <Row>
                     <div className="CardTitle-Info_Calo">
                       Không tìm được thực đơn phù hợp cho bữa trưa
                     </div>
                   </Row> */}
-                  </>
-                )}
-              {diet?.lunchOptions.length > 0 ?
-                (
-                  diet.lunchOptions[lunchIndex]?.map((foodMass) => (
-                    <div onClick={() => {
-                      setDetail(foodMass)
-                      showModal()
-                    }}>
-                      <Row className="padding_20">
-                        <Col span={18} push={6}>
-                          <div className="wrapper-food-quantitative">
-                            <h5 className="CardName-food">
-                              {foodMass.mass.toFixed(1)} suất{" "}
-                              {foodMass.food.foodName}
-                            </h5>
+                </>
+              )}
+              {diet?.lunchOptions.length > 0 ? (
+                diet.lunchOptions[lunchIndex]?.map((foodMass) => (
+                  <div
+                    onClick={() => {
+                      setDetail(foodMass);
+                      showModal();
+                    }}
+                  >
+                    <Row className="padding_20">
+                      <Col span={18} push={6}>
+                        <div className="wrapper-food-quantitative">
+                          <h5 className="CardName-food">
+                            {foodMass.mass.toFixed(1)} suất{" "}
+                            {foodMass.food.foodName}
+                          </h5>
 
-                            <h5 className="CardName-caloFood">
-                              Calo: <b> {foodMass.food.calo}</b>
-                            </h5>
-                          </div>
-                        </Col>
-                        <Col span={6} pull={18}>
-                          <Image
-                            width={120}
-                            height={80}
-                            src={`http://localhost:8080/food/${foodMass.food.id}/image`}
-                          />
-                        </Col>
-                      </Row>
+                          <h5 className="CardName-caloFood">
+                            Calo: <b> {foodMass.food.calo}</b>
+                          </h5>
+                        </div>
+                      </Col>
+                      <Col span={6} pull={18}>
+                        <Image
+                          width={120}
+                          height={80}
+                          src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                        />
+                      </Col>
+                    </Row>
+                  </div>
+                ))
+              ) : loading ? (
+                <div>
+                  <div className="Messageloading-getUserDiet">
+                    <div className="title-name">Đang tải món ăn....</div>
+                    <Spinner animation="border" variant="primary" />
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="Messageloading-getUserDiet">
+                    <div className="title-name">
+                      Chưa tìm được thực đơn cho bữa trưa
                     </div>
-                  ))
-                )
-                :
-                (
-                  loading ?
-                    <div>
-                      <div className="Messageloading-getUserDiet">
-                        <div className="title-name">Đang tải món ăn....</div>
-                        <Spinner animation="border" variant="primary" />
-                      </div>
-                    </div>
-                    :
-                    <div>
-                      <div className="Messageloading-getUserDiet">
-                        <div className="title-name">Chưa tìm được thực đơn cho bữa trưa</div>
-                      </div>
-                    </div>
-                )}
+                  </div>
+                </div>
+              )}
             </Card>
             {/* Tối */}
             <Card
@@ -342,72 +373,69 @@ const GetUserDiet = ({ checkValidRole }) => {
               size="small"
               extra={<Button onClick={changeDinner}>Đổi món</Button>}
             >
-              {diet?.dinnerOptions.length > 0 ?
-                (
-                  <Row>
-                    <div className="CardTitle-Info_Calo">
-                      Tổng calo cần xấp xỉ
-                    </div>
-                    <div className="CardTitle-Info_Number">{diet.dinnerCalo}</div>
-                  </Row>
-                )
-                :
-                (
-                  <>
-                    {/* <Row>
+              {diet?.dinnerOptions.length > 0 ? (
+                <Row>
+                  <div className="CardTitle-Info_Calo">
+                    Tổng calo cần xấp xỉ
+                  </div>
+                  <div className="CardTitle-Info_Number">{diet.dinnerCalo}</div>
+                </Row>
+              ) : (
+                <>
+                  {/* <Row>
                     <div className="CardTitle-Info_Calo">
                       Không tìm được thực đơn phù hợp cho bữa tối
                     </div>
                   </Row> */}
-                  </>
-                )}
-              {diet?.dinnerOptions.length > 0 ?
-                (
-                  diet.dinnerOptions[dinnerIndex]?.map((foodMass) => (
-                    <div onClick={() => {
-                      setDetail(foodMass)
-                      showModal()
-                    }}>
-                      <Row className="padding_20">
-                        <Col span={18} push={6}>
-                          <div className="wrapper-food-quantitative">
-                            <h5 className="CardName-food">
-                              {foodMass.mass.toFixed(1)} suất{" "}
-                              {foodMass.food.foodName}
-                            </h5>
+                </>
+              )}
+              {diet?.dinnerOptions.length > 0 ? (
+                diet.dinnerOptions[dinnerIndex]?.map((foodMass) => (
+                  <div
+                    onClick={() => {
+                      setDetail(foodMass);
+                      showModal();
+                    }}
+                  >
+                    <Row className="padding_20">
+                      <Col span={18} push={6}>
+                        <div className="wrapper-food-quantitative">
+                          <h5 className="CardName-food">
+                            {foodMass.mass.toFixed(1)} suất{" "}
+                            {foodMass.food.foodName}
+                          </h5>
 
-                            <h5 className="CardName-caloFood">
-                              Calo: <b> {foodMass.food.calo}</b>
-                            </h5>
-                          </div>
-                        </Col>
-                        <Col span={6} pull={18}>
-                          <Image
-                            width={120}
-                            height={80}
-                            src={`http://localhost:8080/food/${foodMass.food.id}/image`}
-                          />
-                        </Col>
-                      </Row>
+                          <h5 className="CardName-caloFood">
+                            Calo: <b> {foodMass.food.calo}</b>
+                          </h5>
+                        </div>
+                      </Col>
+                      <Col span={6} pull={18}>
+                        <Image
+                          width={120}
+                          height={80}
+                          src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                        />
+                      </Col>
+                    </Row>
+                  </div>
+                ))
+              ) : loading ? (
+                <div>
+                  <div className="Messageloading-getUserDiet">
+                    <div className="title-name">Đang tải món ăn....</div>
+                    <Spinner animation="border" variant="primary" />
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="Messageloading-getUserDiet">
+                    <div className="title-name">
+                      Chưa tìm được thực đơn cho bữa tối
                     </div>
-                  ))
-                )
-                :
-                (
-                  loading ?
-                    <div>
-                      <div className="Messageloading-getUserDiet">
-                        <div className="title-name">Đang tải món ăn....</div>
-                        <Spinner animation="border" variant="primary" />
-                      </div>
-                    </div>
-                    :
-                    <div>
-                      <div className="Messageloading-getUserDiet">
-                        <div className="title-name">Chưa tìm được thực đơn cho bữa tối</div>
-                      </div>
-                    </div>
-                )}
+                  </div>
+                </div>
+              )}
             </Card>
           </Space>
           {/* <Link to="/login"> */}

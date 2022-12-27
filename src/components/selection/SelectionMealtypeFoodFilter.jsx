@@ -4,11 +4,13 @@ import { Select } from "antd";
 function SelectionMealtypeFoodFilter({ searchData, setSearchData }) {
   const [placement, SetPlacement] = useState("bottomLeft");
   const handleChange = (value) => {
-    setSearchData({ ...searchData, mealId: value })
+    setSearchData({ ...searchData, mealId: value });
   };
   return (
     <>
-      <div> Lọc theo bữa ăn</div>
+      <div>
+        <strong>Lọc theo bữa ăn</strong>
+      </div>
       <Select
         defaultValue={null}
         style={{

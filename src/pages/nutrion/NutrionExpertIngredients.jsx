@@ -419,12 +419,10 @@ function NutrionExpertIngredients() {
             size="large"
             onSearch={onSearch}
           />
-          <div className="wrapper__listUser">
-            <AlertMessage info={alert} />
-          </div>
+          <AlertMessage info={alert} />
         </div>
-        <div style={{ paddingTop: 0 }}>
-          Lọc theo mùa
+        <strong>Lọc theo mùa</strong>
+        <div className="filterSeasson_user___listUser">
           <SelectionSeasonIngredient
             searchData={searchData}
             setSearchData={setSearchData}

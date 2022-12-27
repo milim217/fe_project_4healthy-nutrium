@@ -12,32 +12,29 @@ const gridStyle = {
   textAlign: "center",
 };
 const DetailFood = () => {
-
   const { foodID } = useParams();
   const [food, setFood] = useState(null);
-  const [seasonStr, setSeasonStr] = useState('');
-  const [mealStr, setMealStr] = useState('');
+  const [seasonStr, setSeasonStr] = useState("");
+  const [mealStr, setMealStr] = useState("");
 
   useEffect(async () => {
     console.log(foodID);
     await FoodAPI.getById(foodID)
-      .then(res => {
+      .then((res) => {
         setFood(res.data);
       })
-      .catch(e => {
-
-      });
+      .catch((e) => {});
   }, []);
 
   useEffect(() => {
-    let seasonS = '';
-    let mealS = '';
+    let seasonS = "";
+    let mealS = "";
 
-    food?.seasons?.map(season => {
-      seasonS += season.seasonName + ' ';
+    food?.seasons?.map((season) => {
+      seasonS += season.seasonName + " ";
     });
-    food?.meals?.map(meal => {
-      mealS += meal.mealName + ' ';
+    food?.meals?.map((meal) => {
+      mealS += meal.mealName + " ";
     });
     setSeasonStr(seasonS);
     setMealStr(mealS);
@@ -47,84 +44,120 @@ const DetailFood = () => {
     <div>
       <HeaderUser></HeaderUser>
       <div className="wrapper-DetailPage">
-        {
-          food ?
-            <>
-              <div className="wrapper-Img_sumary">
-                <Row>
-                  <Col span={18} push={6}>
-                    <div className="name_food_DetailPage">{food.foodName}</div>
-                    <Card title="Thông tin dinh dưỡng">
-                      <Card.Grid style={gridStyle}>
-                        <div className="name_SumaryNutrition_Food"> Calories</div>
-                        <div className="data_SmaryNutrition_Food"> {food.calo}</div>
-                      </Card.Grid>
-                      <Card.Grid style={gridStyle}>
-                        <div className="name_SumaryNutrition_Food"> Fat</div>
-                        <div className="data_SmaryNutrition_Food"> {food.fat}</div>
-                      </Card.Grid>
-                      <Card.Grid style={gridStyle}>
-                        <div className="name_SumaryNutrition_Food"> Carbs</div>
-                        <div className="data_SmaryNutrition_Food"> {food.carb}</div>
-                      </Card.Grid>
-                      <Card.Grid style={gridStyle}>
-                        <div className="name_SumaryNutrition_Food"> Protein</div>
-                        <div className="data_SmaryNutrition_Food"> {food.protein}</div>
-                      </Card.Grid>
-                      <Card.Grid style={gridStyle}>
-                        <div className="name_SumaryNutrition_Food"> Phù hợp các mùa</div>
-                        <div className="data_SmaryNutrition_Food"> {seasonStr}</div>
-                      </Card.Grid>
-                      <Card.Grid style={gridStyle}>
-                        <div className="name_SumaryNutrition_Food">Dành cho bữa</div>
-                        <div className="data_SmaryNutrition_Food"> {mealStr}</div>
-                      </Card.Grid>
-                    </Card>
-                  </Col>
-                  <Col span={6} pull={18}>
+        {food ? (
+          <>
+            <div className="wrapper-Img_sumary">
+              <Row>
+                <Col span={18} push={6}>
+                  <div className="name_food_DetailPage">{food.foodName}</div>
+                  <Card title="Thông tin dinh dưỡng ( Dựa trên 100g )">
+                    <Card.Grid style={gridStyle}>
+                      <div className="name_SumaryNutrition_Food">
+                        {" "}
+                        Hàm lượng calo
+                      </div>
+                      <div className="data_SmaryNutrition_Food">
+                        {" "}
+                        {food.calo}
+                      </div>
+                    </Card.Grid>
+                    <Card.Grid style={gridStyle}>
+                      <div className="name_SumaryNutrition_Food">
+                        {" "}
+                        Hàm lượng chất béo
+                      </div>
+                      <div className="data_SmaryNutrition_Food">
+                        {" "}
+                        {food.fat}
+                      </div>
+                    </Card.Grid>
+                    <Card.Grid style={gridStyle}>
+                      <div className="name_SumaryNutrition_Food">
+                        {" "}
+                        Hàm lượng chất bột đường
+                      </div>
+                      <div className="data_SmaryNutrition_Food">
+                        {" "}
+                        {food.carb}
+                      </div>
+                    </Card.Grid>
+                    <Card.Grid style={gridStyle}>
+                      <div className="name_SumaryNutrition_Food">
+                        {" "}
+                        Hàm lượng chất đạm
+                      </div>
+                      <div className="data_SmaryNutrition_Food">
+                        {" "}
+                        {food.protein}
+                      </div>
+                    </Card.Grid>
+                    <Card.Grid style={gridStyle}>
+                      <div className="name_SumaryNutrition_Food">
+                        {" "}
+                        Phù hợp các mùa
+                      </div>
+                      <div className="data_SmaryNutrition_Food">
+                        {" "}
+                        {seasonStr}
+                      </div>
+                    </Card.Grid>
+                    <Card.Grid style={gridStyle}>
+                      <div className="name_SumaryNutrition_Food">
+                        Dành cho bữa
+                      </div>
+                      <div className="data_SmaryNutrition_Food"> {mealStr}</div>
+                    </Card.Grid>
+                  </Card>
+                </Col>
+                <Col span={6} pull={18}>
+                  <Image
+                    style={{ padding: "7px 0px", marginTop: "40px" }}
+                    width={350}
+                    height={350}
+                    src={`http://localhost:8080/food/${food?.id}/image`}
+                  />
+                </Col>
+              </Row>
+            </div>
+            <div className="wrapper_RelateFood">
+              <div className="name_RelateFood">Thành phần trong món ăn</div>
+              {food.ingredientMasses ? (
+                food.ingredientMasses.map((ingredientMass) => (
+                  <div className="box_RelateFood">
                     <Image
-                      width={350}
-                      height={345}
-                      src={`http://localhost:8080/food/${food?.id}/image`}
+                      width={150}
+                      height={100}
+                      src={`http://localhost:8080/ingredient/${ingredientMass.ingredient.id}/image`}
                     />
-                  </Col>
-                </Row>
-              </div>
-              <div className="wrapper_RelateFood">
-                <div className="name_RelateFood">Thành phần trong món ăn</div>
-                {food.ingredientMasses ? (
-                  food.ingredientMasses.map(ingredientMass => (
-                    <div className="box_RelateFood">
-                      <Image
-                        width={150}
-                        height={100}
-                        src={`http://localhost:8080/ingredient/${ingredientMass.ingredient.id}/image`}
-                      />
-                      <div className="main-box_RelateFood">
-                        <div className="nameIngredient_boxDetailFood">{ingredientMass.ingredient.ingredientName}</div>
-                        {/* <div className="contentIngredient_boxDetailFood">
+                    <div className="main-box_RelateFood">
+                      <div className="nameIngredient_boxDetailFood">
+                        {ingredientMass.ingredient.ingredientName}
+                      </div>
+                      {/* <div className="contentIngredient_boxDetailFood">
                           Nội dung thành phần
                         </div> */}
-                        <div className="contentIngredient_boxDetailFood">{ingredientMass.mass} gram</div>
+                      <div className="contentIngredient_boxDetailFood">
+                        {ingredientMass.mass} gram
                       </div>
                     </div>
-                  ))
-                )
-                  :
-                  <></>
-                }
-                <div className="name_RelateFood">Công thức nấu</div>
-                <div className="box_RelateFood">
-                  <div className="main-box_RelateFood">
-                    <div className="nameIngredient_boxDetailFood">{food?.recipe}</div>
+                  </div>
+                ))
+              ) : (
+                <></>
+              )}
+              <div className="name_RelateFood">Công thức nấu</div>
+              <div className="box_RelateFood">
+                <div className="main-box_RelateFood">
+                  <div className="nameIngredient_boxDetailFood">
+                    {food?.recipe}
                   </div>
                 </div>
               </div>
-            </>
-            :
-            <></>
-        }
-
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
       <Footers></Footers>
     </div>

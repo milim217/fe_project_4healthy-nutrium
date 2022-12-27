@@ -63,7 +63,7 @@ const MealTypeList = [
 ];
 
 const { Option } = Select;
-const { TextArea } = Input
+const { TextArea } = Input;
 const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
   const [checkedMealTypeList, setcheckedMealTypeList] = useState(
     foodData?.mealType.map((element) => {
@@ -113,13 +113,13 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
         .then((res) => {
           setListCategory(res.data);
         })
-        .catch((err) => { });
+        .catch((err) => {});
 
       await IngredientAPI.getActive()
         .then((res) => {
           setListIngredient(res.data);
         })
-        .catch((err) => { });
+        .catch((err) => {});
 
       await FoodAPI.getById(foodData.id).then((res) => {
         // console.log("food = ", res.data);
@@ -168,36 +168,36 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
     }
   }, [checkedSeasonList]);
 
-  const [dataMealTypeSubmit,setDataMealTypeSubmit] = useState(null);
+  const [dataMealTypeSubmit, setDataMealTypeSubmit] = useState(null);
 
   useEffect(() => {
-    if(checkedMealTypeList){
-    let mList = checkedMealTypeList.map((data) => {
-      if (data == "Bữa sáng") {
-        return {
-          value: {
-            id: 1,
-            mealName: "Bữa sáng",
-          },
-        };
-      } else if (data == "Bữa trưa") {
-        return {
-          value: {
-            id: 2,
-            mealName: "Bữa trưa",
-          },
-        };
-      } else {
-        return {
-          value: {
-            id: 3,
-            mealName: "Bữa tối",
-          },
-        };
-      }
-    })
-    setDataMealTypeSubmit(mList);
-  }
+    if (checkedMealTypeList) {
+      let mList = checkedMealTypeList.map((data) => {
+        if (data == "Bữa sáng") {
+          return {
+            value: {
+              id: 1,
+              mealName: "Bữa sáng",
+            },
+          };
+        } else if (data == "Bữa trưa") {
+          return {
+            value: {
+              id: 2,
+              mealName: "Bữa trưa",
+            },
+          };
+        } else {
+          return {
+            value: {
+              id: 3,
+              mealName: "Bữa tối",
+            },
+          };
+        }
+      });
+      setDataMealTypeSubmit(mList);
+    }
   }, [checkedMealTypeList]);
 
   // let dataSeasonSubmit = checkedSeasonList?.map((data) => {
@@ -397,12 +397,12 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
 
     let seasonList = [];
     let mealList = [];
-    dataSeasonSubmit.map(s => {
+    dataSeasonSubmit.map((s) => {
       seasonList.push(s.value);
     });
-    dataMealTypeSubmit.map(m => {
+    dataMealTypeSubmit.map((m) => {
       mealList.push(m.value);
-    })
+    });
 
     const editFoodForm = {
       id: foodData.id,
@@ -417,13 +417,12 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
       ingredientMasses: ingredientMasses,
       category: CategoryFoodValue,
       status: foodData.status,
-      img: foodData.img
+      img: foodData.img,
     };
-    console.log('season = ', dataSeasonSubmit)
+    console.log("season = ", dataSeasonSubmit);
     console.log("update food = ", editFoodForm);
     FoodAPI.update(editFoodForm)
-      .then(res => {
-
+      .then((res) => {
         loadFoodList();
         setTopAlert({ type: "success", message: "Cập nhật món ăn thành công" });
         setTimeout(() => setTopAlert(null), 5000);
@@ -432,19 +431,26 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
           const formData = new FormData();
           formData.append("file", image);
 
-          let urlStr = 'http://localhost:8080/food/' + editFoodForm.id + '/image'
+          let urlStr =
+            "http://localhost:8080/food/" + editFoodForm.id + "/image";
           axios({
             method: "post",
             url: urlStr,
             data: formData,
-            headers: { "Content-Type": "multipart/form-data", 'Authorization': JSON.parse(localStorage.getItem("jwt"))},
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: JSON.parse(localStorage.getItem("jwt")),
+            },
           });
         }
 
         setUpdated(true);
       })
-      .catch(e => {
-        setTopAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi cập nhật món ăn" });
+      .catch((e) => {
+        setTopAlert({
+          type: "danger",
+          message: e.response ? e.response.data.message : "Lỗi cập nhật món ăn",
+        });
         setTimeout(() => setTopAlert(null), 5000);
       });
   };
@@ -590,14 +596,36 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
               <Image
                 width={300}
                 height={250}
-                src={result ? result : `http://localhost:8080/food/${foodData?.id}/image`}
+                src={
+                  result
+                    ? result
+                    : `http://localhost:8080/food/${foodData?.id}/image`
+                }
               />
             </Col>
             <Col span={12}>
-              <Form.Item name="imageFood" label="Hình ảnh món ăn">
-                <UploadImageFile setImage={setImage} setResult={setResult}></UploadImageFile>
+              <Form.Item
+                name="imageFood"
+                label={
+                  <span>
+                    Hình ảnh món ăn
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
+                <UploadImageFile
+                  setImage={setImage}
+                  setResult={setResult}
+                ></UploadImageFile>
               </Form.Item>
-              <Form.Item label="Tên món ăn:">
+              <Form.Item
+                label={
+                  <span>
+                    Tên món ăn
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Input
                   name="foodName"
                   placeholder="Tên món ăn"
@@ -609,7 +637,12 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
                 )}
               </Form.Item>
               <Form.Item
-                label="Công thức nấu món này là:"
+                label={
+                  <span>
+                    Công thức nấu món này là
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
                 rules={[
                   {
                     required: true,
@@ -631,7 +664,12 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
           </Row>
           <Col span={24}>
             <Form.Item
-              label="Hàm lượng chất béo:"
+              label={
+                <span>
+                  Hàm lượng chất béo
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,
@@ -652,7 +690,12 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
           </Col>
           <Col span={24}>
             <Form.Item
-              label="Hàm lượng Protein:"
+              label={
+                <span>
+                  Hàm lượng chất đạm
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,
@@ -673,7 +716,12 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
           </Col>
           <Col span={24}>
             <Form.Item
-              label="Hàm lượng Carb:"
+              label={
+                <span>
+                  Hàm lượng chất bột đường
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,
@@ -694,7 +742,12 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
           </Col>
           <Col span={24}>
             <Form.Item
-              label="Hàm lượng calo:"
+              label={
+                <span>
+                  Hàm lượng calo
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,
@@ -735,7 +788,15 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
           </Col> */}
           <Row span={24}>
             <Col span={12}>
-              <Form.Item name="seassonFood" label="Mùa của món ăn này:">
+              <Form.Item
+                name="seassonFood"
+                label={
+                  <span>
+                    Mùa của món ăn này
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Checkbox
                   indeterminate={indeterminate}
                   onChange={onCheckAllChange}
@@ -756,7 +817,15 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
               <AlertDiv info={alert} />
             </Col>
             <Col span={12}>
-              <Form.Item name="mealTypeFood" label="Món ăn này ăn vào bữa:">
+              <Form.Item
+                name="mealTypeFood"
+                label={
+                  <span>
+                    Món ăn này ăn vào bữa
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </span>
+                }
+              >
                 <Checkbox
                   indeterminate={indeterminateMealType}
                   onChange={onCheckAllChangeMealType}
@@ -780,7 +849,12 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
           <Col span={24}>
             <Form.Item
               name="ingredientFood"
-              label="Nguyên liệu trong món ăn này"
+              label={
+                <span>
+                  Nguyên liệu trong món ăn này
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,
@@ -816,7 +890,12 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
             </Form.Item>
             <Form.Item
               name="category"
-              label="Món ăn này thuộc loại"
+              label={
+                <span>
+                  Món ăn này thuộc loại
+                  <p style={{ color: "red", display: "inline" }}> * </p>:
+                </span>
+              }
               rules={[
                 {
                   required: true,
@@ -828,7 +907,7 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
                 onChange={onChangeSelectCategoryFood}
                 value={{
                   // label: foodData?.category_id,
-                  label: CategoryFoodValue.categoryName
+                  label: CategoryFoodValue.categoryName,
                 }}
               >
                 {listCategory ? (

@@ -29,83 +29,93 @@ const ModalDetailFood = (props) => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        width="1000px"
+        width="1700px"
       >
-        {
-          foods ?
-            (
-              foods.map((foodMass) => (
-                <div className="wrapper-detail">
-                <div className="detail-nameFood">
-                  <Image
-                    width={100}
-                    src={`http://localhost:8080/food/${foodMass.food.id}/image`}
-                  />
-                  <h4>{foodMass.mass} suất {foodMass.food.foodName}</h4>
-                </div>
-      
-                <div className="site-card-wrapper">
-                  <Row gutter={24} bordered={false}>
-                    <Col span={6}>
-                      <Card
-                        title="Calories"
-                        bordered={false}
-                        headStyle={{
-                          fontSize: 20,
-                          fontWeight: 1000,
-                          textAlign: "center",
-                        }}
-                      >
-                        <p className="content-card-detailFood">{(foodMass.mass*foodMass.food.calo).toFixed(1)}</p>
-                      </Card>
-                    </Col>
-                    <Col span={6}>
-                      <Card
-                        title="Carbs"
-                        bordered={false}
-                        headStyle={{
-                          fontSize: 20,
-                          fontWeight: 1000,
-                          textAlign: "center",
-                        }}
-                      >
-                        <p className="content-card-detailFood"> {(foodMass.mass*foodMass.food.carb).toFixed(1)} g</p>
-                      </Card>
-                    </Col>
-                    <Col span={6}>
-                      <Card
-                        title="Fat"
-                        headStyle={{
-                          fontSize: 20,
-                          fontWeight: 1000,
-                          textAlign: "center",
-                        }}
-                        bordered={false}
-                      >
-                        <p className="content-card-detailFood"> {(foodMass.mass*foodMass.food.fat).toFixed(1)} g</p>
-                      </Card>
-                    </Col>
-                    <Col span={6}>
-                      <Card
-                        title="Protein"
-                        headStyle={{
-                          fontSize: 20,
-                          fontWeight: 1000,
-                          textAlign: "center",
-                        }}
-                        bordered={false}
-                      >
-                        <p className="content-card-detailFood"> {(foodMass.mass*foodMass.food.protein).toFixed(1)} g</p>
-                      </Card>
-                    </Col>
-                  </Row>
-                </div>
+        {foods ? (
+          foods.map((foodMass) => (
+            <div className="wrapper-detail">
+              <div className="detail-nameFood">
+                <Image
+                  width={100}
+                  src={`http://localhost:8080/food/${foodMass.food.id}/image`}
+                />
+                <h4>
+                  {foodMass.mass} suất {foodMass.food.foodName}
+                </h4>
               </div>
-              ))
-            )
-            :
-            (<></>)
-        }
+
+              <div className="site-card-wrapper">
+                <Row gutter={24} bordered={false}>
+                  <Col span={6}>
+                    <Card
+                      title="Hàm lượng Calo"
+                      bordered={false}
+                      headStyle={{
+                        fontSize: 20,
+                        fontWeight: 1000,
+                        textAlign: "center",
+                      }}
+                    >
+                      <p className="content-card-detailFood">
+                        {(foodMass.mass * foodMass.food.calo).toFixed(1)}
+                      </p>
+                    </Card>
+                  </Col>
+                  <Col span={6}>
+                    <Card
+                      title="Hàm lượng chất bột đường"
+                      bordered={false}
+                      headStyle={{
+                        fontSize: 20,
+                        fontWeight: 1000,
+                        textAlign: "center",
+                      }}
+                    >
+                      <p className="content-card-detailFood">
+                        {" "}
+                        {(foodMass.mass * foodMass.food.carb).toFixed(1)} g
+                      </p>
+                    </Card>
+                  </Col>
+                  <Col span={6}>
+                    <Card
+                      title="Hàm lượng chất béo"
+                      headStyle={{
+                        fontSize: 20,
+                        fontWeight: 1000,
+                        textAlign: "center",
+                      }}
+                      bordered={false}
+                    >
+                      <p className="content-card-detailFood">
+                        {" "}
+                        {(foodMass.mass * foodMass.food.fat).toFixed(1)} g
+                      </p>
+                    </Card>
+                  </Col>
+                  <Col span={6}>
+                    <Card
+                      title="Hàm lượng chất đạm"
+                      headStyle={{
+                        fontSize: 20,
+                        fontWeight: 1000,
+                        textAlign: "center",
+                      }}
+                      bordered={false}
+                    >
+                      <p className="content-card-detailFood">
+                        {" "}
+                        {(foodMass.mass * foodMass.food.protein).toFixed(1)} g
+                      </p>
+                    </Card>
+                  </Col>
+                </Row>
+              </div>
+            </div>
+          ))
+        ) : (
+          <></>
+        )}
       </Modal>
     </>
   );

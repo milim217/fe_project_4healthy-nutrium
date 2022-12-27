@@ -145,12 +145,15 @@ const RegisterForm = () => {
       } else {
         UserAPI.sendRegisterCode([email])
           .then((res) => {
-            console.log('res ',res.data)
+            console.log("res ", res.data);
             setAlert({ type: "success", message: res.data });
             setTimeout(() => setAlert(null), 5000);
           })
           .catch((e) => {
-            setAlert({ type: "danger", message: e.response ? e.response.data.message : "Lỗi gửi email" });
+            setAlert({
+              type: "danger",
+              message: e.response ? e.response.data.message : "Lỗi gửi email",
+            });
             setTimeout(() => setAlert(null), 5000);
           });
       }
@@ -220,7 +223,12 @@ const RegisterForm = () => {
           setTimeout(() => setAlert(null), 5000);
         })
         .catch((e) => {
-          setAlert({ type: "danger", message: e.response ? e.response.data.message : 'Lỗi đăng kí tài khoản' });
+          setAlert({
+            type: "danger",
+            message: e.response
+              ? e.response.data.message
+              : "Lỗi đăng kí tài khoản",
+          });
           setTimeout(() => setAlert(null), 5000);
         });
     }
@@ -241,7 +249,8 @@ const RegisterForm = () => {
                 <Form.Group>
                   <Form.Group>
                     <label className="formLabel_loginForm_RegisterForm">
-                      Email:
+                      Email{" "}
+                      <p style={{ color: "red", display: "inline" }}> * </p>:
                     </label>
                     <Input
                       type="email"
@@ -258,7 +267,8 @@ const RegisterForm = () => {
                   </Form.Group>
                   <Form.Group>
                     <label className="formLabel_loginForm_RegisterForm">
-                      Mật khẩu:
+                      Mật khẩu{" "}
+                      <p style={{ color: "red", display: "inline" }}> * </p>:
                     </label>
                     <Input.Password
                       type="password"
@@ -275,7 +285,8 @@ const RegisterForm = () => {
                   </Form.Group>
                   <Form.Group>
                     <label className="formLabel_loginForm_RegisterForm">
-                      Nhập lại mật khẩu:
+                      Nhập lại mật khẩu{" "}
+                      <p style={{ color: "red", display: "inline" }}> * </p>:
                     </label>
                     <Input.Password
                       type="password"
@@ -294,7 +305,8 @@ const RegisterForm = () => {
                   </Form.Group>
                   <Form.Group>
                     <label className="formLabel_loginForm_RegisterForm">
-                      Họ và Tên
+                      Họ và Tên{" "}
+                      <p style={{ color: "red", display: "inline" }}> * </p>:
                     </label>
                     <Input
                       type="text"
@@ -311,7 +323,8 @@ const RegisterForm = () => {
                   </Form.Group>
                   <Form.Group>
                     <label className="formLabel_loginForm_RegisterForm">
-                      Địa chỉ:
+                      Địa chỉ{" "}
+                      <p style={{ color: "red", display: "inline" }}> * </p>:
                     </label>
                     <Input
                       type="text"
@@ -328,7 +341,8 @@ const RegisterForm = () => {
                   </Form.Group>
                   <Form.Group>
                     <label className="formLabel_loginForm_RegisterForm">
-                      Số điện thoại:
+                      Số điện thoại{" "}
+                      <p style={{ color: "red", display: "inline" }}> * </p>:
                     </label>
                     <Input
                       type="text"
@@ -344,7 +358,8 @@ const RegisterForm = () => {
                     )}
                   </Form.Group>
                   <label className="formLabel_loginForm_RegisterForm">
-                    Ngày sinh:
+                    Ngày sinh{" "}
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
                   </label>
                   <Input
                     // defaultValue={moment("01/01/2000", "DD/MM/YYYY")}
@@ -364,7 +379,8 @@ const RegisterForm = () => {
                 </Form.Group>
                 <Form.Group>
                   <label className="formLabel_loginForm_RegisterForm">
-                    Mã xác thực Email
+                    Mã xác thực Email{" "}
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
                   </label>
                   <Input
                     type="text"
@@ -380,7 +396,8 @@ const RegisterForm = () => {
                 </Form.Group>
                 <Form.Group>
                   <label className="formLabel_loginForm_RegisterForm">
-                    Giới tính:
+                    Giới tính{" "}
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
                   </label>
                   <Radio.Group
                     onChange={onChangeGender}

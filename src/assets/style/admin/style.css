@@ -6,7 +6,6 @@
 
 .site-card-wrapper {
   width: 100%;
-  min-height: 100vh;
   padding-top: 10px;
   padding-left: 20px;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
@@ -30,6 +29,10 @@
   float: left;
   width: 650px;
   padding: 20px 20px 20px 10px;
+}
+
+.filterSeasson_user___listUser {
+  padding: 0px 20px 20px 0px;
 }
 .wrapper__listUser {
   width: 100%;

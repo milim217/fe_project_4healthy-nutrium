@@ -176,7 +176,8 @@ const ResetPasswordForm = () => {
               <Form.Group>
                 <Form.Group>
                   <label className="formLabel_loginForm_RegisterForm">
-                    Email:
+                    Email <p style={{ color: "red", display: "inline" }}> * </p>
+                    :
                   </label>
                   <Input
                     placeholder="Email của bạn"
@@ -194,7 +195,8 @@ const ResetPasswordForm = () => {
 
                 <Form.Group>
                   <label className="formLabel_loginForm_RegisterForm">
-                    Mật khẩu mới:
+                    Mật khẩu mới{" "}
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
                   </label>
                   <Input.Password
                     placeholder="Nhập mật khẩu mới của bạn"
@@ -211,7 +213,8 @@ const ResetPasswordForm = () => {
                 </Form.Group>
                 <Form.Group>
                   <label className="formLabel_loginForm_RegisterForm">
-                    Nhập lại mật khẩu mới:
+                    Nhập lại mật khẩu mới{" "}
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
                   </label>
                   <Input.Password
                     placeholder="Nhập mật khẩu mới của bạn lần nữa"
@@ -228,7 +231,8 @@ const ResetPasswordForm = () => {
                 </Form.Group>
                 <Form.Group>
                   <label className="formLabel_loginForm_RegisterForm">
-                    Mã xác thực Email của bạn:
+                    Mã xác thực Email của bạn{" "}
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
                   </label>
                   <Input
                     placeholder="Nhập mã xác thực email"

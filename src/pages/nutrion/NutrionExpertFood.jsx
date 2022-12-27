@@ -29,33 +29,33 @@ const NutrionExpertFood = ({ user }) => {
   const [alert, setAlert] = useState(null);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [updatedFood, setUpdatedFood] = useState(null);
-  const [categories,setCategories] = useState(null)
+  const [categories, setCategories] = useState(null);
 
   const loadFoodList = async () => {
     await FoodAPI.getAll()
       .then((res) => {
         setFoods(res.data);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   const loadCategoryList = async () => {
     await CategoryAPI.getAll()
       .then((res) => {
         let cList = [];
-        cList.push( {
+        cList.push({
           value: null,
           label: "Tất cả",
-        })
-        res.data.map(category => {
-           cList.push( {
+        });
+        res.data.map((category) => {
+          cList.push({
             value: category.id,
             label: category.categoryName,
-          })
+          });
         });
         setCategories(cList);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -183,10 +183,13 @@ const NutrionExpertFood = ({ user }) => {
       title: "Chỉnh sửa",
       render: (_, record) => (
         // <EditFood foodData={record} loadFoodList={loadFoodList}></EditFood>
-        <Button type="primary" onClick={() => {
-          setOpenUpdate(true);
-          setUpdatedFood(record);
-        }}>
+        <Button
+          type="primary"
+          onClick={() => {
+            setOpenUpdate(true);
+            setUpdatedFood(record);
+          }}
+        >
           Sửa
         </Button>
       ),
@@ -220,22 +223,22 @@ const NutrionExpertFood = ({ user }) => {
   const body = <br></br>;
   foods
     ? foods.map((foodValue) => {
-      data.push({
-        id: foodValue.id,
-        food_name: foodValue.foodName,
-        category_id: foodValue.category.categoryName,
-        mealType: foodValue.meals.map((m) => m.mealName + " "),
-        seasson_id: foodValue.seasons.map((s) => s.seasonName + " "),
-        recipe: foodValue.recipe,
-        fat: foodValue.fat,
-        protein: foodValue.protein,
-        carbon: foodValue.carb,
-        calories: foodValue.calo,
-        imageFood: `http://localhost:8080/food/${foodValue.id}/image`,
-        status: foodValue.status,
-        img: foodValue.img,
-      });
-    })
+        data.push({
+          id: foodValue.id,
+          food_name: foodValue.foodName,
+          category_id: foodValue.category.categoryName,
+          mealType: foodValue.meals.map((m) => m.mealName + " "),
+          seasson_id: foodValue.seasons.map((s) => s.seasonName + " "),
+          recipe: foodValue.recipe,
+          fat: foodValue.fat,
+          protein: foodValue.protein,
+          carbon: foodValue.carb,
+          calories: foodValue.calo,
+          imageFood: `http://localhost:8080/food/${foodValue.id}/image`,
+          status: foodValue.status,
+          img: foodValue.img,
+        });
+      })
     : console.log("error");
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -254,24 +257,21 @@ const NutrionExpertFood = ({ user }) => {
 
   // Tìm kiếm Food
   const { Search } = Input;
-  const [searchData,setSearchData] = useState({
-     text: "",
-     categoryId: null,
-     mealId: null,
-     seasonId: null
-  })
-  const onChange = (e) => { 
-     setSearchData({...searchData, text: e.target.value})
+  const [searchData, setSearchData] = useState({
+    text: "",
+    categoryId: null,
+    mealId: null,
+    seasonId: null,
+  });
+  const onChange = (e) => {
+    setSearchData({ ...searchData, text: e.target.value });
   };
-  const onSearch = async (text) => { 
+  const onSearch = async (text) => {
     await FoodAPI.search(searchData)
-    .then(res => {
-       setFoods(res.data);
-    })
-    .catch(e => {
-
-    })
-    
+      .then((res) => {
+        setFoods(res.data);
+      })
+      .catch((e) => {});
   };
 
   return (
@@ -305,15 +305,25 @@ const NutrionExpertFood = ({ user }) => {
           </div> */}
           {/* Lọc theo loại */}
           <div className="display_block">
-            <SelectionCategories categories={categories} searchData={searchData} setSearchData={setSearchData}/>
+            <SelectionCategories
+              categories={categories}
+              searchData={searchData}
+              setSearchData={setSearchData}
+            />
           </div>
           {/* Lọc theo kiểu bữa */}
           <div className="display_block">
-            <SelectionMealtypeFoodFilter searchData={searchData} setSearchData={setSearchData}/>
+            <SelectionMealtypeFoodFilter
+              searchData={searchData}
+              setSearchData={setSearchData}
+            />
           </div>
           {/* Lọc theo mùa món ăn */}
           <div className="display_block">
-            <SelectionSeasonFood searchData={searchData} setSearchData={setSearchData}/>
+            <SelectionSeasonFood
+              searchData={searchData}
+              setSearchData={setSearchData}
+            />
           </div>
           {/* Thêm món ăn mới vào danh sách */}
           <div className="display_block">
