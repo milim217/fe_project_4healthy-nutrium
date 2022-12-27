@@ -305,7 +305,7 @@ const UserProfile = ({ checkValidRole }) => {
                         label: "Nữ",
                       },
                     ]}
-                    disabled={isDisable}
+                    disabled={true}
                   />
                 </Form.Item>
                 <Form.Item label="Số điện thoại của bạn:">

@@ -233,8 +233,8 @@ const RegisterForm = () => {
       <div className="landing">
         <div className="dark-overlay">
           <div className="landing-all">
-            <div className="landing-inner-second">
-              <Form className="my-4" onSubmit={register}>
+            <div className="landing-inner-second_register">
+              <Form className="my-4_register" onSubmit={register}>
                 <AlertMessage info={alert} />
                 <Form.Group>
                   <Form.Group>
