@@ -293,7 +293,7 @@ const UserProfile = ({ checkValidRole }) => {
                   ]}
                 >
                   <Select
-                    defaultValue="true"
+                    defaultValue={true}
                     onChange={onChangeGender}
                     options={[
                       {
