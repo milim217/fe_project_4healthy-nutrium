@@ -201,7 +201,24 @@ const ResetPasswordForm = () => {
                     Gửi mã xác thực
                   </Button>
                 </InputGroup>
-
+                <Form.Group>
+                  <label className="formLabel_loginForm_RegisterForm">
+                    Mã xác thực Email của bạn{" "}
+                    <p style={{ color: "red", display: "inline" }}> * </p>:
+                  </label>
+                  <Input
+                    placeholder="Nhập mã xác thực email"
+                    className="form_send_mail"
+                    type="text"
+                    name="code"
+                    required
+                    value={formik.values.code}
+                    onChange={formik.handleChange}
+                  />
+                  {formik.errors.code && (
+                    <p className="errorMSG">{formik.errors.code}</p>
+                  )}
+                </Form.Group>
                 <Form.Group>
                   <label className="formLabel_loginForm_RegisterForm">
                     Mật khẩu mới{" "}
@@ -236,24 +253,6 @@ const ResetPasswordForm = () => {
                   />
                   {formik.errors.password2 && (
                     <p className="errorMSG">{formik.errors.password2}</p>
-                  )}
-                </Form.Group>
-                <Form.Group>
-                  <label className="formLabel_loginForm_RegisterForm">
-                    Mã xác thực Email của bạn{" "}
-                    <p style={{ color: "red", display: "inline" }}> * </p>:
-                  </label>
-                  <Input
-                    placeholder="Nhập mã xác thực email"
-                    className="form_send_mail"
-                    type="text"
-                    name="code"
-                    required
-                    value={formik.values.code}
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.code && (
-                    <p className="errorMSG">{formik.errors.code}</p>
                   )}
                 </Form.Group>
 
