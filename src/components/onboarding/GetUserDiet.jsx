@@ -7,6 +7,7 @@ import Progress from "../progress/Progress";
 import Spinner from "react-bootstrap/Spinner";
 import React, { useEffect, useState } from "react";
 import DietAPI from "../../service/Actions/DietAPI";
+import FoodAPI from "../../service/Actions/FoodAPI";
 import Moment from "moment";
 import AlertMessage from "../alert/AlertMessage";
 
@@ -19,6 +20,7 @@ const GetUserDiet = ({ checkValidRole }) => {
   const [alert, setAlert] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [detail, setDetail] = useState(null);
+  const [detailMass, setDetailMass] = useState(null);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -126,7 +128,8 @@ const GetUserDiet = ({ checkValidRole }) => {
           setTimeout(() => setAlert(null), 5000);
         })
         .catch((e) => {
-          setAlert({ type: "danger", message: e.response ? e.response.data.message : "Lưu thực đơn không thành công",
+          setAlert({
+            type: "danger", message: e.response ? e.response.data.message : "Lưu thực đơn không thành công",
           });
           setTimeout(() => setAlert(null), 5000);
         });
@@ -146,6 +149,18 @@ const GetUserDiet = ({ checkValidRole }) => {
     }
   }, [loading]);
 
+  useEffect(async () => {
+    if (detail) {
+      await FoodAPI.getById(detail.food.id)
+        .then(res => {
+          setDetailMass(res.data);
+        })
+        .catch(e => {
+          setDetailMass(null);
+        })
+    }
+  }, [detail]);
+
   return (
     <>
       <HeaderUser></HeaderUser>
@@ -163,9 +178,8 @@ const GetUserDiet = ({ checkValidRole }) => {
           <Image
             width={190}
             height={140}
-            src={`http://localhost:8080/food/${
-              detail ? detail.food.id : ""
-            }/image`}
+            src={`http://localhost:8080/food/${detail ? detail.food.id : ""
+              }/image`}
           />
           <Card.Grid style={gridStyle}>
             {detail ? (
@@ -200,14 +214,45 @@ const GetUserDiet = ({ checkValidRole }) => {
           <Card.Grid style={gridStyle}>
             {detail ? (
               <>
-                Hàm lượng chất bột đường: <br />{" "}
-                {(detail.food.carb * detail.mass).toFixed(2)}
+                Hàm lượng bột đường: <br />{" "}
+                {(detail.food.carb * detail.mass).toFixed(1)}
               </>
             ) : (
               <></>
             )}
           </Card.Grid>
         </Card>
+
+        {detail ?
+          (detailMass?.ingredientMasses?.map(ingredientMass => (
+            <Card
+              title={`${detail.mass * ingredientMass.mass} gram ${ingredientMass.ingredient.ingredientName}`}
+            >
+              <Image
+                width={190}
+                height={140}
+                src={`http://localhost:8080/ingredient/${ingredientMass.ingredient.id}/image`}
+              />
+              <Card.Grid style={gridStyle}>
+                Hàm lượng calo: <br />{" "}
+                {(ingredientMass.ingredient.calo * ingredientMass.mass * detail.mass * 0.01).toFixed(1)}
+              </Card.Grid>
+              <Card.Grid style={gridStyle}>
+                Hàm lượng chất béo: <br />{" "}
+                {(ingredientMass.ingredient.fat * ingredientMass.mass * detail.mass * 0.01).toFixed(1)}
+              </Card.Grid>
+              <Card.Grid style={gridStyle}>
+                Hàm lượng chất đạm: <br />{" "}
+                {(ingredientMass.ingredient.protein * ingredientMass.mass * detail.mass * 0.01).toFixed(1)}
+              </Card.Grid>
+              <Card.Grid style={gridStyle}>
+                Hàm lượng bột đường: <br />{" "}
+                {(ingredientMass.ingredient.carb * ingredientMass.mass * detail.mass * 0.01).toFixed(1)}
+              </Card.Grid>
+            </Card>
+          )))
+          : <></>
+        }
       </Modal>
 
       <div className="wrapper-quiz_page">

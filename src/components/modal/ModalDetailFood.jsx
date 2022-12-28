@@ -61,7 +61,7 @@ const ModalDetailFood = (props) => {
                       }}
                     >
                       <p className="content-card-detailFood">
-                        {(foodMass.mass * foodMass.food.calo).toFixed(1)}
+                        {(foodMass.mass * foodMass.food.calo).toFixed(1)} kcal
                       </p>
                     </Card>
                   </Col>
