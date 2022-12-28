@@ -7,6 +7,7 @@ import AlertMessage from "../alert/AlertMessage";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import InputGroup from "react-bootstrap/InputGroup";
 
 const ResetPasswordForm = () => {
   // const [form, setForm] = useState({
@@ -174,24 +175,32 @@ const ResetPasswordForm = () => {
             <Form className="my-4" onSubmit={changePassword}>
               <AlertMessage info={alert} />
               <Form.Group>
-                <Form.Group>
-                  <label className="formLabel_loginForm_RegisterForm">
-                    Email <p style={{ color: "red", display: "inline" }}> * </p>
-                    :
-                  </label>
-                  <Input
-                    placeholder="Email của bạn"
-                    className="form_send_mail"
-                    type="text"
-                    name="email"
-                    required
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.email && (
-                    <p className="errorMSG">{formik.errors.email}</p>
-                  )}
-                </Form.Group>
+                <InputGroup className="mb-3">
+                  <Form.Group>
+                    <label className="formLabel_loginForm_RegisterForm">
+                      Email{" "}
+                      <p style={{ color: "red", display: "inline" }}> * </p>:
+                    </label>
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      name="email"
+                      value={formik.values.email}
+                      required
+                      onChange={formik.handleChange}
+                      className="form_login_register"
+                    />
+                    {formik.errors.email && (
+                      <p className="errorMSG">{formik.errors.email}</p>
+                    )}
+                  </Form.Group>
+                  <Button
+                    className="btn_sendEmail_resetPassword"
+                    onClick={sendMail}
+                  >
+                    Gửi mã xác thực
+                  </Button>
+                </InputGroup>
 
                 <Form.Group>
                   <label className="formLabel_loginForm_RegisterForm">
@@ -248,13 +257,13 @@ const ResetPasswordForm = () => {
                   )}
                 </Form.Group>
 
-                <Button
+                {/* <Button
                   variant="success"
                   className="btn_Return_ResetPasswordForm"
                   onClick={sendMail}
                 >
                   Gửi mã xác thực Email
-                </Button>
+                </Button> */}
                 <Button
                   variant="success"
                   className="btn_Next_SendMailForm_2"
