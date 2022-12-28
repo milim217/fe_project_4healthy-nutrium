@@ -4,10 +4,12 @@
   border-bottom: 1px solid #1890ff;
 }
 
-.site-card-wrapper {
+.site-card-wrapper_Schedule {
   width: 100%;
   padding-top: 10px;
   padding-left: 20px;
+  min-height: auto;
+  background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 

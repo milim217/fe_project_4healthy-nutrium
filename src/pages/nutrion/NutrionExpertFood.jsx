@@ -117,6 +117,7 @@ const NutrionExpertFood = ({ user }) => {
       render: (imageFood) => {
         return <Image width={80} height={60} src={imageFood} />;
       },
+      width: 120,
     },
     {
       title: "Trạng thái",
@@ -137,7 +138,7 @@ const NutrionExpertFood = ({ user }) => {
       title: "Loại món ăn",
       dataIndex: "category_id",
       justify: "center",
-      width: 80,
+      width: 150,
     },
     {
       title: "Bữa Ăn",
@@ -258,7 +259,7 @@ const NutrionExpertFood = ({ user }) => {
   // Tìm kiếm Food
   const { Search } = Input;
   const [searchData, setSearchData] = useState({
-    text: '',
+    text: "",
     categoryId: null,
     mealId: null,
     seasonId: null,
@@ -267,15 +268,14 @@ const NutrionExpertFood = ({ user }) => {
   //   setSearchData({ ...searchData, text: e.target.value.trim() });
   // };
   const onSearch = async (text) => {
-    let trimText = '';
-    if(text){
+    let trimText = "";
+    if (text) {
       trimText = text.trim();
     }
     searchData.text = trimText;
-    await FoodAPI.search(searchData)
-      .then((res) => {
-        setFoods(res.data);
-      })
+    await FoodAPI.search(searchData).then((res) => {
+      setFoods(res.data);
+    });
   };
 
   return (

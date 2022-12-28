@@ -132,7 +132,7 @@ function NutrionExpertIngredients() {
       title: "Chất bột đường (g)",
       dataIndex: "carb",
       justify: "center",
-      width: 80,
+      width: 95,
     },
     {
       title: "Calo (Kcal)",
@@ -324,11 +324,10 @@ function NutrionExpertIngredients() {
   // Tìm kiếm người dùng
   const { Search } = Input;
   const onSearch = (text) => {
-    
     let newList = [];
 
-    let trimText = '';
-    if(text){
+    let trimText = "";
+    if (text) {
       trimText = text.trim();
     }
 
