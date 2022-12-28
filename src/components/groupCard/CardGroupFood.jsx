@@ -66,11 +66,10 @@ function CardGroupFood() {
   const paginate = (pageNum) => {
     if (pageNum <= 0) {
       pageNum = 1;
-    }
-    else if (pageNum > pageNumbers.length) {
+    } else if (pageNum > pageNumbers.length) {
       pageNum = pageNumbers.length;
     }
-    setCurrentPage(pageNum)
+    setCurrentPage(pageNum);
   };
 
   const pageNumbers = [];
@@ -84,7 +83,7 @@ function CardGroupFood() {
         setFoods(res.data);
         setLoading(false);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
   const loadCategories = async () => {
     await CategoryAPI.getAll()
@@ -92,17 +91,17 @@ function CardGroupFood() {
         let cList = [];
         cList.push({
           value: null,
-          label: "Tất cả"
-        })
-        res.data.map(category => {
+          label: "Tất cả",
+        });
+        res.data.map((category) => {
           cList.push({
             value: category.id,
-            label: category.categoryName
+            label: category.categoryName,
           });
-        })
+        });
         setCategories(cList);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -111,23 +110,22 @@ function CardGroupFood() {
   }, []);
 
   const [searchData, setSearchData] = useState({
-    text: '',
+    text: "",
     categoryId: null,
     mealId: null,
-    seasonId: null
+    seasonId: null,
   });
 
   //Lấy giá trị search
   const onSearch = async (text) => {
-    let trimText = '';
-    if(text){
+    let trimText = "";
+    if (text) {
       trimText = text.trim();
     }
     searchData.text = trimText;
-    FoodAPI.searchActive(searchData)
-      .then(res => {
-        setFoods(res.data);
-      })
+    FoodAPI.searchActive(searchData).then((res) => {
+      setFoods(res.data);
+    });
   };
 
   return (
@@ -205,7 +203,7 @@ function CardGroupFood() {
                     </Card.Title>
                   </Card.Body>
                   <Button className="btn_libaryFood" href={`food/${f.id}`}>
-                    Chi tiết
+                    Xem thông tin chi tiết
                   </Button>
                   {/* <ModalDetailFood></ModalDetailFood> */}
                 </Card>
