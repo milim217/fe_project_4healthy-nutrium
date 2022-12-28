@@ -76,12 +76,16 @@ function CardGroupIngredient() {
   }, []);
 
   const [searchData, setSearchData] = useState({
-    text: "",
+    text: '',
     seasonId: null
   });
 
   const onSearch = async (text) => {
-    searchData.text = text;
+    let trimText = '';
+    if(text){
+      trimText = text.trim();
+    }
+    searchData.text = trimText;
     await IngredientAPI.searchActive(searchData)
       .then(res => {
         setIngredient(res.data);

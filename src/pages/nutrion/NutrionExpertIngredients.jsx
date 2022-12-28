@@ -323,30 +323,20 @@ function NutrionExpertIngredients() {
 
   // Tìm kiếm người dùng
   const { Search } = Input;
-  const onSearch = (value) => {
-    // if (text === "") {
-    //   if(searchData.season === null){
-    //     loadIngredientList();
-    //   }
-    //   else{
-    //     let newList = [];
-    //     ingredients.map(i => {
-    //       i.seasons.map(s => {
-    //         if (s.seasonName.toUpperCase().includes(searchData.season.toUpperCase())) {
-    //           newList.push(i);
-    //         }
-    //       })
-    //     })
-    //     setSearchedIngredients(newList);
-    //   }
-    // }
-    // else {
+  const onSearch = (text) => {
+    
     let newList = [];
+
+    let trimText = '';
+    if(text){
+      trimText = text.trim();
+    }
+
     if (searchData.season) {
       ingredients.map((i) => {
         i.seasons.map((s) => {
           if (
-            i.ingredientName.toUpperCase().includes(value.toUpperCase()) &&
+            i.ingredientName.toUpperCase().includes(trimText.toUpperCase()) &&
             s.seasonName.toUpperCase().includes(searchData.season.toUpperCase())
           ) {
             newList.push(i);
@@ -355,7 +345,7 @@ function NutrionExpertIngredients() {
       });
     } else {
       ingredients.map((i) => {
-        if (i.ingredientName.toUpperCase().includes(value.toUpperCase())) {
+        if (i.ingredientName.toUpperCase().includes(trimText.toUpperCase())) {
           newList.push(i);
         }
       });

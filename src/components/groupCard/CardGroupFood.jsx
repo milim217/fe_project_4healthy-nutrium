@@ -111,7 +111,7 @@ function CardGroupFood() {
   }, []);
 
   const [searchData, setSearchData] = useState({
-    text: "",
+    text: '',
     categoryId: null,
     mealId: null,
     seasonId: null
@@ -119,7 +119,11 @@ function CardGroupFood() {
 
   //Lấy giá trị search
   const onSearch = async (text) => {
-    searchData.text = text;
+    let trimText = '';
+    if(text){
+      trimText = text.trim();
+    }
+    searchData.text = trimText;
     FoodAPI.searchActive(searchData)
       .then(res => {
         setFoods(res.data);

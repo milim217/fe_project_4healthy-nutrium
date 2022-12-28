@@ -220,7 +220,7 @@ const ListUser = ({ user, checkValidRole }) => {
   const { Search } = Input;
   const onSearch = async (key) => {
     if (key) {
-      await UserAPI.getSearched(key).then((res) => {
+      await UserAPI.getSearched(key.trim()).then((res) => {
         setUserList(res.data);
       });
     } else {

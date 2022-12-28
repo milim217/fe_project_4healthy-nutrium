@@ -258,20 +258,24 @@ const NutrionExpertFood = ({ user }) => {
   // Tìm kiếm Food
   const { Search } = Input;
   const [searchData, setSearchData] = useState({
-    text: "",
+    text: '',
     categoryId: null,
     mealId: null,
     seasonId: null,
   });
-  const onChange = (e) => {
-    setSearchData({ ...searchData, text: e.target.value });
-  };
+  // const onChange = (e) => {
+  //   setSearchData({ ...searchData, text: e.target.value.trim() });
+  // };
   const onSearch = async (text) => {
+    let trimText = '';
+    if(text){
+      trimText = text.trim();
+    }
+    searchData.text = trimText;
     await FoodAPI.search(searchData)
       .then((res) => {
         setFoods(res.data);
       })
-      .catch((e) => {});
   };
 
   return (
@@ -337,7 +341,7 @@ const NutrionExpertFood = ({ user }) => {
             enterButton="Tìm Kiếm"
             size="large"
             onSearch={onSearch}
-            onChange={onChange}
+            // onChange={onChange}
           />
           <AlertMessage info={alert} />
         </div>
