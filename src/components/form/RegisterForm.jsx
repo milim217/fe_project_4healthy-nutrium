@@ -271,7 +271,23 @@ const RegisterForm = () => {
                       Gửi mã xác thực
                     </Button>
                   </InputGroup>
-
+                  <Form.Group>
+                    <label className="formLabel_loginForm_RegisterForm">
+                      Mã xác thực Email{" "}
+                      <p style={{ color: "red", display: "inline" }}> * </p>:
+                    </label>
+                    <Input
+                      type="text"
+                      placeholder="Mã xác thực email"
+                      name="ValidEmail"
+                      required
+                      onChange={formik.handleChange}
+                      className="form_login_register"
+                    />
+                    {formik.errors.ValidEmail && (
+                      <p className="errorMSG">{formik.errors.ValidEmail}</p>
+                    )}
+                  </Form.Group>
                   <Form.Group>
                     <label className="formLabel_loginForm_RegisterForm">
                       Mật khẩu{" "}
@@ -384,23 +400,7 @@ const RegisterForm = () => {
                     <p className="errorMSG">{formik.errors.date}</p>
                   )}
                 </Form.Group>
-                <Form.Group>
-                  <label className="formLabel_loginForm_RegisterForm">
-                    Mã xác thực Email{" "}
-                    <p style={{ color: "red", display: "inline" }}> * </p>:
-                  </label>
-                  <Input
-                    type="text"
-                    placeholder="Mã xác thực email"
-                    name="ValidEmail"
-                    required
-                    onChange={formik.handleChange}
-                    className="form_login_register"
-                  />
-                  {formik.errors.ValidEmail && (
-                    <p className="errorMSG">{formik.errors.ValidEmail}</p>
-                  )}
-                </Form.Group>
+
                 <Form.Group>
                   <label className="formLabel_loginForm_RegisterForm">
                     Giới tính{" "}
