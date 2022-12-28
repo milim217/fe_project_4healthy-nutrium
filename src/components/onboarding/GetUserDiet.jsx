@@ -18,7 +18,7 @@ const GetUserDiet = ({ checkValidRole }) => {
   const [dinnerIndex, setDinnerIndex] = useState(0);
   const [alert, setAlert] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [detail, setDetail] = useState(false);
+  const [detail, setDetail] = useState(null);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -126,9 +126,7 @@ const GetUserDiet = ({ checkValidRole }) => {
           setTimeout(() => setAlert(null), 5000);
         })
         .catch((e) => {
-          setAlert({
-            type: "danger",
-            message: "Lưu thực đơn không thành công",
+          setAlert({ type: "danger", message: e.response ? e.response.data.message : "Lưu thực đơn không thành công",
           });
           setTimeout(() => setAlert(null), 5000);
         });
