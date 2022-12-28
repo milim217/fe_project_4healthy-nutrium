@@ -53,7 +53,7 @@ const Slidebar = ({ children }) => {
               label: "Danh sách nguyên liệu",
             },
             {
-              key: "/home",
+              key: "/login",
               // icon: <UploadOutlined />,
               label: "Đăng xuất",
             },
