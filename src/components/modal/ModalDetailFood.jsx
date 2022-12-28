@@ -21,7 +21,11 @@ const ModalDetailFood = (props) => {
   };
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <Button
+        type="primary"
+        onClick={showModal}
+        style={{ backgroundColor: "#059669", borderColor: "#059669" }}
+      >
         Xem chi tiết
       </Button>
       <Modal

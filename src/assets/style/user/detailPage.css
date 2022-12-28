@@ -17,7 +17,7 @@ body {
 .wrapper-Img_sumary {
   padding: 30px;
   /* background-image: url("https://celes.club/uploads/posts/2022-05/1653252853_23-celes-club-p-sushi-rolli-fon-krasivie-24.jpg"); */
-  background-color: burlywood;
+  background-color: #ffedd5;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -43,7 +43,7 @@ body {
 .wrapper_RelateFood {
   width: 100%;
   height: auto;
-  min-height: 500px;
+  min-height: 80vh;
 }
 
 .name_RelateFood {

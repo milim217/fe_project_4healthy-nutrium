@@ -208,8 +208,8 @@
 }
 
 .btn_Return_ResetPasswordForm {
-  background-color: #f73b6d;
-  border-color: #f73b6d;
+  background-color: #10b981;
+  border-color: #10b981;
   color: #fff;
   display: inline-flex;
   margin-right: 50px;
@@ -343,11 +343,11 @@
   cursor: pointer;
   transition: all 0.2s ease;
   height: 56px;
-  width: 160px;
+  width: 100%;
   font-family: "Takeaway Sans", sans-serif;
   font-size: 16px;
   line-height: 24px;
-  float: left;
+  margin-top: 20px;
 }
 
 .landing-inner-second_register .my-4_register {
@@ -355,4 +355,23 @@
   padding-top: 100px;
   padding-bottom: 120px;
   margin-top: 0rem !important;
+}
+
+.btn_sendEmail {
+  background-color: #10b981;
+  border-color: #10b981;
+  height: 56px;
+  width: 129px;
+  margin-top: 32px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.btn_sendEmail {
+  background-color: #059669;
+  border-color: #059669;
 }

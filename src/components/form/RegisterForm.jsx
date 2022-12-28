@@ -9,6 +9,7 @@ import Moment from "moment";
 import moment from "moment";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import InputGroup from "react-bootstrap/InputGroup";
 
 const RegisterForm = () => {
   const formik = useFormik({
@@ -247,24 +248,30 @@ const RegisterForm = () => {
               <Form className="my-4_register" onSubmit={register}>
                 <AlertMessage info={alert} />
                 <Form.Group>
-                  <Form.Group>
-                    <label className="formLabel_loginForm_RegisterForm">
-                      Email{" "}
-                      <p style={{ color: "red", display: "inline" }}> * </p>:
-                    </label>
-                    <Input
-                      type="email"
-                      placeholder="Email"
-                      name="email"
-                      value={formik.values.email}
-                      required
-                      onChange={formik.handleChange}
-                      className="form_login_register"
-                    />
-                    {formik.errors.email && (
-                      <p className="errorMSG">{formik.errors.email}</p>
-                    )}
-                  </Form.Group>
+                  <InputGroup className="mb-3">
+                    <Form.Group>
+                      <label className="formLabel_loginForm_RegisterForm">
+                        Email{" "}
+                        <p style={{ color: "red", display: "inline" }}> * </p>:
+                      </label>
+                      <Input
+                        type="email"
+                        placeholder="Email"
+                        name="email"
+                        value={formik.values.email}
+                        required
+                        onChange={formik.handleChange}
+                        className="form_login_register"
+                      />
+                      {formik.errors.email && (
+                        <p className="errorMSG">{formik.errors.email}</p>
+                      )}
+                    </Form.Group>
+                    <Button className="btn_sendEmail" onClick={sendEmail}>
+                      Gửi mã xác thực
+                    </Button>
+                  </InputGroup>
+
                   <Form.Group>
                     <label className="formLabel_loginForm_RegisterForm">
                       Mật khẩu{" "}
@@ -417,13 +424,13 @@ const RegisterForm = () => {
                   </Radio.Group>
                 </Form.Group>
 
-                <Button
+                {/* <Button
                   variant="success"
                   className="btn_SendEmail_Register"
                   onClick={sendEmail}
                 >
                   Gửi mã xác thực Email
-                </Button>
+                </Button> */}
                 <Button
                   variant="success"
                   className="btn_register"

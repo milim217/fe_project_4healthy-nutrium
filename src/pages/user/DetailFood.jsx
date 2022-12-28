@@ -148,7 +148,7 @@ const DetailFood = () => {
               <div className="name_RelateFood">Công thức nấu</div>
               <div className="box_RelateFood">
                 <div className="main-box_RelateFood">
-                  <div className="nameIngredient_boxDetailFood">
+                  <div className="nameIngredient_boxDetailRecipe">
                     {food?.recipe}
                   </div>
                 </div>

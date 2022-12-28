@@ -82,7 +82,7 @@ body {
 .name_food_DetailPage {
   font-size: 30px;
   font-weight: 600;
-  color: white;
+  color: #f97316;
 }
 
 .name_SumaryNutrition_Food {
@@ -100,6 +100,13 @@ body {
   font-size: 26px;
   color: #001529;
   font-weight: 900;
+}
+
+.nameIngredient_boxDetailRecipe {
+  font-size: 15px;
+  color: #001529;
+  font-weight: 900;
+  text-align: center;
 }
 
 .contentIngredient_boxDetailFood {
