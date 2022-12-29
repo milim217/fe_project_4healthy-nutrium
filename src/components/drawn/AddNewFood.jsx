@@ -330,7 +330,6 @@ const AddNewFood = ({ loadFoodList }) => {
 
     console.log("added food = ", addNewFoodForm);
 
-    if (check) {
       await FoodAPI.add(addNewFoodForm)
         .then((res) => {
           const addedFood = res.data;
@@ -347,7 +346,6 @@ const AddNewFood = ({ loadFoodList }) => {
             data: formData,
             headers: {
               "Content-Type": "multipart/form-data",
-              Authorization: JSON.parse(localStorage.getItem("jwt")),
             },
           });
 
@@ -360,10 +358,7 @@ const AddNewFood = ({ loadFoodList }) => {
           });
           setTimeout(() => setTopAlert(null), 5000);
         });
-    } else {
-      setTopAlert({ type: "danger", message: "Lỗi thêm món ăn" });
-      setTimeout(() => setTopAlert(null), 5000);
-    }
+    
   };
   const showDrawer = () => {
     setOpen(true);
