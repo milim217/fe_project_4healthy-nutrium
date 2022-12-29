@@ -48,11 +48,10 @@ function CardGroupIngredient() {
   const paginate = (pageNum) => {
     if (pageNum <= 0) {
       pageNum = 1;
-    }
-    else if (pageNum > pageNumbers.length) {
+    } else if (pageNum > pageNumbers.length) {
       pageNum = pageNumbers.length;
     }
-    setCurrentPage(pageNum)
+    setCurrentPage(pageNum);
   };
 
   const pageNumbers = [];
@@ -68,7 +67,7 @@ function CardGroupIngredient() {
         setIngredient(res.data);
         setLoading(false);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -76,20 +75,19 @@ function CardGroupIngredient() {
   }, []);
 
   const [searchData, setSearchData] = useState({
-    text: '',
-    seasonId: null
+    text: "",
+    seasonId: null,
   });
 
   const onSearch = async (text) => {
-    let trimText = '';
-    if(text){
+    let trimText = "";
+    if (text) {
       trimText = text.trim();
     }
     searchData.text = trimText;
-    await IngredientAPI.searchActive(searchData)
-      .then(res => {
-        setIngredient(res.data);
-      })
+    await IngredientAPI.searchActive(searchData).then((res) => {
+      setIngredient(res.data);
+    });
   };
 
   return (
@@ -141,7 +139,7 @@ function CardGroupIngredient() {
                   className="btn_libaryFood"
                   href={`/ingredient/${ingredientValue.id}`}
                 >
-                  Thông tin thêm
+                  Xem thông tin chi tiết
                 </Button>
                 {/* <ModalDetailFood></ModalDetailFood> */}
               </Card>

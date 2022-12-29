@@ -203,7 +203,7 @@
 
 .btn_Next_SendMailForm_2:hover {
   background-color: white;
-  color: #10b981;
+  background-color: #10b981;
   border-color: #10b981;
 }
 
@@ -388,4 +388,16 @@
 .btn_sendEmail {
   background-color: #059669;
   border-color: #059669;
+}
+
+.landing-inner-second_register form .btn_register:hover {
+  background-color: #10b981;
+  border-color: #10b981;
+  color: #fff;
+}
+.dropdown-item:focus,
+.dropdown-item:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: #10b981;
 }
