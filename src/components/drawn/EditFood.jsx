@@ -465,9 +465,9 @@ const EditFood = ({ foodData, openUpdate, setOpenUpdate, loadFoodList }) => {
     setOpenUpdate(false);
     setImage(null);
     setResult(null);
-    // if (updated) {
-    //   window.location.reload();
-    // }
+    if (updated) {
+      window.location.reload();
+    }
   };
   //
   //

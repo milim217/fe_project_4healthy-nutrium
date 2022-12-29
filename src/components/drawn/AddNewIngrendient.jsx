@@ -117,9 +117,9 @@ const AddNewIngrendient = ({ loadAllIngredientList }) => {
     formik.handleReset();
     setImage(null);
     setResult(null);
-    // if (added) {
-    //   window.location.reload();
-    // }
+    if (added) {
+      window.location.reload();
+    }
   };
 
   const formik = useFormik({

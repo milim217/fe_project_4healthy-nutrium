@@ -160,9 +160,9 @@ const EditIngrdient = ({
     formik.handleReset();
     setImage(null);
     setResult(null);
-    // if (updated) {
-    //   window.location.reload();
-    // }
+    if (updated) {
+      window.location.reload();
+    }
   };
 
   const formik = useFormik({
